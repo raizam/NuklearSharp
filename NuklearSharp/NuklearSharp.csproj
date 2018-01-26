@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CRuntime.cs" />
+    <Compile Include="StringView.cs" />
     <Compile Include="Nuklear.cs" />
     <Compile Include="Nuklear.Generated.cs" />
     <Compile Include="Operations.cs" />

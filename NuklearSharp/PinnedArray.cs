@@ -22,16 +22,6 @@ namespace NuklearSharp
 		{
 			return ptr.Ptr;
 		}
-
-		public static implicit operator byte*(Pointer ptr)
-		{
-			return (byte*) ptr.Ptr;
-		}
-
-		public static implicit operator short*(Pointer ptr)
-		{
-			return (short*) ptr.Ptr;
-		}
 	}
 
 	public unsafe class PinnedArray<T> : Pointer
