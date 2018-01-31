@@ -18281,7 +18281,8 @@ nk_style_set_cursor(struct nk_context *ctx, enum nk_style_cursor c)
     NK_ASSERT(ctx);
     if (!ctx) return 0;
     style = &ctx->style;
-    if (style->cursors[c]) {
+//    if (style->cursors[c])
+    {
         style->cursor_active = style->cursors[c];
         return 1;
     }
@@ -21055,8 +21056,10 @@ nk_tree_state_base(struct nk_context *ctx, enum nk_tree_type type,
     float row_height;
 
     struct nk_vec2 item_spacing;
-    struct nk_rect header = {0,0,0,0};
-    struct nk_rect sym = {0,0,0,0};
+    struct nk_rect header;
+    header.x = header.y = header.w = header.h = 0;;
+    struct nk_rect sym;
+    sym.x = sym.y = sym.w = sym.h = 0;
     struct nk_text text;
 
     nk_flags ws = 0;
@@ -22765,7 +22768,8 @@ nk_chart_begin_colored(struct nk_context *ctx, enum nk_chart_type type,
     const struct nk_style_chart *style;
 
     const struct nk_style_item *background;
-    struct nk_rect bounds = {0, 0, 0, 0};
+    struct nk_rect bounds;
+    bounds.x = bounds.y = bounds.w = bounds.h = 0;
 
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
@@ -22930,7 +22934,8 @@ nk_chart_push_column(const struct nk_context *ctx, struct nk_window *win,
     float ratio;
     nk_flags ret = 0;
     struct nk_color color;
-    struct nk_rect item = {0,0,0,0};
+    struct nk_rect item;
+    item.x = item.y = item.w = item.h = 0;
 
     NK_ASSERT(slot >= 0 && slot < NK_CHART_MAX_SLOT);
     if (chart->slots[slot].index  >= chart->slots[slot].count)
@@ -22989,6 +22994,7 @@ nk_chart_push_slot(struct nk_context *ctx, float value, int slot)
     default:
     case NK_CHART_MAX:
         flags = 0;
+        break;
     }
     return flags;
 }
@@ -23334,7 +23340,6 @@ nk_popup_begin(struct nk_context *ctx, enum nk_popup_type type,
     win = ctx->current;
     panel = win->layout;
     NK_ASSERT(!(panel->type & NK_PANEL_SET_POPUP) && "popups are not allowed to have popups");
-    (void)panel;
     title_len = (int)nk_strlen(title);
     title_hash = nk_murmur_hash(title, (int)title_len, NK_PANEL_POPUP);
 
@@ -23429,7 +23434,6 @@ nk_nonblock_begin(struct nk_context *ctx,
     win = ctx->current;
     panel = win->layout;
     NK_ASSERT(!(panel->type & NK_PANEL_SET_POPUP));
-    (void)panel;
     popup = win->popup.win;
     if (!popup) {
         /* create window for nonblocking popup */
@@ -23651,7 +23655,8 @@ nk_contextual_begin(struct nk_context *ctx, nk_flags flags, struct nk_vec2 size,
     struct nk_window *popup;
     struct nk_rect body;
 
-    NK_STORAGE const struct nk_rect null_rect = {0,0,0,0};
+    NK_STORAGE const struct nk_rect null_rect;
+    null_rect.x = null_rect.y = null_rect.w = null_rect.h = 0;
     int is_clicked = 0;
     int is_active = 0;
     int is_open = 0;
@@ -23832,7 +23837,8 @@ nk_contextual_end(struct nk_context *ctx)
         how big it will be. We therefore do not directly know when a
         click outside the non-blocking popup must close it at that direct frame.
         Instead it will be closed in the next frame.*/
-        struct nk_rect body = {0,0,0,0};
+        struct nk_rect body;
+        body.x = body.y = body.w = body.h = 0;
         if (panel->at_y < (panel->bounds.y + panel->bounds.h)) {
             struct nk_vec2 padding = nk_panel_get_padding(&ctx->style, panel->type);
             body = panel->bounds;
@@ -24112,7 +24118,8 @@ nk_combo_begin_symbol(struct nk_context *ctx, enum nk_symbol_type symbol, struct
         nk_stroke_rect(&win->buffer, header, style->combo.rounding, style->combo.border, style->combo.border_color);
     }
     {
-        struct nk_rect bounds = {0,0,0,0};
+        struct nk_rect bounds;
+        bounds.x = bounds.y = bounds.w = bounds.h = 0;
         struct nk_rect content;
         struct nk_rect button;
 
@@ -24288,7 +24295,9 @@ nk_combo_begin_image(struct nk_context *ctx, struct nk_image img, struct nk_vec2
         nk_stroke_rect(&win->buffer, header, style->combo.rounding, style->combo.border, style->combo.border_color);
     }
     {
-        struct nk_rect bounds = {0,0,0,0};
+        struct nk_rect bounds;
+        bounds.x = bounds.y = bounds.w = bounds.h;
+
         struct nk_rect content;
         struct nk_rect button;
 
