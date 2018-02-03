@@ -99,6 +99,8 @@ namespace NuklearSharp.Generation
 						"nk_command_buffer",
 						"nk_panel",
 						"nk_config_stack_button_behavior_element",
+						"nk_convert_config",
+						"nk_user_font_glyph",
 					},
 					Classes = new[]
 					{
@@ -215,6 +217,7 @@ namespace NuklearSharp.Generation
 						"nk_proggy_clean_ttf_compressed_data_base85",
 						"nk_custom_cursor_data",
 						"nk_cursor_data",
+						"hue_colors",
 					},
 					SkipFunctions = new[]
 					{
@@ -265,6 +268,9 @@ namespace NuklearSharp.Generation
 						"nk_build",
 						"nk_property_",
 						"nk_font_atlas_add_default",
+						"nk_stroke_polygon",
+						"nk_fill_polygon",
+						"nk_stroke_polyline",
 					},
 					GlobalArrays = new[]
 					{
@@ -285,7 +291,11 @@ namespace NuklearSharp.Generation
 					    n == "state" ||
 					    n == "ws" ||
 					    n == "size" ||
-					    n == "glyph_count")
+					    n == "glyph_count" ||
+						n == "width" ||
+						n == "height" ||
+						n == "value" ||
+						n == "val")
 					{
 						return true;
 					}
@@ -513,7 +523,7 @@ namespace NuklearSharp.Generation
 
 				// nk_murmur_hash
 				data =
-					data.Replace("union (anonymous at nuklear.h:6645:5) conv = (union (anonymous at nuklear.h:6645:5))({ null });",
+					data.Replace("union (anonymous at nuklear.h:6644:5) conv = (union (anonymous at nuklear.h:6644:5))({ null });",
 						"nk_murmur_hash_union conv = new nk_murmur_hash_union(null);");
 				data = data.Replace("i; ++i", "i != 0; ++i");
 
@@ -579,8 +589,8 @@ namespace NuklearSharp.Generation
 				data = data.Replace("sizeof((color))", "sizeof(uint)");
 				data =
 					data.Replace(
-						"return (int)(((element.attribute) == (NK_VERTEX_ATTRIBUTE_COUNT)) || ((element.format) == (NK_FORMAT_COUNT)));",
-						"return (int)(((element.attribute) == (NK_VERTEX_ATTRIBUTE_COUNT)) || ((element.format) == (NK_FORMAT_COUNT))?1:0);");
+						"return (int)(((element->attribute) == (NK_VERTEX_ATTRIBUTE_COUNT)) || ((element->format) == (NK_FORMAT_COUNT)));",
+						"return (int)(((element->attribute) == (NK_VERTEX_ATTRIBUTE_COUNT)) || ((element->format) == (NK_FORMAT_COUNT))?1:0);");
 				data = data.Replace("(sizeof(nk_command_arc_filled)", "((ulong)sizeof(nk_command_arc_filled)");
 				data = data.Replace("sizeof(short);)", "sizeof(short))");
 				data = data.Replace("sizeof((values[value_index]))", "sizeof(float)");
@@ -644,9 +654,9 @@ namespace NuklearSharp.Generation
 
 				data = data.Replace("return &state.undo_char[r.char_storage];", "return (char *)state.undo_char + r.char_storage;");
 				data = data.Replace("active = (int)(!active);", "active = active != 0?0:1;");
-				data = data.Replace("*value = (int)(!(*value));", "*value = *value != 0?0:1;");
+				data = data.Replace("value = (int)(!(value));", "value = value != 0?0:1;");
 				data = data.Replace("return (int)(was_active != *active);", "return was_active != *active?1:0;");
-				data = data.Replace("return (int)(old_value != *value);", "return old_value != *value?1:0;");
+				data = data.Replace("return (int)(old_value != value);", "return old_value != value?1:0;");
 				data = data.Replace("int (const nk_text_edit *, unsigned int)*", "NkPluginFilter");
 				data = data.Replace("enum nk_text_edit_type", "int");
 
@@ -954,8 +964,8 @@ namespace NuklearSharp.Generation
 				data = data.Replace("return (int)(old_value != *active);", "return (old_value != *active)?1:0;");
 
 				// nk_slider_float
-				data = data.Replace("return (int)(((old_value) > (*value)) || ((old_value) < (*value)));",
-					"return (((old_value) > (*value)) || ((old_value) < (*value)))?1:0;");
+				data = data.Replace("return (int)(((old_value) > (value)) || ((old_value) < (value)));",
+					"return (((old_value) > (value)) || ((old_value) < (value)))?1:0;");
 
 				// nk_edit_buffer
 				data = data.Replace("(win.layout.flags & NK_WINDOW_ROM)?",
@@ -1017,6 +1027,7 @@ namespace NuklearSharp.Generation
 				data = data.Replace(", &alloc", "");
 				data = data.Replace(", &baker->alloc", "");
 				data = data.Replace(", &atlas.temporary", "");
+				data = data.Replace("|| (alloc== null)", "");
 				data = data.Replace("(alloc== null)", "");
 				data = data.Replace("|| (a== null)", "");
 				data = data.Replace("public nk_allocator alloc;", "");
@@ -1059,6 +1070,7 @@ namespace NuklearSharp.Generation
 				data = data.Replace("if ((custom) != null)", "");
 				data = data.Replace("nk_zero(s, (ulong)(sizeof(nk_image)));", "");
 				data = data.Replace(", (ulong)(sizeof((cmd)))", "");
+				data = data.Replace(", (ulong)(sizeof((cmd)) + (ulong)(length + 1))", "");
 				data = data.Replace("nk_command* cmd;", "");
 				data = data.Replace("for ((cmd) = nk__begin(ctx); (cmd) != null; (cmd) = nk__next(ctx, cmd))",
 					"var top_window = nk__begin(ctx); foreach (var cmd in top_window.buffer.commands)");
@@ -1096,13 +1108,46 @@ namespace NuklearSharp.Generation
 				data = data.Replace("x_offset, y_offset", "new nk_scroll {x = *x_offset, y = *y_offset}");
 				data =
 					data.Replace(
-						"nk_font_bake_custom_data(atlas.pixel, (int)(*width), (int)(*height), (nk_recti)(atlas.custom), nk_custom_cursor_data, (int)(90), (int)(27), ('.'), ('X'));",
-						"fixed(char *ptr = nk_custom_cursor_data) { nk_font_bake_custom_data(atlas.pixel, (int)(*width), (int)(*height), (nk_recti)(atlas.custom), ptr, (int)(90), (int)(27), ('.'), ('X'));}");
+						"nk_font_bake_custom_data(atlas.pixel, (int)(width), (int)(height), (nk_recti)(atlas.custom), nk_custom_cursor_data, (int)(90), (int)(27), ('.'), ('X'));",
+						"fixed(char *ptr = nk_custom_cursor_data) { nk_font_bake_custom_data(atlas.pixel, (int)(width), (int)(height), (nk_recti)(atlas.custom), ptr, (int)(90), (int)(27), ('.'), ('X'));}");
 				data = data.Replace("nk_zero(&layout.row.item, (ulong)(sizeof(nk_rect)));",
 					"fixed(void *ptr = &layout.row.item) {nk_zero(ptr, (ulong)(sizeof(nk_rect)));}");
 				data = data.Replace("element->address = &ctx.button_behavior;", "");
 				data = data.Replace("*element->address = (int)(element->old_value);", "ctx.button_behavior = element->old_value;");
 				data = data.Replace("return nk_font_text_width(handle", "return nk_font_text_width(font");
+
+				data = data.Replace("nk_zero(b, (ulong)(sizeof((b))));", "");
+				data = data.Replace("size = (ulong)(sizeof((cmd)) + sizeof(short)* 2 * (ulong)(point_count));", "");
+
+				data = data.Replace("(nk_colorf)({ 0, 0, 0, 0 })", "new nk_colorf()");
+				data = data.Replace("(nk_handle)({ null })", "new nk_handle()");
+				data = data.Replace("ctrl[0]", "ctrl_0");
+				data = data.Replace("ctrl[1]", "ctrl_1");
+				data = data.Replace("nk_zero(list, (ulong)(sizeof((list))));", "");
+				data = data.Replace("(nk_vec2)(g.uv[0]), (nk_vec2)(g.uv[1])", "nk_vec2_(g.uv_x[0], g.uv_y[0]), nk_vec2_(g.uv_x[1], g.uv_y[1])");
+				data = data.Replace("glyph->uv[0] = (nk_vec2)(nk_vec2_((float)(g->u0), (float)(g->v0)));",
+					"glyph->uv_x[0] = g->u0; glyph->uv_y[0] = g->v0;");
+				data = data.Replace("glyph->uv[1] = (nk_vec2)(nk_vec2_((float)(g->u1), (float)(g->v1)));",
+					"glyph->uv_x[1] = g->u1; glyph->uv_y[1] = g->v1;");
+				data = data.Replace("nk_memset(state, (int)(0), (ulong)(sizeof(nk_text_edit)));", "");
+				data = data.Replace("(nk_rect)({ 0, 0, 0, 0 })", "new nk_rect()");
+				data = data.Replace("nk_zero(button, (ulong)(sizeof((button))));", "");
+				data = data.Replace("nk_zero(toggle, (ulong)(sizeof((toggle))));", "");
+				data = data.Replace("nk_zero(select, (ulong)(sizeof((select))));", "");
+				data = data.Replace("nk_zero(slider, (ulong)(sizeof((slider))));", "");
+				data = data.Replace("nk_zero(prog, (ulong)(sizeof((prog))));", "");
+				data = data.Replace("nk_zero(scroll, (ulong)(sizeof((scroll))));", "");
+				data = data.Replace("nk_zero(edit, (ulong)(sizeof((edit))));", "");
+				data = data.Replace("nk_zero(property, (ulong)(sizeof((property))));", "");
+				data = data.Replace("nk_zero(ctx, (ulong)(sizeof((ctx))));", "");
+				data = data.Replace("if ((ctx.use_pool) != 0) nk_buffer_clear(ctx.memory); else nk_buffer_reset(ctx.memory, (int)(NK_BUFFER_FRONT));",
+					"nk_buffer_reset(ctx.memory, (int)(NK_BUFFER_FRONT));");
+				data = data.Replace("nk_memset(ctx.overlay, (int)(0), (ulong)(sizeof((ctx.overlay))));", "");
+				data = data.Replace("nk_zero(ctx.current.layout, (ulong)(sizeof((ctx.current.layout))));", "");
+				data = data.Replace("nk_zero(ctx.current.layout, (ulong)(sizeof(nk_panel)));", "");
+				data = data.Replace("(layout.flags & NK_WINDOW_DYNAMIC)?", "(layout.flags & NK_WINDOW_DYNAMIC) != 0?");
+				data = data.Replace("nk_zero(window.property, (ulong)(sizeof((window.property))));", "");
+				data = data.Replace("nk_zero(window.edit, (ulong)(sizeof((window.edit))));", "");
 
 				File.WriteAllText(@"..\..\..\..\..\NuklearSharp\Nuklear.Generated.cs", data);
 			}

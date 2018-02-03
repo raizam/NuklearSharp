@@ -188,7 +188,6 @@ namespace NuklearSharp
 			public ulong size;
 		}
 
-
 		public class nk_context
 		{
 			public nk_input input = new nk_input();
@@ -274,18 +273,16 @@ namespace NuklearSharp
 			public nk_handle userdata;
 		}
 
-		[StructLayout(LayoutKind.Explicit)]
-		public struct nk_style_item_data
+		public class nk_style_item_data
 		{
-			[FieldOffset(0)] public nk_image image;
-
-			[FieldOffset(0)] public nk_color color;
+			public nk_image image;
+			public nk_color color;
 		}
 
 		public class nk_style_item
 		{
 			public int type;
-			public nk_style_item_data data;
+			public nk_style_item_data data = new nk_style_item_data();
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -308,13 +305,21 @@ namespace NuklearSharp
 			public int tex_width;
 			public int tex_height;
 			public nk_recti custom;
-			public PinnedArray<nk_cursor> cursors = new PinnedArray<nk_cursor>(new nk_cursor[NK_CURSOR_COUNT]);
+			public nk_cursor[] cursors = new nk_cursor[NK_CURSOR_COUNT];
 			public int glyph_count;
 			public nk_font_glyph* glyphs;
 			public nk_font default_font;
 			public nk_font fonts;
 			public nk_font_config config;
 			public int font_num;
+
+			public nk_font_atlas()
+			{
+				for (var i = 0; i < cursors.Length; ++i)
+				{
+					cursors[i] = new nk_cursor();
+				}
+			}
 		}
 
 		public class nk_text_undo_state
@@ -350,27 +355,27 @@ namespace NuklearSharp
 		public class nk_style
 		{
 			public nk_user_font font;
-			public PinnedArray<nk_cursor> cursors = new PinnedArray<nk_cursor>(new nk_cursor[NK_CURSOR_COUNT]);
+			public nk_cursor[] cursors = new nk_cursor[NK_CURSOR_COUNT];
 			public nk_cursor cursor_active;
 			public nk_cursor cursor_last;
 			public int cursor_visible;
-			public nk_style_text text;
-			public nk_style_button button;
-			public nk_style_button contextual_button;
-			public nk_style_button menu_button;
-			public nk_style_toggle option;
-			public nk_style_toggle checkbox;
-			public nk_style_selectable selectable;
-			public nk_style_slider slider;
-			public nk_style_progress progress;
-			public nk_style_property property;
-			public nk_style_edit edit;
-			public nk_style_chart chart;
-			public nk_style_scrollbar scrollh;
-			public nk_style_scrollbar scrollv;
-			public nk_style_tab tab;
-			public nk_style_combo combo;
-			public nk_style_window window;
+			public nk_style_text text = new nk_style_text();
+			public nk_style_button button = new nk_style_button();
+			public nk_style_button contextual_button = new nk_style_button();
+			public nk_style_button menu_button = new nk_style_button();
+			public nk_style_toggle option = new nk_style_toggle();
+			public nk_style_toggle checkbox = new nk_style_toggle();
+			public nk_style_selectable selectable = new nk_style_selectable();
+			public nk_style_slider slider = new nk_style_slider();
+			public nk_style_progress progress = new nk_style_progress();
+			public nk_style_property property = new nk_style_property();
+			public nk_style_edit edit = new nk_style_edit();
+			public nk_style_chart chart = new nk_style_chart();
+			public nk_style_scrollbar scrollh = new nk_style_scrollbar();
+			public nk_style_scrollbar scrollv = new nk_style_scrollbar();
+			public nk_style_tab tab = new nk_style_tab();
+			public nk_style_combo combo = new nk_style_combo();
+			public nk_style_window window = new nk_style_window();
 		}
 
 		public class nk_chart
@@ -380,7 +385,7 @@ namespace NuklearSharp
 			public float y;
 			public float w;
 			public float h;
-			public PinnedArray<nk_chart_slot> slots = new PinnedArray<nk_chart_slot>(new nk_chart_slot[4]);
+			public nk_chart_slot[] slots = new nk_chart_slot[4];
 		}
 
 		[StructLayout(LayoutKind.Explicit)]
@@ -528,25 +533,25 @@ namespace NuklearSharp
 
 		public class nk_command_polygon : nk_command_base
 		{
-			public nk_color color = new nk_color();
+			public nk_color color;
 			public ushort line_thickness;
 			public ushort point_count;
-			public nk_vec2i points = new nk_vec2i();
+			public nk_vec2i[] points;
 		}
 
 		public class nk_command_polygon_filled : nk_command_base
 		{
-			public nk_color color = new nk_color();
+			public nk_color color;
 			public ushort point_count;
-			public nk_vec2i points = new nk_vec2i();
+			public nk_vec2i[] points;
 		}
 
 		public class nk_command_polyline : nk_command_base
 		{
-			public nk_color color = new nk_color();
+			public nk_color color;
 			public ushort line_thickness;
 			public ushort point_count;
-			public nk_vec2i points = new nk_vec2i();
+			public nk_vec2i[] points;
 		}
 
 		public class nk_command_image : nk_command_base
@@ -612,6 +617,32 @@ namespace NuklearSharp
 		{
 			public int old_value;
 		}
+
+		public class nk_convert_config
+		{
+			public float global_alpha;
+			public int line_AA;
+			public int shape_AA;
+			public uint circle_segment_count;
+			public uint arc_segment_count;
+			public uint curve_segment_count;
+			public nk_draw_null_texture _null_ = new nk_draw_null_texture();
+			public nk_draw_vertex_layout_element[] vertex_layout;
+			public ulong vertex_size;
+			public ulong vertex_alignment;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		public struct nk_user_font_glyph
+		{
+			public fixed float uv_x[2];
+			public fixed float uv_y[2];
+			public nk_vec2 offset;
+			public float width;
+			public float height;
+			public float xadvance;
+		}
+
 
 		private static readonly Func<object>[] _commandCreators =
 		{
@@ -711,7 +742,7 @@ namespace NuklearSharp
 
 			var it = ctx.begin;
 			nk_command_base cmd = null;
-			for (; it != null; it = it.next)
+			for (; it != null;)
 			{
 				var next = it.next;
 				if (((it.flags & NK_WINDOW_HIDDEN) != 0) || (it.seq != ctx.seq))
@@ -759,6 +790,7 @@ namespace NuklearSharp
 			{
 				i = 0,
 			};
+			conv.f = number;
 			var x2 = number*0.5f;
 			conv.i = 0x5f375A84 - (conv.i >> 1);
 			conv.f = conv.f*(threehalfs - (x2*conv.f*conv.f));
@@ -997,6 +1029,80 @@ namespace NuklearSharp
 				win.property.select_end = 0;
 				win.property.active = 0;
 			}*/
+		}
+
+		public static void nk_stroke_polygon(nk_command_buffer b, float* points, int point_count, float line_thickness,
+			nk_color col)
+		{
+			if ((b == null) || (col.a == 0) || (line_thickness <= 0)) return;
+			var cmd = (nk_command_polygon) nk_command_buffer_push(b, NK_COMMAND_POLYGON);
+			if (cmd == null) return;
+			cmd.color = col;
+			cmd.line_thickness = (ushort) line_thickness;
+			cmd.point_count = (ushort) point_count;
+			cmd.points = new nk_vec2i[point_count];
+			for (var i = 0; i < point_count; ++i)
+			{
+				cmd.points[i].x = (short) points[i*2];
+				cmd.points[i].y = (short) points[i*2 + 1];
+			}
+		}
+
+		public static void nk_fill_polygon(nk_command_buffer b, float* points, int point_count, nk_color col)
+		{
+			nk_command_polygon_filled cmd;
+			if ((b == null) || (col.a == 0)) return;
+			cmd = (nk_command_polygon_filled) nk_command_buffer_push(b, NK_COMMAND_POLYGON_FILLED);
+			if (cmd == null) return;
+			cmd.color = col;
+			cmd.point_count = (ushort) point_count;
+			cmd.points = new nk_vec2i[point_count];
+			for (var i = 0; i < point_count; ++i)
+			{
+				cmd.points[i].x = (short) points[i*2 + 0];
+				cmd.points[i].y = (short) points[i*2 + 1];
+			}
+		}
+
+		public static void nk_stroke_polyline(nk_command_buffer b, float* points, int point_count, float line_thickness,
+			nk_color col)
+		{
+			if ((b == null) || (col.a == 0) || (line_thickness <= 0)) return;
+			var cmd = (nk_command_polyline) nk_command_buffer_push(b, NK_COMMAND_POLYLINE);
+			if (cmd == null) return;
+			cmd.color = col;
+			cmd.point_count = (ushort) point_count;
+			cmd.line_thickness = (ushort) line_thickness;
+			cmd.points = new nk_vec2i[point_count];
+			for (var i = 0; i < point_count; ++i)
+			{
+				cmd.points[i].x = (short) points[i*2];
+				cmd.points[i].y = (short) points[i*2 + 1];
+			}
+		}
+
+		public static nk_font_config nk_font_config_clone(nk_font_config src)
+		{
+			return new nk_font_config
+			{
+				next = src.next,
+				ttf_blob = src.ttf_blob,
+				ttf_size = src.ttf_size,
+				ttf_data_owned_by_atlas = src.ttf_data_owned_by_atlas,
+				merge_mode = src.merge_mode,
+				pixel_snap = src.pixel_snap,
+				oversample_v = src.oversample_v,
+				oversample_h = src.oversample_h,
+				padding = src.padding,
+				size = src.size,
+				coord_type = src.coord_type,
+				spacing = src.spacing,
+				range = src.range,
+				font = src.font,
+				fallback_glyph = src.fallback_glyph,
+				n = src.n,
+				p = src.p,
+			};
 		}
 	}
 }
