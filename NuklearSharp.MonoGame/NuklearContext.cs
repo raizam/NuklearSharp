@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace NuklearSharp.MonoGame
 {
-	public partial class NuklearContext
+	public class NuklearContext
 	{
 		private const int WHEEL_DELTA = 120;
 		private const float DepthBias = 0F;
