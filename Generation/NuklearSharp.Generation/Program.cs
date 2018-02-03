@@ -12,11 +12,12 @@ namespace NuklearSharp.Generation
 		{
 			public string Header { get; set; }
 			public string[] Args { get; set; }
-			public int Position { get; set; }
 		}
 
 		static void Process()
 		{
+			var bindings = new Dictionary<string, StringFunctionBinding>();
+
 			using (var output = new StringWriter())
 			{
 				var parameters = new ConversionParameters
@@ -214,8 +215,6 @@ namespace NuklearSharp.Generation
 						"nk_yellow",
 						"nk_default_color_style",
 						"nk_color_names",
-						"nk_proggy_clean_ttf_compressed_data_base85",
-						"nk_custom_cursor_data",
 						"nk_cursor_data",
 						"hue_colors",
 					},
@@ -307,135 +306,72 @@ namespace NuklearSharp.Generation
 					return false;
 				};
 
-				var bindings = new Dictionary<string, StringFunctionBinding>();
+				parameters.CustomGlobalVariableProcessor += cpr =>
+				{
+					if (cpr.Info.Spelling == "nk_proggy_clean_ttf_compressed_data_base85" ||
+					    cpr.Info.Spelling == "nk_custom_cursor_data")
+					{
+						var sb = new StringBuilder();
+
+						sb.Append("{");
+
+						var start = cpr.Expression.IndexOf('\"') + 1;
+						for (var i = start; i < cpr.Expression.Length; ++i)
+						{
+							var c = cpr.Expression[i];
+
+							if (c == '\"')
+							{
+								break;
+							}
+
+							if (i > start)
+							{
+								sb.Append(", ");
+							}
+
+							sb.AppendFormat("0x{0:X}", (int) c);
+						}
+
+						sb.Append("}");
+
+						cpr.Expression = "byte[] " + cpr.Info.Spelling + " = " + sb.ToString();
+					}
+				};
 
 				parameters.FunctionHeaderProcessed = (fn, args) =>
 				{
 					if (fn.Contains("nk_stricmpn") ||
-						fn.Contains("nk_tree_state_base") ||
-						fn.Contains("nk_tree_state_push") ||
-						fn.Contains("nk_tree_state_image_push") ||
-						fn.Contains("nk_group_scrolled_offset_begin") ||
-						fn.Contains("nk_parse_hex") ||
-						fn.Contains("nk_itoa"))
+					    fn.Contains("nk_tree_state_base") ||
+					    fn.Contains("nk_tree_state_push") ||
+					    fn.Contains("nk_tree_state_image_push") ||
+					    fn.Contains("nk_group_scrolled_offset_begin") ||
+					    fn.Contains("nk_parse_hex") ||
+					    fn.Contains("nk_itoa") |
+					    fn.Contains("nk_string_float_limit") ||
+					    fn.Contains("nk_text_clamp") ||
+					    fn.Contains("nk_text_calculate_text_bounds") ||
+					    fn.Contains("nk_str_") ||
+					    fn.Contains("nk_draw_") ||
+					    fn.Contains("nk_font_"))
 					{
 						return;
 					}
 
-					for (var i = 0; i < args.Length - 1; ++i)
+					if (args.Length == 0 || !args[0].StartsWith("nk_context"))
 					{
-						if (args[i].Contains("sbyte* ") && args[i + 1].Contains("int"))
-						{
-							var sb = new StringFunctionBinding
-							{
-								Header = fn,
-								Args = args,
-								Position = i
-							};
-
-							bindings[fn] = sb;
-							break;
-						}
+						return;
 					}
+					var sb = new StringFunctionBinding
+					{
+						Header = fn,
+						Args = args,
+					};
+
+					bindings[fn] = sb;
 				};
 
 				var cp = new ClangParser();
-
-
-				parameters.BeforeLastClosingBracket = () =>
-				{
-					foreach (var s in bindings)
-					{
-						var sb = new StringBuilder();
-
-						sb.Append("public static ");
-						sb.Append(s.Key);
-						sb.Append("(");
-
-						string[] parts;
-						string ps = string.Empty;
-						for (var i = 0; i < s.Value.Args.Length; ++i)
-						{
-							if (i > 0)
-							{
-								sb.Append(", ");
-							}
-
-							if (i == s.Value.Position)
-							{
-								sb.Append("string ");
-
-								parts = s.Value.Args[i].Split(' ');
-								ps = parts[parts.Length - 1];
-								sb.Append(ps);
-
-								++i;
-								continue;
-							}
-
-							sb.Append(s.Value.Args[i]);
-						}
-
-						sb.Append(") ");
-						sb.Append("{");
-						sb.Append("fixed(char *ptr = " + ps + ") {");
-
-						parts = s.Key.Split(' ');
-
-						if (parts[0] != "void")
-						{
-							sb.Append("return ");
-						}
-
-						sb.Append(parts[parts.Length - 1]);
-						sb.Append("(");
-
-						for (var i = 0; i < s.Value.Args.Length; ++i)
-						{
-							if (i > 0)
-							{
-								sb.Append(", ");
-							}
-
-							if (i == s.Value.Position)
-							{
-								parts = s.Value.Args[i + 1].Split(' ');
-								sb.Append("ptr");
-								sb.Append(", ");
-
-								if (parts[0] != "ref")
-								{
-									sb.Append("(" + parts[0] + ")");
-								}
-								else
-								{
-									sb.Append("ref ");
-								}
-								sb.Append(ps);
-								sb.Append(".Length");
-
-								++i;
-								continue;
-							}
-
-							parts = s.Value.Args[i].Split(' ');
-
-							if (parts[0] == "ref")
-							{
-								sb.Append("ref ");
-							}
-
-							sb.Append(parts[parts.Length - 1]);
-						}
-
-						sb.Append(");");
-						sb.Append("}");
-						sb.Append("}");
-
-						cp.Processor.IndentedWriteLine(sb.ToString());
-					}
-				};
-
 
 				cp.Process(parameters);
 				var data = output.ToString();
@@ -460,7 +396,7 @@ namespace NuklearSharp.Generation
 					"ctext", "text", "_string_", "label", "title", "txt", "str", "name", "begin", "end",
 					"X", "line", "output", "data_base85", "glyph", "cstr", "buffer", "remaining", "temp",
 					"select_begin_ptr", "select_end_ptr", "cursor_ptr", "s1", "s2", "memory", "id",
-					"selected"
+					"selected", "hash",
 				};
 
 				foreach (var sn in stringNames)
@@ -1153,8 +1089,170 @@ namespace NuklearSharp.Generation
 				data = data.Replace("nk_zero(window.property, (ulong)(sizeof((window.property))));", "");
 				data = data.Replace("nk_zero(window.edit, (ulong)(sizeof((window.edit))));", "");
 
-				File.WriteAllText(@"..\..\..\..\..\NuklearSharp\Nuklear.Generated.cs", data);
+				File.WriteAllText(@"..\..\..\..\..\NuklearSharp\Nuklear2.Generated.cs", data);
 			}
+
+			var str = new StringBuilder();
+
+			str.AppendFormat("// Generated by Sichem at {0}\n\n", DateTime.Now);
+
+			str.Append("namespace NuklearSharp {\n");
+			str.Append("unsafe partial class ContextWrapper {\n");
+			foreach (var s in bindings)
+			{
+				try
+				{
+					str.Append("public ");
+					var parts = s.Key.Split(' ');
+
+					var isBool = parts.Length > 0 && parts[0] == "int";
+
+					if (isBool)
+					{
+						str.Append("bool ");
+					}
+					
+					for (var i = isBool?1:0; i < parts.Length - 1; ++i)
+					{
+						str.Append(parts[i]);
+						str.Append(" ");
+					}
+
+					str.Append(parts[parts.Length - 1].ToCSharpName());
+					str.Append("(");
+
+					var hasCtx = s.Value.Args.Length > 0 && s.Value.Args[0].StartsWith("nk_context");
+
+					var args = new List<Tuple<string, bool>>();
+					for (var i = 0; i < s.Value.Args.Length; ++i)
+					{
+						var arg = s.Value.Args[i];
+						var replaceLength = false;
+
+						if (arg.StartsWith("sbyte*"))
+						{
+							parts = arg.Split(' ');
+							var newArg = "string ";
+							for (var j = 1; j < parts.Length; j++)
+							{
+								newArg += parts[j];
+								if (j < parts.Length - 1)
+								{
+									newArg += " ";
+								}
+							}
+
+							arg = newArg;
+
+							if (i < s.Value.Args.Length - 1 && s.Value.Args[i + 1].StartsWith("int") && s.Value.Args[i + 1].EndsWith("len"))
+							{
+								++i;
+								replaceLength = true;
+							}
+						}
+
+						args.Add(new Tuple<string, bool>(arg, replaceLength));
+					}
+
+					var ps = string.Empty;
+					for (var i = hasCtx?1:0; i < args.Count; ++i)
+					{
+						if (i > (hasCtx?1:0))
+						{
+							str.Append(", ");
+						}
+
+						str.Append(args[i].Item1);
+					}
+
+					str.Append(") ");
+					str.Append("{");
+
+					foreach (var arg in args)
+					{
+						if (arg.Item1.StartsWith("string"))
+						{
+							parts = arg.Item1.Split(' ');
+							str.AppendFormat("fixed(char *{0}_ptr = " + ps + " {0}) {{", parts[parts.Length - 1]);
+						}
+					}
+
+					parts = s.Key.Split(' ');
+
+					if (parts[0] != "void")
+					{
+						str.Append("return ");
+					}
+
+					str.Append("Nuklear." + parts[parts.Length - 1] + "(");
+
+					if (hasCtx)
+					{
+						str.Append("_ctx");
+					}
+
+					for (var i = hasCtx?1:0; i < args.Count; ++i)
+					{
+						if (i > 0)
+						{
+							str.Append(", ");
+						}
+
+						parts = args[i].Item1.Split(' ');
+
+						if (parts[0] == "ref")
+						{
+							str.Append("ref ");
+						}
+
+						str.Append(parts[parts.Length - 1]);
+
+						if (args[i].Item1.StartsWith("string "))
+						{
+							str.Append("_ptr");
+						}
+
+						if (args[i].Item2)
+						{
+							str.Append(", " + parts[parts.Length - 1] + ".Length");
+						}
+					}
+
+					str.Append(")");
+
+					if (isBool)
+					{
+						str.Append(" != 0");
+					}
+
+					str.Append(";\n");
+
+					foreach (var arg in args)
+					{
+						if (arg.Item1.StartsWith("string"))
+						{
+							str.Append("}\n");
+						}
+					}
+					str.Append("}\n\n");
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+				}
+			}
+
+			str.Append("}\n");
+			str.Append("}");
+
+			var s2 = str.ToString();
+			
+			s2 = s2.Replace("int (const nk_text_edit *, unsigned int)*", "NkPluginFilter");
+			s2 = s2.Replace("IntPtr* item_getter", "NkComboCallback item_getter");
+			s2 = s2.Replace("void*", "IntPtr");
+			s2 = s2.Replace("enum nk_chart_type", "int");
+
+			// File.WriteAllText(@"..\..\..\..\..\NuklearSharp\ContextWrapper.Generated.cs", s2);
 		}
 
 		static void Main(string[] args)

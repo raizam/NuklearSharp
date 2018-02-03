@@ -43,10 +43,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Font.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="NuklearContext.cs" />
-    <Compile Include="nk_vertex.cs" />
+    <Compile Include="MonogameNkInput.cs" />
+    <Compile Include="MonogameNkRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
