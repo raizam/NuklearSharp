@@ -50,12 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Font.cs" />
     <Compile Include="GameTest.cs" />
-    <Compile Include="Helpers.cs" />
-    <Compile Include="NkContext.cs" />
-    <Compile Include="NkMonogame.cs" />
-    <Compile Include="nk_vertex.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

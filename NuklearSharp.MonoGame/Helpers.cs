@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using NuklearSharp;
 
-namespace RaizamTest
+namespace NuklearSharp.MonoGame
 {
 	internal static class Helpers
 	{

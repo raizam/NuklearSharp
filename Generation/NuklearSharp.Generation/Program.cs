@@ -295,7 +295,11 @@ namespace NuklearSharp.Generation
 						n == "width" ||
 						n == "height" ||
 						n == "value" ||
-						n == "val")
+						n == "val" ||
+						n == "cursor" ||
+						n == "len" ||
+						n == "select_begin" ||
+						n == "select_end")
 					{
 						return true;
 					}

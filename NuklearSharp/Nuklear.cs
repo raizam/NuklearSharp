@@ -108,6 +108,8 @@ namespace NuklearSharp
 		public static string nk_custom_cursor_data =
 			"..-         -XXXXXXX-    X    -           X           -XXXXXXX          -          XXXXXXX..-         -X.....X-   X.X   -          X.X          -X.....X          -          X.....X---         -XXX.XXX-  X...X  -         X...X         -X....X           -           X....XX           -  X.X  - X.....X -        X.....X        -X...X            -            X...XXX          -  X.X  -X.......X-       X.......X       -X..X.X           -           X.X..XX.X         -  X.X  -XXXX.XXXX-       XXXX.XXXX       -X.X X.X          -          X.X X.XX..X        -  X.X  -   X.X   -          X.X          -XX   X.X         -         X.X   XXX...X       -  X.X  -   X.X   -    XX    X.X    XX    -      X.X        -        X.X      X....X      -  X.X  -   X.X   -   X.X    X.X    X.X   -       X.X       -       X.X       X.....X     -  X.X  -   X.X   -  X..X    X.X    X..X  -        X.X      -      X.X        X......X    -  X.X  -   X.X   - X...XXXXXX.XXXXXX...X -         X.X   XX-XX   X.X         X.......X   -  X.X  -   X.X   -X.....................X-          X.X X.X-X.X X.X          X........X  -  X.X  -   X.X   - X...XXXXXX.XXXXXX...X -           X.X..X-X..X.X           X.........X -XXX.XXX-   X.X   -  X..X    X.X    X..X  -            X...X-X...X            X..........X-X.....X-   X.X   -   X.X    X.X    X.X   -           X....X-X....X           X......XXXXX-XXXXXXX-   X.X   -    XX    X.X    XX    -          X.....X-X.....X          X...X..X    ---------   X.X   -          X.X          -          XXXXXXX-XXXXXXX          X..X X..X   -       -XXXX.XXXX-       XXXX.XXXX       ------------------------------------X.X  X..X   -       -X.......X-       X.......X       -    XX           XX    -           XX    X..X  -       - X.....X -        X.....X        -   X.X           X.X   -                 X..X          -  X...X  -         X...X         -  X..X           X..X  -                  XX           -   X.X   -          X.X          - X...XXXXXXXXXXXXX...X -           ------------        -    X    -           X           -X.....................X-                               ----------------------------------- X...XXXXXXXXXXXXX...X -                                                                 -  X..X           X..X  -                                                                 -   X.X           X.X   -                                                                 -    XX           XX    -           ";
 
+		private static PinnedArray<uint> ranges = new PinnedArray<uint>(new uint[] {0x0020, 0x00FF, 0});
+
 		[StructLayout(LayoutKind.Explicit)]
 		public struct nk_handle
 		{
@@ -635,8 +637,8 @@ namespace NuklearSharp
 		[StructLayout(LayoutKind.Sequential)]
 		public struct nk_user_font_glyph
 		{
-			public fixed float uv_x[2];
-			public fixed float uv_y[2];
+			public fixed float uv_x [2];
+			public fixed float uv_y [2];
 			public nk_vec2 offset;
 			public float width;
 			public float height;
@@ -949,7 +951,7 @@ namespace NuklearSharp
 		public static void nk_property_(nk_context ctx, char* name, nk_property_variant* variant, float inc_per_pixel,
 			int filter)
 		{
-/*			var bounds = new nk_rect();
+			var bounds = new nk_rect();
 			uint hash;
 			char* dummy_buffer = stackalloc char[64];
 			var dummy_state = NK_PROPERTY_DEFAULT;
@@ -974,42 +976,49 @@ namespace NuklearSharp
 				? null
 				: ctx.input;
 
+			int old_state, state;
+			char* buffer;
+			int len, cursor, select_begin, select_end;
 			if ((win.property.active != 0) && (hash == win.property.name))
 			{
+				old_state = win.property.state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
 					win.property.buffer, ref win.property.length, ref win.property.state, ref win.property.cursor,
 					ref win.property.select_start, ref win.property.select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
+				state = win.property.state;
+				buffer = win.property.buffer;
+				len = win.property.length;
+				cursor = win.property.cursor;
+				select_begin = win.property.select_start;
+				select_end = win.property.select_end;
 			}
 			else
 			{
+				old_state = dummy_state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-					win.property.buffer, dummy_buffer, ref dummy_state, ref dummy_cursor,
-					ref win.property.select_start, ref win.property.select_end, style.property, filter, _in_, style.font,
+					dummy_buffer, ref dummy_length, ref dummy_state, ref dummy_cursor,
+					ref dummy_select_begin, ref dummy_select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
+				state = dummy_state;
 				buffer = dummy_buffer;
-				len = &dummy_length;
-				cursor = &dummy_cursor;
-				state = &dummy_state;
-				select_begin = &dummy_select_begin;
-				select_end = &dummy_select_end;
+				len = dummy_length;
+				cursor = dummy_cursor;
+				select_begin = dummy_select_begin;
+				select_end = dummy_select_end;
 			}
 
-			var old_state = (int) state;
 			ctx.text_edit.clip = ctx.clip;
-			nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-				buffer, len, state, cursor, select_begin, select_end, style.property, filter, _in_, style.font,
-				ctx.text_edit, ctx.button_behavior);
 			if ((_in_ != null) && (state != NK_PROPERTY_DEFAULT) && (win.property.active == 0))
 			{
 				win.property.active = 1;
-				nk_memcopy(win.property.buffer, buffer, (ulong) *len);
-				win.property.length = *len;
-				win.property.cursor = *cursor;
-				win.property.state = (int) state;
+				nk_memcopy(win.property.buffer, buffer, (ulong) len);
+				win.property.length = len;
+				win.property.cursor = cursor;
+				win.property.state = state;
 				win.property.name = hash;
-				win.property.select_start = *select_begin;
-				win.property.select_end = *select_end;
+				win.property.select_start = select_begin;
+				win.property.select_end = select_end;
 				if (state == NK_PROPERTY_DRAG)
 				{
 					ctx.input.mouse.grab = nk_true;
@@ -1028,7 +1037,7 @@ namespace NuklearSharp
 				win.property.select_start = 0;
 				win.property.select_end = 0;
 				win.property.active = 0;
-			}*/
+			}
 		}
 
 		public static void nk_stroke_polygon(nk_command_buffer b, float* points, int point_count, float line_thickness,

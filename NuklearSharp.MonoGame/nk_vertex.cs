@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace RaizamTest
+namespace NuklearSharp.MonoGame
 {
 	[StructLayout(LayoutKind.Explicit, Size = 24)]
 	internal unsafe struct nk_vertex
