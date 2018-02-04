@@ -33,13 +33,19 @@ namespace NuklearSharp.MonoGame
 			basicEffect = new BasicEffect(device);
 		}
 
+		public int CreateTexture(Texture2D texture)
+		{
+			_textures.Add(texture);
+
+			return _textures.Count;
+		}
+
 		protected override int CreateTexture(int width, int height, byte[] data)
 		{
 			var texture = new Texture2D(_device, width, height, false, SurfaceFormat.Color);
 			texture.SetData(data, 0, data.Length);
-			_textures.Add(texture);
 
-			return _textures.Count;
+			return CreateTexture (texture);
 		}
 
 		private static void GetProjectionMatrix(int width, int height, out Matrix mtx)
