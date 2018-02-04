@@ -102,8 +102,6 @@ namespace NuklearSharp
 			"NK_COLOR_TAB_HEADER"
 		};
 
-		private static PinnedArray<uint> ranges = new PinnedArray<uint>(new uint[] {0x0020, 0x00FF, 0});
-
 		[StructLayout(LayoutKind.Explicit)]
 		public struct nk_handle
 		{

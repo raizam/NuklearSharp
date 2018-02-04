@@ -44,7 +44,7 @@ namespace RaizamTest
 			using (var stream = File.OpenRead(Path.Combine(Content.RootDirectory, "Fonts/Roboto-Regular.ttf")))
 			{
 				var fontAtlas = _nuklearContext.CreateFontAtlas();
-				font = fontAtlas.AddFont(stream, 22);
+				font = fontAtlas.AddDefaultFont(22);
 				fontAtlas.Bake();
 			}
 

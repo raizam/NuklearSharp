@@ -305,6 +305,5 @@ namespace NuklearSharp
 				rects[i].was_packed = (int) ((((rects[i].x) == (0xffff)) && ((rects[i].y) == (0xffff))) ? 0 : 1);
 			}
 		}
-
 	}
 }
