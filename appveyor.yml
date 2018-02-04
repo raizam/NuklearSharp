@@ -10,6 +10,7 @@ assembly_info:
 build_script:
 - cmd: >-
     msbuild NuklearSharp\NuklearSharp.csproj /p:Configuration=Release /t:rebuild
+    msbuild NuklearSharp.MonoGame\NuklearSharp.MonoGame.csproj /p:Configuration=Release /t:rebuild
 
     nuget restore NuklearSharp\NuklearSharp.NETStandard.csproj
 
