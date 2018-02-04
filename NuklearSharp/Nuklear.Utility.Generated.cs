@@ -4609,15 +4609,12 @@ namespace NuklearSharp
 		public static void nk_finish(nk_context ctx, nk_window win)
 		{
 			nk_popup_buffer buf;
-			nk_command* parent_last;
-			void* memory;
 			if ((ctx == null) || (win == null)) return;
 			nk_finish_buffer(ctx, win.buffer);
 			if (win.popup.buf.active == 0) return;
 			buf = win.popup.buf;
-			memory = ctx.memory.memory.ptr;
-			parent_last = ((nk_command*) ((void*) ((byte*) (memory) + (buf.parent))));
-			parent_last->next = (ulong) (buf.end);
+
+//			buf.parent [buf.parent.Count - 1].next = buf.commands [0];
 		}
 	}
 }

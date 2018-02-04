@@ -443,15 +443,6 @@ namespace NuklearSharp
 			public PinnedArray<float> templates = new PinnedArray<float>(16);
 		}
 
-		public class nk_popup_buffer
-		{
-			public ulong begin;
-			public ulong parent;
-			public ulong last;
-			public ulong end;
-			public int active;
-		}
-
 		public class nk_menu_state
 		{
 			public float x;

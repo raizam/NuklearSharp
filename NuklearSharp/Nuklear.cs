@@ -606,6 +606,37 @@ namespace NuklearSharp
 			public nk_handle userdata = new nk_handle();
 		}
 
+		public class nk_popup_buffer
+		{
+			private List<nk_command_base> _commands;
+			private int _lastIndex;
+
+			public List<nk_command_base> commands
+			{
+				get { return _commands; }
+
+				set {
+					if (value != null) {
+						_commands = value;
+						_lastIndex = value.Count - 1;
+					}
+				}
+			}
+
+			public nk_command_base begin
+			{
+				get { return _commands[0]; }
+			}
+
+			public nk_command_base last
+			{
+				get { return _commands[_commands.Count - 1]; }
+			}
+
+			public int active;
+		}
+
+
 		[StructLayout(LayoutKind.Sequential)]
 		public class nk_config_stack_button_behavior_element
 		{
@@ -752,7 +783,8 @@ namespace NuklearSharp
 				cont:
 				it = next;
 			}
-			/*it = ctx.begin;
+
+			it = ctx.begin;
 
 			while (it != null)
 			{
@@ -762,17 +794,19 @@ namespace NuklearSharp
 				if (it.popup.buf.active == 0) goto skip;
 				buf = it.popup.buf;
 				cmd.next = buf.begin;
-				cmd = ((nk_command*) ((void*) ((buffer) + (buf->last))));
-				buf->active = (int) (nk_false);
+				cmd = buf.last;
+				buf.active = (int) (nk_false);
 				skip:
-				;
 				it = _next_;
 			}
-			if ((cmd) != null)
+			if (cmd != null)
 			{
-				if (ctx.overlay.end != ctx.overlay.begin) cmd->_next_ = (ulong) (ctx.overlay.begin);
-				else cmd->_next_ = (ulong) (ctx.memory.allocated);
-			}*/
+				if (ctx.overlay.commands.Count > 0) {
+					cmd.next = ctx.overlay.begin;
+				} else {
+					cmd.next = null;
+				}
+			}
 		}
 
 

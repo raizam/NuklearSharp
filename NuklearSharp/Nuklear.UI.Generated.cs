@@ -3016,7 +3016,7 @@ namespace NuklearSharp
 			nk_popup_buffer buf;
 			if ((ctx == null) || (win == null)) return;
 			buf = win.popup.buf;
-			buf.last = (ulong) (buf.begin);
+			buf.commands = win.buffer.commands;
 			buf.active = (int) (nk_true);
 		}
 
@@ -5749,7 +5749,7 @@ namespace NuklearSharp
 			return (int) (ret);
 		}
 
-		public static int nk_progress(nk_context ctx, ulong* cur, ulong max, int is_modifyable)
+		public static int nk_progress(nk_context ctx, ref ulong cur, ulong max, int is_modifyable)
 		{
 			nk_window win;
 			nk_panel layout;
@@ -5758,24 +5758,24 @@ namespace NuklearSharp
 			nk_rect bounds = new nk_rect();
 			int state;
 			ulong old_value;
-			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) || (cur == null)) return (int) (0);
+			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null))) return (int) (0);
 			win = ctx.current;
 			style = ctx.style;
 			layout = win.layout;
 			state = (int) (nk_widget(&bounds, ctx));
 			if (state == 0) return (int) (0);
 			_in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.flags & NK_WINDOW_ROM) != 0)) ? null : ctx.input;
-			old_value = (ulong) (*cur);
-			*cur =
+			old_value = (ulong) (cur);
+			cur =
 				(ulong)
-					(nk_do_progress(ref ctx.last_widget_state, win.buffer, (nk_rect) (bounds), (ulong) (*cur), (ulong) (max),
+					(nk_do_progress(ref ctx.last_widget_state, win.buffer, (nk_rect) (bounds), (ulong) (cur), (ulong) (max),
 						(int) (is_modifyable), style.progress, _in_));
-			return (*cur != old_value) ? 1 : 0;
+			return (cur != old_value) ? 1 : 0;
 		}
 
-		public static ulong nk_prog(nk_context ctx, ulong cur, ulong max, int modifyable)
+		public static ulong nk_prog(nk_context ctx, ref ulong cur, ulong max, int modifyable)
 		{
-			nk_progress(ctx, &cur, (ulong) (max), (int) (modifyable));
+			nk_progress(ctx, ref cur, (ulong) (max), (int) (modifyable));
 			return (ulong) (cur);
 		}
 
