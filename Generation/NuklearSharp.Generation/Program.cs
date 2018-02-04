@@ -1098,10 +1098,10 @@ namespace NuklearSharp.Generation
 			data = data.Replace("nk_zero(list, (ulong)(sizeof((list))));", "");
 			data = data.Replace("(nk_vec2)(g.uv[0]), (nk_vec2)(g.uv[1])",
 				"nk_vec2_(g.uv_x[0], g.uv_y[0]), nk_vec2_(g.uv_x[1], g.uv_y[1])");
-			data = data.Replace("glyph->uv[0] = (nk_vec2)(nk_vec2_((float)(g.u0), (float)(g.v0)));",
-				"glyph->uv_x[0] = g.u0; glyph->uv_y[0] = g.v0;");
-			data = data.Replace("glyph->uv[1] = (nk_vec2)(nk_vec2_((float)(g.u1), (float)(g.v1)));",
-				"glyph->uv_x[1] = g.u1; glyph->uv_y[1] = g.v1;");
+			data = data.Replace("glyph->uv[0] = (nk_vec2)(nk_vec2_((float)(g->u0), (float)(g->v0)));",
+				"glyph->uv_x[0] = g->u0; glyph->uv_y[0] = g->v0;");
+			data = data.Replace("glyph->uv[1] = (nk_vec2)(nk_vec2_((float)(g->u1), (float)(g->v1)));",
+				"glyph->uv_x[1] = g->u1; glyph->uv_y[1] = g->v1;");
 			data = data.Replace("nk_memset(state, (int)(0), (ulong)(sizeof(nk_text_edit)));", "");
 			data = data.Replace("(nk_rect)({ 0, 0, 0, 0 })", "new nk_rect()");
 			data = data.Replace("nk_zero(button, (ulong)(sizeof((button))));", "");
