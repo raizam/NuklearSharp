@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NuklearSharp;
 using NuklearSharp.MonoGame;
+using Color = Microsoft.Xna.Framework.Color;
+using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 
 namespace RaizamTest
 {
@@ -14,7 +16,8 @@ namespace RaizamTest
 	{
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
-		private NuklearContext _nuklearContext;
+		private ContextWrapper _contextWrapper;
+		private Context _ctx;
 		Color _background = Color.Black;
 		bool _isTea = true;
 
@@ -38,17 +41,18 @@ namespace RaizamTest
 
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			_nuklearContext = new NuklearContext(GraphicsDevice);
+			_contextWrapper = new ContextWrapper(GraphicsDevice);
+			_ctx = _contextWrapper.Ctx;
 
-			Nuklear.nk_font font;
+			Font font;
 			using (var stream = File.OpenRead(Path.Combine(Content.RootDirectory, "Fonts/Roboto-Regular.ttf")))
 			{
-				var fontAtlas = _nuklearContext.CreateFontAtlas();
-				font = fontAtlas.AddFont(stream, 22);
+				var fontAtlas = new FontAtlasWrapper(_contextWrapper);
+				font = fontAtlas.AddDefaultFont(22);
 				fontAtlas.Bake();
 			}
 
-			_nuklearContext.SetFont(font);
+			_ctx.StyleSetFont(font.handle);
 
 			IsMouseVisible = true;
 			Window.AllowUserResizing = true;
@@ -99,47 +103,47 @@ namespace RaizamTest
 			GraphicsDevice.Clear(_background);
 
 			// TODO: Add your drawing code here
-			if (_nuklearContext.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
+			if (_ctx.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
 				Nuklear.NK_WINDOW_BORDER | Nuklear.NK_WINDOW_MOVABLE | Nuklear.NK_WINDOW_SCALABLE |
 				Nuklear.NK_WINDOW_MINIMIZABLE | Nuklear.NK_WINDOW_TITLE))
 			{
-				_nuklearContext.LayoutRowStatic(30, 80, 1);
-				_nuklearContext.LayoutRowDynamic(30, 1);
-				_nuklearContext.ButtonText("Button");
-				_nuklearContext.LayoutRowDynamic(30, 2);
-				if (_nuklearContext.OptionLabel("Tea", _isTea))
+				_ctx.LayoutRowStatic(30, 80, 1);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.ButtonText("Button");
+				_ctx.LayoutRowDynamic(30, 2);
+				if (_ctx.OptionLabel("Tea", _isTea))
 					_isTea = true;
 
-				if (_nuklearContext.OptionLabel("Coffee", !_isTea))
+				if (_ctx.OptionLabel("Coffee", !_isTea))
 					_isTea = false;
 
-				_nuklearContext.ButtonColor(Color.Red);
-				_nuklearContext.LayoutRowDynamic(30, 1);
-				_nuklearContext.LayoutRowDynamic(30, 2);
-				_nuklearContext.LabelColored("background", Nuklear.NK_TEXT_LEFT, _background);
+				_ctx.ButtonColor(Color.Red);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.LayoutRowDynamic(30, 2);
+				_ctx.LabelColored("background", Nuklear.NK_TEXT_LEFT, _background);
 
-				if (_nuklearContext.ComboBeginColor(_background, new Vector2(_nuklearContext.WidgetWidth(), 400)))
+				if (_ctx.ComboBeginColor(_background, new Vector2(_ctx.WidgetWidth(), 400)))
 				{
-					_nuklearContext.LayoutRowDynamic(120, 1);
-					_background = _nuklearContext.ColorPicker(_background, 0);
-					_nuklearContext.LayoutRowDynamic(25, 1);
-					_background.R = (byte) _nuklearContext.Propertyi("#R", 0, _background.R, 255, 1, 1);
-					_background.G = (byte) _nuklearContext.Propertyi("#G", 0, _background.G, 255, 1, 1);
-					_background.B = (byte) _nuklearContext.Propertyi("#B", 0, _background.B, 255, 1, 1);
-					_background.A = (byte) _nuklearContext.Propertyi("#A", 0, _background.A, 255, 1, 1);
-					_nuklearContext.ComboEnd();
+					_ctx.LayoutRowDynamic(120, 1);
+					_background = _ctx.ColorPicker(_background, 0);
+					_ctx.LayoutRowDynamic(25, 1);
+					_background.R = (byte) _ctx.Propertyi("#R", 0, _background.R, 255, 1, 1);
+					_background.G = (byte) _ctx.Propertyi("#G", 0, _background.G, 255, 1, 1);
+					_background.B = (byte) _ctx.Propertyi("#B", 0, _background.B, 255, 1, 1);
+					_background.A = (byte) _ctx.Propertyi("#A", 0, _background.A, 255, 1, 1);
+					_ctx.ComboEnd();
 				}
 
-				_nuklearContext.LayoutRowDynamic(30, 1);
-				_nuklearContext.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nuklear.NK_TEXT_LEFT, _background);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nuklear.NK_TEXT_LEFT, _background);
 
 			}
-			_nuklearContext.End();
+			_ctx.End();
 
-			_nuklearContext.Draw();
+			_contextWrapper.Draw();
 
 			/*_spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-			_spriteBatch.Draw(((NuklearContext)_nuklearContext.Renderer).Textures[0], Vector2.Zero, Color.White);
+			_spriteBatch.Draw(((ContextWrapper)_contextWrapper.Renderer).Textures[0], Vector2.Zero, Color.White);
 			_spriteBatch.End();*/
 
 			base.Draw(gameTime);

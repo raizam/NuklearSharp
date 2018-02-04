@@ -4,15 +4,15 @@ namespace NuklearSharp.MonoGame
 {
 	internal static class Helpers
 	{
-		internal static Nuklear.nk_color ToNkColor(this Color color)
+		internal static Color ToNkColor(this Microsoft.Xna.Framework.Color color)
 		{
-			return new Nuklear.nk_color {a = color.A, b = color.B, g = color.G, r = color.R};
+			return new Color {a = color.A, b = color.B, g = color.G, r = color.R};
 		}
 
-		internal static Nuklear.nk_colorf ToNkColorf(this Color color)
+		internal static Colorf ToNkColorf(this Microsoft.Xna.Framework.Color color)
 		{
 			const float s = 1.0f/255.0f;
-			return new Nuklear.nk_colorf
+			return new Colorf
 			{
 				r = color.R*s,
 				g = color.G*s,
@@ -21,24 +21,30 @@ namespace NuklearSharp.MonoGame
 			};
 		}
 
-		internal static Nuklear.nk_vec2 ToNkVec2(this Vector2 v2)
+		internal static Vec2 ToNkVec2(this Vector2 v2)
 		{
-			return new Nuklear.nk_vec2 {x = v2.X, y = v2.Y};
+			return new Vec2 {x = v2.X, y = v2.Y};
 		}
 
-		internal static Color ToColor(this Nuklear.nk_color c)
+		internal static Microsoft.Xna.Framework.Color ToColor(this Color c)
 		{
-			return new Color(c.r, c.g, c.b, c.a);
+			return new Microsoft.Xna.Framework.Color(c.r, c.g, c.b, c.a);
 		}
 
-		internal static Color ToColor(this Nuklear.nk_colorf c)
+		internal static Microsoft.Xna.Framework.Color ToColor(this Colorf c)
 		{
-			return new Color(c.r, c.g, c.b, c.a);
+			return new Microsoft.Xna.Framework.Color(c.r, c.g, c.b, c.a);
 		}
 
-		internal static Nuklear.nk_rect ToRect(this Rectangle rect)
+		internal static Rect ToRect(this Rectangle rect)
 		{
-			return new Nuklear.nk_rect {x = rect.X, y = rect.Y, w = rect.Width, h = rect.Height};
+			return new Rect
+			{
+				x = rect.X,
+				y = rect.Y,
+				w = rect.Width,
+				h = rect.Height
+			};
 		}
 	}
 }

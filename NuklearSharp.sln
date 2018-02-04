@@ -7,9 +7,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuklearSharp", "NuklearShar
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{6EC8E033-6AAB-4698-B3C7-55EA775AD236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuklearSharp.MonoGame", "NuklearSharp.MonoGame\NuklearSharp.MonoGame.csproj", "{70337314-2F86-4BF5-B194-C9ACA390EAD2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaizamTest", "Samples\RaizamTest\RaizamTest.csproj", "{FCAC80A4-8318-44E4-A404-02473A75CF54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameDesktopGLBinaries", "MonoGameDesktopGLBinaries\MonoGameDesktopGLBinaries.csproj", "{E69E21CF-0C0C-45D9-8016-64A99B7AA197}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileBrowser", "Samples\FileBrowser\FileBrowser.csproj", "{45645499-748D-47C3-A4B1-AAC38CDE43AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extended", "Samples\Extended\Extended.csproj", "{394928B3-ED31-44C2-8A5B-E3BC6AA3EF8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuklearSharp.MonoGame", "NuklearSharp.MonoGame\NuklearSharp.MonoGame.csproj", "{70337314-2F86-4BF5-B194-C9ACA390EAD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,19 +27,30 @@ Global
 		{A57323B2-E5F7-44D7-B206-0149FD807D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A57323B2-E5F7-44D7-B206-0149FD807D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A57323B2-E5F7-44D7-B206-0149FD807D31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FCAC80A4-8318-44E4-A404-02473A75CF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCAC80A4-8318-44E4-A404-02473A75CF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCAC80A4-8318-44E4-A404-02473A75CF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCAC80A4-8318-44E4-A404-02473A75CF54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69E21CF-0C0C-45D9-8016-64A99B7AA197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69E21CF-0C0C-45D9-8016-64A99B7AA197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69E21CF-0C0C-45D9-8016-64A99B7AA197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45645499-748D-47C3-A4B1-AAC38CDE43AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45645499-748D-47C3-A4B1-AAC38CDE43AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45645499-748D-47C3-A4B1-AAC38CDE43AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{394928B3-ED31-44C2-8A5B-E3BC6AA3EF8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394928B3-ED31-44C2-8A5B-E3BC6AA3EF8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394928B3-ED31-44C2-8A5B-E3BC6AA3EF8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70337314-2F86-4BF5-B194-C9ACA390EAD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FCAC80A4-8318-44E4-A404-02473A75CF54} = {6EC8E033-6AAB-4698-B3C7-55EA775AD236}
+		{E69E21CF-0C0C-45D9-8016-64A99B7AA197} = {6EC8E033-6AAB-4698-B3C7-55EA775AD236}
+		{45645499-748D-47C3-A4B1-AAC38CDE43AC} = {6EC8E033-6AAB-4698-B3C7-55EA775AD236}
 	EndGlobalSection
 EndGlobal
