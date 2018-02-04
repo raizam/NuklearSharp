@@ -77,15 +77,15 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 
 	base.Draw(gameTime);
 ```
-7. Run and observe the following result: (/Screenshots/sample.gif)
+7. Run and observe the following result: ![](/Screenshots/sample.gif)
 
 ## Credits
 * [nuklear](https://github.com/vurtun/nuklear)
-* [ClangSharp] (https://github.com/Microsoft/ClangSharp)
-* [sealang] (https://github.com/pybee/sealang)
+* [ClangSharp](https://github.com/Microsoft/ClangSharp)
+* [sealang](https://github.com/pybee/sealang)
 * [MonoGame](http://www.monogame.net/)
 
-Also I would like to thank @raizam for donating his code that was used to make NuklearSharp.MonoGame and RaizamTest.
+Also I would like to thank [@raizam](https://github.com/raizam) for donating his code that was used to make NuklearSharp.MonoGame and RaizamTest.
 
 ## License
 ```
