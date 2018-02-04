@@ -4,7 +4,7 @@ using System;
 
 namespace NuklearSharp
 {
-	unsafe partial class ContextWrapper
+	unsafe partial class BaseContext
 	{
 		public uint Convert(Nuklear.nk_buffer cmds, Nuklear.nk_buffer vertices, Nuklear.nk_buffer elements,
 			Nuklear.nk_convert_config config)

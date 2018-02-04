@@ -44,8 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers.cs" />
-    <Compile Include="MonogameNkInput.cs" />
-    <Compile Include="MonogameNkRenderer.cs" />
+    <Compile Include="NuklearContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
