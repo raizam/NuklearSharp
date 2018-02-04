@@ -7,16 +7,16 @@ namespace NuklearSharp
 	public unsafe class FontAtlasWrapper
 	{
 		private readonly Nuklear.nk_font_atlas _atlas = new Nuklear.nk_font_atlas();
-		private readonly IRenderer _renderer;
+		private readonly BaseContext _context;
 
-		internal FontAtlasWrapper(IRenderer renderer)
+		internal FontAtlasWrapper(BaseContext context)
 		{
-			if (renderer == null)
+			if (context == null)
 			{
-				throw new ArgumentNullException("renderer");
+				throw new ArgumentNullException("context");
 			}
 
-			_renderer = renderer;
+			_context = context;
 
 			Nuklear.nk_font_atlas_begin(_atlas);
 		}
@@ -52,7 +52,7 @@ namespace NuklearSharp
 			var arr = new byte[buffSize];
 			Marshal.Copy((IntPtr)image, arr, 0, buffSize);
 
-			var textureId = _renderer.CreateTexture(w, h, arr);
+			var textureId = _context.CreateTexture(w, h, arr);
 
 			Nuklear.nk_font_atlas_end(_atlas, new Nuklear.nk_handle { id = textureId }, null);
 		}

@@ -36,12 +36,11 @@
   <ItemGroup>
     <Compile Include="CRuntime.cs" />
     <Compile Include="FontAtlasWrapper.cs" />
-    <Compile Include="IRenderer.cs" />
     <Compile Include="NkVertex.cs" />
     <Compile Include="Nuklear.cs" />
     <Compile Include="Nuklear.Generated.cs" />
-    <Compile Include="ContextWrapper.cs" />
-    <Compile Include="ContextWrapper.Generated.cs" />
+    <Compile Include="BaseContext.cs" />
+    <Compile Include="BaseContext.Generated.cs" />
     <Compile Include="Operations.cs" />
     <Compile Include="PinnedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

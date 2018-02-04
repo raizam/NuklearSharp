@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace NuklearSharp.MonoGame
 {
-	public class MonogameNkRenderer: IRenderer
+	public class NuklearContext : BaseContext
 	{
 		private const float DepthBias = 0F;
+		private const int WHEEL_DELTA = 120;
 
 		private readonly GraphicsDevice _device;
 		private readonly DynamicVertexBuffer _vertexBuffer;
@@ -14,12 +16,15 @@ namespace NuklearSharp.MonoGame
 		private readonly BasicEffect basicEffect;
 		private readonly List<Texture2D> _textures = new List<Texture2D>();
 
+		private MouseState _previousMouseState = default(MouseState);
+		private int _previousWheel;
+
 		public List<Texture2D> Textures
 		{
 			get { return _textures; }
 		}
 
-		public MonogameNkRenderer(GraphicsDevice device)
+		public NuklearContext(GraphicsDevice device)
 		{
 			_device = device;
 			_vertexBuffer = new DynamicVertexBuffer(device, VertexPositionColorTexture.VertexDeclaration, 30000,
@@ -28,7 +33,7 @@ namespace NuklearSharp.MonoGame
 			basicEffect = new BasicEffect(device);
 		}
 
-		public int CreateTexture(int width, int height, byte[] data)
+		protected override int CreateTexture(int width, int height, byte[] data)
 		{
 			var texture = new Texture2D(_device, width, height, false, SurfaceFormat.Color);
 			texture.SetData(data, 0, data.Length);
@@ -37,7 +42,7 @@ namespace NuklearSharp.MonoGame
 			return _textures.Count;
 		}
 
-		private void getProjectionMatrix(int width, int height, out Matrix mtx)
+		private static void GetProjectionMatrix(int width, int height, out Matrix mtx)
 		{
 			const float L = 0.5f;
 			var R = width + 0.5f;
@@ -47,11 +52,14 @@ namespace NuklearSharp.MonoGame
 				(R + L)/(L - R), (T + B)/(B - T), 0.0f, 1.0f);
 		}
 
-		public void BeginDraw()
+		protected override void BeginDraw()
 		{
+			UpdateInput();
+
 			basicEffect.World = Matrix.Identity;
 			Matrix projection;
-			getProjectionMatrix(_device.PresentationParameters.Bounds.Width, _device.PresentationParameters.Bounds.Height, out projection);
+			GetProjectionMatrix(_device.PresentationParameters.Bounds.Width, _device.PresentationParameters.Bounds.Height,
+				out projection);
 			basicEffect.Projection = projection;
 			basicEffect.VertexColorEnabled = true;
 			basicEffect.TextureEnabled = true;
@@ -69,15 +77,15 @@ namespace NuklearSharp.MonoGame
 			_device.RasterizerState = rasterizerState;
 		}
 
-		public unsafe void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride)
+		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride)
 		{
 			if (vertex_count == 0) return;
 
-			var result = new VertexPositionColorTexture[vertices.Length / sizeof(VertexPositionColorTexture)];
+			var result = new VertexPositionColorTexture[vertices.Length/sizeof (VertexPositionColorTexture)];
 
 			fixed (VertexPositionColorTexture* vx = &result[0])
 			{
-				var b = (byte*)vx;
+				var b = (byte*) vx;
 				for (int i = 0; i < vertices.Length; i++)
 				{
 					*(b + i) = vertices[i];
@@ -97,7 +105,7 @@ namespace NuklearSharp.MonoGame
 			_indexBuffer.SetData(indices);
 		}
 
-		public void Draw(int x, int y, int w, int h, int textureId, int startIndex, int primitiveCount)
+		protected override void Draw(int x, int y, int w, int h, int textureId, int startIndex, int primitiveCount)
 		{
 			_device.ScissorRectangle = new Rectangle(x, y, w, h);
 			if (textureId != 0)
@@ -114,8 +122,57 @@ namespace NuklearSharp.MonoGame
 			}
 		}
 
-		public void EndDraw()
+		protected override void EndDraw()
 		{
+		}
+
+		private void UpdateInput()
+		{
+			var state = Mouse.GetState();
+
+			InputBegin();
+
+			if (_previousMouseState.LeftButton == ButtonState.Released && state.LeftButton == ButtonState.Pressed)
+				InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, 1);
+			else if (_previousMouseState.LeftButton == ButtonState.Pressed && state.LeftButton == ButtonState.Released)
+				InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, 0);
+
+			if (_previousMouseState.RightButton == ButtonState.Released && state.RightButton == ButtonState.Pressed)
+				InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, 1);
+			else if (_previousMouseState.RightButton == ButtonState.Pressed && state.RightButton == ButtonState.Released)
+				InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, 0);
+
+			InputMotion(state.X, state.Y);
+			InputScroll(new Nuklear.nk_vec2 {x = 0, y = (state.ScrollWheelValue - _previousWheel)/WHEEL_DELTA});
+			InputEnd();
+
+			_previousWheel = state.ScrollWheelValue;
+			_previousMouseState = state;
+		}
+
+		public bool BeginTitled(string name, string title, Rectangle bounds, uint flags)
+		{
+			return BeginTitled(name, title, bounds.ToRect(), flags);
+		}
+
+		public bool ButtonColor(Color color)
+		{
+			return ButtonColor(color.ToNkColor());
+		}
+
+		public void LabelColored(string str, uint align, Color color)
+		{
+			LabelColored(str, align, color.ToNkColor());
+		}
+
+		public bool ComboBeginColor(Color color, Vector2 size)
+		{
+			return ComboBeginColor(color.ToNkColor(), size.ToNkVec2());
+		}
+
+		public Color ColorPicker(Color color, int fmt)
+		{
+			return ColorPicker(color.ToNkColorf(), fmt).ToColor();
 		}
 	}
 }
