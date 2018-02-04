@@ -16,6 +16,8 @@ build_script:
     dotnet publish NuklearSharp\NuklearSharp.NETStandard.csproj /p:Configuration=Release
 
     nuget pack NuklearSharp\NuklearSharp.nuspec -Version %APPVEYOR_BUILD_VERSION%
+    
+    nuget pack NuklearSharp.MonoGame\NuklearSharp.MonoGame.nuspec -Version %APPVEYOR_BUILD_VERSION%   
 
     copy_zip_package_files.bat
     
@@ -25,6 +27,9 @@ build_script:
 artifacts:
   - path: NuklearSharp.$(appveyor_build_version).nupkg
     name: NuklearSharp.nupkg
+    
+  - path: NuklearSharp.MonoGame.$(appveyor_build_version).nupkg
+    name: NuklearSharp.MonoGame.nupkg    
 
   - path: NuklearSharp.$(appveyor_build_version).zip
     name: ZipPackage
