@@ -12396,50 +12396,54 @@ nk_range_glyph_count(const nk_rune *range, int count)
     return total_glyphs;
 }
 
+NK_STORAGE const nk_rune default_ranges[] = { 0x0020, 0x00FF, 0 };
+
 NK_API const nk_rune*
 nk_font_default_glyph_ranges(void)
 {
-    NK_STORAGE const nk_rune ranges[] = {0x0020, 0x00FF, 0};
-    return ranges;
+    return default_ranges;
 }
+
+NK_STORAGE const nk_rune chinese_ranges[] = {
+    0x0020, 0x00FF,
+    0x3000, 0x30FF,
+    0x31F0, 0x31FF,
+    0xFF00, 0xFFEF,
+    0x4e00, 0x9FAF,
+    0
+};
 
 NK_API const nk_rune*
 nk_font_chinese_glyph_ranges(void)
 {
-    NK_STORAGE const nk_rune ranges[] = {
-        0x0020, 0x00FF,
-        0x3000, 0x30FF,
-        0x31F0, 0x31FF,
-        0xFF00, 0xFFEF,
-        0x4e00, 0x9FAF,
-        0
-    };
-    return ranges;
+    return chinese_ranges;
 }
+
+NK_STORAGE const nk_rune cyrillic_ranges[] = {
+    0x0020, 0x00FF,
+    0x0400, 0x052F,
+    0x2DE0, 0x2DFF,
+    0xA640, 0xA69F,
+    0
+};
 
 NK_API const nk_rune*
 nk_font_cyrillic_glyph_ranges(void)
 {
-    NK_STORAGE const nk_rune ranges[] = {
-        0x0020, 0x00FF,
-        0x0400, 0x052F,
-        0x2DE0, 0x2DFF,
-        0xA640, 0xA69F,
-        0
-    };
-    return ranges;
+    return cyrillic_ranges;
 }
+
+NK_STORAGE const nk_rune korean_ranges[] = {
+    0x0020, 0x00FF,
+    0x3131, 0x3163,
+    0xAC00, 0xD79D,
+    0
+};
 
 NK_API const nk_rune*
 nk_font_korean_glyph_ranges(void)
 {
-    NK_STORAGE const nk_rune ranges[] = {
-        0x0020, 0x00FF,
-        0x3131, 0x3163,
-        0xAC00, 0xD79D,
-        0
-    };
-    return ranges;
+    return korean_ranges;
 }
 
 NK_INTERN void

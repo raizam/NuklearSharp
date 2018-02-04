@@ -14,12 +14,173 @@ namespace NuklearSharp.Generation
 			public string[] Args { get; set; }
 		}
 
-		static void Process()
-		{
-			var bindings = new Dictionary<string, StringFunctionBinding>();
+		private static readonly Dictionary<string, StringFunctionBinding> _bindings = new Dictionary<string, StringFunctionBinding>();
 
+
+		private static void Convert()
+		{
 			using (var output = new StringWriter())
 			{
+				var skipStructs = new HashSet<string>
+				{
+					"nk_handle",
+					"nk_user_font",
+					"nk_font",
+					"nk_allocator",
+					"nk_clipboard",
+					"nk_style_item_data",
+					"nk_style_item",
+					"nk_font_atlas",
+					"nk_page_data",
+					"nk_page_element",
+					"nk_buffer",
+					"nk_text_undo_state",
+					"nk_property",
+					"nk_property_variant",
+					"nk_keyboard",
+					"nk_mouse",
+					"nk_draw_list",
+					"nk_style",
+					"nk_chart",
+					"nk_command_custom",
+					"nk_rp_context",
+					"nk_context",
+					"nk_page",
+					"nk_pool",
+					"nk_window",
+					"nk_panel",
+					"nk_config_stack_button_behavior_element",
+					"nk_convert_config",
+					"nk_user_font_glyph",
+				};
+
+				var treatAsClasses = new HashSet<string>
+				{
+					"nk_str",
+					"nk_clipboard",
+					"nk_context",
+					"nk_font_atlas",
+					"nk_buffer",
+					"nk_text_undo_state",
+					"nk_page_element",
+					"nk_keyboard",
+					"nk_mouse",
+					"nk_input",
+					"nk_draw_list",
+					"nk_command_buffer",
+					"nk_style",
+					"nk_chart",
+					"nk_panel",
+					"nk_window",
+					"nk_popup_state",
+					"nk_page",
+					"nk_text_edit",
+					"nk_pool",
+					"nk_table",
+					"nk_list_view",
+					"nk_convert_config",
+					"nk_style_item",
+					"nk_config_stack_style_item_element",
+					"nk_style_text",
+					"nk_popup_buffer",
+					"nk_image",
+					"nk_cursor",
+					"nk_user_font",
+					"nk_font",
+					"nk_config_stack_user_font_element",
+					"nk_font_config",
+					"nk_baked_font",
+					"nk_chart_slot",
+					"nk_row_layout",
+					"nk_edit_state",
+					"nk_property_state",
+					"nk_configuration_stacks",
+					"nk_scroll",
+					"nk_font_glyph",
+					"nk_memory_status",
+					"nk_menu_state",
+				};
+
+				var skipGlobalVariables = new HashSet<string>
+				{
+					"nk_null_rect",
+					"nk_red",
+					"nk_green",
+					"nk_blue",
+					"nk_white",
+					"nk_black",
+					"nk_yellow",
+					"nk_default_color_style",
+					"nk_color_names",
+					"nk_cursor_data",
+					"hue_colors",
+				};
+
+				var skipFunctions = new HashSet<string>
+				{
+					"nk_inv_sqrt",
+					"nk_strmatch_fuzzy_text",
+					"nk_strmatch_fuzzy_string",
+					"nk_str_append_text_runes",
+					"nk_str_append_str_runes",
+					"nk_stricmp",
+					"nk_strfilter",
+					"nk_utf_validate",
+					"nk_utf_decode_byte",
+					"nk_utf_decode",
+					"nk_utf_encode_byte",
+					"nk_utf_encode",
+					"nk_utf_len",
+					"nk_utf_at",
+					"nk_style_get_color_by_name",
+					"nk_pool_init_fixed",
+					"nk_init_custom",
+					"nk_pool_init",
+					"nk_pool_free",
+					"nk_pool_alloc",
+					"nk_create_page_element",
+					"nk_link_page_element_into_freelist",
+					"nk_free_page_element",
+					"nk_create_panel",
+					"nk_free_panel",
+					"nk_create_table",
+					"nk_free_table",
+					"nk_init_fixed",
+					"nk_init",
+					"nk_free",
+					"nk_create_window",
+					"nk_free_window",
+					"nk_buffer_init_default",
+					"nk_str_init_default",
+					"nk_str_init",
+					"nk_font_atlas_init_default",
+					"nk_font_atlas_init",
+					"nk_font_atlas_init_custom",
+					"nk_init_default",
+					"nk_command_buffer_push",
+					"nk__begin",
+					"nk_command_buffer_init",
+					"nk_command_buffer_reset",
+					"nk__next",
+					"nk_build",
+					"nk_property_",
+					"nk_font_atlas_add_default",
+					"nk_stroke_polygon",
+					"nk_fill_polygon",
+					"nk_stroke_polyline",
+				};
+
+				var globalArrays = new HashSet<string>
+				{
+					"nk_utfbyte",
+					"nk_utfmask",
+					"nk_utfmin",
+					"nk_utfmax",
+					"nk_proggy_clean_ttf_compressed_data_base85",
+					"nk_custom_cursor_data",
+					"nk_cursor_data",
+				};
+
 				var parameters = new ConversionParameters
 				{
 					InputPath = @"nuklear.h",
@@ -35,276 +196,29 @@ namespace NuklearSharp.Generation
 					},
 					Namespace = "NuklearSharp",
 					Class = "Nuklear",
-					SkipStructs = new[]
-					{
-						"nk_handle",
-						"nk_user_font",
-						"nk_font",
-						"nk_allocator",
-						"nk_clipboard",
-						"nk_style_item_data",
-						"nk_style_item",
-						"nk_font_atlas",
-						"nk_page_data",
-						"nk_page_element",
-						"nk_buffer",
-						"nk_text_undo_state",
-						"nk_property",
-						"nk_property_variant",
-						"nk_keyboard",
-						"nk_mouse",
-						"nk_draw_list",
-						"nk_style",
-						"nk_chart",
-						"nk_command_custom",
-						"nk_rp_context",
-						"nk_context",
-						"nk_page",
-						"nk_pool",
-						"nk_window",
-						"nk_command_scissor",
-						"nk_command_line",
-						"nk_command_curve",
-						"nk_command_rect",
-						"nk_command_rect_filled",
-						"nk_command_rect_multi_color",
-						"nk_command_triangle",
-						"nk_command_triangle_filled",
-						"nk_command_circle",
-						"nk_command_circle_filled",
-						"nk_command_arc",
-						"nk_command_arc_filled",
-						"nk_command_polygon",
-						"nk_command_polygon_filled",
-						"nk_command_polyline",
-						"nk_command_image",
-						"nk_command_text",
-						"nk_command_scissor",
-						"nk_command_line",
-						"nk_command_curve",
-						"nk_command_rect",
-						"nk_command_rect_filled",
-						"nk_command_rect_multi_color",
-						"nk_command_triangle",
-						"nk_command_triangle_filled",
-						"nk_command_circle",
-						"nk_command_circle_filled",
-						"nk_command_arc",
-						"nk_command_arc_filled",
-						"nk_command_polygon",
-						"nk_command_polygon_filled",
-						"nk_command_polyline",
-						"nk_command_image",
-						"nk_command_text",
-						"nk_command_custom",
-						"nk_command_buffer",
-						"nk_panel",
-						"nk_config_stack_button_behavior_element",
-						"nk_convert_config",
-						"nk_user_font_glyph",
-					},
-					Classes = new[]
-					{
-						"nk_str",
-						"nk_clipboard",
-						"nk_context",
-						"nk_font_atlas",
-						"nk_buffer",
-						"nk_text_undo_state",
-						"nk_page_element",
-						"nk_keyboard",
-						"nk_mouse",
-						"nk_input",
-						"nk_draw_list",
-						"nk_command_buffer",
-						"nk_style",
-						"nk_chart",
-						"nk_panel",
-						"nk_window",
-						"nk_popup_state",
-						"nk_config_stack_style_item",
-						"nk_config_stack_float",
-						"nk_config_stack_vec2",
-						"nk_config_stack_flags",
-						"nk_config_stack_color",
-						"nk_config_stack_user_font",
-						"nk_config_stack_button_behavior",
-						"nk_page",
-						"nk_text_edit",
-						"nk_style",
-						"nk_style_button",
-						"nk_style_toggle",
-						"nk_style_selectable",
-						"nk_style_slider",
-						"nk_style_progress",
-						"nk_style_scrollbar",
-						"nk_style_edit",
-						"nk_style_property",
-						"nk_style_chart",
-						"nk_style_combo",
-						"nk_style_tab",
-						"nk_style_window_header",
-						"nk_style_window",
-						"nk_pool",
-						"nk_table",
-						"nk_list_view",
-						"nk_convert_config",
-						"nk_style_item",
-						"nk_config_stack_style_item_element",
-						"nk_style_text",
-						"nk_popup_buffer",
-						"nk_image",
-						"nk_cursor",
-						"nk_command_scissor",
-						"nk_command_line",
-						"nk_command_curve",
-						"nk_command_rect",
-						"nk_command_rect_filled",
-						"nk_command_rect_multi_color",
-						"nk_command_triangle",
-						"nk_command_triangle_filled",
-						"nk_command_circle",
-						"nk_command_circle_filled",
-						"nk_command_arc",
-						"nk_command_arc_filled",
-						"nk_command_polygon",
-						"nk_command_polygon_filled",
-						"nk_command_polyline",
-						"nk_command_image",
-						"nk_command_text",
-						"nk_command_buffer",
-						"nk_command_scissor",
-						"nk_command_line",
-						"nk_command_curve",
-						"nk_command_rect",
-						"nk_command_rect_filled",
-						"nk_command_rect_multi_color",
-						"nk_command_triangle",
-						"nk_command_triangle_filled",
-						"nk_command_circle",
-						"nk_command_circle_filled",
-						"nk_command_arc",
-						"nk_command_arc_filled",
-						"nk_command_polygon",
-						"nk_command_polygon_filled",
-						"nk_command_polyline",
-						"nk_command_image",
-						"nk_command_text",
-						"nk_command_buffer",
-						"nk_command_custom",
-						"nk_user_font",
-						"nk_font",
-						"nk_config_stack_user_font_element",
-						"nk_font_config",
-						"nk_baked_font",
-						"nk_chart_slot",
-						"nk_row_layout",
-						"nk_edit_state",
-						"nk_property_state",
-						"nk_configuration_stacks",
-						"nk_scroll",
-					},
-					SkipGlobalVariables = new[]
-					{
-						"nk_null_rect",
-						"nk_red",
-						"nk_green",
-						"nk_blue",
-						"nk_white",
-						"nk_black",
-						"nk_yellow",
-						"nk_default_color_style",
-						"nk_color_names",
-						"nk_cursor_data",
-						"hue_colors",
-					},
-					SkipFunctions = new[]
-					{
-						"nk_inv_sqrt",
-						"nk_strmatch_fuzzy_text",
-						"nk_strmatch_fuzzy_string",
-						"nk_str_append_text_runes",
-						"nk_str_append_str_runes",
-						"nk_stricmp",
-						"nk_strfilter",
-						"nk_utf_validate",
-						"nk_utf_decode_byte",
-						"nk_utf_decode",
-						"nk_utf_encode_byte",
-						"nk_utf_encode",
-						"nk_utf_len",
-						"nk_utf_at",
-						"nk_style_get_color_by_name",
-						"nk_pool_init_fixed",
-						"nk_init_custom",
-						"nk_pool_init",
-						"nk_pool_free",
-						"nk_pool_alloc",
-						"nk_create_page_element",
-						"nk_link_page_element_into_freelist",
-						"nk_free_page_element",
-						"nk_create_panel",
-						"nk_free_panel",
-						"nk_create_table",
-						"nk_free_table",
-						"nk_init_fixed",
-						"nk_init",
-						"nk_free",
-						"nk_create_window",
-						"nk_free_window",
-						"nk_buffer_init_default",
-						"nk_str_init_default",
-						"nk_str_init",
-						"nk_font_atlas_init_default",
-						"nk_font_atlas_init",
-						"nk_font_atlas_init_custom",
-						"nk_init_default",
-						"nk_command_buffer_push",
-						"nk__begin",
-						"nk_command_buffer_init",
-						"nk_command_buffer_reset",
-						"nk__next",
-						"nk_build",
-						"nk_property_",
-						"nk_font_atlas_add_default",
-						"nk_stroke_polygon",
-						"nk_fill_polygon",
-						"nk_stroke_polyline",
-					},
-					GlobalArrays = new[]
-					{
-						"nk_utfbyte",
-						"nk_utfmask",
-						"nk_utfmin",
-						"nk_utfmax",
-						"nk_proggy_clean_ttf_compressed_data_base85",
-						"nk_custom_cursor_data",
-						"nk_cursor_data",
-					}
 				};
 
-				parameters.UseRefInsteadOfPointer = (f, t, n) =>
-				{
-					if (n == "custom" ||
-					    f == "nk_unify" ||
-					    n == "state" ||
-					    n == "ws" ||
-					    n == "size" ||
-					    n == "glyph_count" ||
-						n == "width" ||
-						n == "height" ||
-						n == "value" ||
-						n == "val" ||
-						n == "cursor" ||
-						n == "len" ||
-						n == "select_begin" ||
-						n == "select_end")
-					{
-						return true;
-					}
+				parameters.ShouldProcessStruct = n => !skipStructs.Contains(n) && !n.StartsWith("nk_command_");
+				parameters.ShouldProcessGlobalVariables = n => !skipGlobalVariables.Contains(n);
+				parameters.ShouldProcessFunction = n => !skipFunctions.Contains(n);
+				parameters.TreatGlobalPointerAsArray = n => globalArrays.Contains(n);
+				parameters.TreatStructAsClass =
+					n => treatAsClasses.Contains(n) || n.StartsWith("nk_command_") || n.StartsWith("nk_style_") || n.StartsWith("nk_config_");
 
-					return false;
-				};
+				parameters.UseRefInsteadOfPointer = (f, t, n) => n == "custom" ||
+				                                                 f == "nk_unify" ||
+				                                                 n == "state" ||
+				                                                 n == "ws" ||
+				                                                 n == "size" ||
+				                                                 n == "glyph_count" ||
+				                                                 n == "width" ||
+				                                                 n == "height" ||
+				                                                 n == "value" ||
+				                                                 n == "val" ||
+				                                                 n == "cursor" ||
+				                                                 n == "len" ||
+				                                                 n == "select_begin" ||
+				                                                 n == "select_end";
 
 				parameters.CustomGlobalVariableProcessor += cpr =>
 				{
@@ -368,7 +282,7 @@ namespace NuklearSharp.Generation
 						Args = args,
 					};
 
-					bindings[fn] = sb;
+					_bindings[fn] = sb;
 				};
 
 				var cp = new ClangParser();
@@ -1065,10 +979,10 @@ namespace NuklearSharp.Generation
 				data = data.Replace("ctrl[1]", "ctrl_1");
 				data = data.Replace("nk_zero(list, (ulong)(sizeof((list))));", "");
 				data = data.Replace("(nk_vec2)(g.uv[0]), (nk_vec2)(g.uv[1])", "nk_vec2_(g.uv_x[0], g.uv_y[0]), nk_vec2_(g.uv_x[1], g.uv_y[1])");
-				data = data.Replace("glyph->uv[0] = (nk_vec2)(nk_vec2_((float)(g->u0), (float)(g->v0)));",
-					"glyph->uv_x[0] = g->u0; glyph->uv_y[0] = g->v0;");
-				data = data.Replace("glyph->uv[1] = (nk_vec2)(nk_vec2_((float)(g->u1), (float)(g->v1)));",
-					"glyph->uv_x[1] = g->u1; glyph->uv_y[1] = g->v1;");
+				data = data.Replace("glyph->uv[0] = (nk_vec2)(nk_vec2_((float)(g.u0), (float)(g.v0)));",
+					"glyph->uv_x[0] = g.u0; glyph->uv_y[0] = g.v0;");
+				data = data.Replace("glyph->uv[1] = (nk_vec2)(nk_vec2_((float)(g.u1), (float)(g.v1)));",
+					"glyph->uv_x[1] = g.u1; glyph->uv_y[1] = g.v1;");
 				data = data.Replace("nk_memset(state, (int)(0), (ulong)(sizeof(nk_text_edit)));", "");
 				data = data.Replace("(nk_rect)({ 0, 0, 0, 0 })", "new nk_rect()");
 				data = data.Replace("nk_zero(button, (ulong)(sizeof((button))));", "");
@@ -1088,17 +1002,23 @@ namespace NuklearSharp.Generation
 				data = data.Replace("(layout.flags & NK_WINDOW_DYNAMIC)?", "(layout.flags & NK_WINDOW_DYNAMIC) != 0?");
 				data = data.Replace("nk_zero(window.property, (ulong)(sizeof((window.property))));", "");
 				data = data.Replace("nk_zero(window.edit, (ulong)(sizeof((window.edit))));", "");
+				data = data.Replace("CRuntime.free(atlas.glyphs);", "");
+				data = data.Replace("(nk_font_glyph)(CRuntime.malloc((ulong)((ulong)sizeof(nk_font_glyph) * (ulong)(atlas.glyph_count))));",
+					"new nk_font_glyph[atlas.glyph_count];");
 
-				File.WriteAllText(@"..\..\..\..\..\NuklearSharp\Nuklear2.Generated.cs", data);
+				File.WriteAllText(@"..\..\..\..\..\NuklearSharp\Nuklear.Generated.cs", data);
 			}
+		}
 
+		private static void GenerateWrapper()
+		{
 			var str = new StringBuilder();
 
 			str.AppendFormat("// Generated by Sichem at {0}\n\n", DateTime.Now);
 
 			str.Append("namespace NuklearSharp {\n");
 			str.Append("unsafe partial class ContextWrapper {\n");
-			foreach (var s in bindings)
+			foreach (var s in _bindings)
 			{
 				try
 				{
@@ -1111,8 +1031,8 @@ namespace NuklearSharp.Generation
 					{
 						str.Append("bool ");
 					}
-					
-					for (var i = isBool?1:0; i < parts.Length - 1; ++i)
+
+					for (var i = isBool ? 1 : 0; i < parts.Length - 1; ++i)
 					{
 						str.Append(parts[i]);
 						str.Append(" ");
@@ -1155,9 +1075,9 @@ namespace NuklearSharp.Generation
 					}
 
 					var ps = string.Empty;
-					for (var i = hasCtx?1:0; i < args.Count; ++i)
+					for (var i = hasCtx ? 1 : 0; i < args.Count; ++i)
 					{
-						if (i > (hasCtx?1:0))
+						if (i > (hasCtx ? 1 : 0))
 						{
 							str.Append(", ");
 						}
@@ -1191,7 +1111,7 @@ namespace NuklearSharp.Generation
 						str.Append("_ctx");
 					}
 
-					for (var i = hasCtx?1:0; i < args.Count; ++i)
+					for (var i = hasCtx ? 1 : 0; i < args.Count; ++i)
 					{
 						if (i > 0)
 						{
@@ -1246,13 +1166,19 @@ namespace NuklearSharp.Generation
 			str.Append("}");
 
 			var s2 = str.ToString();
-			
+
 			s2 = s2.Replace("int (const nk_text_edit *, unsigned int)*", "NkPluginFilter");
 			s2 = s2.Replace("IntPtr* item_getter", "NkComboCallback item_getter");
 			s2 = s2.Replace("void*", "IntPtr");
 			s2 = s2.Replace("enum nk_chart_type", "int");
 
-			// File.WriteAllText(@"..\..\..\..\..\NuklearSharp\ContextWrapper.Generated.cs", s2);
+			// File.WriteAllText(@"..\..\..\..\..\NuklearSharp\ContextWrapper.Generated.cs", s2);			
+		}
+
+		private static void Process()
+		{
+			Convert();
+//			GenerateWrapper();
 		}
 
 		static void Main(string[] args)

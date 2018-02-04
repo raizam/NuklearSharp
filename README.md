@@ -1,6 +1,6 @@
 ## Overview
 
-C# Port of the ANSI C GUI Library: https://github.com/vurtun/nuklear
+NuklearSharp is C# Port of the ANSI C GUI Library: https://github.com/vurtun/nuklear
 
 It is important to note, that this project is **port**, not **wrapper**. Original C code had been ported to C#. So NuklearSharp doesnt require any native binaries.
 
