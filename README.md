@@ -13,7 +13,7 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 	graphics.PreferredBackBufferHeight = 768;
 ```	
 3. [Add reference to the NuklearSharp and NuklearSharp.MonoGame](https://github.com/rds1983/NuklearSharp/wiki/Adding-Reference-to-NuklearSharp).
-4. Add following fields to class:
+4. Add following fields to the Game class:
 ```c#
 	private NuklearContext _nuklearContext;
 	private Color _background = Color.Black;
@@ -78,6 +78,7 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 	base.Draw(gameTime);
 ```
 7. Run and observe the following result: ![](/Screenshots/sample.gif)
+8. Full source code of the above sample is available here: [NuklearTest.zip](https://github.com/rds1983/NuklearSharp/releases/download/0.1.0.7/NuklearTest.zip)
 
 ## Credits
 * [nuklear](https://github.com/vurtun/nuklear)
