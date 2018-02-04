@@ -27,6 +27,11 @@ namespace NuklearSharp
 		{
 			return (char *)ptr.Ptr;
 		}
+
+		public static implicit operator uint*(Pointer ptr)
+		{
+			return (uint*)ptr.Ptr;
+		}
 	}
 
 	public unsafe class PinnedArray<T> : Pointer

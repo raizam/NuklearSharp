@@ -128,8 +128,8 @@ namespace NuklearSharp
 			public nk_user_font handle = new nk_user_font();
 			public nk_baked_font info = new nk_baked_font();
 			public float scale;
-			public nk_font_glyph[] glyphs;
-			public nk_font_glyph fallback;
+			public nk_font_glyph* glyphs;
+			public nk_font_glyph* fallback;
 			public char fallback_codepoint;
 			public nk_handle texture = new nk_handle();
 			public nk_font_config config;
@@ -303,7 +303,7 @@ namespace NuklearSharp
 			public nk_recti custom;
 			public nk_cursor[] cursors = new nk_cursor[NK_CURSOR_COUNT];
 			public int glyph_count;
-			public nk_font_glyph[] glyphs;
+			public nk_font_glyph* glyphs;
 			public nk_font default_font;
 			public nk_font fonts;
 			public nk_font_config config;
