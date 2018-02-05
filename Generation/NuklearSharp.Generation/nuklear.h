@@ -176,7 +176,7 @@
 /// struct nk_context ctx;
 ///
 /// nk_init_fixed(&ctx, calloc(1, MAX_MEMORY), MAX_MEMORY, &font);
-/// if (nk_begin(&ctx, "Show", nk_rect_(50, 50, 220, 220),
+/// if (nk_begin(&ctx, "Show", nk_rectz(50, 50, 220, 220),
 ///     NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_CLOSABLE)) {
 ///     // fixed widget pixel width
 ///     nk_layout_row_static(&ctx, 30, 80, 1);
@@ -2150,17 +2150,17 @@ NK_API void nk_window_show_if(struct nk_context*, const char *name, enum nk_show
 ///     if (nk_begin_xxx(...) {
 ///         // static row with height: 500 (you can set column count to INT_MAX if you don't want to be bothered)
 ///         nk_layout_space_begin(ctx, NK_STATIC, 500, INT_MAX);
-///         nk_layout_space_push(ctx, nk_rect_(0,0,150,200));
+///         nk_layout_space_push(ctx, nk_rectz(0,0,150,200));
 ///         nk_widget(...);
-///         nk_layout_space_push(ctx, nk_rect_(200,200,100,200));
+///         nk_layout_space_push(ctx, nk_rectz(200,200,100,200));
 ///         nk_widget(...);
 ///         nk_layout_space_end(ctx);
 ///         //
 ///         // dynamic row with height: 500 (you can set column count to INT_MAX if you don't want to be bothered)
 ///         nk_layout_space_begin(ctx, NK_DYNAMIC, 500, INT_MAX);
-///         nk_layout_space_push(ctx, nk_rect_(0.5,0.5,0.1,0.1));
+///         nk_layout_space_push(ctx, nk_rectz(0.5,0.5,0.1,0.1));
 ///         nk_widget(...);
-///         nk_layout_space_push(ctx, nk_rect_(0.7,0.6,0.1,0.1));
+///         nk_layout_space_push(ctx, nk_rectz(0.7,0.6,0.1,0.1));
 ///         nk_widget(...);
 ///     }
 ///     nk_end(...);
@@ -2969,7 +2969,7 @@ enum nk_text_alignment {
     NK_TEXT_CENTERED    = NK_TEXT_ALIGN_MIDDLE|NK_TEXT_ALIGN_CENTERED,
     NK_TEXT_RIGHT       = NK_TEXT_ALIGN_MIDDLE|NK_TEXT_ALIGN_RIGHT
 };
-NK_API void nk_text_(struct nk_context*, const char*, int, nk_flags);
+NK_API void nk_textz(struct nk_context*, const char*, int, nk_flags);
 NK_API void nk_text_colored(struct nk_context*, const char*, int, nk_flags, struct nk_color);
 NK_API void nk_text_wrap(struct nk_context*, const char*, int);
 NK_API void nk_text_wrap_colored(struct nk_context*, const char*, int, struct nk_color);
@@ -2977,7 +2977,7 @@ NK_API void nk_label(struct nk_context*, const char*, nk_flags align);
 NK_API void nk_label_colored(struct nk_context*, const char*, nk_flags align, struct nk_color);
 NK_API void nk_label_wrap(struct nk_context*, const char*);
 NK_API void nk_label_colored_wrap(struct nk_context*, const char*, struct nk_color);
-NK_API void nk_image_(struct nk_context*, struct nk_image);
+NK_API void nk_imagez(struct nk_context*, struct nk_image);
 #ifdef NK_INCLUDE_STANDARD_VARARGS
 NK_API void nk_labelf(struct nk_context*, nk_flags, NK_PRINTF_FORMAT_STRING const char*, ...) NK_PRINTF_VARARG_FUNC(3);
 NK_API void nk_labelf_colored(struct nk_context*, nk_flags, struct nk_color, NK_PRINTF_FORMAT_STRING const char*,...) NK_PRINTF_VARARG_FUNC(4);
@@ -3383,14 +3383,14 @@ NK_API struct nk_image nk_subimage_handle(nk_handle, unsigned short w, unsigned 
 NK_API nk_hash nk_murmur_hash(const void *key, int len, nk_hash seed);
 NK_API void nk_triangle_from_direction(struct nk_vec2 *result, struct nk_rect r, float pad_x, float pad_y, enum nk_heading);
 
-NK_API struct nk_vec2 nk_vec2_(float x, float y);
-NK_API struct nk_vec2 nk_vec2i_(int x, int y);
+NK_API struct nk_vec2 nk_vec2z(float x, float y);
+NK_API struct nk_vec2 nk_vec2iz(int x, int y);
 NK_API struct nk_vec2 nk_vec2v(const float *xy);
 NK_API struct nk_vec2 nk_vec2iv(const int *xy);
 
 NK_API struct nk_rect nk_get_null_rect(void);
-NK_API struct nk_rect nk_rect_(float x, float y, float w, float h);
-NK_API struct nk_rect nk_recti_(int x, int y, int w, int h);
+NK_API struct nk_rect nk_rectz(float x, float y, float w, float h);
+NK_API struct nk_rect nk_rectiz(int x, int y, int w, int h);
 NK_API struct nk_rect nk_recta(struct nk_vec2 pos, struct nk_vec2 size);
 NK_API struct nk_rect nk_rectv(const float *xywh);
 NK_API struct nk_rect nk_rectiv(const int *xywh);
@@ -3561,7 +3561,7 @@ NK_API const char* nk_utf_at(const char *buffer, int length, int index, nk_rune 
     how to merge fonts, configure a font with `nk_font_config` to use other languages,
     use another texture coordinate format and a lot more:
 
-        struct nk_font_config cfg = nk_font_config_(font_pixel_height);
+        struct nk_font_config cfg = nk_font_configz(font_pixel_height);
         cfg.merge_mode = nk_false or nk_true;
         cfg.range = nk_font_korean_glyph_ranges();
         cfg.coord_type = NK_COORD_PIXEL;
@@ -3713,7 +3713,7 @@ NK_API void nk_font_atlas_init_default(struct nk_font_atlas*);
 NK_API void nk_font_atlas_init(struct nk_font_atlas*, struct nk_allocator*);
 NK_API void nk_font_atlas_init_custom(struct nk_font_atlas*, struct nk_allocator *persistent, struct nk_allocator *transient);
 NK_API void nk_font_atlas_begin(struct nk_font_atlas*);
-NK_API struct nk_font_config nk_font_config_(float pixel_height);
+NK_API struct nk_font_config nk_font_configz(float pixel_height);
 NK_API struct nk_font *nk_font_atlas_add(struct nk_font_atlas*, const struct nk_font_config*);
 #ifdef NK_INCLUDE_DEFAULT_FONT
 NK_API struct nk_font* nk_font_atlas_add_default(struct nk_font_atlas*, float height, const struct nk_font_config*);
@@ -5116,7 +5116,7 @@ struct nk_window {
  *      nk_style_push_style_item(ctx, &ctx->style.button.normal, nk_style_item_color(nk_rgb(255,0,0)));
  *      nk_style_push_style_item(ctx, &ctx->style.button.hover, nk_style_item_color(nk_rgb(255,0,0)));
  *      nk_style_push_style_item(ctx, &ctx->style.button.active, nk_style_item_color(nk_rgb(255,0,0)));
- *      nk_style_push_vec2(ctx, &cx->style.button.padding, nk_vec2_(2,2));
+ *      nk_style_push_vec2(ctx, &cx->style.button.padding, nk_vec2z(2,2));
  *
  *      nk_button(...);
  *
@@ -5297,10 +5297,10 @@ struct nk_context {
 #define NK_CONTAINS(x, y, w, h, bx, by, bw, bh)\
     (NK_INBOX(x,y, bx, by, bw, bh) && NK_INBOX(x+w,y+h, bx, by, bw, bh))
 
-#define nk_vec2_sub(a, b) nk_vec2_((a).x - (b).x, (a).y - (b).y)
-#define nk_vec2_add(a, b) nk_vec2_((a).x + (b).x, (a).y + (b).y)
+#define nk_vec2_sub(a, b) nk_vec2z((a).x - (b).x, (a).y - (b).y)
+#define nk_vec2_add(a, b) nk_vec2z((a).x + (b).x, (a).y + (b).y)
 #define nk_vec2_len_sqr(a) ((a).x*(a).x+(a).y*(a).y)
-#define nk_vec2_muls(a, t) nk_vec2_((a).x * (t), (a).y * (t))
+#define nk_vec2_muls(a, t) nk_vec2z((a).x * (t), (a).y * (t))
 
 #define nk_ptr_add(t, p, i) ((t*)((void*)((nk_byte*)(p) + (i))))
 #define nk_ptr_add_const(t, p, i) ((const t*)((const void*)((const nk_byte*)(p) + (i))))
@@ -5553,7 +5553,7 @@ nk_get_null_rect(void)
 }
 
 NK_API struct nk_rect
-nk_rect_(float x, float y, float w, float h)
+nk_rectz(float x, float y, float w, float h)
 {
     struct nk_rect r;
     r.x = x; r.y = y;
@@ -5562,7 +5562,7 @@ nk_rect_(float x, float y, float w, float h)
 }
 
 NK_API struct nk_rect
-nk_recti_(int x, int y, int w, int h)
+nk_rectiz(int x, int y, int w, int h)
 {
     struct nk_rect r;
     r.x = (float)x;
@@ -5575,19 +5575,19 @@ nk_recti_(int x, int y, int w, int h)
 NK_API struct nk_rect
 nk_recta(struct nk_vec2 pos, struct nk_vec2 size)
 {
-    return nk_rect_(pos.x, pos.y, size.x, size.y);
+    return nk_rectz(pos.x, pos.y, size.x, size.y);
 }
 
 NK_API struct nk_rect
 nk_rectv(const float *r)
 {
-    return nk_rect_(r[0], r[1], r[2], r[3]);
+    return nk_rectz(r[0], r[1], r[2], r[3]);
 }
 
 NK_API struct nk_rect
 nk_rectiv(const int *r)
 {
-    return nk_recti_(r[0], r[1], r[2], r[3]);
+    return nk_rectiz(r[0], r[1], r[2], r[3]);
 }
 
 NK_API struct nk_vec2
@@ -5607,7 +5607,7 @@ nk_rect_size(struct nk_rect r)
 }
 
 NK_INTERN struct nk_rect
-nk_shrink_rect_(struct nk_rect r, float amount)
+nk_shrink_rectz(struct nk_rect r, float amount)
 {
     struct nk_rect res;
     r.w = NK_MAX(r.w, 2 * amount);
@@ -5631,7 +5631,7 @@ nk_pad_rect(struct nk_rect r, struct nk_vec2 pad)
 }
 
 NK_API struct nk_vec2
-nk_vec2_(float x, float y)
+nk_vec2z(float x, float y)
 {
     struct nk_vec2 ret;
     ret.x = x; ret.y = y;
@@ -5639,7 +5639,7 @@ nk_vec2_(float x, float y)
 }
 
 NK_API struct nk_vec2
-nk_vec2i_(int x, int y)
+nk_vec2iz(int x, int y)
 {
     struct nk_vec2 ret;
     ret.x = (float)x;
@@ -5650,13 +5650,13 @@ nk_vec2i_(int x, int y)
 NK_API struct nk_vec2
 nk_vec2v(const float *v)
 {
-    return nk_vec2_(v[0], v[1]);
+    return nk_vec2z(v[0], v[1]);
 }
 
 NK_API struct nk_vec2
 nk_vec2iv(const int *v)
 {
-    return nk_vec2i_(v[0], v[1]);
+    return nk_vec2iz(v[0], v[1]);
 }
 
 /*
@@ -7352,21 +7352,21 @@ nk_triangle_from_direction(struct nk_vec2 *result, struct nk_rect r,
     h_half = r.h / 2.0f;
 
     if (direction == NK_UP) {
-        result[0] = nk_vec2_(r.x + w_half, r.y);
-        result[1] = nk_vec2_(r.x + r.w, r.y + r.h);
-        result[2] = nk_vec2_(r.x, r.y + r.h);
+        result[0] = nk_vec2z(r.x + w_half, r.y);
+        result[1] = nk_vec2z(r.x + r.w, r.y + r.h);
+        result[2] = nk_vec2z(r.x, r.y + r.h);
     } else if (direction == NK_RIGHT) {
-        result[0] = nk_vec2_(r.x, r.y);
-        result[1] = nk_vec2_(r.x + r.w, r.y + h_half);
-        result[2] = nk_vec2_(r.x, r.y + r.h);
+        result[0] = nk_vec2z(r.x, r.y);
+        result[1] = nk_vec2z(r.x + r.w, r.y + h_half);
+        result[2] = nk_vec2z(r.x, r.y + r.h);
     } else if (direction == NK_DOWN) {
-        result[0] = nk_vec2_(r.x, r.y);
-        result[1] = nk_vec2_(r.x + r.w, r.y);
-        result[2] = nk_vec2_(r.x + w_half, r.y + r.h);
+        result[0] = nk_vec2z(r.x, r.y);
+        result[1] = nk_vec2z(r.x + r.w, r.y);
+        result[2] = nk_vec2z(r.x + w_half, r.y + r.h);
     } else {
-        result[0] = nk_vec2_(r.x, r.y + h_half);
-        result[1] = nk_vec2_(r.x + r.w, r.y);
-        result[2] = nk_vec2_(r.x + r.w, r.y + r.h);
+        result[0] = nk_vec2z(r.x, r.y + h_half);
+        result[1] = nk_vec2z(r.x + r.w, r.y);
+        result[2] = nk_vec2z(r.x + r.w, r.y + r.h);
     }
 }
 
@@ -7426,7 +7426,7 @@ nk_text_calculate_text_bounds(const struct nk_user_font *font,
     struct nk_vec2 *out_offset, int *glyphs, int op)
 {
     float line_height = row_height;
-    struct nk_vec2 text_size = nk_vec2_(0,0);
+    struct nk_vec2 text_size = nk_vec2z(0,0);
     float line_width = 0.0f;
 
     float glyph_width;
@@ -7434,7 +7434,7 @@ nk_text_calculate_text_bounds(const struct nk_user_font *font,
     nk_rune unicode = 0;
     int text_len = 0;
     if (!begin || byte_len <= 0 || !font)
-        return nk_vec2_(0,row_height);
+        return nk_vec2z(0,row_height);
 
     glyph_len = nk_utf_decode(begin, &unicode, byte_len);
     if (!glyph_len) return text_size;
@@ -7473,7 +7473,7 @@ nk_text_calculate_text_bounds(const struct nk_user_font *font,
     if (text_size.x < line_width)
         text_size.x = line_width;
     if (out_offset)
-        *out_offset = nk_vec2_(line_width, text_size.y + line_height);
+        *out_offset = nk_vec2z(line_width, text_size.y + line_height);
     if (line_width > 0 || text_size.y == 0.0f)
         text_size.y += line_height;
     if (remaining)
@@ -7634,10 +7634,10 @@ nk_utf_at(const char *buffer, int length, int index,
  *
  * ===============================================================*/
 #ifdef NK_INCLUDE_DEFAULT_ALLOCATOR
-NK_INTERN void* nk_malloc(nk_handle unused, void *old,nk_size size)
-{NK_UNUSED(unused); NK_UNUSED(old); return malloc(size);}
-NK_INTERN void nk_mfree(nk_handle unused, void *ptr)
-{NK_UNUSED(unused); free(ptr);}
+NK_INTERN void* nk_malloc(void *old,nk_size size)
+{return malloc(size);}
+NK_INTERN void nk_mfree(void *ptr)
+{free(ptr);}
 
 NK_API void
 nk_buffer_init_default(struct nk_buffer *buffer)
@@ -9543,10 +9543,10 @@ nk_draw_list_stroke_poly_line(struct nk_draw_list *list, const struct nk_vec2 *p
             dx = diff.x * (thickness * 0.5f);
             dy = diff.y * (thickness * 0.5f);
 
-            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(p1.x + dy, p1.y - dx), uv, col);
-            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(p2.x + dy, p2.y - dx), uv, col);
-            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(p2.x - dy, p2.y + dx), uv, col);
-            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(p1.x - dy, p1.y + dx), uv, col);
+            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(p1.x + dy, p1.y - dx), uv, col);
+            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(p2.x + dy, p2.y - dx), uv, col);
+            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(p2.x - dy, p2.y + dx), uv, col);
+            vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(p1.x - dy, p1.y + dx), uv, col);
 
             ids[0] = (nk_draw_index)(idx+0); ids[1] = (nk_draw_index)(idx+1);
             ids[2] = (nk_draw_index)(idx+2); ids[3] = (nk_draw_index)(idx+0);
@@ -9725,7 +9725,7 @@ nk_draw_list_path_arc_to_fast(struct nk_draw_list *list, struct nk_vec2 center,
             const struct nk_vec2 c = list->circle_vtx[(nk_size)a % NK_LEN(list->circle_vtx)];
             const float x = center.x + c.x * radius;
             const float y = center.y + c.y * radius;
-            nk_draw_list_path_line_to(list, nk_vec2_(x, y));
+            nk_draw_list_path_line_to(list, nk_vec2z(x, y));
         }
     }
 }
@@ -9767,7 +9767,7 @@ nk_draw_list_path_arc_to(struct nk_draw_list *list, struct nk_vec2 center,
         float new_cx, new_cy;
         const float x = center.x + cx;
         const float y = center.y + cy;
-        nk_draw_list_path_line_to(list, nk_vec2_(x, y));
+        nk_draw_list_path_line_to(list, nk_vec2z(x, y));
 
         new_cx = cx * cos_d - cy * sin_d;
         new_cy = cy * cos_d + cx * sin_d;
@@ -9789,14 +9789,14 @@ nk_draw_list_path_rect_to(struct nk_draw_list *list, struct nk_vec2 a,
 
     if (r == 0.0f) {
         nk_draw_list_path_line_to(list, a);
-        nk_draw_list_path_line_to(list, nk_vec2_(b.x,a.y));
+        nk_draw_list_path_line_to(list, nk_vec2z(b.x,a.y));
         nk_draw_list_path_line_to(list, b);
-        nk_draw_list_path_line_to(list, nk_vec2_(a.x,b.y));
+        nk_draw_list_path_line_to(list, nk_vec2z(a.x,b.y));
     } else {
-        nk_draw_list_path_arc_to_fast(list, nk_vec2_(a.x + r, a.y + r), r, 6, 9);
-        nk_draw_list_path_arc_to_fast(list, nk_vec2_(b.x - r, a.y + r), r, 9, 12);
-        nk_draw_list_path_arc_to_fast(list, nk_vec2_(b.x - r, b.y - r), r, 0, 3);
-        nk_draw_list_path_arc_to_fast(list, nk_vec2_(a.x + r, b.y - r), r, 3, 6);
+        nk_draw_list_path_arc_to_fast(list, nk_vec2z(a.x + r, a.y + r), r, 6, 9);
+        nk_draw_list_path_arc_to_fast(list, nk_vec2z(b.x - r, a.y + r), r, 9, 12);
+        nk_draw_list_path_arc_to_fast(list, nk_vec2z(b.x - r, b.y - r), r, 0, 3);
+        nk_draw_list_path_arc_to_fast(list, nk_vec2z(a.x + r, b.y - r), r, 3, 6);
     }
 }
 
@@ -9824,7 +9824,7 @@ nk_draw_list_path_curve_to(struct nk_draw_list *list, struct nk_vec2 p2,
         float w4 = t * t *t;
         float x = w1 * p1.x + w2 * p2.x + w3 * p3.x + w4 * p4.x;
         float y = w1 * p1.y + w2 * p2.y + w3 * p3.y + w4 * p4.y;
-        nk_draw_list_path_line_to(list, nk_vec2_(x,y));
+        nk_draw_list_path_line_to(list, nk_vec2z(x,y));
     }
 }
 
@@ -9862,8 +9862,8 @@ nk_draw_list_stroke_line(struct nk_draw_list *list, struct nk_vec2 a,
         nk_draw_list_path_line_to(list, a);
         nk_draw_list_path_line_to(list, b);
     } else {
-        nk_draw_list_path_line_to(list, nk_vec2_sub(a,nk_vec2_(0.5f,0.5f)));
-        nk_draw_list_path_line_to(list, nk_vec2_sub(b,nk_vec2_(0.5f,0.5f)));
+        nk_draw_list_path_line_to(list, nk_vec2_sub(a,nk_vec2z(0.5f,0.5f)));
+        nk_draw_list_path_line_to(list, nk_vec2_sub(b,nk_vec2z(0.5f,0.5f)));
     }
     nk_draw_list_path_stroke(list,  col, NK_STROKE_OPEN, thickness);
 }
@@ -9876,11 +9876,11 @@ nk_draw_list_fill_rect(struct nk_draw_list *list, struct nk_rect rect,
     if (!list || !col.a) return;
 
     if (list->line_AA == NK_ANTI_ALIASING_ON) {
-        nk_draw_list_path_rect_to(list, nk_vec2_(rect.x, rect.y),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h), rounding);
+        nk_draw_list_path_rect_to(list, nk_vec2z(rect.x, rect.y),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h), rounding);
     } else {
-        nk_draw_list_path_rect_to(list, nk_vec2_(rect.x-0.5f, rect.y-0.5f),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h), rounding);
+        nk_draw_list_path_rect_to(list, nk_vec2z(rect.x-0.5f, rect.y-0.5f),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h), rounding);
     } nk_draw_list_path_fill(list,  col);
 }
 
@@ -9891,11 +9891,11 @@ nk_draw_list_stroke_rect(struct nk_draw_list *list, struct nk_rect rect,
     NK_ASSERT(list);
     if (!list || !col.a) return;
     if (list->line_AA == NK_ANTI_ALIASING_ON) {
-        nk_draw_list_path_rect_to(list, nk_vec2_(rect.x, rect.y),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h), rounding);
+        nk_draw_list_path_rect_to(list, nk_vec2z(rect.x, rect.y),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h), rounding);
     } else {
-        nk_draw_list_path_rect_to(list, nk_vec2_(rect.x-0.5f, rect.y-0.5f),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h), rounding);
+        nk_draw_list_path_rect_to(list, nk_vec2z(rect.x-0.5f, rect.y-0.5f),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h), rounding);
     } nk_draw_list_path_stroke(list,  col, NK_STROKE_CLOSED, thickness);
 }
 
@@ -9928,10 +9928,10 @@ nk_draw_list_fill_rect_multi_color(struct nk_draw_list *list, struct nk_rect rec
     idx[2] = (nk_draw_index)(index+2); idx[3] = (nk_draw_index)(index+0);
     idx[4] = (nk_draw_index)(index+2); idx[5] = (nk_draw_index)(index+3);
 
-    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(rect.x, rect.y), list->config.null.uv, col_left);
-    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(rect.x + rect.w, rect.y), list->config.null.uv, col_top);
-    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(rect.x + rect.w, rect.y + rect.h), list->config.null.uv, col_right);
-    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2_(rect.x, rect.y + rect.h), list->config.null.uv, col_bottom);
+    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(rect.x, rect.y), list->config.null.uv, col_left);
+    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(rect.x + rect.w, rect.y), list->config.null.uv, col_top);
+    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(rect.x + rect.w, rect.y + rect.h), list->config.null.uv, col_right);
+    vtx = nk_draw_vertex(vtx, &list->config, nk_vec2z(rect.x, rect.y + rect.h), list->config.null.uv, col_bottom);
 }
 
 NK_API void
@@ -10012,10 +10012,10 @@ nk_draw_list_push_rect_uv(struct nk_draw_list *list, struct nk_vec2 a,
     if (!list) return;
 
     nk_color_fv(&col.r, color);
-    uvb = nk_vec2_(uvc.x, uva.y);
-    uvd = nk_vec2_(uva.x, uvc.y);
-    b = nk_vec2_(c.x, a.y);
-    d = nk_vec2_(a.x, c.y);
+    uvb = nk_vec2z(uvc.x, uva.y);
+    uvd = nk_vec2z(uva.x, uvc.y);
+    b = nk_vec2z(c.x, a.y);
+    d = nk_vec2z(a.x, c.y);
 
     index = (nk_draw_index)list->vertex_count;
     vtx = nk_draw_list_alloc_vertices(list, 4);
@@ -10047,11 +10047,11 @@ nk_draw_list_add_image(struct nk_draw_list *list, struct nk_image texture,
         uv[0].y = (float)texture.region[1]/(float)texture.h;
         uv[1].x = (float)(texture.region[0] + texture.region[2])/(float)texture.w;
         uv[1].y = (float)(texture.region[1] + texture.region[3])/(float)texture.h;
-        nk_draw_list_push_rect_uv(list, nk_vec2_(rect.x, rect.y),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h),  uv[0], uv[1], color);
-    } else nk_draw_list_push_rect_uv(list, nk_vec2_(rect.x, rect.y),
-            nk_vec2_(rect.x + rect.w, rect.y + rect.h),
-            nk_vec2_(0.0f, 0.0f), nk_vec2_(1.0f, 1.0f),color);
+        nk_draw_list_push_rect_uv(list, nk_vec2z(rect.x, rect.y),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h),  uv[0], uv[1], color);
+    } else nk_draw_list_push_rect_uv(list, nk_vec2z(rect.x, rect.y),
+            nk_vec2z(rect.x + rect.w, rect.y + rect.h),
+            nk_vec2z(0.0f, 0.0f), nk_vec2z(1.0f, 1.0f),color);
 }
 
 NK_API void
@@ -10094,7 +10094,7 @@ nk_draw_list_add_text(struct nk_draw_list *list, const struct nk_user_font *font
         gy = rect.y + g.offset.y;
         gw = g.width; gh = g.height;
         char_width = g.xadvance;
-        nk_draw_list_push_rect_uv(list, nk_vec2_(gx,gy), nk_vec2_(gx + gw, gy+ gh),
+        nk_draw_list_push_rect_uv(list, nk_vec2z(gx,gy), nk_vec2z(gx + gw, gy+ gh),
             g.uv[0], g.uv[1], fg);
 
         /* offset next glyph */
@@ -10133,77 +10133,77 @@ nk_convert(struct nk_context *ctx, struct nk_buffer *cmds,
         case NK_COMMAND_NOP: break;
         case NK_COMMAND_SCISSOR: {
             const struct nk_command_scissor *s = (const struct nk_command_scissor*)cmd;
-            nk_draw_list_add_clip(&ctx->draw_list, nk_rect_(s->x, s->y, s->w, s->h));
+            nk_draw_list_add_clip(&ctx->draw_list, nk_rectz(s->x, s->y, s->w, s->h));
         } break;
         case NK_COMMAND_LINE: {
             const struct nk_command_line *l = (const struct nk_command_line*)cmd;
-            nk_draw_list_stroke_line(&ctx->draw_list, nk_vec2_(l->begin.x, l->begin.y),
-                nk_vec2_(l->end.x, l->end.y), l->color, l->line_thickness);
+            nk_draw_list_stroke_line(&ctx->draw_list, nk_vec2z(l->begin.x, l->begin.y),
+                nk_vec2z(l->end.x, l->end.y), l->color, l->line_thickness);
         } break;
         case NK_COMMAND_CURVE: {
             const struct nk_command_curve *q = (const struct nk_command_curve*)cmd;
-            nk_draw_list_stroke_curve(&ctx->draw_list, nk_vec2_(q->begin.x, q->begin.y),
-                nk_vec2_(q->ctrl[0].x, q->ctrl[0].y), nk_vec2_(q->ctrl[1].x,
-                q->ctrl[1].y), nk_vec2_(q->end.x, q->end.y), q->color,
+            nk_draw_list_stroke_curve(&ctx->draw_list, nk_vec2z(q->begin.x, q->begin.y),
+                nk_vec2z(q->ctrl[0].x, q->ctrl[0].y), nk_vec2z(q->ctrl[1].x,
+                q->ctrl[1].y), nk_vec2z(q->end.x, q->end.y), q->color,
                 config->curve_segment_count, q->line_thickness);
         } break;
         case NK_COMMAND_RECT: {
             const struct nk_command_rect *r = (const struct nk_command_rect*)cmd;
-            nk_draw_list_stroke_rect(&ctx->draw_list, nk_rect_(r->x, r->y, r->w, r->h),
+            nk_draw_list_stroke_rect(&ctx->draw_list, nk_rectz(r->x, r->y, r->w, r->h),
                 r->color, (float)r->rounding, r->line_thickness);
         } break;
         case NK_COMMAND_RECT_FILLED: {
             const struct nk_command_rect_filled *r = (const struct nk_command_rect_filled*)cmd;
-            nk_draw_list_fill_rect(&ctx->draw_list, nk_rect_(r->x, r->y, r->w, r->h),
+            nk_draw_list_fill_rect(&ctx->draw_list, nk_rectz(r->x, r->y, r->w, r->h),
                 r->color, (float)r->rounding);
         } break;
         case NK_COMMAND_RECT_MULTI_COLOR: {
             const struct nk_command_rect_multi_color *r = (const struct nk_command_rect_multi_color*)cmd;
-            nk_draw_list_fill_rect_multi_color(&ctx->draw_list, nk_rect_(r->x, r->y, r->w, r->h),
+            nk_draw_list_fill_rect_multi_color(&ctx->draw_list, nk_rectz(r->x, r->y, r->w, r->h),
                 r->left, r->top, r->right, r->bottom);
         } break;
         case NK_COMMAND_CIRCLE: {
             const struct nk_command_circle *c = (const struct nk_command_circle*)cmd;
-            nk_draw_list_stroke_circle(&ctx->draw_list, nk_vec2_((float)c->x + (float)c->w/2,
+            nk_draw_list_stroke_circle(&ctx->draw_list, nk_vec2z((float)c->x + (float)c->w/2,
                 (float)c->y + (float)c->h/2), (float)c->w/2, c->color,
                 config->circle_segment_count, c->line_thickness);
         } break;
         case NK_COMMAND_CIRCLE_FILLED: {
             const struct nk_command_circle_filled *c = (const struct nk_command_circle_filled *)cmd;
-            nk_draw_list_fill_circle(&ctx->draw_list, nk_vec2_((float)c->x + (float)c->w/2,
+            nk_draw_list_fill_circle(&ctx->draw_list, nk_vec2z((float)c->x + (float)c->w/2,
                 (float)c->y + (float)c->h/2), (float)c->w/2, c->color,
                 config->circle_segment_count);
         } break;
         case NK_COMMAND_ARC: {
             const struct nk_command_arc *c = (const struct nk_command_arc*)cmd;
-            nk_draw_list_path_line_to(&ctx->draw_list, nk_vec2_(c->cx, c->cy));
-            nk_draw_list_path_arc_to(&ctx->draw_list, nk_vec2_(c->cx, c->cy), c->r,
+            nk_draw_list_path_line_to(&ctx->draw_list, nk_vec2z(c->cx, c->cy));
+            nk_draw_list_path_arc_to(&ctx->draw_list, nk_vec2z(c->cx, c->cy), c->r,
                 c->a[0], c->a[1], config->arc_segment_count);
             nk_draw_list_path_stroke(&ctx->draw_list, c->color, NK_STROKE_CLOSED, c->line_thickness);
         } break;
         case NK_COMMAND_ARC_FILLED: {
             const struct nk_command_arc_filled *c = (const struct nk_command_arc_filled*)cmd;
-            nk_draw_list_path_line_to(&ctx->draw_list, nk_vec2_(c->cx, c->cy));
-            nk_draw_list_path_arc_to(&ctx->draw_list, nk_vec2_(c->cx, c->cy), c->r,
+            nk_draw_list_path_line_to(&ctx->draw_list, nk_vec2z(c->cx, c->cy));
+            nk_draw_list_path_arc_to(&ctx->draw_list, nk_vec2z(c->cx, c->cy), c->r,
                 c->a[0], c->a[1], config->arc_segment_count);
             nk_draw_list_path_fill(&ctx->draw_list, c->color);
         } break;
         case NK_COMMAND_TRIANGLE: {
             const struct nk_command_triangle *t = (const struct nk_command_triangle*)cmd;
-            nk_draw_list_stroke_triangle(&ctx->draw_list, nk_vec2_(t->a.x, t->a.y),
-                nk_vec2_(t->b.x, t->b.y), nk_vec2_(t->c.x, t->c.y), t->color,
+            nk_draw_list_stroke_triangle(&ctx->draw_list, nk_vec2z(t->a.x, t->a.y),
+                nk_vec2z(t->b.x, t->b.y), nk_vec2z(t->c.x, t->c.y), t->color,
                 t->line_thickness);
         } break;
         case NK_COMMAND_TRIANGLE_FILLED: {
             const struct nk_command_triangle_filled *t = (const struct nk_command_triangle_filled*)cmd;
-            nk_draw_list_fill_triangle(&ctx->draw_list, nk_vec2_(t->a.x, t->a.y),
-                nk_vec2_(t->b.x, t->b.y), nk_vec2_(t->c.x, t->c.y), t->color);
+            nk_draw_list_fill_triangle(&ctx->draw_list, nk_vec2z(t->a.x, t->a.y),
+                nk_vec2z(t->b.x, t->b.y), nk_vec2z(t->c.x, t->c.y), t->color);
         } break;
         case NK_COMMAND_POLYGON: {
             int i;
             const struct nk_command_polygon*p = (const struct nk_command_polygon*)cmd;
             for (i = 0; i < p->point_count; ++i) {
-                struct nk_vec2 pnt = nk_vec2_((float)p->points[i].x, (float)p->points[i].y);
+                struct nk_vec2 pnt = nk_vec2z((float)p->points[i].x, (float)p->points[i].y);
                 nk_draw_list_path_line_to(&ctx->draw_list, pnt);
             }
             nk_draw_list_path_stroke(&ctx->draw_list, p->color, NK_STROKE_CLOSED, p->line_thickness);
@@ -10212,7 +10212,7 @@ nk_convert(struct nk_context *ctx, struct nk_buffer *cmds,
             int i;
             const struct nk_command_polygon_filled *p = (const struct nk_command_polygon_filled*)cmd;
             for (i = 0; i < p->point_count; ++i) {
-                struct nk_vec2 pnt = nk_vec2_((float)p->points[i].x, (float)p->points[i].y);
+                struct nk_vec2 pnt = nk_vec2z((float)p->points[i].x, (float)p->points[i].y);
                 nk_draw_list_path_line_to(&ctx->draw_list, pnt);
             }
             nk_draw_list_path_fill(&ctx->draw_list, p->color);
@@ -10221,19 +10221,19 @@ nk_convert(struct nk_context *ctx, struct nk_buffer *cmds,
             int i;
             const struct nk_command_polyline *p = (const struct nk_command_polyline*)cmd;
             for (i = 0; i < p->point_count; ++i) {
-                struct nk_vec2 pnt = nk_vec2_((float)p->points[i].x, (float)p->points[i].y);
+                struct nk_vec2 pnt = nk_vec2z((float)p->points[i].x, (float)p->points[i].y);
                 nk_draw_list_path_line_to(&ctx->draw_list, pnt);
             }
             nk_draw_list_path_stroke(&ctx->draw_list, p->color, NK_STROKE_OPEN, p->line_thickness);
         } break;
         case NK_COMMAND_TEXT: {
             const struct nk_command_text *t = (const struct nk_command_text*)cmd;
-            nk_draw_list_add_text(&ctx->draw_list, t->font, nk_rect_(t->x, t->y, t->w, t->h),
+            nk_draw_list_add_text(&ctx->draw_list, t->font, nk_rectz(t->x, t->y, t->w, t->h),
                 t->string, t->length, t->height, t->foreground);
         } break;
         case NK_COMMAND_IMAGE: {
             const struct nk_command_image *i = (const struct nk_command_image*)cmd;
-            nk_draw_list_add_image(&ctx->draw_list, i->img, nk_rect_(i->x, i->y, i->w, i->h), i->col);
+            nk_draw_list_add_image(&ctx->draw_list, i->img, nk_rectz(i->x, i->y, i->w, i->h), i->col);
         } break;
         case NK_COMMAND_CUSTOM: {
             const struct nk_command_custom *c = (const struct nk_command_custom*)cmd;
@@ -12480,7 +12480,7 @@ nk_font_baker_memory(nk_size *temp, int *glyph_count,
 }
 
 NK_INTERN struct nk_font_baker*
-nk_font_baker_(void *memory, int glyph_count, int count, struct nk_allocator *alloc)
+nk_font_bakerz(void *memory, int glyph_count, int count, struct nk_allocator *alloc)
 {
     struct nk_font_baker *baker;
     if (!memory) return 0;
@@ -12775,7 +12775,7 @@ nk_font_bake_convert(void *out_memory, int img_width, int img_height,
  *
  * --------------------------------------------------------------*/
 NK_INTERN float
-nk_font_text_width(nk_handle handle, float height, const char *text, int len)
+nk_font_text_width(struct nk_font *font, float height, const char *text, int len)
 {
     nk_rune unicode;
     int text_len  = 0;
@@ -12783,7 +12783,6 @@ nk_font_text_width(nk_handle handle, float height, const char *text, int len)
     int glyph_len = 0;
     float scale = 0;
 
-    struct nk_font *font = (struct nk_font*)handle.ptr;
     NK_ASSERT(font);
     NK_ASSERT(font->glyphs);
     if (!font || !text || !len)
@@ -12809,12 +12808,11 @@ nk_font_text_width(nk_handle handle, float height, const char *text, int len)
 
 #ifdef NK_INCLUDE_VERTEX_BUFFER_OUTPUT
 NK_INTERN void
-nk_font_query_font_glyph(nk_handle handle, float height,
+nk_font_query_font_glyph(struct nk_font *font, float height,
     struct nk_user_font_glyph *glyph, nk_rune codepoint, nk_rune next_codepoint)
 {
     float scale;
     const struct nk_font_glyph *g;
-    struct nk_font *font;
 
     NK_ASSERT(glyph);
     NK_UNUSED(next_codepoint);
@@ -12829,10 +12827,10 @@ nk_font_query_font_glyph(nk_handle handle, float height,
     g = nk_font_find_glyph(font, codepoint);
     glyph->width = (g->x1 - g->x0) * scale;
     glyph->height = (g->y1 - g->y0) * scale;
-    glyph->offset = nk_vec2_(g->x0 * scale, g->y0 * scale);
+    glyph->offset = nk_vec2z(g->x0 * scale, g->y0 * scale);
     glyph->xadvance = (g->xadvance * scale);
-    glyph->uv[0] = nk_vec2_(g->u0, g->v0);
-    glyph->uv[1] = nk_vec2_(g->u1, g->v1);
+    glyph->uv[0] = nk_vec2z(g->u0, g->v0);
+    glyph->uv[1] = nk_vec2z(g->u1, g->v1);
 }
 #endif
 
@@ -13196,7 +13194,7 @@ nk_decode_85(unsigned char* dst, const unsigned char* src)
  *
  * --------------------------------------------------------------*/
 NK_API struct nk_font_config
-nk_font_config_(float pixel_height)
+nk_font_configz(float pixel_height)
 {
     struct nk_font_config cfg;
     nk_zero_struct(cfg);
@@ -13208,7 +13206,7 @@ nk_font_config_(float pixel_height)
     cfg.oversample_v = 1;
     cfg.pixel_snap = 0;
     cfg.coord_type = NK_COORD_UV;
-    cfg.spacing = nk_vec2_(0,0);
+    cfg.spacing = nk_vec2z(0,0);
     cfg.range = nk_font_default_glyph_ranges();
     cfg.merge_mode = 0;
     cfg.fallback_glyph = '?';
@@ -13380,7 +13378,7 @@ nk_font_atlas_add_from_memory(struct nk_font_atlas *atlas, void *memory,
         !atlas->permanent.alloc || !atlas->permanent.free)
         return 0;
 
-    cfg = (config) ? *config: nk_font_config_(height);
+    cfg = (config) ? *config: nk_font_configz(height);
     cfg.ttf_blob = memory;
     cfg.ttf_size = size;
     cfg.size = height;
@@ -13407,7 +13405,7 @@ nk_font_atlas_add_from_file(struct nk_font_atlas *atlas, const char *file_path,
     memory = nk_file_load(file_path, &size, &atlas->permanent);
     if (!memory) return 0;
 
-    cfg = (config) ? *config: nk_font_config_(height);
+    cfg = (config) ? *config: nk_font_  height);
     cfg.ttf_blob = memory;
     cfg.ttf_size = size;
     cfg.size = height;
@@ -13444,7 +13442,7 @@ nk_font_atlas_add_compressed(struct nk_font_atlas *atlas,
     nk_decompress((unsigned char*)decompressed_data, (unsigned char*)compressed_data,
         (unsigned int)compressed_size);
 
-    cfg = (config) ? *config: nk_font_config_(height);
+    cfg = (config) ? *config: nk_font_configz(height);
     cfg.ttf_blob = decompressed_data;
     cfg.ttf_size = decompressed_size;
     cfg.size = height;
@@ -13545,7 +13543,7 @@ nk_font_atlas_bake(struct nk_font_atlas *atlas, int *width, int *height,
     if (!tmp) goto failed;
 
     /* allocate glyph memory for all fonts */
-    baker = nk_font_baker_(tmp, atlas->glyph_count, atlas->font_num, &atlas->temporary);
+    baker = nk_font_bakerz(tmp, atlas->glyph_count, atlas->font_num, &atlas->temporary);
     atlas->glyphs = (struct nk_font_glyph*)atlas->permanent.alloc(
         atlas->permanent.userdata,0, sizeof(struct nk_font_glyph)*(nk_size)atlas->glyph_count);
     NK_ASSERT(atlas->glyphs);
@@ -13632,7 +13630,7 @@ nk_font_atlas_end(struct nk_font_atlas *atlas, nk_handle texture,
     if (!atlas) {
         if (!null) return;
         null->texture = texture;
-        null->uv = nk_vec2_(0.5f,0.5f);
+        null->uv = nk_vec2z(0.5f,0.5f);
     }
     if (null) {
         null->texture = texture;
@@ -13738,7 +13736,7 @@ nk_input_begin(struct nk_context *ctx)
         in->mouse.buttons[i].clicked = 0;
 
     in->keyboard.text_len = 0;
-    in->mouse.scroll_delta = nk_vec2_(0,0);
+    in->mouse.scroll_delta = nk_vec2z(0,0);
     in->mouse.prev.x = in->mouse.pos.x;
     in->mouse.prev.y = in->mouse.pos.y;
     in->mouse.delta.x = 0;
@@ -15004,7 +15002,7 @@ nk_textedit_clear_state(struct nk_text_edit *state, enum nk_text_edit_type type,
    state->single_line = (unsigned char)(type == NK_TEXT_EDIT_SINGLE_LINE);
    state->mode = NK_TEXT_EDIT_MODE_VIEW;
    state->filter = filter;
-   state->scrollbar = nk_vec2_(0,0);
+   state->scrollbar = nk_vec2z(0,0);
 }
 
 NK_API void
@@ -15137,7 +15135,7 @@ nk_widget_text_wrap(struct nk_command_buffer *o, struct nk_rect b,
     NK_ASSERT(t);
     if (!o || !t) return;
 
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     text.background = t->background;
     text.text = t->text;
 
@@ -15180,7 +15178,7 @@ nk_draw_symbol(struct nk_command_buffer *out, enum nk_symbol_type type,
             (type == NK_SYMBOL_UNDERSCORE) ? "_":
             (type == NK_SYMBOL_PLUS) ? "+": "-";
         struct nk_text text;
-        text.padding = nk_vec2_(0,0);
+        text.padding = nk_vec2z(0,0);
         text.background = background;
         text.text = foreground;
         nk_widget_text(out, content, X, 1, &text, NK_TEXT_CENTERED, font);
@@ -15193,11 +15191,11 @@ nk_draw_symbol(struct nk_command_buffer *out, enum nk_symbol_type type,
         if (type == NK_SYMBOL_RECT_SOLID || type == NK_SYMBOL_RECT_OUTLINE) {
             nk_fill_rect(out, content,  0, foreground);
             if (type == NK_SYMBOL_RECT_OUTLINE)
-                nk_fill_rect(out, nk_shrink_rect_(content, border_width), 0, background);
+                nk_fill_rect(out, nk_shrink_rectz(content, border_width), 0, background);
         } else {
             nk_fill_circle(out, content, foreground);
             if (type == NK_SYMBOL_CIRCLE_OUTLINE)
-                nk_fill_circle(out, nk_shrink_rect_(content, 1), background);
+                nk_fill_circle(out, nk_shrink_rectz(content, 1), background);
         }
     } break;
     case NK_SYMBOL_TRIANGLE_UP:
@@ -15314,7 +15312,7 @@ nk_draw_button_text(struct nk_command_buffer *out,
         text.text = style->text_active;
     else text.text = style->text_normal;
 
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     nk_widget_text(out, *content, txt, len, &text, text_alignment, font);
 }
 
@@ -15455,7 +15453,7 @@ nk_draw_button_text_symbol(struct nk_command_buffer *out,
         text.text = style->text_normal;
     }
 
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     nk_draw_symbol(out, type, *symbol, style->text_background, sym, 0, font);
     nk_widget_text(out, *label, str, len, &text, NK_TEXT_CENTERED, font);
 }
@@ -15514,7 +15512,7 @@ nk_draw_button_text_image(struct nk_command_buffer *out,
         text.text = style->text_active;
     else text.text = style->text_normal;
 
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     nk_widget_text(out, *label, str, len, &text, NK_TEXT_CENTERED, font);
     nk_draw_image(out, *image, img, nk_white);
 }
@@ -15611,7 +15609,7 @@ nk_draw_checkbox(struct nk_command_buffer *out,
     /* draw background and cursor */
     if (background->type == NK_STYLE_ITEM_COLOR) {
         nk_fill_rect(out, *selector, 0, style->border_color);
-        nk_fill_rect(out, nk_shrink_rect_(*selector, style->border), 0, background->data.color);
+        nk_fill_rect(out, nk_shrink_rectz(*selector, style->border), 0, background->data.color);
     } else nk_draw_image(out, *selector, &background->data.image, nk_white);
     if (active) {
         if (cursor->type == NK_STYLE_ITEM_IMAGE)
@@ -15654,7 +15652,7 @@ nk_draw_option(struct nk_command_buffer *out,
     /* draw background and cursor */
     if (background->type == NK_STYLE_ITEM_COLOR) {
         nk_fill_circle(out, *selector, style->border_color);
-        nk_fill_circle(out, nk_shrink_rect_(*selector, style->border), background->data.color);
+        nk_fill_circle(out, nk_shrink_rectz(*selector, style->border), background->data.color);
     } else nk_draw_image(out, *selector, &background->data.image, nk_white);
     if (active) {
         if (cursor->type == NK_STYLE_ITEM_IMAGE)
@@ -16158,7 +16156,7 @@ nk_do_progress(nk_flags *state,
     /* calculate progressbar cursor */
     cursor.w = NK_MAX(bounds.w, 2 * style->padding.x + 2 * style->border);
     cursor.h = NK_MAX(bounds.h, 2 * style->padding.y + 2 * style->border);
-    cursor = nk_pad_rect(bounds, nk_vec2_(style->padding.x + style->border, style->padding.y + style->border));
+    cursor = nk_pad_rect(bounds, nk_vec2z(style->padding.x + style->border, style->padding.y + style->border));
     prog_scale = (float)value / (float)max;
 
     /* update progressbar */
@@ -16557,7 +16555,7 @@ nk_edit_draw_text(struct nk_command_buffer *out,
     int line_count = 0;
 
     struct nk_text txt;
-    txt.padding = nk_vec2_(0,0);
+    txt.padding = nk_vec2z(0,0);
     txt.background = background;
     txt.text = foreground;
 
@@ -16803,7 +16801,7 @@ nk_do_edit(nk_flags *state, struct nk_command_buffer *out,
     if (edit->active)
     {
         int total_lines = 1;
-        struct nk_vec2 text_size = nk_vec2_(0,0);
+        struct nk_vec2 text_size = nk_vec2z(0,0);
 
         /* text pointer positions */
         const char *cursor_ptr = 0;
@@ -16811,9 +16809,9 @@ nk_do_edit(nk_flags *state, struct nk_command_buffer *out,
         const char *select_end_ptr = 0;
 
         /* 2D pixel positions */
-        struct nk_vec2 cursor_pos = nk_vec2_(0,0);
-        struct nk_vec2 selection_offset_start = nk_vec2_(0,0);
-        struct nk_vec2 selection_offset_end = nk_vec2_(0,0);
+        struct nk_vec2 cursor_pos = nk_vec2z(0,0);
+        struct nk_vec2 selection_offset_start = nk_vec2z(0,0);
+        struct nk_vec2 selection_offset_end = nk_vec2z(0,0);
 
         int selection_begin = NK_MIN(edit->select_start, edit->select_end);
         int selection_end = NK_MAX(edit->select_start, edit->select_end);
@@ -17079,7 +17077,7 @@ nk_do_edit(nk_flags *state, struct nk_command_buffer *out,
                 label.w = font->width(font->userdata, font->height, cursor_ptr, glyph_len);
                 label.h = row_height;
 
-                txt.padding = nk_vec2_(0,0);
+                txt.padding = nk_vec2z(0,0);
                 txt.background = cursor_color;;
                 txt.text = cursor_text_color;
                 nk_fill_rect(out, label, 0, cursor_color);
@@ -17239,7 +17237,7 @@ nk_draw_property(struct nk_command_buffer *out, const struct nk_style_property *
     }
 
     /* draw label */
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     nk_widget_text(out, *label, name, len, &text, NK_TEXT_CENTERED, font);
 }
 
@@ -17505,7 +17503,7 @@ nk_draw_color_picker(struct nk_command_buffer *o, const struct nk_rect *matrix,
     nk_colorf_hsva_fv(hsva, col);
     for (i = 0; i < 6; ++i) {
         nk_fill_rect_multi_color(o,
-            nk_rect_(hue_bar->x, hue_bar->y + (float)i * (hue_bar->h/6.0f) + 0.5f,
+            nk_rectz(hue_bar->x, hue_bar->y + (float)i * (hue_bar->h/6.0f) + 0.5f,
                 hue_bar->w, (hue_bar->h/6.0f) + 0.5f), hue_colors[i], hue_colors[i],
                 hue_colors[i+1], hue_colors[i+1]);
     }
@@ -17672,7 +17670,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     /* default text */
     text = &style->text;
     text->color = table[NK_COLOR_TEXT];
-    text->padding = nk_vec2_(0,0);
+    text->padding = nk_vec2z(0,0);
 
     /* default button */
     button = &style->button;
@@ -17685,9 +17683,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->image_padding   = nk_vec2_(0.0f,0.0f);
-    button->touch_padding   = nk_vec2_(0.0f, 0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->image_padding   = nk_vec2z(0.0f,0.0f);
+    button->touch_padding   = nk_vec2z(0.0f, 0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 1.0f;
@@ -17706,8 +17704,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -17726,8 +17724,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -17748,8 +17746,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     toggle->text_normal     = table[NK_COLOR_TEXT];
     toggle->text_hover      = table[NK_COLOR_TEXT];
     toggle->text_active     = table[NK_COLOR_TEXT];
-    toggle->padding         = nk_vec2_(2.0f, 2.0f);
-    toggle->touch_padding   = nk_vec2_(0,0);
+    toggle->padding         = nk_vec2z(2.0f, 2.0f);
+    toggle->touch_padding   = nk_vec2z(0,0);
     toggle->border_color    = nk_rgba(0,0,0,0);
     toggle->border          = 0.0f;
     toggle->spacing         = 4;
@@ -17767,8 +17765,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     toggle->text_normal     = table[NK_COLOR_TEXT];
     toggle->text_hover      = table[NK_COLOR_TEXT];
     toggle->text_active     = table[NK_COLOR_TEXT];
-    toggle->padding         = nk_vec2_(3.0f, 3.0f);
-    toggle->touch_padding   = nk_vec2_(0,0);
+    toggle->padding         = nk_vec2z(3.0f, 3.0f);
+    toggle->touch_padding   = nk_vec2z(0,0);
     toggle->border_color    = nk_rgba(0,0,0,0);
     toggle->border          = 0.0f;
     toggle->spacing         = 4;
@@ -17788,8 +17786,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     select->text_normal_active  = table[NK_COLOR_TEXT];
     select->text_hover_active   = table[NK_COLOR_TEXT];
     select->text_pressed_active = table[NK_COLOR_TEXT];
-    select->padding         = nk_vec2_(2.0f,2.0f);
-    select->touch_padding   = nk_vec2_(0,0);
+    select->padding         = nk_vec2z(2.0f,2.0f);
+    select->touch_padding   = nk_vec2z(0,0);
     select->userdata        = nk_handle_ptr(0);
     select->rounding        = 0.0f;
     select->draw_begin      = 0;
@@ -17810,9 +17808,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     slider->cursor_active   = nk_style_item_color(table[NK_COLOR_SLIDER_CURSOR_ACTIVE]);
     slider->inc_symbol      = NK_SYMBOL_TRIANGLE_RIGHT;
     slider->dec_symbol      = NK_SYMBOL_TRIANGLE_LEFT;
-    slider->cursor_size     = nk_vec2_(16,16);
-    slider->padding         = nk_vec2_(2,2);
-    slider->spacing         = nk_vec2_(2,2);
+    slider->cursor_size     = nk_vec2z(16,16);
+    slider->padding         = nk_vec2z(2,2);
+    slider->spacing         = nk_vec2z(2,2);
     slider->userdata        = nk_handle_ptr(0);
     slider->show_buttons    = nk_false;
     slider->bar_height      = 8;
@@ -17830,8 +17828,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = nk_rgb(175,175,175);
     button->text_hover      = nk_rgb(175,175,175);
     button->text_active     = nk_rgb(175,175,175);
-    button->padding         = nk_vec2_(8.0f,8.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(8.0f,8.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 1.0f;
@@ -17852,7 +17850,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     prog->border_color      = nk_rgba(0,0,0,0);
     prog->cursor_border_color = nk_rgba(0,0,0,0);
     prog->userdata          = nk_handle_ptr(0);
-    prog->padding           = nk_vec2_(4,4);
+    prog->padding           = nk_vec2z(4,4);
     prog->rounding          = 0;
     prog->border            = 0;
     prog->cursor_rounding   = 0;
@@ -17874,7 +17872,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     scroll->userdata        = nk_handle_ptr(0);
     scroll->border_color    = table[NK_COLOR_SCROLLBAR];
     scroll->cursor_border_color = table[NK_COLOR_SCROLLBAR];
-    scroll->padding         = nk_vec2_(0,0);
+    scroll->padding         = nk_vec2z(0,0);
     scroll->show_buttons    = nk_false;
     scroll->border          = 0;
     scroll->rounding        = 0;
@@ -17894,8 +17892,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = nk_rgb(175,175,175);
     button->text_hover      = nk_rgb(175,175,175);
     button->text_active     = nk_rgb(175,175,175);
-    button->padding         = nk_vec2_(4.0f,4.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(4.0f,4.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 1.0f;
@@ -17924,9 +17922,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     edit->selected_hover    = table[NK_COLOR_TEXT];
     edit->selected_text_normal  = table[NK_COLOR_EDIT];
     edit->selected_text_hover   = table[NK_COLOR_EDIT];
-    edit->scrollbar_size    = nk_vec2_(10,10);
+    edit->scrollbar_size    = nk_vec2z(10,10);
     edit->scrollbar         = style->scrollv;
-    edit->padding           = nk_vec2_(4,4);
+    edit->padding           = nk_vec2z(4,4);
     edit->row_padding       = 2;
     edit->cursor_size       = 4;
     edit->border            = 1;
@@ -17945,7 +17943,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     property->sym_left      = NK_SYMBOL_TRIANGLE_LEFT;
     property->sym_right     = NK_SYMBOL_TRIANGLE_RIGHT;
     property->userdata      = nk_handle_ptr(0);
-    property->padding       = nk_vec2_(4,4);
+    property->padding       = nk_vec2z(4,4);
     property->border        = 1;
     property->rounding      = 10;
     property->draw_begin    = 0;
@@ -17962,8 +17960,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(0.0f,0.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(0.0f,0.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -17990,7 +17988,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     edit->selected_hover    = table[NK_COLOR_TEXT];
     edit->selected_text_normal  = table[NK_COLOR_EDIT];
     edit->selected_text_hover   = table[NK_COLOR_EDIT];
-    edit->padding           = nk_vec2_(0,0);
+    edit->padding           = nk_vec2z(0,0);
     edit->cursor_size       = 8;
     edit->border            = 0;
     edit->rounding          = 0;
@@ -18002,7 +18000,7 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     chart->border_color     = table[NK_COLOR_BORDER];
     chart->selected_color   = table[NK_COLOR_CHART_COLOR_HIGHLIGHT];
     chart->color            = table[NK_COLOR_CHART_COLOR];
-    chart->padding          = nk_vec2_(4,4);
+    chart->padding          = nk_vec2z(4,4);
     chart->border           = 0;
     chart->rounding         = 0;
 
@@ -18018,9 +18016,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     combo->sym_normal       = NK_SYMBOL_TRIANGLE_DOWN;
     combo->sym_hover        = NK_SYMBOL_TRIANGLE_DOWN;
     combo->sym_active       = NK_SYMBOL_TRIANGLE_DOWN;
-    combo->content_padding  = nk_vec2_(4,4);
-    combo->button_padding   = nk_vec2_(0,4);
-    combo->spacing          = nk_vec2_(4,0);
+    combo->content_padding  = nk_vec2z(4,4);
+    combo->button_padding   = nk_vec2z(0,4);
+    combo->spacing          = nk_vec2z(4,0);
     combo->border           = 1;
     combo->rounding         = 0;
 
@@ -18035,8 +18033,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -18051,8 +18049,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     tab->text               = table[NK_COLOR_TEXT];
     tab->sym_minimize       = NK_SYMBOL_TRIANGLE_RIGHT;
     tab->sym_maximize       = NK_SYMBOL_TRIANGLE_DOWN;
-    tab->padding            = nk_vec2_(4,4);
-    tab->spacing            = nk_vec2_(4,4);
+    tab->padding            = nk_vec2z(4,4);
+    tab->spacing            = nk_vec2z(4,4);
     tab->indent             = 10.0f;
     tab->border             = 1;
     tab->rounding           = 0;
@@ -18068,8 +18066,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -18089,8 +18087,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(2.0f,2.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(2.0f,2.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -18111,9 +18109,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     win->header.label_normal = table[NK_COLOR_TEXT];
     win->header.label_hover = table[NK_COLOR_TEXT];
     win->header.label_active = table[NK_COLOR_TEXT];
-    win->header.label_padding = nk_vec2_(4,4);
-    win->header.padding = nk_vec2_(4,4);
-    win->header.spacing = nk_vec2_(0,0);
+    win->header.label_padding = nk_vec2z(4,4);
+    win->header.padding = nk_vec2z(4,4);
+    win->header.spacing = nk_vec2z(0,0);
 
     /* window header close button */
     button = &style->window.header.close_button;
@@ -18126,8 +18124,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(0.0f,0.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(0.0f,0.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -18146,8 +18144,8 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     button->text_normal     = table[NK_COLOR_TEXT];
     button->text_hover      = table[NK_COLOR_TEXT];
     button->text_active     = table[NK_COLOR_TEXT];
-    button->padding         = nk_vec2_(0.0f,0.0f);
-    button->touch_padding   = nk_vec2_(0.0f,0.0f);
+    button->padding         = nk_vec2z(0.0f,0.0f);
+    button->touch_padding   = nk_vec2z(0.0f,0.0f);
     button->userdata        = nk_handle_ptr(0);
     button->text_alignment  = NK_TEXT_CENTERED;
     button->border          = 0.0f;
@@ -18168,9 +18166,9 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     win->scaler = nk_style_item_color(table[NK_COLOR_TEXT]);
 
     win->rounding = 0.0f;
-    win->spacing = nk_vec2_(4,4);
-    win->scrollbar_size = nk_vec2_(10,10);
-    win->min_size = nk_vec2_(64,64);
+    win->spacing = nk_vec2z(4,4);
+    win->scrollbar_size = nk_vec2z(10,10);
+    win->min_size = nk_vec2z(64,64);
 
     win->combo_border = 1.0f;
     win->contextual_border = 1.0f;
@@ -18181,13 +18179,13 @@ nk_style_from_table(struct nk_context *ctx, const struct nk_color *table)
     win->border = 2.0f;
     win->min_row_height_padding = 8;
 
-    win->padding = nk_vec2_(4,4);
-    win->group_padding = nk_vec2_(4,4);
-    win->popup_padding = nk_vec2_(4,4);
-    win->combo_padding = nk_vec2_(4,4);
-    win->contextual_padding = nk_vec2_(4,4);
-    win->menu_padding = nk_vec2_(4,4);
-    win->tooltip_padding = nk_vec2_(4,4);
+    win->padding = nk_vec2z(4,4);
+    win->group_padding = nk_vec2z(4,4);
+    win->popup_padding = nk_vec2z(4,4);
+    win->combo_padding = nk_vec2z(4,4);
+    win->contextual_padding = nk_vec2z(4,4);
+    win->menu_padding = nk_vec2z(4,4);
+    win->tooltip_padding = nk_vec2z(4,4);
 }
 
 NK_API void
@@ -18922,7 +18920,7 @@ nk_panel_begin(struct nk_context *ctx, const char *title, enum nk_panel_type pan
     layout->bounds.w -= 2*panel_padding.x;
     if (win->flags & NK_WINDOW_BORDER) {
         layout->border = nk_panel_get_border(style, win->flags, panel_type);
-        layout->bounds = nk_shrink_rect_(layout->bounds, layout->border);
+        layout->bounds = nk_shrink_rectz(layout->bounds, layout->border);
     } else layout->border = 0;
     layout->at_y = layout->bounds.y;
     layout->at_x = layout->bounds.x;
@@ -19038,7 +19036,7 @@ nk_panel_begin(struct nk_context *ctx, const char *title, enum nk_panel_type pan
         int text_len = nk_strlen(title);
         struct nk_rect label = {0,0,0,0};
         float t = font->width(font->userdata, font->height, title, text_len);
-        text.padding = nk_vec2_(0,0);
+        text.padding = nk_vec2z(0,0);
 
         label.x = header.x + style->window.header.padding.x;
         label.x += style->window.header.label_padding.x;
@@ -19784,7 +19782,7 @@ nk_begin_titled(struct nk_context *ctx, const char *name, const char *title,
         float h = ctx->style.font->height + 2.0f * style->window.header.padding.y +
             (2.0f * style->window.header.label_padding.y);
         struct nk_rect win_bounds = (!(win->flags & NK_WINDOW_MINIMIZED))?
-            win->bounds: nk_rect_(win->bounds.x, win->bounds.y, win->bounds.w, h);
+            win->bounds: nk_rectz(win->bounds.x, win->bounds.y, win->bounds.w, h);
 
         /* activate window if hovered and no other window is overlapping this window */
         inpanel = nk_input_has_mouse_click_down_in_rect(&ctx->input, NK_BUTTON_LEFT, win_bounds, nk_true);
@@ -19794,7 +19792,7 @@ nk_begin_titled(struct nk_context *ctx, const char *name, const char *title,
             iter = win->next;
             while (iter) {
                 struct nk_rect iter_bounds = (!(iter->flags & NK_WINDOW_MINIMIZED))?
-                    iter->bounds: nk_rect_(iter->bounds.x, iter->bounds.y, iter->bounds.w, h);
+                    iter->bounds: nk_rectz(iter->bounds.x, iter->bounds.y, iter->bounds.w, h);
                 if (NK_INTERSECT(win_bounds.x, win_bounds.y, win_bounds.w, win_bounds.h,
                     iter_bounds.x, iter_bounds.y, iter_bounds.w, iter_bounds.h) &&
                     (!(iter->flags & NK_WINDOW_HIDDEN)))
@@ -19815,7 +19813,7 @@ nk_begin_titled(struct nk_context *ctx, const char *name, const char *title,
             while (iter) {
                 /* try to find a panel with higher priority in the same position */
                 struct nk_rect iter_bounds = (!(iter->flags & NK_WINDOW_MINIMIZED))?
-                iter->bounds: nk_rect_(iter->bounds.x, iter->bounds.y, iter->bounds.w, h);
+                iter->bounds: nk_rectz(iter->bounds.x, iter->bounds.y, iter->bounds.w, h);
                 if (NK_INBOX(ctx->input.mouse.pos.x, ctx->input.mouse.pos.y,
                     iter_bounds.x, iter_bounds.y, iter_bounds.w, iter_bounds.h) &&
                     !(iter->flags & NK_WINDOW_HIDDEN))
@@ -19885,7 +19883,7 @@ nk_window_get_bounds(const struct nk_context *ctx)
 {
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
-    if (!ctx || !ctx->current) return nk_rect_(0,0,0,0);
+    if (!ctx || !ctx->current) return nk_rectz(0,0,0,0);
     return ctx->current->bounds;
 }
 
@@ -19894,8 +19892,8 @@ nk_window_get_position(const struct nk_context *ctx)
 {
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
-    if (!ctx || !ctx->current) return nk_vec2_(0,0);
-    return nk_vec2_(ctx->current->bounds.x, ctx->current->bounds.y);
+    if (!ctx || !ctx->current) return nk_vec2z(0,0);
+    return nk_vec2z(ctx->current->bounds.x, ctx->current->bounds.y);
 }
 
 NK_API struct nk_vec2
@@ -19903,8 +19901,8 @@ nk_window_get_size(const struct nk_context *ctx)
 {
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
-    if (!ctx || !ctx->current) return nk_vec2_(0,0);
-    return nk_vec2_(ctx->current->bounds.w, ctx->current->bounds.h);
+    if (!ctx || !ctx->current) return nk_vec2z(0,0);
+    return nk_vec2z(ctx->current->bounds.w, ctx->current->bounds.h);
 }
 
 NK_API float
@@ -19930,7 +19928,7 @@ nk_window_get_content_region(struct nk_context *ctx)
 {
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
-    if (!ctx || !ctx->current) return nk_rect_(0,0,0,0);
+    if (!ctx || !ctx->current) return nk_rectz(0,0,0,0);
     return ctx->current->layout->clip;
 }
 
@@ -19940,8 +19938,8 @@ nk_window_get_content_region_min(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     NK_ASSERT(ctx->current->layout);
-    if (!ctx || !ctx->current) return nk_vec2_(0,0);
-    return nk_vec2_(ctx->current->layout->clip.x, ctx->current->layout->clip.y);
+    if (!ctx || !ctx->current) return nk_vec2z(0,0);
+    return nk_vec2z(ctx->current->layout->clip.x, ctx->current->layout->clip.y);
 }
 
 NK_API struct nk_vec2
@@ -19950,8 +19948,8 @@ nk_window_get_content_region_max(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     NK_ASSERT(ctx->current->layout);
-    if (!ctx || !ctx->current) return nk_vec2_(0,0);
-    return nk_vec2_(ctx->current->layout->clip.x + ctx->current->layout->clip.w,
+    if (!ctx || !ctx->current) return nk_vec2z(0,0);
+    return nk_vec2z(ctx->current->layout->clip.x + ctx->current->layout->clip.w,
         ctx->current->layout->clip.y + ctx->current->layout->clip.h);
 }
 
@@ -19961,8 +19959,8 @@ nk_window_get_content_region_size(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     NK_ASSERT(ctx->current->layout);
-    if (!ctx || !ctx->current) return nk_vec2_(0,0);
-    return nk_vec2_(ctx->current->layout->clip.w, ctx->current->layout->clip.h);
+    if (!ctx || !ctx->current) return nk_vec2z(0,0);
+    return nk_vec2z(ctx->current->layout->clip.w, ctx->current->layout->clip.h);
 }
 
 NK_API struct nk_command_buffer*
@@ -20426,7 +20424,7 @@ nk_panel_layout(const struct nk_context *ctx, struct nk_window *win,
 }
 
 NK_INTERN void
-nk_row_layout_(struct nk_context *ctx, enum nk_layout_format fmt,
+nk_row_layoutz(struct nk_context *ctx, enum nk_layout_format fmt,
     float height, int cols, int width)
 {
     /* update the current row and set the current row layout */
@@ -20463,13 +20461,13 @@ nk_layout_ratio_from_pixel(struct nk_context *ctx, float pixel_width)
 NK_API void
 nk_layout_row_dynamic(struct nk_context *ctx, float height, int cols)
 {
-    nk_row_layout_(ctx, NK_DYNAMIC, height, cols, 0);
+    nk_row_layoutz(ctx, NK_DYNAMIC, height, cols, 0);
 }
 
 NK_API void
 nk_layout_row_static(struct nk_context *ctx, float height, int item_width, int cols)
 {
-    nk_row_layout_(ctx, NK_STATIC, height, cols, item_width);
+    nk_row_layoutz(ctx, NK_STATIC, height, cols, item_width);
 }
 
 NK_API void
@@ -21143,7 +21141,7 @@ nk_tree_state_base(struct nk_context *ctx, enum nk_tree_type type,
         } else {
             text.background = background->data.color;
             nk_fill_rect(out, header, 0, style->tab.border_color);
-            nk_fill_rect(out, nk_shrink_rect_(header, style->tab.border),
+            nk_fill_rect(out, nk_shrink_rectz(header, style->tab.border),
                 style->tab.rounding, background->data.color);
         }
     } else text.background = style->window.background;
@@ -21189,7 +21187,7 @@ nk_tree_state_base(struct nk_context *ctx, enum nk_tree_type type,
     label.w = header.w - (sym.w + item_spacing.y + style->tab.indent);
     label.h = style->font->height;
     text.text = style->tab.text;
-    text.padding = nk_vec2_(0,0);
+    text.padding = nk_vec2z(0,0);
     nk_widget_text(out, label, title, nk_strlen(title), &text,
         NK_TEXT_LEFT, style->font);}
 
@@ -21284,7 +21282,7 @@ nk_widget_bounds(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     if (!ctx || !ctx->current)
-        return nk_rect_(0,0,0,0);
+        return nk_rectz(0,0,0,0);
     nk_layout_peek(&bounds, ctx);
     return bounds;
 }
@@ -21296,10 +21294,10 @@ nk_widget_position(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     if (!ctx || !ctx->current)
-        return nk_vec2_(0,0);
+        return nk_vec2z(0,0);
 
     nk_layout_peek(&bounds, ctx);
-    return nk_vec2_(bounds.x, bounds.y);
+    return nk_vec2z(bounds.x, bounds.y);
 }
 
 NK_API struct nk_vec2
@@ -21309,10 +21307,10 @@ nk_widget_size(struct nk_context *ctx)
     NK_ASSERT(ctx);
     NK_ASSERT(ctx->current);
     if (!ctx || !ctx->current)
-        return nk_vec2_(0,0);
+        return nk_vec2z(0,0);
 
     nk_layout_peek(&bounds, ctx);
-    return nk_vec2_(bounds.w, bounds.h);
+    return nk_vec2z(bounds.w, bounds.h);
 }
 
 NK_API float
@@ -21680,7 +21678,7 @@ nk_value_color_hex(struct nk_context *ctx, const char *prefix, struct nk_color c
 #endif
 
 NK_API void
-nk_text_(struct nk_context *ctx, const char *str, int len, nk_flags alignment)
+nk_textz(struct nk_context *ctx, const char *str, int len, nk_flags alignment)
 {
     NK_ASSERT(ctx);
     if (!ctx) return;
@@ -21697,7 +21695,7 @@ nk_text_wrap(struct nk_context *ctx, const char *str, int len)
 
 NK_API void
 nk_label(struct nk_context *ctx, const char *str, nk_flags alignment)
-{nk_text_(ctx, str, nk_strlen(str), alignment);}
+{nk_textz(ctx, str, nk_strlen(str), alignment);}
 
 NK_API void
 nk_label_colored(struct nk_context *ctx, const char *str, nk_flags align,
@@ -21713,7 +21711,7 @@ nk_label_colored_wrap(struct nk_context *ctx, const char *str, struct nk_color c
 {nk_text_wrap_colored(ctx, str, nk_strlen(str), color);}
 
 NK_API void
-nk_image_(struct nk_context *ctx, struct nk_image img)
+nk_imagez(struct nk_context *ctx, struct nk_image img)
 {
     struct nk_window *win;
     struct nk_rect bounds;
@@ -22570,7 +22568,7 @@ nk_property_variant_double(double value, double min_value, double max_value,
 }
 
 NK_INTERN void
-nk_property_(struct nk_context *ctx, const char *name, struct nk_property_variant *variant,
+nk_propertyz(struct nk_context *ctx, const char *name, struct nk_property_variant *variant,
     float inc_per_pixel, const enum nk_property_filter filter)
 {
     struct nk_window *win;
@@ -22681,7 +22679,7 @@ nk_property_int(struct nk_context *ctx, const char *name,
 
     if (!ctx || !ctx->current || !name || !val) return;
     variant = nk_property_variant_int(*val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_INT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_INT);
     *val = variant.value.i;
 }
 
@@ -22696,7 +22694,7 @@ nk_property_float(struct nk_context *ctx, const char *name,
 
     if (!ctx || !ctx->current || !name || !val) return;
     variant = nk_property_variant_float(*val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
     *val = variant.value.f;
 }
 
@@ -22711,7 +22709,7 @@ nk_property_double(struct nk_context *ctx, const char *name,
 
     if (!ctx || !ctx->current || !name || !val) return;
     variant = nk_property_variant_double(*val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
     *val = variant.value.d;
 }
 
@@ -22725,7 +22723,7 @@ nk_propertyi(struct nk_context *ctx, const char *name, int min, int val,
 
     if (!ctx || !ctx->current || !name) return val;
     variant = nk_property_variant_int(val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_INT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_INT);
     val = variant.value.i;
     return val;
 }
@@ -22740,7 +22738,7 @@ nk_propertyf(struct nk_context *ctx, const char *name, float min,
 
     if (!ctx || !ctx->current || !name) return val;
     variant = nk_property_variant_float(val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
     val = variant.value.f;
     return val;
 }
@@ -22755,7 +22753,7 @@ nk_propertyd(struct nk_context *ctx, const char *name, double min,
 
     if (!ctx || !ctx->current || !name) return val;
     variant = nk_property_variant_double(val, min, max, step);
-    nk_property_(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
+    nk_propertyz(ctx, name, &variant, inc_per_pixel, NK_FILTER_FLOAT);
     val = variant.value.d;
     return val;
 }
@@ -22791,7 +22789,7 @@ nk_color_pick(struct nk_context * ctx, struct nk_colorf *color,
     if (!state) return 0;
     in = (state == NK_WIDGET_ROM || layout->flags & NK_WINDOW_ROM) ? 0 : &ctx->input;
     return nk_do_color_picker(&ctx->last_widget_state, &win->buffer, color, fmt, bounds,
-                nk_vec2_(0,0), in, config->font);
+                nk_vec2z(0,0), in, config->font);
 }
 
 NK_API struct nk_colorf
@@ -22861,7 +22859,7 @@ nk_chart_begin_colored(struct nk_context *ctx, enum nk_chart_type type,
         nk_draw_image(&win->buffer, bounds, &background->data.image, nk_white);
     } else {
         nk_fill_rect(&win->buffer, bounds, style->rounding, style->border_color);
-        nk_fill_rect(&win->buffer, nk_shrink_rect_(bounds, style->border),
+        nk_fill_rect(&win->buffer, nk_shrink_rectz(bounds, style->border),
             style->rounding, style->background.data.color);
     }
     return 1;
@@ -22963,7 +22961,7 @@ nk_chart_push_line(struct nk_context *ctx, struct nk_window *win,
             color = g->slots[slot].highlight;
         }
     }
-    nk_fill_rect(out, nk_rect_(cur.x - 2, cur.y - 2, 4, 4), 0, color);
+    nk_fill_rect(out, nk_rectz(cur.x - 2, cur.y - 2, 4, 4), 0, color);
 
     /* save current data point position */
     g->slots[slot].last.x = cur.x;
@@ -23673,7 +23671,7 @@ nk_tooltip(struct nk_context *ctx, const char *text)
     /* execute tooltip and fill with text */
     if (nk_tooltip_begin(ctx, (float)text_width)) {
         nk_layout_row_dynamic(ctx, (float)text_height, 1);
-        nk_text_(ctx, text, text_len, NK_TEXT_LEFT);
+        nk_textz(ctx, text, text_len, NK_TEXT_LEFT);
         nk_tooltip_end(ctx);
     }
 }
@@ -23935,7 +23933,7 @@ nk_combo_begin(struct nk_context *ctx, struct nk_window *win,
     if ((is_clicked && is_open && !is_active) || (is_open && !is_active) ||
         (!is_open && !is_active && !is_clicked)) return 0;
     if (!nk_nonblock_begin(ctx, 0, body,
-        (is_clicked && is_open)?nk_rect_(0,0,0,0):header, NK_PANEL_COMBO)) return 0;
+        (is_clicked && is_open)?nk_rectz(0,0,0,0):header, NK_PANEL_COMBO)) return 0;
 
     win->popup.type = NK_PANEL_COMBO;
     win->popup.name = hash;
@@ -24017,7 +24015,7 @@ nk_combo_begin_text(struct nk_context *ctx, const char *selected, int len,
         content.h = button.h - 2 * style->combo.button.padding.y;
 
         /* draw selected label */
-        text.padding = nk_vec2_(0,0);
+        text.padding = nk_vec2z(0,0);
         label.x = header.x + style->combo.content_padding.x;
         label.y = header.y + style->combo.content_padding.y;
         label.w = button.x - (style->combo.content_padding.x + style->combo.spacing.x) - label.x;;
@@ -24288,7 +24286,7 @@ nk_combo_begin_symbol_text(struct nk_context *ctx, const char *selected, int len
             1.0f, style->font);
 
         /* draw label */
-        text.padding = nk_vec2_(0,0);
+        text.padding = nk_vec2z(0,0);
         label.x = image.x + image.w + style->combo.spacing.x + style->combo.content_padding.x;
         label.y = header.y + style->combo.content_padding.y;
         label.w = (button.x - style->combo.content_padding.x) - label.x;
@@ -24458,7 +24456,7 @@ nk_combo_begin_image_text(struct nk_context *ctx, const char *selected, int len,
         nk_draw_image(&win->buffer, image, &img, nk_white);
 
         /* draw label */
-        text.padding = nk_vec2_(0,0);
+        text.padding = nk_vec2z(0,0);
         label.x = image.x + image.w + style->combo.spacing.x + style->combo.content_padding.x;
         label.y = header.y + style->combo.content_padding.y;
         label.w = (button.x - style->combo.content_padding.x) - label.x;
