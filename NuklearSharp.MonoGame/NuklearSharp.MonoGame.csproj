@@ -43,6 +43,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseContext.cs" />
+    <Compile Include="FontAtlasWrapper.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="NuklearContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

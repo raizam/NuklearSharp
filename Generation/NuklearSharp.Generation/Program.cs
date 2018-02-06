@@ -162,7 +162,7 @@ namespace NuklearSharp.Generation
 				"nk_command_buffer_reset",
 				"nk__next",
 				"nk_build",
-				"nk_property_",
+				"nk_propertyz",
 				"nk_font_atlas_add_default",
 				"nk_stroke_polygon",
 				"nk_fill_polygon",
@@ -217,8 +217,7 @@ namespace NuklearSharp.Generation
 						}
 					}
 
-
-					result.Source = @"..\..\..\..\..\NuklearSharp\" + subFolder + s + ".cs";
+					result.Source = @"..\..\..\..\..\NuklearSharp\" + subFolder + s + ".Generated.cs";
 				}
 
 				result.IsClass = treatAsClasses.Contains(n) || n.StartsWith("nk_command_") || n.StartsWith("nk_style_") ||
@@ -228,13 +227,13 @@ namespace NuklearSharp.Generation
 			};
 
 			parameters.GlobalVariableSource = n => skipGlobalVariables.Contains(n) ? null : @"..\..\..\..\..\NuklearSharp\Nuklear.GlobalVariables.Generated.cs";
-			parameters.EnumSource = n => @"..\..\..\..\..\NuklearSharp\Nuklear.Enums.Generated.cs";
+			parameters.EnumSource = n => @"..\..\..\..\..\NuklearSharp\Enums.Generated.cs";
 			parameters.FunctionSource = n =>
 			{
 				var fc = new FunctionGenerationConfig
 				{
 					Name = n.Name.ToCSharpName(),
-					Source = @"..\..\..\..\..\NuklearSharp\Utility.cs"
+					Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs"
 				};
 
 				var parts = n.Signature.Split(',');
@@ -270,7 +269,7 @@ namespace NuklearSharp.Generation
 						subFolder += "\\";
 					}
 
-					fc.Source += subFolder + s + ".cs";
+					fc.Source += subFolder + s + ".Generated.cs";
 				}
 
 				if (skipFunctions.Contains(n.Name))
@@ -278,10 +277,15 @@ namespace NuklearSharp.Generation
 					fc.Source = null;
 				}
 
-				if (!string.IsNullOrEmpty(fc.Class) && 
-					fc.Name.StartsWith(fc.Class) && 
-					fc.Name.Length > fc.Class.Length &&
-					!char.IsLower(fc.Name[fc.Class.Length]))
+				if (!string.IsNullOrEmpty(fc.Class) &&
+				    fc.Name.StartsWith(fc.Class) &&
+				    fc.Name.Length > fc.Class.Length &&
+				    !char.IsLower(fc.Name[fc.Class.Length]))
+				{
+					fc.Name = fc.Name.Substring(fc.Class.Length);
+				}
+
+				if (fc.Name.StartsWith("Textedit") && fc.Name.Length > 8)
 				{
 					fc.Name = fc.Name.Substring(fc.Class.Length);
 				}

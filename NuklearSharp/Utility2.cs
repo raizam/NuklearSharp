@@ -12,6 +12,22 @@ namespace NuklearSharp
 			[FieldOffset(0)] public float f;
 		}
 
+		[StructLayout(LayoutKind.Explicit)]
+		private struct MurmurHashUnion
+		{
+			[FieldOffset(0)]
+			public uint* i;
+
+			[FieldOffset(0)]
+			public byte* b;
+
+			public MurmurHashUnion(void* ptr)
+			{
+				i = (uint*)ptr;
+				b = (byte*)ptr;
+			}
+		}
+
 		public static float InvSqrt(float number)
 		{
 			var threehalfs = 1.5f;
