@@ -46,7 +46,6 @@
     <Compile Include="Commands\PropertyVariant.cs" />
     <Compile Include="Commands\RowLayout.Generated.cs" />
     <Compile Include="Commands\Scroll.Generated.cs" />
-    <Compile Include="Commands\StyleProperty.Generated.cs" />
     <Compile Include="Commands\Table.Generated.cs" />
     <Compile Include="Commands\Window.Generated.cs" />
     <Compile Include="Config\ConfigStackButtonBehavior.Generated.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="Config\ConfigurationStacks.Generated.cs" />
     <Compile Include="Context.Generated.cs" />
     <Compile Include="ConvertConfig.cs" />
+    <Compile Include="ConvertConfig.Generated.cs" />
     <Compile Include="Core\Chart.cs" />
     <Compile Include="Core\ChartSlot.Generated.cs" />
     <Compile Include="Core\Clipboard.cs" />
@@ -130,7 +130,6 @@
     <Compile Include="Drawing\DrawList.cs" />
     <Compile Include="Fonts\FontAtlas.cs" />
     <Compile Include="Core\Handle.cs" />
-    <Compile Include="NkVertex.cs" />
     <Compile Include="Nuklear.cs" />
     <Compile Include="Context.Bindings.cs" />
     <Compile Include="GlobalVariables.cs" />
@@ -142,6 +141,7 @@
     <Compile Include="Styling\StyleItem.cs" />
     <Compile Include="Styling\StyleItemData.cs" />
     <Compile Include="Styling\StyleProgress.Generated.cs" />
+    <Compile Include="Styling\StyleProperty.Generated.cs" />
     <Compile Include="Styling\StyleScrollbar.Generated.cs" />
     <Compile Include="Styling\StyleSelectable.Generated.cs" />
     <Compile Include="Styling\StyleSlider.Generated.cs" />
@@ -156,7 +156,7 @@
     <Compile Include="TextEditing\TextUndoRecord.Generated.cs" />
     <Compile Include="TextEditing\TextUndoState.Generated.cs" />
     <Compile Include="Utility.Generated.cs" />
-    <Compile Include="Utility2.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="Runtime\Operations.cs" />
     <Compile Include="Runtime\PinnedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

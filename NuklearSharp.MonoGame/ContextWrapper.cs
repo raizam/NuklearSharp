@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace NuklearSharp.MonoGame
 {
-	public class NuklearContext : BaseContext
+	public class ContextWrapper
 	{
 		private const float DepthBias = 0F;
 		private const int WHEEL_DELTA = 120;
 
+		private readonly Context _ctx;
+		private readonly Buffer _cmds, _vbuf, _ebuf;
 		private readonly GraphicsDevice _device;
 		private readonly DynamicVertexBuffer _vertexBuffer;
 		private readonly DynamicIndexBuffer _indexBuffer;
@@ -24,13 +28,114 @@ namespace NuklearSharp.MonoGame
 			get { return _textures; }
 		}
 
-		public NuklearContext(GraphicsDevice device)
+		public Context Ctx
 		{
+			get { return _ctx; }
+		}
+
+		public Buffer Cmds
+		{
+			get { return _cmds; }
+		}
+
+		public ContextWrapper(GraphicsDevice device)
+		{
+			if (device == null)
+			{
+				throw new ArgumentNullException("device");
+			}
+
 			_device = device;
 			_vertexBuffer = new DynamicVertexBuffer(device, VertexPositionColorTexture.VertexDeclaration, 30000,
 				BufferUsage.WriteOnly);
-			_indexBuffer = new DynamicIndexBuffer(device, typeof (ushort), 10000, BufferUsage.WriteOnly);
+			_indexBuffer = new DynamicIndexBuffer(device, typeof(ushort), 10000, BufferUsage.WriteOnly);
 			basicEffect = new BasicEffect(device);
+
+			_ctx = new Context();
+			_ctx.InitDefault(null);
+
+			_cmds = new Buffer();
+			_cmds.InitDefault();
+
+			_vbuf = new Buffer();
+			_vbuf.InitDefault();
+
+			_ebuf = new Buffer();
+			_ebuf.InitDefault();
+		}
+
+		public void Draw()
+		{
+			BeginDraw();
+
+			DrawCommand* cmd;
+			//  ushort* offset = null;
+			var config = new ConvertConfig
+			{
+				vertex_size = (uint)sizeof(NkVertex),
+				vertex_alignment = 4,
+				global_alpha = 1f,
+				shape_AA = Nuklear.NK_ANTI_ALIASING_ON,
+				line_AA = Nuklear.NK_ANTI_ALIASING_ON,
+				circle_segment_count = 22,
+				curve_segment_count = 22,
+				arc_segment_count = 22,
+				vertex_layout = new[]
+				{
+					new DrawVertexLayoutElement
+					{
+						attribute = Nuklear.NK_VERTEX_POSITION,
+						format = Nuklear.NK_FORMAT_FLOAT,
+						offset = 0
+					},
+					new DrawVertexLayoutElement
+					{
+						attribute = Nuklear.NK_VERTEX_COLOR,
+						format = Nuklear.NK_FORMAT_B8G8R8A8,
+						offset = 12
+					},
+					new DrawVertexLayoutElement
+					{
+						attribute = Nuklear.NK_VERTEX_TEXCOORD,
+						format = Nuklear.NK_FORMAT_FLOAT,
+						offset = 16
+					},
+					new DrawVertexLayoutElement
+					{
+						attribute = Nuklear.NK_VERTEX_ATTRIBUTE_COUNT
+					}
+				}
+			};
+
+			/* convert shapes into vertexes */
+			_ctx.Convert(_cmds, _vbuf, _ebuf, config);
+
+			var vSize = (ulong)sizeof(NkVertex);
+
+			var vertex_count = (uint)(_vbuf.needed / vSize);
+			var vertices = new byte[(int)_vbuf.needed];
+			var indices = new short[_ebuf.needed / sizeof(short)];
+
+			Marshal.Copy((IntPtr)_vbuf.memory.ptr, vertices, 0, (int)_vbuf.needed);
+
+			/* iterate over and execute each draw command */
+			uint offset = 0;
+
+			Marshal.Copy((IntPtr)_ebuf.memory.ptr, indices, 0, indices.Length);
+
+			SetBuffers(vertices, indices, (int)vertex_count, sizeof(NkVertex));
+			for (cmd = _ctx.DrawBegin(_cmds); cmd != null; cmd = DrawCommand.DrawNext(cmd, _cmds, _ctx))
+			{
+				if (cmd->elem_count == 0) continue;
+
+				Draw((int)cmd->clip_rect.x, (int)cmd->clip_rect.y, (int)cmd->clip_rect.w, (int)cmd->clip_rect.h,
+					cmd->texture.id, (int)offset, (int)(cmd->elem_count / 3));
+				offset += cmd->elem_count;
+			}
+
+			_ctx.Clear();
+
+			EndDraw();
 		}
 
 		public int CreateTexture(Texture2D texture)

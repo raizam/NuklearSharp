@@ -223,7 +223,7 @@ namespace NuklearSharp
 		{
 			fixed (char* str_ptr = str)
 			{
-				Text(str_ptr, str.Length, alignment);
+				Textz(str_ptr, str.Length, alignment);
 			}
 		}
 

@@ -24,11 +24,13 @@ namespace NuklearSharp
 		public CommandBase begin
 		{
 			get { return _commands[0]; }
+			set { _commands[0] = value; }
 		}
 
 		public CommandBase last
 		{
 			get { return _commands[_commands.Count - 1]; }
+			set { _commands[_commands.Count - 1] = value; }
 		}
 
 		public int active;

@@ -164,7 +164,7 @@
 			while (it != null)
 			{
 				var n = it.next;
-				RemoveTable(win, it);
+				win.RemoveTable(it);
 				if (it == win.tables) win.tables = n;
 				it = n;
 			}
@@ -200,7 +200,7 @@
 			var win = current;
 			var layout = win.layout;
 			var style = this.style;
-			var s = Widget(&bounds, ctx);
+			var s = bounds.Widget(this);
 			if (s == 0) return;
 			if (name[0] == '#')
 			{
@@ -220,11 +220,10 @@
 			if ((win.property.active != 0) && (hash == win.property.name))
 			{
 				old_state = win.property.state;
-
-				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
+				win.buffer.DoProperty(ref last_widget_state, bounds, name, variant, inc_per_pixel,
 					win.property.buffer, ref win.property.length, ref win.property.state, ref win.property.cursor,
 					ref win.property.select_start, ref win.property.select_end, style.property, filter, _in_, style.font,
-					ctx.text_edit, ctx.button_behavior);
+					text_edit, button_behavior);
 				state = win.property.state;
 				buffer = win.property.buffer;
 				len = win.property.length;
@@ -235,10 +234,10 @@
 			else
 			{
 				old_state = dummy_state;
-				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
+				win.buffer.DoProperty(ref last_widget_state, bounds, name, variant, inc_per_pixel,
 					dummy_buffer, ref dummy_length, ref dummy_state, ref dummy_cursor,
 					ref dummy_select_begin, ref dummy_select_end, style.property, filter, _in_, style.font,
-					ctx.text_edit, ctx.button_behavior);
+					text_edit, button_behavior);
 				state = dummy_state;
 				buffer = dummy_buffer;
 				len = dummy_length;
@@ -247,31 +246,31 @@
 				select_end = dummy_select_end;
 			}
 
-			ctx.text_edit.clip = ctx.clip;
-			if ((_in_ != null) && (state != NK_PROPERTY_DEFAULT) && (win.property.active == 0))
+			this.text_edit.clip = this.clip;
+			if ((_in_ != null) && (state != Nuklear.NK_PROPERTY_DEFAULT) && (win.property.active == 0))
 			{
 				win.property.active = 1;
-				nk_memcopy(win.property.buffer, buffer, (ulong) len);
+				Nuklear.Memcopy(win.property.buffer, buffer, (ulong) len);
 				win.property.length = len;
 				win.property.cursor = cursor;
 				win.property.state = state;
 				win.property.name = hash;
 				win.property.select_start = select_begin;
 				win.property.select_end = select_end;
-				if (state == NK_PROPERTY_DRAG)
+				if (state == Nuklear.NK_PROPERTY_DRAG)
 				{
-					ctx.input.mouse.grab = nk_true;
-					ctx.input.mouse.grabbed = nk_true;
+					this.input.mouse.grab = Nuklear.nk_true;
+					this.input.mouse.grabbed = Nuklear.nk_true;
 				}
 			}
 
-			if ((state == NK_PROPERTY_DEFAULT) && (old_state != NK_PROPERTY_DEFAULT))
+			if ((state == Nuklear.NK_PROPERTY_DEFAULT) && (old_state != Nuklear.NK_PROPERTY_DEFAULT))
 			{
-				if (old_state == NK_PROPERTY_DRAG)
+				if (old_state == Nuklear.NK_PROPERTY_DRAG)
 				{
-					ctx.input.mouse.grab = nk_false;
-					ctx.input.mouse.grabbed = nk_false;
-					ctx.input.mouse.ungrab = nk_true;
+					this.input.mouse.grab = Nuklear.nk_false;
+					this.input.mouse.grabbed = Nuklear.nk_false;
+					this.input.mouse.ungrab = Nuklear.nk_true;
 				}
 				win.property.select_start = 0;
 				win.property.select_end = 0;

@@ -14,7 +14,8 @@ namespace NuklearSharp.Generation
 			public string[] Args { get; set; }
 		}
 
-		private static readonly Dictionary<string, StringFunctionBinding> _bindings = new Dictionary<string, StringFunctionBinding>();
+		private static readonly Dictionary<string, StringFunctionBinding> _bindings =
+			new Dictionary<string, StringFunctionBinding>();
 
 		private static void Convert()
 		{
@@ -193,12 +194,35 @@ namespace NuklearSharp.Generation
 					"NK_INCLUDE_COMMAND_USERDATA"
 				},
 				Namespace = "NuklearSharp",
-				Class = "Nuklear",
+			};
+
+			var staticMethods = new HashSet<string>
+			{
+				"nk_triangle_from_direction",
+				"nk_tt__sort_edges_ins_sort",
+				"nk_tt__sort_edges_quicksort",
+				"nk_tt__sort_edges",
+				"nk_filter_default",
+				"nk_rp_qsort",
+				"nk_color_hex_rgba",
+				"nk_color_hex_rgb",
+				"nk__draw_list_next",
+				"nk__draw_next",
+				"nk_tt__fill_active_edges_new",
+				"nk_tt_GetPackedQuad",
+				"nk_tt__add_point",
+				"nk_tt__tesselate_curve",
+				"stbtt__close_shape",
+				"nk_tt_FlattenCurves",
+				"nk_rp_init_target",
+				"nk_rp__skyline_find_best_pos",
+				"nk_rp__skyline_pack_rectangle",
+				"nk_rp_pack_rects",
 			};
 
 			parameters.StructSource = n =>
 			{
-				var result = new StructGenerationConfig
+				var result = new BaseConfig
 				{
 					Name = n.ToCSharpName(),
 					Class = n.ToCSharpName()
@@ -220,20 +244,45 @@ namespace NuklearSharp.Generation
 					result.Source = @"..\..\..\..\..\NuklearSharp\" + subFolder + s + ".Generated.cs";
 				}
 
-				result.IsClass = treatAsClasses.Contains(n) || n.StartsWith("nk_command_") || n.StartsWith("nk_style_") ||
-					n.StartsWith("nk_config_");
+				if (treatAsClasses.Contains(n) || n.StartsWith("nk_command_") || n.StartsWith("nk_style_") ||
+				    n.StartsWith("nk_config_"))
+				{
+					result.StructType = StructType.Class;
+				}
+				else
+				{
+					result.StructType = StructType.Struct;
+				}
 
 				return result;
 			};
 
-			parameters.GlobalVariableSource = n => skipGlobalVariables.Contains(n) ? null : @"..\..\..\..\..\NuklearSharp\Nuklear.GlobalVariables.Generated.cs";
-			parameters.EnumSource = n => @"..\..\..\..\..\NuklearSharp\Enums.Generated.cs";
+			parameters.GlobalVariableSource = n => new BaseConfig
+			{
+				Class = "Nuklear",
+				Name = n,
+				Source = @"..\..\..\..\..\NuklearSharp\Nuklear.GlobalVariables.Generated.cs",
+				StructType = StructType.StaticClass,
+				Skip = skipGlobalVariables.Contains(n)
+			};
+
+			parameters.EnumSource = n => new BaseConfig
+			{
+				Class = "Nuklear",
+				Name = string.Empty,
+				Source = @"..\..\..\..\..\NuklearSharp\Enums.Generated.cs",
+				StructType = StructType.StaticClass
+			};
+
 			parameters.FunctionSource = n =>
 			{
 				var fc = new FunctionGenerationConfig
 				{
 					Name = n.Name.ToCSharpName(),
-					Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs"
+					Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs",
+					Class = "Nuklear",
+					StructType = StructType.StaticClass,
+					Static = true
 				};
 
 				var parts = n.Signature.Split(',');
@@ -241,22 +290,28 @@ namespace NuklearSharp.Generation
 				var s = string.Empty;
 				if (parts.Length > 0)
 				{
-					var parts2 = parts[0].Split(' ');
-
-					var typeName = parts2[0];
-
-					if (typeName.EndsWith("*"))
+					for (var i = 0; i < parts.Length; ++i)
 					{
-						typeName = typeName.Substring(0, typeName.Length - 1);
-					}
+						var parts2 = parts[i].Trim().Split(' ');
 
-					var recordType = cp.Processor.GetRecordType(typeName);
-					if (recordType != RecordType.None)
-					{
-						s = typeName.ToCSharpName();
-						fc.Class = typeName.ToCSharpName();
-						fc.Source = @"..\..\..\..\..\NuklearSharp\";
-						fc.ThisName = parts2[parts2.Length - 1];
+						var typeName = parts2[0];
+
+						if (typeName.EndsWith("*"))
+						{
+							typeName = typeName.Substring(0, typeName.Length - 1);
+						}
+
+						var recordType = cp.Processor.GetRecordType(typeName);
+						if (recordType != RecordType.None)
+						{
+							s = typeName.ToCSharpName();
+							fc.Class = typeName.ToCSharpName();
+							fc.Source = @"..\..\..\..\..\NuklearSharp\";
+							fc.ThisName = parts2[parts2.Length - 1];
+							fc.Static = false;
+							fc.ThisArgPosition = i;
+							break;
+						}
 					}
 				}
 
@@ -287,7 +342,22 @@ namespace NuklearSharp.Generation
 
 				if (fc.Name.StartsWith("Textedit") && fc.Name.Length > 8)
 				{
-					fc.Name = fc.Name.Substring(fc.Class.Length);
+					fc.Name = fc.Name.Substring(8);
+				}
+
+				if (staticMethods.Contains(n.Name) ||
+				    n.Name.Contains("filter_"))
+				{
+					fc.Static = true;
+				}
+
+				if (n.Name == "nk_font_bakerz")
+				{
+					fc.Name = n.Name.ToCSharpName();
+					fc.Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs";
+					fc.Class = "Nuklear";
+					fc.StructType = StructType.StaticClass;
+					fc.Static = true;
 				}
 
 				return fc;
@@ -383,7 +453,17 @@ namespace NuklearSharp.Generation
 			foreach (var output in outputs)
 			{
 				if (output.Key.Contains("GlobalVariables") ||
-				    output.Key.Contains("Enums"))
+				    output.Key.Contains("Enums") ||
+				    output.Key.Contains("Commands\\") ||
+				    output.Key.Contains("Config\\") ||
+				    output.Key.Contains("Core\\") ||
+				    output.Key.Contains("Drawing\\") ||
+				    output.Key.Contains("Fonts\\") ||
+				    output.Key.Contains("InputSystem\\") ||
+				    output.Key.Contains("MemoryManagement\\") ||
+				    output.Key.Contains("RectPacts\\") ||
+				    output.Key.Contains("Styling\\") ||
+				    output.Key.Contains("TextEditing\\"))
 				{
 					continue;
 				}
@@ -394,7 +474,6 @@ namespace NuklearSharp.Generation
 
 				File.WriteAllText(output.Key, data);
 			}
-
 		}
 
 		private static void GenerateWrapper()
@@ -575,7 +654,7 @@ namespace NuklearSharp.Generation
 			    s.Contains("EditState") ||
 			    s.Contains("Panel") ||
 			    s.Contains("Popup") ||
-			    s.Contains("Property") ||
+			    s.StartsWith("Property") ||
 			    s.Contains("RowLayout") ||
 			    s.StartsWith("Scroll") ||
 			    s.Contains("Table") ||
@@ -591,7 +670,7 @@ namespace NuklearSharp.Generation
 			else if (s.StartsWith("Chart") ||
 			         s.Contains("Clipboard") ||
 			         s.Contains("Color") ||
-			         s.Contains("Conv") ||
+			         s == "Conv" ||
 			         s.Contains("Cursor") ||
 			         s.Contains("Handle") ||
 			         s.Contains("Image") ||

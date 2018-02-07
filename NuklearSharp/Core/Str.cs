@@ -7,7 +7,7 @@
 			buffer.Init(32);
 			len = 0;
 		}
-		
+
 		public void Init(ulong size)
 		{
 			buffer.Init(size);

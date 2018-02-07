@@ -15,7 +15,7 @@ namespace Extended
 	{
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
-		private NuklearContext _nuklearContext;
+		private ContextWrapper _contextWrapper;
 		private Color _background = Color.Black;
 		private readonly Media _media = new Media();
 
@@ -42,7 +42,7 @@ namespace Extended
 		{
 			using (var stream = new MemoryStream(data))
 			{
-				var fontAtlas = _nuklearContext.CreateFontAtlas();
+				var fontAtlas = _contextWrapper.CreateFontAtlas();
 				var font = fontAtlas.AddFont(stream, 14);
 				fontAtlas.Bake();
 
@@ -55,7 +55,7 @@ namespace Extended
 			using(var stream = File.OpenRead(GetAssetPath(path)))
 			{
 				var texture = Texture2D.FromStream (GraphicsDevice, stream);
-				return Nuklear.nk_image_id(_nuklearContext.CreateTexture (texture));
+				return Nuklear.nk_image_id(_contextWrapper.CreateTexture (texture));
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace Extended
 
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			_nuklearContext = new NuklearContext(GraphicsDevice);
+			_contextWrapper = new ContextWrapper(GraphicsDevice);
 
 			// Fonts
 			var fontData = File.ReadAllBytes(GetAssetPath("Fonts/Roboto-Regular.ttf"));
@@ -156,11 +156,11 @@ namespace Extended
 			GraphicsDevice.Clear(_background);
 
 			// TODO: Add your drawing code here
-			GUI.basic_demo(_nuklearContext, _media);
-//			GUI.button_demo (_nuklearContext, _media);
-//			GUI.grid_demo (_nuklearContext, _media);
+			GUI.basic_demo(_contextWrapper, _media);
+//			GUI.button_demo (_contextWrapper, _media);
+//			GUI.grid_demo (_contextWrapper, _media);
 
-			_nuklearContext.Draw ();
+			_contextWrapper.Draw ();
 
 			base.Draw(gameTime);
 		}

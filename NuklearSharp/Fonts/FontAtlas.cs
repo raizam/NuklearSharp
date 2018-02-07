@@ -26,7 +26,7 @@
 		{
 			fixed (byte* ptr = Nuklear.nk_proggy_clean_ttf_compressed_data_base85)
 			{
-				return AddCompressedBase85(ptr, pixel_height, config);
+				return AddCompressedBase85((sbyte*)ptr, pixel_height, config);
 			}
 		}
 	}

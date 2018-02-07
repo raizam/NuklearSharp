@@ -1,6 +1,6 @@
 ﻿namespace NuklearSharp
 {
-	public class ConvertConfig
+	public partial class ConvertConfig
 	{
 		public float global_alpha;
 		public int line_AA;

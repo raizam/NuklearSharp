@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace NuklearSharp
+namespace NuklearSharp.MonoGame
 {
 	public unsafe class FontAtlasWrapper
 	{
-/*		private readonly Nuklear.nk_font_atlas _atlas = new Nuklear.nk_font_atlas();
-		private readonly BaseContext _context;
+		private readonly GraphicsDevice _device;
+		private readonly FontAtlas _atlas = new FontAtlas();
+
 
 		internal FontAtlasWrapper(BaseContext context)
 		{
@@ -18,17 +20,17 @@ namespace NuklearSharp
 
 			_context = context;
 
-			Nuklear.nk_font_atlas_begin(_atlas);
+			_atlas.Begin();
 		}
 
-		public Nuklear.nk_font AddDefaultFont(float height)
+		public Font AddDefaultFont(float height)
 		{
-			return Nuklear.nk_font_atlas_add_default(_atlas, height, null);
+			return _atlas.AddDefault(height, null);
 		}
 
-		public Nuklear.nk_font AddFont(Stream input, float height)
+		public Font AddFont(Stream input, float height)
 		{
-			Nuklear.nk_font font;
+			Font font;
 			using (var memoryStream = new MemoryStream())
 			{
 				input.CopyTo(memoryStream);
@@ -36,7 +38,7 @@ namespace NuklearSharp
 
 				fixed (void* ptr = bytes)
 				{
-					font = Nuklear.nk_font_atlas_add_from_memory(_atlas, ptr, (ulong)bytes.Length, height, null);
+					font = _atlas.AddFromMemory(ptr, (ulong) bytes.Length, height, null);
 				}
 			}
 
@@ -47,14 +49,14 @@ namespace NuklearSharp
 		{
 			int w = 0, h = 0;
 
-			var image = (int*)Nuklear.nk_font_atlas_bake(_atlas, ref w, ref h, Nuklear.NK_FONT_ATLAS_RGBA32);
-			var buffSize = w * h * 4;
+			var image = (int*) _atlas.Bake(ref w, ref h, Nuklear.NK_FONT_ATLAS_RGBA32);
+			var buffSize = w*h*4;
 			var arr = new byte[buffSize];
-			Marshal.Copy((IntPtr)image, arr, 0, buffSize);
+			Marshal.Copy((IntPtr) image, arr, 0, buffSize);
 
 			var textureId = _context.CreateTexture(w, h, arr);
 
-			Nuklear.nk_font_atlas_end(_atlas, new Nuklear.nk_handle { id = textureId }, null);
-		}*/
+			_atlas.End(new Handle {id = textureId}, null);
+		}
 	}
 }

@@ -11,7 +11,7 @@ namespace NuklearSharp.Generation
 
 			data = data.Replace("(void *)(0)", "null");
 			data = data.Replace("public IntPtr* draw_begin;", "public Nuklear.NkDrawNotify draw_begin;");
-			data = data.Replace("public IntPtr* draw_end;", "public  Nuklear.NkDrawNotify draw_end;");
+			data = data.Replace("public IntPtr* draw_end;", "public Nuklear.NkDrawNotify draw_end;");
 			data = data.Replace("enum anti_aliasing", "int");
 			data = data.Replace("- -", "-");
 			data = data.Replace("* *", "*");
@@ -159,8 +159,8 @@ namespace NuklearSharp.Generation
 			data = data.Replace("(sizeof(CommandArcFilled)", "((ulong)sizeof(CommandArcFilled)");
 			data = data.Replace("sizeof(short);)", "sizeof(short))");
 			data = data.Replace("sizeof((values[value_index]))", "sizeof(float)");
-			data = data.Replace("Nuklear.Memcopy(attribute, &value, (ulong)(sizeof((value))));",
-				"Nuklear.Memcopy(attribute, &value, (ulong)(sizeof(double)));");
+			data = data.Replace("Memcopy(attribute, &value, (ulong)(sizeof((value))));",
+				"Memcopy(attribute, &value, (ulong)(sizeof(double)));");
 			data = data.Replace("attribute = (void *)(((sbyte*)(attribute) + sizeof(float))));",
 				"attribute = (void *)(((sbyte*)(attribute) + sizeof(float)));");
 			data = data.Replace("attribute = (void *)(((sbyte*)(attribute) + sizeof(double))));",
@@ -181,7 +181,7 @@ namespace NuklearSharp.Generation
 			data = data.Replace("&_in_.mouse.buttons[id]", "(MouseButton *)_in_.mouse.buttons + id");
 
 			// input_begin
-			data = data.Replace("&_in_.mouse.buttons[id]", "(MouseButton *)_in_.mouse.buttons + id");
+			data = data.Replace("&this.mouse.buttons[id]", "(MouseButton *)this.mouse.buttons + id");
 			data = data.Replace("_in_.mouse.buttons[Nuklear.NK_BUTTON_LEFT].",
 				"((MouseButton *)_in_.mouse.buttons + Nuklear.NK_BUTTON_LEFT)->");
 
@@ -193,31 +193,31 @@ namespace NuklearSharp.Generation
 			data = data.Replace("rune[0] = (sbyte)(c);", "rune[0] = c;");
 
 			// input_has_Mouse_click
-			data = data.Replace("&i.mouse.buttons[id]", "(MouseButton *)i.mouse.buttons + id");
+			data = data.Replace("&_in_.mouse.buttons[id]", "(MouseButton *)_in_.mouse.buttons + id");
 
 			// input_is_Key_pressed
 			data = data.Replace("_in_.keyboard.keys[key].", "((Key *)_in_.keyboard.keys + key)->");
 			data = data.Replace("_in_.keyboard.keys[i].", "((Key *)_in_.keyboard.keys + i)->");
-			data = data.Replace("&_in_.keyboard.text[_in_.keyboard.text_len]",
-				"(char *)_in_.keyboard.text + _in_.keyboard.text_len");
-			data = data.Replace("&i.keyboard.keys[key]", "(Key *)i.keyboard.keys + key");
+			data = data.Replace("&_in_.keyboard.text[this.keyboard.text_len]",
+				"(char *)_in_.keyboard.text + this.keyboard.text_len");
+			data = data.Replace("&this.keyboard.keys[key]", "(Key *)this.keyboard.keys + key");
 
 			data =
 				data.Replace(
-					"(int)((((rect.x) <= (i.mouse.pos.x)) && ((i.mouse.pos.x) < (rect.x + rect.w))) && (((rect.y) <= (i.mouse.pos.y)) && ((i.mouse.pos.y) < (rect.y + rect.h))));",
-					"(((rect.x) <= (i.mouse.pos.x)) && ((i.mouse.pos.x) < (rect.x + rect.w))) && (((rect.y) <= (i.mouse.pos.y)) && ((i.mouse.pos.y) < (rect.y + rect.h)))?1:0;");
+					"(int)((((rect.x) <= (this.mouse.pos.x)) && ((this.mouse.pos.x) < (rect.x + rect.w))) && (((rect.y) <= (this.mouse.pos.y)) && ((this.mouse.pos.y) < (rect.y + rect.h))));",
+					"((((rect.x) <= (this.mouse.pos.x)) && ((this.mouse.pos.x) < (rect.x + rect.w))) && (((rect.y) <= (this.mouse.pos.y)) && ((this.mouse.pos.y) < (rect.y + rect.h))))?1:0;");
 			data =
 				data.Replace(
-					"(int)((((rect.x) <= (i.mouse.prev.x)) && ((i.mouse.prev.x) < (rect.x + rect.w))) && (((rect.y) <= (i.mouse.prev.y)) && ((i.mouse.prev.y) < (rect.y + rect.h))));",
-					"(((rect.x) <= (i.mouse.prev.x)) && ((i.mouse.prev.x) < (rect.x + rect.w))) && (((rect.y) <= (i.mouse.prev.y)) && ((i.mouse.prev.y) < (rect.y + rect.h)))?1:0;");
-			data = data.Replace("return (int)((i.mouse.buttons[id].down== 0) && ((i.mouse.buttons[id].clicked) != 0));",
-				"return ((i.mouse.buttons[id].down== 0) && ((i.mouse.buttons[id].clicked) != 0))?1:0;");
+					"(int)((((rect.x) <= (this.mouse.prev.x)) && ((this.mouse.prev.x) < (rect.x + rect.w))) && (((rect.y) <= (this.mouse.prev.y)) && ((this.mouse.prev.y) < (rect.y + rect.h))));",
+					"((((rect.x) <= (this.mouse.prev.x)) && ((this.mouse.prev.x) < (rect.x + rect.w))) && (((rect.y) <= (this.mouse.prev.y)) && ((this.mouse.prev.y) < (rect.y + rect.h))))?1:0;");
+			data = data.Replace("return (int)((this.mouse.buttons[id].down== 0) && ((this.mouse.buttons[id].clicked) != 0));",
+				"return ((this.mouse.buttons[id].down== 0) && ((this.mouse.buttons[id].clicked) != 0))?1:0;");
 
 			data = data.Replace("Nuklear.Zero(&r, (ulong)(sizeof((r))));", "Nuklear.Zero(&r, (ulong)(sizeof(TextEditRow)));");
 
 			data = data.Replace("&text[len]", "text+len");
 
-			data = data.Replace("return &state.undo_char[r.char_storage];", "return (char *)state.undo_char + r.char_storage;");
+			data = data.Replace("return &this.undo_char[r.char_storage];", "return (char *)state.undo_char + r.char_storage;");
 			data = data.Replace("active = (int)(!active);", "active = active != 0?0:1;");
 			data = data.Replace("value = (int)(!(value));", "value = value != 0?0:1;");
 			data = data.Replace("return (int)(was_active != *active);", "return was_active != *active?1:0;");
@@ -229,8 +229,8 @@ namespace NuklearSharp.Generation
 
 			data =
 				data.Replace(
-					"edit.active = (byte)((((bounds.x) <= (_in_.mouse.pos.x)) && ((_in_.mouse.pos.x) < (bounds.x + bounds.w))) && (((bounds.y) <= (_in_.mouse.pos.y)) && ((_in_.mouse.pos.y) < (bounds.y + bounds.h))));",
-					"edit.active = (byte)((((bounds.x) <= (_in_.mouse.pos.x)) && ((_in_.mouse.pos.x) < (bounds.x + bounds.w))) && (((bounds.y) <= (_in_.mouse.pos.y)) && ((_in_.mouse.pos.y) < (bounds.y + bounds.h)))?1:0);");
+					"edit.active = (byte)((((bounds.x) <= (this.mouse.pos.x)) && ((this.mouse.pos.x) < (bounds.x + bounds.w))) && (((bounds.y) <= (this.mouse.pos.y)) && ((this.mouse.pos.y) < (bounds.y + bounds.h))));",
+					"edit.active = (byte)((((bounds.x) <= (this.mouse.pos.x)) && ((this.mouse.pos.x) < (bounds.x + bounds.w))) && (((bounds.y) <= (this.mouse.pos.y)) && ((this.mouse.pos.y) < (bounds.y + bounds.h)))?1:0);");
 
 			data = data.Replace("void (void *, short, short, unsigned short, unsigned short, nk_handle)*",
 				"Nuklear.NkCommandCustomCallback");
@@ -264,7 +264,7 @@ namespace NuklearSharp.Generation
 
 			// RpQsort
 			data = data.Replace("RpQsort(RpRect* array, uint len, IntPtr* cmp)",
-				"RpQsort(RpRect* array, uint len, QSortComparer cmp)");
+				"RpQsort(RpRect* array, uint len, Nuklear.QSortComparer cmp)");
 			data = data.Replace("for (right = (uint)(left - 1); {", "for (right = (uint)(left - 1);;) {");
 			data = data.Replace("; ) {}", "");
 
@@ -272,7 +272,7 @@ namespace NuklearSharp.Generation
 			data = data.Replace("sbyte* tag", "string tag");
 
 			// TtHheap_alloc
-			data = data.Replace("(sizeof(TtHheap_chunk)", "((ulong)sizeof(TtHheap_chunk)");
+			data = data.Replace("(sizeof(TtHheapChunk)", "((ulong)sizeof(TtHheapChunk)");
 
 			// TtHheap_cleanup
 
@@ -283,8 +283,8 @@ namespace NuklearSharp.Generation
 			data = data.Replace("(flags & 16)?dx:-dx", "(flags & 16) != 0?dx:-dx");
 			data = data.Replace("(flags & 32)?dy:-dy", "(flags & 32) != 0?dy:-dy");
 			data = data.Replace("!(flags & 1)", "(flags & 1)==0?1:0");
-			data = data.Replace("sizeof((vertices[0]))", "sizeof(Tt_vertex)");
-			data = data.Replace("sizeof(Tt_vertex)", "(ulong)sizeof(Tt_vertex)");
+			data = data.Replace("sizeof((vertices[0]))", "sizeof(TtVertex)");
+			data = data.Replace("sizeof(TtVertex)", "(ulong)sizeof(TtVertex)");
 
 			// Tt__sortEdges_ins_sort
 			data = data.Replace("(int)(((a)->y0) < ((b)->y0))", "(int)(((a)->y0) < ((b)->y0)?1:0)");
@@ -294,19 +294,19 @@ namespace NuklearSharp.Generation
 			data = data.Replace("for (--j; {", "for (;;--j) {");
 
 			// Tt__rasterize
-			data = data.Replace("sizeof((*e))", "(ulong)sizeof(Tt_Edge)");
+			data = data.Replace("sizeof((*e))", "(ulong)sizeof(TtEdge)");
 			data = data.Replace("(((invert) != 0?(p[j].y) > (p[k].y):(p[j].y) < (p[k].y)) != 0)",
 				"(invert != 0?(p[j].y > p[k].y):(p[j].y < p[k].y))");
 
 			// Tt__rasterize_sortedEdges
 			data = data.Replace("Nuklear.Zero(&hh, (ulong)(sizeof((hh))));", "Nuklear.Zero(&hh, (ulong)(sizeof(TtHheap)));");
 			data = data.Replace("hh.set_alloc", "hh.alloc");
-			data = data.Replace("(result->w * 2 + 1) * sizeof(float)))));", "(result->w * 2 + 1) * sizeof(float))));");
+			data = data.Replace("(this.w * 2 + 1) * sizeof(float)))));", "(this.w * 2 + 1) * sizeof(float))));");
 			data = data.Replace("sizeof((scanline[0]))", "sizeof(float)");
 
 			// Tt_FlattenCurves
 			data = data.Replace("sizeof((**contour_lengths))", "(ulong)sizeof(int)");
-			data = data.Replace("sizeof((points[0]))", "(ulong)sizeof(Tt__point)");
+			data = data.Replace("sizeof((points[0]))", "(ulong)sizeof(TtPoint)");
 
 			// Tt_PackBegin
 			data = data.Replace("sizeof((*context))", "sizeof(RpContext)");
@@ -386,11 +386,11 @@ namespace NuklearSharp.Generation
 			// FontAtlasBake
 			data = data.Replace("(sizeof(FontGlyph)", "((ulong)sizeof(FontGlyph)");
 			data = data.Replace("*width *height", "*width * *height");
-			data = data.Replace("uint fallbackGlyph", "char fallbackGlyph");
-			data = data.Replace("(uint)(config.fallbackGlyph)", "config.fallbackGlyph");
+			data = data.Replace("uint fallback_glyph", "char fallback_glyph");
+			data = data.Replace("(uint)(config.fallback_glyph)", "config.fallback_glyph");
 			data = data.Replace("font_iter; font_iter", "font_iter != null; font_iter");
 			data = data.Replace("(uint)('?')", "'?'");
-			data = data.Replace("CursorData[i][", "CursorData[i,");
+			data = data.Replace("nk_cursor_data[i][", "nk_cursor_data[i,");
 
 			// input_begin
 			data = data.Replace("_in_.mouse.buttons[i].", "((MouseButton *)_in_.mouse.buttons + i)->");
@@ -401,14 +401,14 @@ namespace NuklearSharp.Generation
 			data = data.Replace("cmd._string_ = _string_;",
 				"cmd._string_ = new PinnedArray<char>(length); CRuntime.memcpy((void *)cmd._string_, _string_, length * sizeof(char));");
 
-			data = data.Replace("state.undo_char + n", "(char *)state.undo_char + n");
-			data = data.Replace("state.undo_rec + ", "(TextUndoRecord *)state.undo_rec + ");
-			data = data.Replace("sizeof((state.undo_rec[0]))", "(ulong)sizeof(TextUndoRecord)");
-			data = data.Replace("state.undo_rec[i].", "((TextUndoRecord *)state.undo_rec + i)->");
-			data = data.Replace("state.undo_char + ", "(char *)state.undo_char + ");
-			data = data.Replace("return &state.undo_rec[state.undo_point++];",
-				"return (TextUndoRecord *)state.undo_rec + (state.undo_point++);");
-			data = data.Replace("return &state.undo_char[r->char_storage];", "return (char *)state.undo_char + r->char_storage;");
+			data = data.Replace("this.undo_char + n", "(char *)this.undo_char + n");
+			data = data.Replace("this.undo_rec + ", "(TextUndoRecord *)this.undo_rec + ");
+			data = data.Replace("sizeof((this.undo_rec[0]))", "(ulong)sizeof(TextUndoRecord)");
+			data = data.Replace("this.undo_rec[i].", "((TextUndoRecord *)this.undo_rec + i)->");
+			data = data.Replace("this.undo_char + ", "(char *)this.undo_char + ");
+			data = data.Replace("return &this.undo_rec[this.undo_point++];",
+				"return (TextUndoRecord *)this.undo_rec + (this.undo_point++);");
+			data = data.Replace("return &this.undo_char[r->char_storage];", "return (char *)this.undo_char + r->char_storage;");
 			data = data.Replace("&s.undo_rec[s.redo_point - 1]", "(TextUndoRecord *)s.undo_rec + s.redo_point - 1");
 			data = data.Replace("&s.undo_char[u.char_storage]", "(char *)s.undo_char + u.char_storage");
 			data = data.Replace("&s.undo_char[r.char_storage]", "(char *)s.undo_char + r.char_storage");
@@ -590,7 +590,8 @@ namespace NuklearSharp.Generation
 			data = data.Replace("Allocator* alloc", "");
 			data = data.Replace(", alloc", "");
 			data = data.Replace("alloc, ", "");
-			data = data.Replace(", &alloc", "");
+			data = data.Replace(", &this.alloc", "");
+			data = data.Replace("&this.alloc", "");
 			data = data.Replace(", &baker->alloc", "");
 			data = data.Replace(", &this.temporary", "");
 			data = data.Replace("|| (alloc== null)", "");
@@ -611,10 +612,10 @@ namespace NuklearSharp.Generation
 			data = data.Replace("this.pool.alloc((Handle)(this.pool.userdata), this.memory.ptr, ", "CRuntime.malloc(");
 			data = data.Replace("alloc->alloc((Handle)(alloc->userdata), null, ", "CRuntime.malloc(");
 			data = data.Replace("this.permanent.alloc((Handle)(this.permanent.userdata), null, ", "CRuntime.malloc(");
-			data = data.Replace("hh->alloc.alloc((Handle)(hh->alloc.userdata), null, ", "CRuntime.malloc(");
+			data = data.Replace("this.alloc.alloc((Handle)(this.alloc.userdata), null, ", "CRuntime.malloc(");
 			data = data.Replace("this.temporary.alloc((Handle)(this.temporary.userdata), null, ", "CRuntime.malloc(");
 			data = data.Replace("this.pool.free((Handle)(this.pool.userdata), ", "CRuntime.free(");
-			data = data.Replace("hh->alloc.free((Handle)(hh->alloc.userdata), ", "CRuntime.free(");
+			data = data.Replace("this.alloc.free((Handle)(this.alloc.userdata), ", "CRuntime.free(");
 			data = data.Replace("alloc->free((Handle)(alloc->userdata), ", "CRuntime.free(");
 			data = data.Replace("this.permanent.free((Handle)(this.permanent.userdata), ", "CRuntime.free(");
 			data = data.Replace("this.temporary.free((Handle)(this.temporary.userdata), ", "CRuntime.free(");
@@ -634,7 +635,7 @@ namespace NuklearSharp.Generation
 					"if ((!(!(((((bounds.x) > (win.layout.clip.x + win.layout.clip.w)) || ((bounds.x + bounds.w) < (win.layout.clip.x))) || ((bounds.y) > (win.layout.clip.y + win.layout.clip.h))) || ((bounds.y + bounds.h) < (win.layout.clip.y)))))");
 			data = data.Replace("Rect* c = &win.layout.clip;", "");
 			data = data.Replace("if ((custom) != null)", "");
-			data = data.Replace("Nuklear.Zero(s, (ulong)(sizeof(Image)));", "");
+			data = data.Replace("Zero(s, (ulong)(sizeof(Image)));", "");
 			data = data.Replace(", (ulong)(sizeof((cmd)))", "");
 			data = data.Replace(", (ulong)(sizeof((cmd)) + (ulong)(length + 1))", "");
 			data = data.Replace("\tCommand* cmd;", "\t");
@@ -645,7 +646,7 @@ namespace NuklearSharp.Generation
 			data = data.Replace("draw_list.userdata = (Handle)(cmd->userdata);",
 				"draw_list.userdata = (Handle)(cmd.userdata);");
 			data = data.Replace("iter; iter", "iter != null; iter");
-			data = data.Replace("Nuklear.Zero(cfg, (ulong)(sizeof(FontConfig)));", "");
+			data = data.Replace("Zero(cfg, (ulong)(sizeof(FontConfig)));", "");
 			data = data.Replace("Nuklear.Memcopy(cfg, config, (ulong)(sizeof((config))));", "cfg = config;");
 			data = data.Replace("cfg = (FontConfig)(CRuntime.malloc((ulong)(sizeof(FontConfig))));", "");
 			data = data.Replace("CRuntime.free(iter);", "");
@@ -674,8 +675,8 @@ namespace NuklearSharp.Generation
 			data = data.Replace("x_offset, y_offset", "new Scroll {x = *x_offset, y = *y_offset}");
 			data =
 				data.Replace(
-					"FontBakeCustomData(atlas.pixel, (int)(width), (int)(height), (Recti)(atlas.custom), nkCustom_cursorData, (int)(90), (int)(27), ('.'), ('X'));",
-					"fixed(char *ptr = nkCustom_cursorData) { FontBakeCustomData(atlas.pixel, (int)(width), (int)(height), (Recti)(atlas.custom), ptr, (int)(90), (int)(27), ('.'), ('X'));}");
+					"this.custom.FontBakeCustomData(this.pixel, (int)(width), (int)(height), Nuklear.nk_custom_cursor_data, (int)(90), (int)(27), ('.'), ('X'));",
+					"fixed(byte *ptr = Nuklear.nk_custom_cursor_data) { this.custom.FontBakeCustomData(this.pixel, (int)(width), (int)(height), ptr, (int)(90), (int)(27), ('.'), ('X'));}");
 			data = data.Replace("Nuklear.Zero(&layout.row.item, (ulong)(sizeof(Rect)));",
 				"fixed(void *ptr = &layout.row.item) {Nuklear.Zero(ptr, (ulong)(sizeof(Rect)));}");
 			data = data.Replace("element.address = &this.button_behavior;", "");
@@ -722,8 +723,12 @@ namespace NuklearSharp.Generation
 			data = data.Replace("if (this == null) return;", "");
 			data = data.Replace("if (this== null) return;", "");
 			data = data.Replace("if (((((this== null))))) return;", "");
+			data = data.Replace("if (((this == null))) return;", "");
 			data = data.Replace("Nuklear.Memset(this.overlay, (int)(0), (ulong)(sizeof((this.overlay))));", "");
 			data = data.Replace("Decode85Byte(char c)", "Decode85Byte(sbyte c)");
+			data = data.Replace("(RpContext*)(this.spc.pack_info)", "((RpContext*)(this.spc.pack_info))");
+			data = data.Replace("uint* Create", "char* Create");
+			data = data.Replace("uint* p = this.undo", "char* p = this.undo");
 
 			return data;
 		}

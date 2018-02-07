@@ -36,7 +36,7 @@ namespace Extended
 		/// <param name="radius">Radius.</param>
 		/// <param name="icons">Icons.</param>
 		/// <param name="item_count">Item count.</param>
-		public static int ui_piemenu (NuklearContext ctx, Nuklear.nk_vec2 pos, float radius,
+		public static int ui_piemenu (ContextWrapper ctx, Nuklear.nk_vec2 pos, float radius,
 		                              Nuklear.nk_image[] icons, int item_count)
 		{
 			int ret = -1;
@@ -147,7 +147,7 @@ namespace Extended
 		/// </summary>
 		/// <param name="ctx">Context.</param>
 		/// <param name="media">Media.</param>
-		public static void grid_demo (NuklearContext ctx, Media media)
+		public static void grid_demo (ContextWrapper ctx, Media media)
 		{
 			int selected_item = 0;
 			bool check = true;
@@ -180,28 +180,28 @@ namespace Extended
 			ctx.StyleSetFont (media.font_14.handle);
 		}
 
-		public static void ui_header (NuklearContext ctx, Media media, string title)
+		public static void ui_header (ContextWrapper ctx, Media media, string title)
 		{
 			ctx.StyleSetFont (media.font_18.handle);
 			ctx.LayoutRowDynamic (20, 1);
 			ctx.Label (title, Nuklear.NK_TEXT_LEFT);
 		}
 
-		public static void ui_widget (NuklearContext ctx, Media media, float height)
+		public static void ui_widget (ContextWrapper ctx, Media media, float height)
 		{
 			ctx.StyleSetFont (media.font_22.handle);
 			ctx.LayoutRow (Nuklear.NK_DYNAMIC, height, 2, ratio);
 			ctx.Spacing (1);
 		}
 
-		public static void ui_widget_centered (NuklearContext ctx, Media media, float height)
+		public static void ui_widget_centered (ContextWrapper ctx, Media media, float height)
 		{
 			ctx.StyleSetFont (media.font_22.handle);
 			ctx.LayoutRow (Nuklear.NK_DYNAMIC, height, 3, ratio2);
 			ctx.Spacing (1);
 		}
 
-		public static void button_demo (NuklearContext ctx, Media media)
+		public static void button_demo (ContextWrapper ctx, Media media)
 		{
 
 			ctx.StyleSetFont (media.font_20.handle);
@@ -300,7 +300,7 @@ namespace Extended
 			ctx.End ();
 		}
 
-		public static void basic_demo (NuklearContext ctx, Media media)
+		public static void basic_demo (ContextWrapper ctx, Media media)
 		{
 			int i = 0;
 			ctx.StyleSetFont (media.font_20.handle);

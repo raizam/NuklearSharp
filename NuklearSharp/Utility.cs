@@ -15,16 +15,14 @@ namespace NuklearSharp
 		[StructLayout(LayoutKind.Explicit)]
 		private struct MurmurHashUnion
 		{
-			[FieldOffset(0)]
-			public uint* i;
+			[FieldOffset(0)] public uint* i;
 
-			[FieldOffset(0)]
-			public byte* b;
+			[FieldOffset(0)] public byte* b;
 
 			public MurmurHashUnion(void* ptr)
 			{
-				i = (uint*)ptr;
-				b = (byte*)ptr;
+				i = (uint*) ptr;
+				b = (byte*) ptr;
 			}
 		}
 
@@ -69,6 +67,16 @@ namespace NuklearSharp
 		public static string StyleGetColorByName(int c)
 		{
 			return ColorNames[c];
+		}
+
+		public static int Strlen(sbyte* str)
+		{
+			var siz = 0;
+			while (((str) != null) && (*str++ != '\0'))
+			{
+				siz++;
+			}
+			return siz;
 		}
 	}
 }
