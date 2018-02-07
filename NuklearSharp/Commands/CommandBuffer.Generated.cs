@@ -795,7 +795,15 @@ namespace NuklearSharp
 			label.w = (float) (((r.x + r.w) < (label.x) ? (label.x) : (r.x + r.w)) - label.x);
 			label.h = (float) (select.w);
 			was_active = (int) (*active);
-			*active = (int) (_in_.ToggleBehavior((Rect) (bounds), ref state, (int) (*active)));
+
+			if (_in_ != null)
+			{
+				*active = (int) (_in_.ToggleBehavior((Rect) (bounds), ref state, (int) (*active)));
+			}
+			else
+			{
+				*active = 0;
+			}
 			if ((style.draw_begin) != null) style.draw_begin(this, (Handle) (style.userdata));
 			if ((type) == (Nuklear.NK_TOGGLE_CHECK))
 			{
@@ -1375,7 +1383,11 @@ namespace NuklearSharp
 			old_clip = (Rect) (this.clip);
 			clip.Unify(ref old_clip, (float) (area.x), (float) (area.y), (float) (area.x + area.w), (float) (area.y + area.h));
 			prev_state = ((sbyte) (edit.active));
-			is_hovered = ((sbyte) (_in_.IsMouseHoveringRect((Rect) (bounds))));
+			if (_in_ != null)
+			{
+				is_hovered = ((sbyte) (_in_.IsMouseHoveringRect((Rect) (bounds))));
+			}
+			 
 			if ((((_in_) != null) && ((((MouseButton*) _in_.mouse.buttons + Nuklear.NK_BUTTON_LEFT)->clicked) != 0)) &&
 			    ((((MouseButton*) _in_.mouse.buttons + Nuklear.NK_BUTTON_LEFT)->down) != 0))
 			{
@@ -1923,8 +1935,11 @@ namespace NuklearSharp
 			empty.y = (float) (property.y);
 			empty.h = (float) (property.h);
 			old = (int) ((state) == (Nuklear.NK_PROPERTY_EDIT) ? 1 : 0);
-			_in_.PropertyBehavior(ref ws, (Rect) (property), (Rect) (label), (Rect) (edit), (Rect) (empty), ref state, variant,
-				(float) (inc_per_pixel));
+			if (_in_ != null)
+			{
+				_in_.PropertyBehavior(ref ws, (Rect) (property), (Rect) (label), (Rect) (edit), (Rect) (empty), ref state, variant,
+					(float) (inc_per_pixel));
+			}
 			if ((style.draw_begin) != null) style.draw_begin(this, (Handle) (style.userdata));
 			DrawProperty(style, &property, &label, (uint) (ws), name, (int) (name_len), font);
 			if ((style.draw_end) != null) style.draw_end(this, (Handle) (style.userdata));

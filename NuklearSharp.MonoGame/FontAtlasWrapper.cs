@@ -1,17 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace NuklearSharp.MonoGame
 {
 	public unsafe class FontAtlasWrapper
 	{
-		private readonly GraphicsDevice _device;
 		private readonly FontAtlas _atlas = new FontAtlas();
+		private readonly ContextWrapper _context;
 
-
-		internal FontAtlasWrapper(BaseContext context)
+		public FontAtlasWrapper(ContextWrapper context)
 		{
 			if (context == null)
 			{

@@ -14,13 +14,13 @@
 
 		public float TextWidth(Handle h, float height, char* s, int length)
 		{
-			return handle.width(h, height, s, length);
+			return TextWidth(height, s, length);
 		}
 
 		public void QueryFontGlyph(Handle h, float height, UserFontGlyph* glyph, char codepoint,
 			char next_codepoint)
 		{
-			handle.query(h, height, glyph, codepoint, next_codepoint);
+			QueryFontGlyph(height, glyph, codepoint, next_codepoint);
 		}
 	}
 }

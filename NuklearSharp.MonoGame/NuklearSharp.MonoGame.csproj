@@ -43,11 +43,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseContext.cs" />
+    <Compile Include="ContextExtensions.cs" />
     <Compile Include="FontAtlasWrapper.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="NkVertex.cs" />
-    <Compile Include="NuklearContext.cs" />
+    <Compile Include="ContextWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

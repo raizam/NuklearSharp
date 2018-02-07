@@ -195,7 +195,7 @@ namespace NuklearSharp
 		{
 			ushort* ids;
 			DrawCommand* cmd;
-			ulong elem_align = (ulong) (4);
+			ulong elem_align = (ulong) (2);
 			ulong elem_size = (ulong) (sizeof (ushort));
 			if (this == null) return null;
 			ids =

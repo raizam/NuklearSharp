@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NuklearSharp;
 using NuklearSharp.MonoGame;
+using Color = Microsoft.Xna.Framework.Color;
+using Keyboard = Microsoft.Xna.Framework.Input.Keyboard;
 
 namespace RaizamTest
 {
@@ -15,6 +17,7 @@ namespace RaizamTest
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 		private ContextWrapper _contextWrapper;
+		private Context _ctx;
 		Color _background = Color.Black;
 		bool _isTea = true;
 
@@ -39,16 +42,17 @@ namespace RaizamTest
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_contextWrapper = new ContextWrapper(GraphicsDevice);
+			_ctx = _contextWrapper.Ctx;
 
-			Nuklear.nk_font font;
+			Font font;
 			using (var stream = File.OpenRead(Path.Combine(Content.RootDirectory, "Fonts/Roboto-Regular.ttf")))
 			{
-				var fontAtlas = _contextWrapper.CreateFontAtlas();
+				var fontAtlas = new FontAtlasWrapper(_contextWrapper);
 				font = fontAtlas.AddDefaultFont(22);
 				fontAtlas.Bake();
 			}
 
-			_contextWrapper.SetFont(font);
+			_ctx.StyleSetFont(font.handle);
 
 			IsMouseVisible = true;
 			Window.AllowUserResizing = true;
@@ -99,42 +103,42 @@ namespace RaizamTest
 			GraphicsDevice.Clear(_background);
 
 			// TODO: Add your drawing code here
-			if (_contextWrapper.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
+			if (_ctx.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
 				Nuklear.NK_WINDOW_BORDER | Nuklear.NK_WINDOW_MOVABLE | Nuklear.NK_WINDOW_SCALABLE |
 				Nuklear.NK_WINDOW_MINIMIZABLE | Nuklear.NK_WINDOW_TITLE))
 			{
-				_contextWrapper.LayoutRowStatic(30, 80, 1);
-				_contextWrapper.LayoutRowDynamic(30, 1);
-				_contextWrapper.ButtonText("Button");
-				_contextWrapper.LayoutRowDynamic(30, 2);
-				if (_contextWrapper.OptionLabel("Tea", _isTea))
+				_ctx.LayoutRowStatic(30, 80, 1);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.ButtonText("Button");
+				_ctx.LayoutRowDynamic(30, 2);
+				if (_ctx.OptionLabel("Tea", _isTea))
 					_isTea = true;
 
-				if (_contextWrapper.OptionLabel("Coffee", !_isTea))
+				if (_ctx.OptionLabel("Coffee", !_isTea))
 					_isTea = false;
 
-				_contextWrapper.ButtonColor(Color.Red);
-				_contextWrapper.LayoutRowDynamic(30, 1);
-				_contextWrapper.LayoutRowDynamic(30, 2);
-				_contextWrapper.LabelColored("background", Nuklear.NK_TEXT_LEFT, _background);
+				_ctx.ButtonColor(Color.Red);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.LayoutRowDynamic(30, 2);
+				_ctx.LabelColored("background", Nuklear.NK_TEXT_LEFT, _background);
 
-				if (_contextWrapper.ComboBeginColor(_background, new Vector2(_contextWrapper.WidgetWidth(), 400)))
+				if (_ctx.ComboBeginColor(_background, new Vector2(_ctx.WidgetWidth(), 400)))
 				{
-					_contextWrapper.LayoutRowDynamic(120, 1);
-					_background = _contextWrapper.ColorPicker(_background, 0);
-					_contextWrapper.LayoutRowDynamic(25, 1);
-					_background.R = (byte) _contextWrapper.Propertyi("#R", 0, _background.R, 255, 1, 1);
-					_background.G = (byte) _contextWrapper.Propertyi("#G", 0, _background.G, 255, 1, 1);
-					_background.B = (byte) _contextWrapper.Propertyi("#B", 0, _background.B, 255, 1, 1);
-					_background.A = (byte) _contextWrapper.Propertyi("#A", 0, _background.A, 255, 1, 1);
-					_contextWrapper.ComboEnd();
+					_ctx.LayoutRowDynamic(120, 1);
+					_background = _ctx.ColorPicker(_background, 0);
+					_ctx.LayoutRowDynamic(25, 1);
+					_background.R = (byte) _ctx.Propertyi("#R", 0, _background.R, 255, 1, 1);
+					_background.G = (byte) _ctx.Propertyi("#G", 0, _background.G, 255, 1, 1);
+					_background.B = (byte) _ctx.Propertyi("#B", 0, _background.B, 255, 1, 1);
+					_background.A = (byte) _ctx.Propertyi("#A", 0, _background.A, 255, 1, 1);
+					_ctx.ComboEnd();
 				}
 
-				_contextWrapper.LayoutRowDynamic(30, 1);
-				_contextWrapper.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nuklear.NK_TEXT_LEFT, _background);
+				_ctx.LayoutRowDynamic(30, 1);
+				_ctx.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nuklear.NK_TEXT_LEFT, _background);
 
 			}
-			_contextWrapper.End();
+			_ctx.End();
 
 			_contextWrapper.Draw();
 

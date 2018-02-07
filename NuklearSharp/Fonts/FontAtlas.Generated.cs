@@ -29,7 +29,7 @@ namespace NuklearSharp
 			if (((((((((config == null)) || (config.ttf_blob == null)) || (config.ttf_size == 0)) || (config.size <= 0.0f))))))
 				return null;
 
-			cfg = config;
+			cfg = config.Clone();
 			cfg.n = cfg;
 			cfg.p = cfg;
 			if (config.merge_mode == 0)

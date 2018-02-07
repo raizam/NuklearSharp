@@ -79,7 +79,7 @@
 
 			it = begin;
 
-			while (it != null)
+			/*while (it != null)
 			{
 				Window _next_ = it.next;
 				PopupBuffer buf;
@@ -102,7 +102,7 @@
 				{
 					cmd.next = null;
 				}
-			}
+			}*/
 		}
 
 		public int InitFixed(void* m, ulong size, UserFont font)

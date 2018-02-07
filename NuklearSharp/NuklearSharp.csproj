@@ -93,6 +93,7 @@
     <Compile Include="Fonts\FontAtlas.Generated.cs" />
     <Compile Include="Fonts\FontBakeData.Generated.cs" />
     <Compile Include="Fonts\FontBaker.Generated.cs" />
+    <Compile Include="Fonts\FontConfig.cs" />
     <Compile Include="Fonts\FontConfig.Generated.cs" />
     <Compile Include="Fonts\FontGlyph.Generated.cs" />
     <Compile Include="Fonts\TtActiveEdge.Generated.cs" />

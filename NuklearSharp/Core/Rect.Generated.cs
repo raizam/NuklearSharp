@@ -243,10 +243,14 @@ namespace NuklearSharp
 				state = (uint) (Nuklear.NK_WIDGET_STATE_ACTIVE);
 			}
 
-			if ((_in_.IsMouseHoveringRect((Rect) (this))) != 0) state = (uint) (Nuklear.NK_WIDGET_STATE_HOVERED);
-			if (((state & Nuklear.NK_WIDGET_STATE_HOVER) != 0) && (_in_.IsMousePrevHoveringRect((Rect) (this)) == 0))
-				state |= (uint) (Nuklear.NK_WIDGET_STATE_ENTERED);
-			else if ((_in_.IsMousePrevHoveringRect((Rect) (this))) != 0) state |= (uint) (Nuklear.NK_WIDGET_STATE_LEFT);
+			if (_in_ != null)
+			{
+				if ((_in_.IsMouseHoveringRect((Rect) (this))) != 0) state = (uint) (Nuklear.NK_WIDGET_STATE_HOVERED);
+				if (((state & Nuklear.NK_WIDGET_STATE_HOVER) != 0) && (_in_.IsMousePrevHoveringRect((Rect) (this)) == 0))
+					state |= (uint) (Nuklear.NK_WIDGET_STATE_ENTERED);
+				else if ((_in_.IsMousePrevHoveringRect((Rect) (this))) != 0) state |= (uint) (Nuklear.NK_WIDGET_STATE_LEFT);
+			}
+
 			return (int) (value_changed);
 		}
 

@@ -1101,7 +1101,7 @@ namespace NuklearSharp
 			PopupBuffer buf;
 			if ((win == null)) return;
 			buf = win.popup.buf;
-			buf.last = buf.begin;
+			//buf.last = buf.begin;
 			buf.active = (int) (Nuklear.nk_true);
 		}
 
