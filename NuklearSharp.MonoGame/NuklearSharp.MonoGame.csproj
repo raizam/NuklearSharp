@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
@@ -38,16 +38,13 @@
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
     <ProjectReference Include="..\NuklearSharp\NuklearSharp.csproj">
-      <Project>{A57323B2-E5F7-44D7-B206-0149FD807D31}</Project>
+      <Project>{a57323b2-e5f7-44d7-b206-0149fd807d31}</Project>
       <Name>NuklearSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextExtensions.cs" />
-    <Compile Include="FontAtlasWrapper.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="NkVertex.cs" />
-    <Compile Include="ContextWrapper.cs" />
+    <Compile Include="NuklearContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

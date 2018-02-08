@@ -6,7 +6,7 @@ using Sichem;
 
 namespace NuklearSharp.Generation
 {
-	static partial class Program
+	public partial class Program
 	{
 		private class StringFunctionBinding
 		{
@@ -17,7 +17,7 @@ namespace NuklearSharp.Generation
 		private static readonly Dictionary<string, StringFunctionBinding> _bindings =
 			new Dictionary<string, StringFunctionBinding>();
 
-		private static void Convert()
+		static void Convert()
 		{
 			var cp = new ClangParser();
 
@@ -163,11 +163,15 @@ namespace NuklearSharp.Generation
 				"nk_command_buffer_reset",
 				"nk__next",
 				"nk_build",
-				"nk_propertyz",
+				"nk_property_",
 				"nk_font_atlas_add_default",
 				"nk_stroke_polygon",
 				"nk_fill_polygon",
 				"nk_stroke_polyline",
+				"nk_font_default_glyph_ranges",
+				"nk_font_chinese_glyph_ranges",
+				"nk_font_cyrillic_glyph_ranges",
+				"nk_font_korean_glyph_ranges",
 			};
 
 			var globalArrays = new HashSet<string>
@@ -196,52 +200,23 @@ namespace NuklearSharp.Generation
 				Namespace = "NuklearSharp",
 			};
 
-			var staticMethods = new HashSet<string>
-			{
-				"nk_triangle_from_direction",
-				"nk_tt__sort_edges_ins_sort",
-				"nk_tt__sort_edges_quicksort",
-				"nk_tt__sort_edges",
-				"nk_filter_default",
-				"nk_rp_qsort",
-				"nk_color_hex_rgba",
-				"nk_color_hex_rgb",
-				"nk__draw_list_next",
-				"nk__draw_next",
-				"nk_tt__fill_active_edges_new",
-				"nk_tt_GetPackedQuad",
-				"nk_tt__add_point",
-				"nk_tt__tesselate_curve",
-				"stbtt__close_shape",
-				"nk_tt_FlattenCurves",
-				"nk_rp_init_target",
-				"nk_rp__skyline_find_best_pos",
-				"nk_rp__skyline_pack_rectangle",
-				"nk_rp_pack_rects",
-			};
-
 			parameters.StructSource = n =>
 			{
-				var result = new BaseConfig
+				var result = new StructConfig
 				{
-					Name = n.ToCSharpName(),
-					Class = n.ToCSharpName()
+					Name = n,
+					Source = new SourceInfo
+					{
+						Class = "Nuklear",
+						StructType = StructType.StaticClass
+					}
 				};
 
 				if (!skipStructs.Contains(n) && !n.StartsWith("nk_command_"))
 				{
-					var s = n.ToCSharpName();
-					var subFolder = string.Empty;
-					if (!string.IsNullOrEmpty(s))
-					{
-						subFolder = GetSubFolder(s);
-						if (!string.IsNullOrEmpty(subFolder))
-						{
-							subFolder += "\\";
-						}
-					}
+					var sourceName = GetSourceName(n);
 
-					result.Source = @"..\..\..\..\..\NuklearSharp\" + subFolder + s + ".Generated.cs";
+					result.Source.Source = @"..\..\..\..\..\NuklearSharp\Nuklear." + sourceName + ".Generated.cs";
 				}
 
 				if (treatAsClasses.Contains(n) || n.StartsWith("nk_command_") || n.StartsWith("nk_style_") ||
@@ -259,30 +234,38 @@ namespace NuklearSharp.Generation
 
 			parameters.GlobalVariableSource = n => new BaseConfig
 			{
-				Class = "Nuklear",
 				Name = n,
-				Source = @"..\..\..\..\..\NuklearSharp\Nuklear.GlobalVariables.Generated.cs",
-				StructType = StructType.StaticClass,
-				Skip = skipGlobalVariables.Contains(n)
+				Source = new SourceInfo
+				{
+					Class = "Nuklear",
+					Source = @"..\..\..\..\..\NuklearSharp\Nuklear.GlobalVariables.Generated.cs",
+					StructType = StructType.StaticClass
+				}
 			};
 
 			parameters.EnumSource = n => new BaseConfig
 			{
-				Class = "Nuklear",
 				Name = string.Empty,
-				Source = @"..\..\..\..\..\NuklearSharp\Enums.Generated.cs",
-				StructType = StructType.StaticClass
+				Source = new SourceInfo
+				{
+					Class = "Nuklear",
+					Source = @"..\..\..\..\..\NuklearSharp\Nuklear.Enums.Generated.cs",
+					StructType = StructType.StaticClass
+				}
 			};
 
 			parameters.FunctionSource = n =>
 			{
-				var fc = new FunctionGenerationConfig
+				var fc = new FunctionConfig
 				{
-					Name = n.Name.ToCSharpName(),
-					Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs",
-					Class = "Nuklear",
-					StructType = StructType.StaticClass,
-					Static = true
+					Name = n.Name,
+					Static = true,
+					Source = new SourceInfo
+					{
+						Source = @"..\..\..\..\..\NuklearSharp\Nuklear.Utility.Generated.cs",
+						Class = "Nuklear",
+						StructType = StructType.StaticClass,
+					}
 				};
 
 				var parts = n.Signature.Split(',');
@@ -304,60 +287,27 @@ namespace NuklearSharp.Generation
 						var recordType = cp.Processor.GetRecordType(typeName);
 						if (recordType != RecordType.None)
 						{
-							s = typeName.ToCSharpName();
-							fc.Class = typeName.ToCSharpName();
-							fc.Source = @"..\..\..\..\..\NuklearSharp\";
-							fc.ThisName = parts2[parts2.Length - 1];
-							fc.Static = false;
-							fc.ThisArgPosition = i;
-							break;
+							s = typeName;
 						}
+
+						break;
 					}
+				}
+
+				if (s == "nk_font_atlas")
+				{
+					var k = 5;
 				}
 
 				if (!string.IsNullOrEmpty(s))
 				{
-					var subFolder = GetSubFolder(s);
-
-					if (!string.IsNullOrEmpty(subFolder))
-					{
-						subFolder += "\\";
-					}
-
-					fc.Source += subFolder + s + ".Generated.cs";
+					var sourceName = GetSourceName(s);
+					fc.Source.Source = @"..\..\..\..\..\NuklearSharp\Nuklear." + sourceName + ".Generated.cs";
 				}
 
 				if (skipFunctions.Contains(n.Name))
 				{
-					fc.Source = null;
-				}
-
-				if (!string.IsNullOrEmpty(fc.Class) &&
-				    fc.Name.StartsWith(fc.Class) &&
-				    fc.Name.Length > fc.Class.Length &&
-				    !char.IsLower(fc.Name[fc.Class.Length]))
-				{
-					fc.Name = fc.Name.Substring(fc.Class.Length);
-				}
-
-				if (fc.Name.StartsWith("Textedit") && fc.Name.Length > 8)
-				{
-					fc.Name = fc.Name.Substring(8);
-				}
-
-				if (staticMethods.Contains(n.Name) ||
-				    n.Name.Contains("filter_"))
-				{
-					fc.Static = true;
-				}
-
-				if (n.Name == "nk_font_bakerz")
-				{
-					fc.Name = n.Name.ToCSharpName();
-					fc.Source = @"..\..\..\..\..\NuklearSharp\Utility.Generated.cs";
-					fc.Class = "Nuklear";
-					fc.StructType = StructType.StaticClass;
-					fc.Static = true;
+					fc.Source.Source = null;
 				}
 
 				return fc;
@@ -453,7 +403,7 @@ namespace NuklearSharp.Generation
 			foreach (var output in outputs)
 			{
 				if (output.Key.Contains("GlobalVariables") ||
-				    output.Key.Contains("Enums") ||
+				    output.Key.Contains("Enums") /* ||
 				    output.Key.Contains("Commands\\") ||
 				    output.Key.Contains("Config\\") ||
 				    output.Key.Contains("Core\\") ||
@@ -463,12 +413,16 @@ namespace NuklearSharp.Generation
 				    output.Key.Contains("MemoryManagement\\") ||
 				    output.Key.Contains("RectPacts\\") ||
 				    output.Key.Contains("Styling\\") ||
-				    output.Key.Contains("TextEditing\\"))
+				    output.Key.Contains("TextEditing\\")*/)
 				{
 					continue;
 				}
 
 				var data = output.Value;
+
+				// Post processing
+				Logger.Info("Post processing '{0}'...", output.Key);
+
 
 				data = PostProcess(data);
 
@@ -641,78 +595,81 @@ namespace NuklearSharp.Generation
 			// File.WriteAllText(@"..\..\..\..\..\NuklearSharp\ContextWrapper.Generated.cs", s2);			
 		}
 
-		private static string GetSubFolder(string s)
+		private static string GetSourceName(string s)
 		{
 			if (string.IsNullOrEmpty(s))
 			{
 				return string.Empty;
 			}
 
-			var result = string.Empty;
+			var result = "Utility";
 
-			if (s.StartsWith("Command") ||
-			    s.Contains("EditState") ||
-			    s.Contains("Panel") ||
-			    s.Contains("Popup") ||
-			    s.StartsWith("Property") ||
-			    s.Contains("RowLayout") ||
-			    s.StartsWith("Scroll") ||
-			    s.Contains("Table") ||
-			    s.StartsWith("Window") ||
-			    s.Contains("MenuState"))
+			if (s.StartsWith("nk_context"))
+			{
+				result = @"Context";
+			} else if (s.StartsWith("nk_command") ||
+				s.Contains("nk_edit_state") ||
+				s.Contains("nk_panel") ||
+				s.Contains("nk_popup") ||
+				s.StartsWith("nk_property") ||
+				s.Contains("nk_row_layout") ||
+				s.StartsWith("nk_scroll") ||
+				s.Contains("nk_table") ||
+				s.StartsWith("nk_window") ||
+				s.Contains("nk_menu_state"))
 			{
 				result = @"Commands";
 			}
-			else if (s.StartsWith("Config"))
+			else if (s.StartsWith("nk_config"))
 			{
 				result = @"Config";
 			}
-			else if (s.StartsWith("Chart") ||
-			         s.Contains("Clipboard") ||
-			         s.Contains("Color") ||
-			         s == "Conv" ||
-			         s.Contains("Cursor") ||
-			         s.Contains("Handle") ||
-			         s.Contains("Image") ||
-			         s.Contains("ListView") ||
-			         s.StartsWith("Rect") ||
-			         s.Contains("Str") ||
-			         s == "Text" ||
-			         s.Contains("Vec2"))
+			else if (s.StartsWith("nk_chart") ||
+					 s.Contains("nk_clipboard") ||
+					 s.Contains("nk_color") ||
+					 s == "nk_conv" ||
+					 s.Contains("nk_cursor") ||
+					 s.Contains("nk_handle") ||
+					 s.Contains("nk_image") ||
+					 s.Contains("nk_list_view") ||
+					 s.StartsWith("nk_rect") ||
+					 s.Contains("nk_str") ||
+					 s == "nk_text" ||
+					 s.Contains("nk_vec2"))
 			{
 				result = @"Core";
 			}
-			else if (s.Contains("Draw"))
+			else if (s.Contains("nk_draw"))
 			{
 				result = @"Drawing";
 			}
-			else if (s.Contains("Font") ||
-			         s.Contains("Tt"))
+			else if (s.Contains("nk_font") ||
+					 s.Contains("nk_tt"))
 			{
 				result = @"Fonts";
 			}
-			else if (s.Contains("Input") ||
-			         s.Contains("Key") ||
-			         s.Contains("Mouse"))
+			else if (s.Contains("nk_input") ||
+					 s.Contains("nk_Key") ||
+					 s.Contains("nk_mouse"))
 			{
-				result = @"InputSystem";
+				result = @"Input";
 			}
-			else if (s.Contains("Buffer") ||
-			         s.Contains("Memory"))
+			else if (s.Contains("nk_buffer") ||
+					 s.Contains("nk_memory"))
 			{
-				result = @"MemoryManagement";
+				result = @"Memory";
 			}
-			else if (s.Contains("Rp"))
+			else if (s.Contains("nk_rp"))
 			{
 				result = @"RectPacts";
 			}
-			else if (s.Contains("Style"))
+			else if (s.Contains("nk_style"))
 			{
-				result = @"Styling";
+				result = @"Styles";
 			}
-			else if (s.Contains("Text"))
+			else if (s.Contains("nk_text"))
 			{
-				result = @"TextEditing";
+				result = @"TextEdit";
 			}
 
 			return result;
@@ -721,7 +678,7 @@ namespace NuklearSharp.Generation
 		private static void Process()
 		{
 			Convert();
-//			GenerateWrapper();
+			//			GenerateWrapper();
 		}
 
 		static void Main(string[] args)
