@@ -123,7 +123,7 @@ namespace NuklearSharp
 		/// <param name="height"></param>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		protected internal  abstract int CreateTexture(int width, int height, byte[] data);
+		public  abstract int CreateTexture(int width, int height, byte[] data);
 
 		/// <summary>
 		/// Called at the beginning of the draw

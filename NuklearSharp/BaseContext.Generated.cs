@@ -507,9 +507,12 @@ namespace NuklearSharp
 			Nuklear.nk_layout_row_end(_ctx);
 		}
 
-		public void LayoutRow(int fmt, float height, int cols, float* ratio)
+		public void LayoutRow(int fmt, float height, int cols, float[] ratio)
 		{
-			Nuklear.nk_layout_row(_ctx, fmt, height, cols, ratio);
+			fixed (float* ptr = ratio)
+			{
+				Nuklear.nk_layout_row(_ctx, fmt, height, cols, ptr);
+			}
 		}
 
 		public void LayoutRowTemplateBegin(float height)
@@ -1081,9 +1084,13 @@ namespace NuklearSharp
 			return Nuklear.nk_slider_int(_ctx, min, ref val, max, step) != 0;
 		}
 
-		public bool Progress(ulong* cur, ulong max, int is_modifyable)
+		public bool Progress(ref ulong cur, ulong max, int is_modifyable)
 		{
-			return Nuklear.nk_progress(_ctx, cur, max, is_modifyable) != 0;
+			ulong temp;
+			var res = Nuklear.nk_progress(_ctx, &temp, max, is_modifyable) != 0;
+			cur = temp;
+
+			return res;
 		}
 
 		public ulong Prog(ulong cur, ulong max, int modifyable)
