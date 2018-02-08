@@ -28,82 +28,6 @@ namespace NuklearSharp
 
 		public delegate int QSortComparer(void* a, void* b);
 
-		public static nk_vec2[,] nk_cursor_data =
-		{
-			{new nk_vec2 {x = 0, y = 3}, new nk_vec2 {x = 12, y = 19}, new nk_vec2 {x = 0, y = 0}},
-			{new nk_vec2 {x = 13, y = 0}, new nk_vec2 {x = 7, y = 16}, new nk_vec2 {x = 4, y = 8}},
-			{new nk_vec2 {x = 31, y = 0}, new nk_vec2 {x = 23, y = 23}, new nk_vec2 {x = 11, y = 11}},
-			{new nk_vec2 {x = 21, y = 0}, new nk_vec2 {x = 9, y = 23}, new nk_vec2 {x = 5, y = 11}},
-			{new nk_vec2 {x = 55, y = 18}, new nk_vec2 {x = 23, y = 9}, new nk_vec2 {x = 11, y = 5}},
-			{new nk_vec2 {x = 73, y = 0}, new nk_vec2 {x = 17, y = 17}, new nk_vec2 {x = 9, y = 9}},
-			{new nk_vec2 {x = 55, y = 0}, new nk_vec2 {x = 17, y = 17}, new nk_vec2 {x = 9, y = 9}}
-		};
-
-		public static nk_rect nk_null_rect = new nk_rect {x = -8192.0f, y = -8192.0f, w = 16384, h = 16384};
-		public static nk_color nk_red = new nk_color {r = 255, g = 0, b = 0, a = 255};
-		public static nk_color nk_green = new nk_color {r = 0, g = 255, b = 0, a = 255};
-		public static nk_color nk_blue = new nk_color {r = 0, g = 0, b = 255, a = 255};
-		public static nk_color nk_white = new nk_color {r = 255, g = 255, b = 255, a = 255};
-		public static nk_color nk_black = new nk_color {r = 0, g = 0, b = 0, a = 255};
-		public static nk_color nk_yellow = new nk_color {r = 255, g = 255, b = 0, a = 255};
-		public static nk_color nk_black_trans = new nk_color {r = 0, g = 0, b = 0, a = 0};
-
-		public static nk_color[] hue_colors =
-		{
-			new nk_color {r = 255, g = 0, b = 0, a = 255},
-			new nk_color {r = 255, g = 255, b = 0, a = 255},
-			new nk_color {r = 0, g = 255, b = 0, a = 255},
-			new nk_color {r = 0, g = 255, b = 255, a = 255},
-			new nk_color {r = 0, g = 0, b = 255, a = 255},
-			new nk_color {r = 255, g = 0, b = 255, a = 255},
-			new nk_color {r = 255, g = 0, b = 0, a = 255}
-		};
-
-		public static nk_color[] nk_default_color_style =
-		{
-			new nk_color {r = 175, g = 175, b = 175, a = 255},
-			new nk_color {r = 45, g = 45, b = 45, a = 255},
-			new nk_color {r = 40, g = 40, b = 40, a = 255},
-			new nk_color {r = 65, g = 65, b = 65, a = 255},
-			new nk_color {r = 50, g = 50, b = 50, a = 255},
-			new nk_color {r = 40, g = 40, b = 40, a = 255},
-			new nk_color {r = 35, g = 35, b = 35, a = 255},
-			new nk_color {r = 100, g = 100, b = 100, a = 255},
-			new nk_color {r = 120, g = 120, b = 120, a = 255},
-			new nk_color {r = 45, g = 45, b = 45, a = 255},
-			new nk_color {r = 45, g = 45, b = 45, a = 255},
-			new nk_color {r = 35, g = 35, b = 35, a = 255},
-			new nk_color {r = 38, g = 38, b = 38, a = 255},
-			new nk_color {r = 100, g = 100, b = 100, a = 255},
-			new nk_color {r = 120, g = 120, b = 120, a = 255},
-			new nk_color {r = 150, g = 150, b = 150, a = 255},
-			new nk_color {r = 38, g = 38, b = 38, a = 255},
-			new nk_color {r = 38, g = 38, b = 38, a = 255},
-			new nk_color {r = 175, g = 175, b = 175, a = 255},
-			new nk_color {r = 45, g = 45, b = 45, a = 255},
-			new nk_color {r = 120, g = 120, b = 120, a = 255},
-			new nk_color {r = 45, g = 45, b = 45, a = 255},
-			new nk_color {r = 255, g = 0, b = 0, a = 255},
-			new nk_color {r = 40, g = 40, b = 40, a = 255},
-			new nk_color {r = 100, g = 100, b = 100, a = 255},
-			new nk_color {r = 120, g = 120, b = 120, a = 255},
-			new nk_color {r = 150, g = 150, b = 150, a = 255},
-			new nk_color {r = 40, g = 40, b = 40, a = 255}
-		};
-
-		public static string[] nk_color_names =
-		{
-			"NK_COLOR_TEXT", "NK_COLOR_WINDOW", "NK_COLOR_HEADER", "NK_COLOR_BORDER", "NK_COLOR_BUTTON", "NK_COLOR_BUTTON_HOVER",
-			"NK_COLOR_BUTTON_ACTIVE", "NK_COLOR_TOGGLE", "NK_COLOR_TOGGLE_HOVER", "NK_COLOR_TOGGLE_CURSOR", "NK_COLOR_SELECT",
-			"NK_COLOR_SELECT_ACTIVE", "NK_COLOR_SLIDER", "NK_COLOR_SLIDER_CURSOR", "NK_COLOR_SLIDER_CURSOR_HOVER",
-			"NK_COLOR_SLIDER_CURSOR_ACTIVE", "NK_COLOR_PROPERTY", "NK_COLOR_EDIT", "NK_COLOR_EDIT_CURSOR", "NK_COLOR_COMBO",
-			"NK_COLOR_CHART", "NK_COLOR_CHART_COLOR", "NK_COLOR_CHART_COLOR_HIGHLIGHT", "NK_COLOR_SCROLLBAR",
-			"NK_COLOR_SCROLLBAR_CURSOR", "NK_COLOR_SCROLLBAR_CURSOR_HOVER", "NK_COLOR_SCROLLBAR_CURSOR_ACTIVE",
-			"NK_COLOR_TAB_HEADER"
-		};
-
-		private static PinnedArray<uint> ranges = new PinnedArray<uint>(new uint[] {0x0020, 0x00FF, 0});
-
 		[StructLayout(LayoutKind.Explicit)]
 		public struct nk_handle
 		{
@@ -608,6 +532,40 @@ namespace NuklearSharp
 			public nk_handle userdata = new nk_handle();
 		}
 
+		public class nk_popup_buffer
+		{
+			private List<nk_command_base> _commands;
+			private int _lastIndex;
+
+			public List<nk_command_base> commands
+			{
+				get { return _commands; }
+
+				set
+				{
+					if (value != null)
+					{
+						_commands = value;
+						_lastIndex = value.Count - 1;
+					}
+				}
+			}
+
+			public nk_command_base begin
+			{
+				get { return _commands[0]; }
+				set { _commands[0] = value; }
+			}
+
+			public nk_command_base last
+			{
+				get { return _commands[_commands.Count - 1]; }
+				set { _commands[_commands.Count - 1] = value; }
+			}
+
+			public int active;
+		}
+
 		[StructLayout(LayoutKind.Sequential)]
 		public struct nk_config_stack_button_behavior_element
 		{
@@ -1106,6 +1064,37 @@ namespace NuklearSharp
 				n = src.n,
 				p = src.p,
 			};
+		}
+
+		public static int nk_strlen(byte* str)
+		{
+			int siz = (int) (0);
+			while (((str) != null) && (*str++ != '\0'))
+			{
+				siz++;
+			}
+			return (int) (siz);
+		}
+
+
+		public static uint* nk_font_default_glyph_ranges()
+		{
+			return default_ranges;
+		}
+
+		public static uint* nk_font_chinese_glyph_ranges()
+		{
+			return chinese_ranges;
+		}
+
+		public static uint* nk_font_cyrillic_glyph_ranges()
+		{
+			return cyrillic_ranges;
+		}
+
+		public static uint* nk_font_korean_glyph_ranges()
+		{
+			return korean_ranges;
 		}
 	}
 }

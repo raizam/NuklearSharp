@@ -138,8 +138,8 @@ namespace RaizamTest
 
 			_nuklearContext.Draw();
 
-			/*_spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-			_spriteBatch.Draw(((NuklearContext)_nuklearContext.Renderer).Textures[0], Vector2.Zero, Color.White);
+/*			_spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+			_spriteBatch.Draw(_nuklearContext.Textures[0], Vector2.Zero, Color.White);
 			_spriteBatch.End();*/
 
 			base.Draw(gameTime);
