@@ -55,7 +55,7 @@ namespace NuklearSharp
 		{
 			void* temp;
 			ulong buffer_size;
-			if ((((b == null) || (size == null)))) return null;
+			if ((((b == null)))) return null;
 			buffer_size = (ulong) (b.memory.size);
 			temp = CRuntime.malloc((ulong) (capacity));
 			if (temp == null) return null;

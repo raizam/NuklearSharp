@@ -2331,7 +2331,7 @@ namespace NuklearSharp
 		{
 			int ret;
 			nk_rect content = new nk_rect();
-			if ((((_out_ == null) || (style == null)) || (font == null)) || (state == null)) return (int) (nk_false);
+			if ((((_out_ == null) || (style == null)) || (font == null))) return (int) (nk_false);
 			ret = (int) (nk_do_button(ref state, _out_, (nk_rect) (bounds), style, _in_, (int) (behavior), &content));
 			if ((style.draw_begin) != null) style.draw_begin(_out_, (nk_handle) (style.userdata));
 			nk_draw_button_symbol(_out_, &bounds, &content, (uint) (state), style, (int) (symbol), font);
@@ -2344,7 +2344,7 @@ namespace NuklearSharp
 		{
 			int ret;
 			nk_rect content = new nk_rect();
-			if (((_out_ == null) || (style == null)) || (state == null)) return (int) (nk_false);
+			if ((_out_ == null) || (style == null)) return (int) (nk_false);
 			ret = (int) (nk_do_button(ref state, _out_, (nk_rect) (bounds), style, _in_, (int) (b), &content));
 			content.x += (float) (style.image_padding.x);
 			content.y += (float) (style.image_padding.y);
@@ -2454,7 +2454,7 @@ namespace NuklearSharp
 		{
 			int old_value;
 			nk_rect touch = new nk_rect();
-			if (((((((state == null) || (_out_ == null)) || (str == null)) || (len == 0)) || (value == null)) || (style == null)) ||
+			if (((((((_out_ == null)) || (str == null)) || (len == 0))) || (style == null)) ||
 			    (font == null)) return (int) (0);
 			old_value = (int) (value);
 			touch.x = (float) (bounds.x - style.touch_padding.x);
@@ -2476,7 +2476,7 @@ namespace NuklearSharp
 			int old_value;
 			nk_rect touch = new nk_rect();
 			nk_rect icon = new nk_rect();
-			if (((((((state == null) || (_out_ == null)) || (str == null)) || (len == 0)) || (value == null)) || (style == null)) ||
+			if (((((((_out_ == null)) || (str == null)) || (len == 0))) || (style == null)) ||
 			    (font == null)) return (int) (0);
 			old_value = (int) (value);
 			touch.x = (float) (bounds.x - style.touch_padding.x);
@@ -2946,7 +2946,7 @@ namespace NuklearSharp
 			sbyte cursor_follow = (sbyte) (0);
 			nk_rect old_clip = new nk_rect();
 			nk_rect clip = new nk_rect();
-			if (((state == null) || (_out_ == null)) || (style == null)) return (uint) (ret);
+			if (((_out_ == null)) || (style == null)) return (uint) (ret);
 			area.x = (float) (bounds.x + style.padding.x + style.border);
 			area.y = (float) (bounds.y + style.padding.y + style.border);
 			area.w = (float) (bounds.w - (2.0f*style.padding.x + 2*style.border));
@@ -3826,7 +3826,7 @@ namespace NuklearSharp
 			nk_rect hue_bar = new nk_rect();
 			nk_rect alpha_bar = new nk_rect();
 			float bar_w;
-			if ((((_out_ == null) || (col == null)) || (state == null)) || (font == null)) return (int) (ret);
+			if ((((_out_ == null) || (col == null))) || (font == null)) return (int) (ret);
 			bar_w = (float) (font.height);
 			bounds.x += (float) (padding.x);
 			bounds.y += (float) (padding.x);

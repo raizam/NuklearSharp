@@ -1375,7 +1375,7 @@ namespace NuklearSharp
 			int total_range_count = (int) (0);
 			int range_count = (int) (0);
 			int i = (int) (0);
-			if (((((image_memory == null) || (width == null)) || (height == null)) || (config_list == null)) || (count == 0))
+			if (((((image_memory == null))) || (config_list == null)) || (count == 0))
 				return (int) (nk_false);
 			for (config_iter = config_list; config_iter != null; config_iter = config_iter.next)
 			{
@@ -1763,7 +1763,7 @@ namespace NuklearSharp
 			ulong img_size;
 			nk_font font_iter;
 			nk_font_baker* baker;
-			if (((((((atlas == null) || (width == null)) || (height == null)))))) return null;
+			if (atlas == null) return null;
 			if (atlas.font_num == 0) atlas.default_font = nk_font_atlas_add_default(atlas, (float) (13.0f), null);
 			if (atlas.font_num == 0) return null;
 			nk_font_baker_memory(&tmp_size, ref atlas.glyph_count, atlas.config, (int) (atlas.font_num));

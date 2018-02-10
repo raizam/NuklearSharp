@@ -522,7 +522,7 @@ namespace NuklearSharp
 			int glyph_len = (int) (0);
 			char* text;
 			int text_len;
-			if (((str == null) || (unicode == null)) || (len == null)) return null;
+			if (((str == null) || (unicode == null))) return null;
 			if ((pos) < (0))
 			{
 				*unicode = (char) (0);
@@ -561,7 +561,7 @@ namespace NuklearSharp
 			int glyph_len = (int) (0);
 			char* text;
 			int text_len;
-			if (((str == null) || (unicode == null)) || (len == null)) return null;
+			if (((str == null) || (unicode == null))) return null;
 			if ((pos) < (0))
 			{
 				*unicode = (char) (0);
@@ -743,7 +743,6 @@ namespace NuklearSharp
 					bounds->h = (float) (layout.row.height*layout.row.item.h);
 					return;
 				}
-					break;
 				case NK_LAYOUT_DYNAMIC:
 				{
 					float ratio;
@@ -786,7 +785,6 @@ namespace NuklearSharp
 					bounds->h = (float) (layout.row.item.h);
 					return;
 				}
-					break;
 				case NK_LAYOUT_STATIC:
 				{
 					item_spacing = (float) ((float) (layout.row.index)*spacing.x);

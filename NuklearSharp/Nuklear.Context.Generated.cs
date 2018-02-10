@@ -3249,7 +3249,7 @@ namespace NuklearSharp
 			nk_style style;
 			int state;
 			nk_rect bounds = new nk_rect();
-			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) || (value == null)) return (int) (0);
+			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null))) return (int) (0);
 			win = ctx.current;
 			layout = win.layout;
 			style = ctx.style;
@@ -3270,7 +3270,7 @@ namespace NuklearSharp
 			nk_style style;
 			int state;
 			nk_rect bounds = new nk_rect();
-			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) || (value == null)) return (int) (0);
+			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null))) return (int) (0);
 			win = ctx.current;
 			layout = win.layout;
 			style = ctx.style;
@@ -3441,7 +3441,7 @@ namespace NuklearSharp
 			float old_value;
 			nk_rect bounds = new nk_rect();
 			int state;
-			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) || (value == null))
+			if ((((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)))
 				return (int) (ret);
 			win = ctx.current;
 			style = ctx.style;
@@ -3537,7 +3537,7 @@ namespace NuklearSharp
 			uint state;
 			nk_text_edit edit;
 			nk_window win;
-			if (((ctx == null) || (memory == null)) || (len == null)) return (uint) (0);
+			if (((ctx == null) || (memory == null))) return (uint) (0);
 			filter = (filter == null) ? nk_filter_default : filter;
 			win = ctx.current;
 			hash = (uint) (win.edit.seq);
@@ -3650,7 +3650,7 @@ namespace NuklearSharp
 			float inc_per_pixel)
 		{
 			nk_property_variant variant = new nk_property_variant();
-			if ((((ctx == null) || (ctx.current == null)) || (name == null)) || (val == null)) return;
+			if ((((ctx == null) || (ctx.current == null)) || (name == null))) return;
 			variant = (nk_property_variant) (nk_property_variant_int((int) (val), (int) (min), (int) (max), (int) (step)));
 			nk_property_(ctx, name, &variant, (float) (inc_per_pixel), (int) (NK_FILTER_INT));
 			val = (int) (variant.value.i);
@@ -3660,7 +3660,7 @@ namespace NuklearSharp
 			float inc_per_pixel)
 		{
 			nk_property_variant variant = new nk_property_variant();
-			if ((((ctx == null) || (ctx.current == null)) || (name == null)) || (val == null)) return;
+			if ((((ctx == null) || (ctx.current == null)) || (name == null))) return;
 			variant =
 				(nk_property_variant) (nk_property_variant_float((float) (val), (float) (min), (float) (max), (float) (step)));
 			nk_property_(ctx, name, &variant, (float) (inc_per_pixel), (int) (NK_FILTER_FLOAT));
@@ -3671,7 +3671,7 @@ namespace NuklearSharp
 			float inc_per_pixel)
 		{
 			nk_property_variant variant = new nk_property_variant();
-			if ((((ctx == null) || (ctx.current == null)) || (name == null)) || (val == null)) return;
+			if ((((ctx == null) || (ctx.current == null)) || (name == null))) return;
 			variant =
 				(nk_property_variant) (nk_property_variant_double((double) (val), (double) (min), (double) (max), (double) (step)));
 			nk_property_(ctx, name, &variant, (float) (inc_per_pixel), (int) (NK_FILTER_FLOAT));
