@@ -7,6 +7,7 @@ namespace NuklearSharp
 	{
 		private readonly Nuklear.nk_context _ctx;
 		private readonly Nuklear.nk_buffer _cmds;
+		private readonly Nuklear.nk_convert_config _convertConfig;
 
 		public Nuklear.nk_context Ctx
 		{
@@ -18,35 +19,21 @@ namespace NuklearSharp
 			get { return _cmds; }
 		}
 
+		public Nuklear.nk_convert_config ConvertConfig
+		{
+			get { return _convertConfig; }
+		}
+
 		protected BaseContext()
 		{
 			_ctx = new Nuklear.nk_context();
 			_cmds = new Nuklear.nk_buffer();
 			Nuklear.nk_init_default(_ctx, null);
 			Nuklear.nk_buffer_init_default(_cmds);
-		}
 
-		public FontAtlasWrapper CreateFontAtlas()
-		{
-			return new FontAtlasWrapper(this);
-		}
-
-		public void SetFont(Nuklear.nk_font font)
-		{
-			Nuklear.nk_style_set_font(_ctx, font.handle);
-		}
-
-		public void Draw()
-		{
-			BeginDraw();
-
-			var vbuf = new Nuklear.nk_buffer();
-			var ebuf = new Nuklear.nk_buffer();
-			Nuklear.nk_draw_command* cmd;
-			//  ushort* offset = null;
-			var config = new Nuklear.nk_convert_config
+			_convertConfig = new Nuklear.nk_convert_config
 			{
-				vertex_size = (uint) sizeof (NkVertex),
+				vertex_size = (uint)sizeof(NkVertex),
 				vertex_alignment = 4,
 				global_alpha = 1f,
 				shape_AA = Nuklear.NK_ANTI_ALIASING_ON,
@@ -80,12 +67,32 @@ namespace NuklearSharp
 					}
 				}
 			};
+		}
+
+		public FontAtlasWrapper CreateFontAtlas()
+		{
+			return new FontAtlasWrapper(this);
+		}
+
+		public void SetFont(Nuklear.nk_font font)
+		{
+			Nuklear.nk_style_set_font(_ctx, font.handle);
+		}
+
+		public void Draw()
+		{
+			BeginDraw();
+
+			var vbuf = new Nuklear.nk_buffer();
+			var ebuf = new Nuklear.nk_buffer();
+			Nuklear.nk_draw_command* cmd;
+			//  ushort* offset = null;
 
 			/* convert shapes into vertexes */
 			Nuklear.nk_buffer_init_default(vbuf);
 			Nuklear.nk_buffer_init_default(ebuf);
 
-			Convert(_cmds, vbuf, ebuf, config);
+			Convert(_cmds, vbuf, ebuf, _convertConfig);
 
 			var vSize = (ulong) sizeof (NkVertex);
 
@@ -106,7 +113,7 @@ namespace NuklearSharp
 				if (cmd->elem_count == 0) continue;
 
 				Draw((int) cmd->clip_rect.x, (int) cmd->clip_rect.y, (int) cmd->clip_rect.w, (int) cmd->clip_rect.h,
-					cmd->texture.id, (int) offset, (int) (cmd->elem_count/3));
+					cmd->texture.id, (int) offset, (int)(cmd->elem_count / 3));
 				offset += cmd->elem_count;
 			}
 			Nuklear.nk_buffer_free(vbuf);

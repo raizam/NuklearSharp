@@ -26,7 +26,6 @@ namespace NuklearSharp
 			public uint elem_count;
 			public nk_rect clip_rect;
 			public nk_handle texture;
-			public nk_handle userdata;
 		}
 
 		public static void nk_draw_list_init(nk_draw_list list)
@@ -155,7 +154,6 @@ namespace NuklearSharp
 			cmd->elem_count = (uint) (0);
 			cmd->clip_rect = (nk_rect) (clip);
 			cmd->texture = (nk_handle) (texture);
-			cmd->userdata = (nk_handle) (list.userdata);
 			list.cmd_count++;
 			list.clip_rect = (nk_rect) (clip);
 			return cmd;
@@ -201,17 +199,11 @@ namespace NuklearSharp
 				if ((prev->elem_count) == (0))
 				{
 					prev->texture = (nk_handle) (texture);
-					prev->userdata = (nk_handle) (list.userdata);
 				}
-				else if ((prev->texture.id != texture.id) || (prev->userdata.id != list.userdata.id))
+				else if (prev->texture.id != texture.id)
 					nk_draw_list_push_command(list, (nk_rect) (prev->clip_rect), (nk_handle) (texture));
 			}
 
-		}
-
-		public static void nk_draw_list_push_userdata(nk_draw_list list, nk_handle userdata)
-		{
-			list.userdata = (nk_handle) (userdata);
 		}
 
 		public static void* nk_draw_list_alloc_vertices(nk_draw_list list, ulong count)
@@ -259,7 +251,6 @@ namespace NuklearSharp
 			count = (ulong) (points_count);
 			if (closed == 0) count = (ulong) (points_count - 1);
 			thick_line = (int) ((thickness) > (1.0f) ? 1 : 0);
-			nk_draw_list_push_userdata(list, (nk_handle) (list.userdata));
 			color.a = ((byte) ((float) (color.a)*list.config.global_alpha));
 			nk_color_fv(&col.r, (nk_color) (color));
 			col_trans = (nk_colorf) (col);
@@ -532,7 +523,6 @@ namespace NuklearSharp
 			ulong pnt_align = (ulong) (4);
 			ulong pnt_size = (ulong) (sizeof (nk_vec2));
 			if ((list == null) || ((points_count) < (3))) return;
-			nk_draw_list_push_userdata(list, (nk_handle) (list.userdata));
 			color.a = ((byte) ((float) (color.a)*list.config.global_alpha));
 			nk_color_fv(&col.r, (nk_color) (color));
 			col_trans = (nk_colorf) (col);

@@ -276,7 +276,7 @@ namespace NuklearSharp
 
 		public static int nk_is_word_boundary(nk_text_edit state, int idx)
 		{
-			int len  = 0;
+			int len = 0;
 			char c;
 			if (idx <= 0) return (int) (1);
 			if (nk_str_at_rune(state._string_, (int) (idx), &c, ref len) == null) return (int) (1);
@@ -928,7 +928,7 @@ namespace NuklearSharp
 
 		public static void nk_textedit_init_fixed(nk_text_edit state, void* memory, ulong size)
 		{
-			if (((state == null) || (memory == null)) || (size == 0)) return;
+			if (((memory == null)) || (size == 0)) return;
 
 			nk_textedit_clear_state(state, (int) (NK_TEXT_EDIT_SINGLE_LINE), null);
 			nk_str_init_fixed(state._string_, memory, (ulong) (size));

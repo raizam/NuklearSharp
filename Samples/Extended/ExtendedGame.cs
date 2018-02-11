@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NuklearSharp;
 using NuklearSharp.MonoGame;
-using System.Collections.Generic;
 
 namespace Extended
 {
@@ -35,23 +34,42 @@ namespace Extended
 			return Path.Combine(Content.RootDirectory, path);
 		}
 
-		private Nuklear.nk_font CreateFont(byte[] data, float height)
+		private static byte ApplyAlpha(byte color, byte alpha)
 		{
-			using (var stream = new MemoryStream(data))
-			{
-				var fontAtlas = _contextWrapper.CreateFontAtlas();
-				var font = fontAtlas.AddFont(stream, height);
-				fontAtlas.Bake();
+			var fc = color / 255.0f;
+			var fa = alpha / 255.0f;
 
-				return font;
-			}			
+			var fr = (int)(255.0f * fc * fa);
+
+			if (fr < 0)
+			{
+				fr = 0;
+			}
+
+			if (fr > 255)
+			{
+				fr = 255;
+			}
+
+			return (byte)fr;
+		}
+
+		public static void PremultiplyAlpha(byte[] data)
+		{
+			for (var i = 0; i < data.Length / 4; ++i)
+			{
+				var a = data[i*4 + 3];
+				data[i*4] = ApplyAlpha(data[i*4], a);
+				data[i*4 + 1] = ApplyAlpha(data[i*4 + 1], a);
+				data[i*4 + 2] = ApplyAlpha(data[i*4 + 2], a);
+			}
 		}
 
 		private Nuklear.nk_image LoadImage(string path)
 		{
 			using(var stream = File.OpenRead(GetAssetPath(path)))
 			{
-				var texture = Texture2D.FromStream (GraphicsDevice, stream);
+				var texture = Texture2D.FromStream(GraphicsDevice, stream);
 				var result = Nuklear.nk_image_id(_contextWrapper.CreateTexture (texture));
 
 				result.w = (ushort)texture.Width;
@@ -76,14 +94,36 @@ namespace Extended
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_contextWrapper = new NuklearContext(GraphicsDevice);
+			_contextWrapper.ConvertConfig._null_ = new Nuklear.nk_draw_null_texture
+			{
+				texture = new Nuklear.nk_handle {id = 1}
+			};
 
 			// Fonts
 			var fontData = File.ReadAllBytes(GetAssetPath("Fonts/Roboto-Regular.ttf"));
+			var fontAtlas = _contextWrapper.CreateFontAtlas();
 
-			_media.font_14 = CreateFont (fontData, 14);
-			_media.font_18 = CreateFont (fontData, 18);
-			_media.font_20 = CreateFont (fontData, 20);
-			_media.font_22 = CreateFont (fontData, 22);
+			using (var stream = new MemoryStream(fontData))
+			{
+				_media.font_14 = fontAtlas.AddFont(stream, 14);
+			}
+
+			using (var stream = new MemoryStream(fontData))
+			{
+				_media.font_18 = fontAtlas.AddFont(stream, 18);
+			}
+
+			using (var stream = new MemoryStream(fontData))
+			{
+				_media.font_20 = fontAtlas.AddFont(stream, 20);
+			}
+
+			using (var stream = new MemoryStream(fontData))
+			{
+				_media.font_22 = fontAtlas.AddFont(stream, 22);
+			}
+
+			fontAtlas.Bake();
 
 			_media.uncheckd = LoadImage("Icons/unchecked.png");
 			_media.checkd = LoadImage("Icons/checked.png");
@@ -164,7 +204,13 @@ namespace Extended
 //			GUI.button_demo (_contextWrapper, _media);
 //			GUI.grid_demo (_contextWrapper, _media);
 
-			_contextWrapper.Draw ();
+			 _contextWrapper.Draw ();
+
+			/*_spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+			var texture = _contextWrapper.Textures[0];
+			_spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+			_spriteBatch.End();*/
+
 
 			base.Draw(gameTime);
 		}

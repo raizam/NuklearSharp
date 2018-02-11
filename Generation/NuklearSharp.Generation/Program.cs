@@ -194,8 +194,7 @@ namespace NuklearSharp.Generation
 					"NK_INCLUDE_DEFAULT_ALLOCATOR",
 					"NK_INCLUDE_VERTEX_BUFFER_OUTPUT",
 					"NK_INCLUDE_FONT_BAKING",
-					"NK_INCLUDE_DEFAULT_FONT",
-					"NK_INCLUDE_COMMAND_USERDATA"
+					"NK_INCLUDE_DEFAULT_FONT"
 				},
 				Namespace = "NuklearSharp",
 			};
@@ -292,11 +291,6 @@ namespace NuklearSharp.Generation
 
 						break;
 					}
-				}
-
-				if (s == "nk_font_atlas")
-				{
-					var k = 5;
 				}
 
 				if (!string.IsNullOrEmpty(s))

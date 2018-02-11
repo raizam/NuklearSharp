@@ -160,11 +160,6 @@ namespace NuklearSharp
 			Nuklear.nk_setup(_ctx, font);
 		}
 
-		public void SetUserData(Nuklear.nk_handle handle)
-		{
-			Nuklear.nk_set_user_data(_ctx, handle);
-		}
-
 		public void Clear()
 		{
 			Nuklear.nk_clear(_ctx);

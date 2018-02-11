@@ -14,9 +14,8 @@ namespace NuklearSharp
 			    (config.vertex_layout == null)) return (uint) (NK_CONVERT_INVALID_PARAM);
 			nk_draw_list_setup(ctx.draw_list, config, cmds, vertices, elements, (int) (config.line_AA), (int) (config.shape_AA));
 			var top_window = nk__begin(ctx);
-			foreach (var cmd in top_window.buffer.commands)
+			for(var cmd = top_window.buffer.first; cmd != null; cmd = cmd.next)
 			{
-				ctx.draw_list.userdata = (nk_handle) (cmd.userdata);
 				switch (cmd.header.type)
 				{
 					case NK_COMMAND_NOP:
@@ -1020,13 +1019,6 @@ namespace NuklearSharp
 			nk_draw_list_init(ctx.draw_list);
 		}
 
-		public static void nk_set_user_data(nk_context ctx, nk_handle handle)
-		{
-			if (ctx == null) return;
-			ctx.userdata = (nk_handle) (handle);
-			if ((ctx.current) != null) ctx.current.buffer.userdata = (nk_handle) (handle);
-		}
-
 		public static void nk_clear(nk_context ctx)
 		{
 			nk_window iter;
@@ -1088,7 +1080,9 @@ namespace NuklearSharp
 		public static void nk_start_buffer(nk_context ctx, nk_command_buffer buffer)
 		{
 			if ((ctx == null) || (buffer == null)) return;
-			buffer.commands.Clear();
+
+			buffer.first = buffer.last = null;
+			buffer.count = 0;
 			buffer.clip = (nk_rect) (nk_null_rect);
 		}
 
@@ -1099,10 +1093,15 @@ namespace NuklearSharp
 
 		public static void nk_start_popup(nk_context ctx, nk_window win)
 		{
-			nk_popup_buffer buf;
 			if ((ctx == null) || (win == null)) return;
-			buf = win.popup.buf;
+			
+			var buf = win.popup.buf;
+
+			buf.first = buf.last = null;
+			buf.count = 0;
+			buf.parent = win.buffer.last;
 			buf.active = (int) (nk_true);
+
 		}
 
 		public static void nk_finish_popup(nk_context ctx, nk_window win)
@@ -1120,15 +1119,11 @@ namespace NuklearSharp
 		public static void nk_finish(nk_context ctx, nk_window win)
 		{
 			nk_popup_buffer buf;
-			nk_command* parent_last;
-			void* memory;
 			if ((ctx == null) || (win == null)) return;
 			nk_finish_buffer(ctx, win.buffer);
 			if (win.popup.buf.active == 0) return;
 			buf = win.popup.buf;
-			memory = ctx.memory.memory.ptr;
-/*			parent_last = ((nk_command*) ((void*) ((byte*) (memory) + (buf.parent))));
-			parent_last->next = (ulong) (buf.end);*/
+			win.buffer.last.next = buf.first;
 		}
 
 		public static int nk_panel_begin(nk_context ctx, char* title, int panel_type)
@@ -1155,7 +1150,6 @@ namespace NuklearSharp
 			layout = win.layout;
 			_out_ = win.buffer;
 			_in_ = (win.flags & NK_WINDOW_NO_INPUT) != 0 ? null : ctx.input;
-			win.buffer.userdata = (nk_handle) (ctx.userdata);
 			scrollbar_size = (nk_vec2) (style.window.scrollbar_size);
 			panel_padding = (nk_vec2) (nk_panel_get_padding(style, (int) (panel_type)));
 			if (((win.flags & NK_WINDOW_MOVABLE) != 0) && ((win.flags & NK_WINDOW_ROM) == 0))

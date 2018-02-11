@@ -15,6 +15,16 @@ namespace NuklearSharp.MonoGame
 		private readonly DynamicIndexBuffer _indexBuffer;
 		private readonly BasicEffect basicEffect;
 		private readonly List<Texture2D> _textures = new List<Texture2D>();
+		private readonly RasterizerState _rasterizerState = new RasterizerState
+		{
+			CullMode = CullMode.None,
+			ScissorTestEnable = true
+		};
+
+		private BlendState _oldBlendState;
+		private RasterizerState _oldRasterizerState;
+		private SamplerState _oldSamplerState;
+		private DepthStencilState _oldDepthStencilState;
 
 		private MouseState _previousMouseState = default(MouseState);
 		private int _previousWheel;
@@ -72,15 +82,16 @@ namespace NuklearSharp.MonoGame
 			basicEffect.LightingEnabled = false;
 			_device.SetVertexBuffer(_vertexBuffer);
 			_device.Indices = _indexBuffer;
-			var rasterizerState = new RasterizerState
-			{
-				CullMode = CullMode.CullCounterClockwiseFace,
-				DepthBias = DepthBias,
-				ScissorTestEnable = true
-			};
 
+			_oldSamplerState = _device.SamplerStates[0];
+			_oldBlendState = _device.BlendState;
+			_oldDepthStencilState = _device.DepthStencilState;
+			_oldRasterizerState = _device.RasterizerState;
+
+			_device.SamplerStates[0] = SamplerState.LinearClamp;
 			_device.BlendState = BlendState.NonPremultiplied;
-			_device.RasterizerState = rasterizerState;
+			_device.DepthStencilState = DepthStencilState.None;
+			_device.RasterizerState = _rasterizerState;
 		}
 
 		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride)
@@ -130,6 +141,10 @@ namespace NuklearSharp.MonoGame
 
 		protected override void EndDraw()
 		{
+			_device.SamplerStates[0] = _oldSamplerState;
+			_device.BlendState = _oldBlendState;
+			_device.DepthStencilState = _oldDepthStencilState;
+			_device.RasterizerState = _oldRasterizerState;
 		}
 
 		private void UpdateInput()
