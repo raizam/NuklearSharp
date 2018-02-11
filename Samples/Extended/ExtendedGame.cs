@@ -28,8 +28,6 @@ namespace Extended
 
 			_graphics.PreferredBackBufferWidth = 1024;
 			_graphics.PreferredBackBufferHeight = 768;
-
-			Content.RootDirectory = "Content";
 		}
 
 		private string GetAssetPath(string path)
@@ -42,7 +40,7 @@ namespace Extended
 			using (var stream = new MemoryStream(data))
 			{
 				var fontAtlas = _contextWrapper.CreateFontAtlas();
-				var font = fontAtlas.AddFont(stream, 14);
+				var font = fontAtlas.AddFont(stream, height);
 				fontAtlas.Bake();
 
 				return font;
@@ -54,7 +52,12 @@ namespace Extended
 			using(var stream = File.OpenRead(GetAssetPath(path)))
 			{
 				var texture = Texture2D.FromStream (GraphicsDevice, stream);
-				return Nuklear.nk_image_id(_contextWrapper.CreateTexture (texture));
+				var result = Nuklear.nk_image_id(_contextWrapper.CreateTexture (texture));
+
+				result.w = (ushort)texture.Width;
+				result.h = (ushort)texture.Height;
+
+				return result;
 			}
 		}
 
@@ -68,7 +71,7 @@ namespace Extended
 		{
 			// TODO: Add your initialization logic here
 
-			base.Initialize();
+			Window.Title = "Demo";
 
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -108,6 +111,8 @@ namespace Extended
 			for (var i = 0; i < _media.images.Length; ++i) {
 				_media.images [i] = LoadImage ("Images/image" + (i + 1) + ".png");
 			}
+
+			base.Initialize();		
 		}
 
 		/// <summary>
