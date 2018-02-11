@@ -9,7 +9,7 @@ namespace NuklearSharp
 		private readonly Nuklear.nk_font_atlas _atlas = new Nuklear.nk_font_atlas();
 		private readonly BaseContext _context;
 
-		internal FontAtlasWrapper(BaseContext context)
+		public FontAtlasWrapper(BaseContext context)
 		{
 			if (context == null)
 			{
@@ -43,7 +43,7 @@ namespace NuklearSharp
 			return font;
 		}
 
-		public void Bake()
+		public Nuklear.nk_draw_null_texture Bake()
 		{
 			int w = 0, h = 0;
 
@@ -54,7 +54,10 @@ namespace NuklearSharp
 
 			var textureId = _context.CreateTexture(w, h, arr);
 
-			Nuklear.nk_font_atlas_end(_atlas, new Nuklear.nk_handle { id = textureId }, null);
+			Nuklear.nk_draw_null_texture result;
+			Nuklear.nk_font_atlas_end(_atlas, new Nuklear.nk_handle { id = textureId }, &result);
+
+			return result;
 		}
 	}
 }

@@ -95,23 +95,10 @@ namespace NuklearSharp
 			public byte ungrab;
 		}
 
-		public class nk_buffer
-		{
-			public nk_buffer_marker[] marker = new nk_buffer_marker[2];
-			public int type;
-			public nk_memory memory;
-			public float grow_factor;
-			public ulong allocated;
-			public ulong needed;
-			public ulong calls;
-			public ulong size;
-		}
-
 		public class nk_context
 		{
 			public nk_input input = new nk_input();
 			public nk_style style = new nk_style();
-			public nk_buffer memory = new nk_buffer();
 			public nk_clipboard clip = new nk_clipboard();
 			public uint last_widget_state;
 			public int button_behavior;
@@ -176,20 +163,32 @@ namespace NuklearSharp
 		public class nk_draw_list
 		{
 			public nk_rect clip_rect;
-			public nk_vec2[] circle_vtx = new nk_vec2[12];
+			public readonly nk_vec2[] circle_vtx = new nk_vec2[12];
 			public nk_convert_config config;
-			public nk_buffer buffer;
-			public nk_buffer vertices;
-			public nk_buffer elements;
-			public uint element_count;
-			public uint vertex_count;
-			public uint cmd_count;
-			public ulong cmd_offset;
-			public uint path_count;
-			public uint path_offset;
+			public readonly NkBuffer<nk_vec2> points = new NkBuffer<nk_vec2>();
+			public NkBuffer<nk_draw_command> buffer;
+			public NkBuffer<byte> vertices;
+			public readonly NkBuffer<nk_vec2> normals = new NkBuffer<nk_vec2>();
+			public NkBuffer<ushort> elements;
 			public int line_AA;
 			public int shape_AA;
 			public nk_handle userdata;
+
+			public int vertex_offset
+			{
+				get { return vertices.Count/(int)config.vertex_size; }
+			}
+
+			public int addElements(int size)
+			{
+				int result = elements.Count;
+
+				elements.addToEnd(size);
+
+				buffer.Data[buffer.Count - 1].elem_count += (uint)size;
+
+				return result;
+			}
 		}
 
 		public class nk_style_item_data
@@ -713,11 +712,12 @@ namespace NuklearSharp
 			var conv = new nk_inv_sqrt_union
 			{
 				i = 0,
+				f = number,
 			};
-			conv.f = number;
 			var x2 = number*0.5f;
 			conv.i = 0x5f375A84 - (conv.i >> 1);
 			conv.f = conv.f*(threehalfs - (x2*conv.f*conv.f));
+
 			return conv.f;
 		}
 
@@ -762,26 +762,18 @@ namespace NuklearSharp
 		{
 			if (memory == null) return 0;
 			nk_setup(ctx, font);
-			nk_buffer_init_fixed(ctx.memory, memory, size);
 			return 1;
-		}
-
-		public static void nk_buffer_init_default(nk_buffer buffer)
-		{
-			nk_buffer_init(buffer, 4*1024);
 		}
 
 		public static int nk_init(nk_context ctx, nk_user_font font)
 		{
 			nk_setup(ctx, font);
-			nk_buffer_init(ctx.memory, 4*1024);
 			return 1;
 		}
 
 		public static void nk_free(nk_context ctx)
 		{
 			if (ctx == null) return;
-			nk_buffer_free(ctx.memory);
 
 			ctx.seq = 0;
 			ctx.build = 0;
@@ -845,18 +837,6 @@ namespace NuklearSharp
 			}
 		}
 
-		public static void nk_str_init_default(nk_str str)
-		{
-			nk_buffer_init(str.buffer, 32);
-			str.len = 0;
-		}
-
-		public static void nk_str_init(nk_str str, ulong size)
-		{
-			nk_buffer_init(str.buffer, size);
-			str.len = 0;
-		}
-
 		public static int nk_init_default(nk_context ctx, nk_user_font font)
 		{
 			return nk_init(ctx, font);
@@ -875,9 +855,8 @@ namespace NuklearSharp
 		{
 			var bounds = new nk_rect();
 			uint hash;
-			char* dummy_buffer = stackalloc char[64];
+			string dummy_buffer = null;
 			var dummy_state = NK_PROPERTY_DEFAULT;
-			var dummy_length = 0;
 			var dummy_cursor = 0;
 			var dummy_select_begin = 0;
 			var dummy_select_end = 0;
@@ -899,18 +878,17 @@ namespace NuklearSharp
 				: ctx.input;
 
 			int old_state, state;
-			char* buffer;
+			string buffer;
 			int len, cursor, select_begin, select_end;
 			if ((win.property.active != 0) && (hash == win.property.name))
 			{
 				old_state = win.property.state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-					win.property.buffer, ref win.property.length, ref win.property.state, ref win.property.cursor,
+					ref win.property.buffer, ref win.property.state, ref win.property.cursor,
 					ref win.property.select_start, ref win.property.select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
 				state = win.property.state;
 				buffer = win.property.buffer;
-				len = win.property.length;
 				cursor = win.property.cursor;
 				select_begin = win.property.select_start;
 				select_end = win.property.select_end;
@@ -919,12 +897,11 @@ namespace NuklearSharp
 			{
 				old_state = dummy_state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-					dummy_buffer, ref dummy_length, ref dummy_state, ref dummy_cursor,
+					ref dummy_buffer, ref dummy_state, ref dummy_cursor,
 					ref dummy_select_begin, ref dummy_select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
 				state = dummy_state;
 				buffer = dummy_buffer;
-				len = dummy_length;
 				cursor = dummy_cursor;
 				select_begin = dummy_select_begin;
 				select_end = dummy_select_end;
@@ -934,8 +911,7 @@ namespace NuklearSharp
 			if ((_in_ != null) && (state != NK_PROPERTY_DEFAULT) && (win.property.active == 0))
 			{
 				win.property.active = 1;
-				nk_memcopy(win.property.buffer, buffer, (ulong) len);
-				win.property.length = len;
+				win.property.buffer = buffer;
 				win.property.cursor = cursor;
 				win.property.state = state;
 				win.property.name = hash;

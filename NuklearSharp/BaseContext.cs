@@ -1,12 +1,11 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace NuklearSharp
+﻿namespace NuklearSharp
 {
 	public abstract unsafe partial class BaseContext
 	{
 		private readonly Nuklear.nk_context _ctx;
-		private readonly Nuklear.nk_buffer _cmds;
+		private readonly NkBuffer<Nuklear.nk_draw_command> _cmds = new NkBuffer<Nuklear.nk_draw_command>();
+		private readonly NkBuffer<byte> _vertices = new NkBuffer<byte>();
+		private readonly NkBuffer<ushort> _indices = new NkBuffer<ushort>();
 		private readonly Nuklear.nk_convert_config _convertConfig;
 
 		public Nuklear.nk_context Ctx
@@ -14,7 +13,7 @@ namespace NuklearSharp
 			get { return _ctx; }
 		}
 
-		public Nuklear.nk_buffer Cmds
+		public NkBuffer<Nuklear.nk_draw_command> Cmds
 		{
 			get { return _cmds; }
 		}
@@ -27,51 +26,18 @@ namespace NuklearSharp
 		protected BaseContext()
 		{
 			_ctx = new Nuklear.nk_context();
-			_cmds = new Nuklear.nk_buffer();
 			Nuklear.nk_init_default(_ctx, null);
-			Nuklear.nk_buffer_init_default(_cmds);
 
 			_convertConfig = new Nuklear.nk_convert_config
 			{
-				vertex_size = (uint)sizeof(NkVertex),
 				vertex_alignment = 4,
 				global_alpha = 1f,
 				shape_AA = Nuklear.NK_ANTI_ALIASING_ON,
 				line_AA = Nuklear.NK_ANTI_ALIASING_ON,
 				circle_segment_count = 22,
 				curve_segment_count = 22,
-				arc_segment_count = 22,
-				vertex_layout = new[]
-				{
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_POSITION,
-						format = Nuklear.NK_FORMAT_FLOAT,
-						offset = 0
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_COLOR,
-						format = Nuklear.NK_FORMAT_B8G8R8A8,
-						offset = 12
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_TEXCOORD,
-						format = Nuklear.NK_FORMAT_FLOAT,
-						offset = 16
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_ATTRIBUTE_COUNT
-					}
-				}
+				arc_segment_count = 22
 			};
-		}
-
-		public FontAtlasWrapper CreateFontAtlas()
-		{
-			return new FontAtlasWrapper(this);
 		}
 
 		public void SetFont(Nuklear.nk_font font)
@@ -83,41 +49,31 @@ namespace NuklearSharp
 		{
 			BeginDraw();
 
-			var vbuf = new Nuklear.nk_buffer();
-			var ebuf = new Nuklear.nk_buffer();
-			Nuklear.nk_draw_command* cmd;
 			//  ushort* offset = null;
 
-			/* convert shapes into vertexes */
-			Nuklear.nk_buffer_init_default(vbuf);
-			Nuklear.nk_buffer_init_default(ebuf);
+			_cmds.reset();
+			_vertices.reset();
+			_indices.reset();
+			Convert(_cmds, _vertices, _indices, _convertConfig);
 
-			Convert(_cmds, vbuf, ebuf, _convertConfig);
-
-			var vSize = (ulong) sizeof (NkVertex);
-
-			var vertex_count = (uint) (vbuf.needed/vSize);
-			var vertices = new byte[(int) vbuf.needed];
-			var indices = new short[ebuf.needed/sizeof (short)];
-
-			Marshal.Copy((IntPtr) vbuf.memory.ptr, vertices, 0, (int) vbuf.needed);
+			var vertex_count = (uint) ((ulong)_vertices.Count/_convertConfig.vertex_size);
 
 			/* iterate over and execute each draw command */
 			uint offset = 0;
 
-			Marshal.Copy((IntPtr) ebuf.memory.ptr, indices, 0, indices.Length);
-
-			SetBuffers(vertices, indices, (int) vertex_count, sizeof (NkVertex));
-			for (cmd = Nuklear.nk__draw_begin(_ctx, _cmds); (cmd) != null; (cmd) = Nuklear.nk__draw_next(cmd, _cmds, _ctx))
+			SetBuffers(_vertices.Data, _indices.Data, _indices.Count, (int) vertex_count);
+			for(var i = 0; i < _cmds.Count; ++i)
 			{
-				if (cmd->elem_count == 0) continue;
+				var cmd = _cmds[i];
+				if (cmd.elem_count == 0)
+				{
+					continue;
+				}
 
-				Draw((int) cmd->clip_rect.x, (int) cmd->clip_rect.y, (int) cmd->clip_rect.w, (int) cmd->clip_rect.h,
-					cmd->texture.id, (int) offset, (int)(cmd->elem_count / 3));
-				offset += cmd->elem_count;
+				Draw((int) cmd.clip_rect.x, (int) cmd.clip_rect.y, (int) cmd.clip_rect.w, (int) cmd.clip_rect.h,
+					cmd.texture.id, (int) offset, (int)(cmd.elem_count / 3));
+				offset += cmd.elem_count;
 			}
-			Nuklear.nk_buffer_free(vbuf);
-			Nuklear.nk_buffer_free(ebuf);
 			Nuklear.nk_clear(_ctx);
 
 			EndDraw();
@@ -142,9 +98,10 @@ namespace NuklearSharp
 		/// </summary>
 		/// <param name="vertices"></param>
 		/// <param name="indices"></param>
+		/// <param name="indices_count"></param>
 		/// <param name="vertex_count"></param>
 		/// <param name="vertex_stride"></param>
-		protected internal abstract void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride);
+		protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count);
 
 		/// <summary>
 		/// Draw

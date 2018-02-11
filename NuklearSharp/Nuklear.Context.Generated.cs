@@ -5,8 +5,8 @@ namespace NuklearSharp
 {
 	public unsafe partial class Nuklear
 	{
-		public static uint nk_convert(nk_context ctx, nk_buffer cmds, nk_buffer vertices, nk_buffer elements,
-			nk_convert_config config)
+		public static uint nk_convert(nk_context ctx, NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
+			NkBuffer<ushort> elements, nk_convert_config config)
 		{
 			uint res = (uint) (NK_CONVERT_SUCCESS);
 
@@ -15,7 +15,8 @@ namespace NuklearSharp
 			nk_draw_list_setup(ctx.draw_list, config, cmds, vertices, elements, (int) (config.line_AA), (int) (config.shape_AA));
 			var top_window = nk__begin(ctx);
 
-			for(var cmd = top_window.buffer.first; cmd != null; cmd = cmd.next)
+			int cnt = 0;
+			for (var cmd = top_window.buffer.first; cmd != null; cmd = cmd.next)
 			{
 				switch (cmd.header.type)
 				{
@@ -180,22 +181,10 @@ namespace NuklearSharp
 					default:
 						break;
 				}
+				++cnt;
 			}
-			res |=
-				(uint) (((cmds.needed) > (cmds.allocated + (cmds.memory.size - cmds.size))) ? NK_CONVERT_COMMAND_BUFFER_FULL : 0);
-			res |= (uint) (((vertices.needed) > (vertices.allocated)) ? NK_CONVERT_VERTEX_BUFFER_FULL : 0);
-			res |= (uint) (((elements.needed) > (elements.allocated)) ? NK_CONVERT_ELEMENT_BUFFER_FULL : 0);
-			return (uint) (res);
-		}
 
-		public static nk_draw_command* nk__draw_begin(nk_context ctx, nk_buffer buffer)
-		{
-			return nk__draw_list_begin(ctx.draw_list, buffer);
-		}
-
-		public static nk_draw_command* nk__draw_end(nk_context ctx, nk_buffer buffer)
-		{
-			return nk__draw_list_end(ctx.draw_list, buffer);
+			return res;
 		}
 
 		public static void nk_input_begin(nk_context ctx)
@@ -1025,9 +1014,7 @@ namespace NuklearSharp
 			nk_window iter;
 			nk_window next;
 			if (ctx == null) return;
-			nk_buffer_reset(ctx.memory, (int) (NK_BUFFER_FRONT));
 			ctx.build = (int) (0);
-			ctx.memory.calls = (ulong) (0);
 			ctx.last_widget_state = (uint) (0);
 			ctx.style.cursor_active = ctx.style.cursors[NK_CURSOR_ARROW];
 
@@ -1095,7 +1082,7 @@ namespace NuklearSharp
 		public static void nk_start_popup(nk_context ctx, nk_window win)
 		{
 			if ((ctx == null) || (win == null)) return;
-			
+
 			var buf = win.popup.buf.buffer;
 
 			buf.first = buf.last = null;
@@ -3509,14 +3496,14 @@ namespace NuklearSharp
 			win.edit.name = (uint) (0);
 		}
 
-		public static uint nk_edit_string(nk_context ctx, uint flags, char* memory, ref int len, int max,
+		public static uint nk_edit_string(nk_context ctx, uint flags, NkStr str, int max,
 			NkPluginFilter filter)
 		{
 			uint hash;
 			uint state;
 			nk_text_edit edit;
 			nk_window win;
-			if (((ctx == null) || (memory == null))) return (uint) (0);
+			if (((ctx == null))) return (uint) (0);
 			filter = (filter == null) ? nk_filter_default : filter;
 			win = ctx.current;
 			hash = (uint) (win.edit.seq);
@@ -3525,7 +3512,7 @@ namespace NuklearSharp
 				(int) ((flags & NK_EDIT_MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE), filter);
 			if (((win.edit.active) != 0) && ((hash) == (win.edit.name)))
 			{
-				if ((flags & NK_EDIT_NO_CURSOR) != 0) edit.cursor = (int) (nk_utf_len(memory, (int) (len)));
+				if ((flags & NK_EDIT_NO_CURSOR) != 0) edit.cursor = (int) (str.len);
 				else edit.cursor = (int) (win.edit.cursor);
 				if ((flags & NK_EDIT_SELECTABLE) == 0)
 				{
@@ -3544,12 +3531,14 @@ namespace NuklearSharp
 			}
 			else edit.active = (byte) (nk_false);
 			max = (int) ((1) < (max) ? (max) : (1));
-			len = (int) ((len) < (max - 1) ? (len) : (max - 1));
-			nk_str_init_fixed(edit._string_, memory, (ulong) (max));
-			edit._string_.buffer.allocated = ((ulong) (len));
-			edit._string_.len = (int) (nk_utf_len(memory, (int) (len)));
+
+			if (str.len > max)
+			{
+				str.str = str.str.Substring(0, max);
+			}
+
+			edit._string_ = str;
 			state = (uint) (nk_edit_buffer(ctx, (uint) (flags), edit, filter));
-			len = ((int) (edit._string_.buffer.allocated));
 			if ((edit.active) != 0)
 			{
 				win.edit.cursor = (int) (edit.cursor);
@@ -3613,16 +3602,6 @@ namespace NuklearSharp
 			}
 
 			return (uint) (ret_flags);
-		}
-
-		public static uint nk_edit_string_zero_terminated(nk_context ctx, uint flags, char* buffer, int max,
-			NkPluginFilter filter)
-		{
-			uint result;
-			int len = (int) (nk_strlen(buffer));
-			result = (uint) (nk_edit_string(ctx, (uint) (flags), buffer, ref len, (int) (max), filter));
-			buffer[(((max - 1) < (0) ? (0) : (max - 1)) < (len) ? ((max - 1) < (0) ? (0) : (max - 1)) : (len))] = ('\0');
-			return (uint) (result);
 		}
 
 		public static void nk_property_int(nk_context ctx, char* name, int min, ref int val, int max, int step,
@@ -4213,7 +4192,6 @@ namespace NuklearSharp
 			nk_panel panel;
 			int title_len;
 			uint title_hash;
-			ulong allocated;
 			if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return (int) (0);
 			win = ctx.current;
 			panel = win.layout;
@@ -4251,8 +4229,7 @@ namespace NuklearSharp
 			popup.flags |= (uint) (NK_WINDOW_BORDER);
 			if ((type) == (NK_POPUP_DYNAMIC)) popup.flags |= (uint) (NK_WINDOW_DYNAMIC);
 			nk_start_popup(ctx, win);
-			popup.buffer = (nk_command_buffer)(win.buffer);
-			allocated = (ulong)(ctx.memory.allocated);
+			popup.buffer = (nk_command_buffer) (win.buffer);
 			nk_push_scissor(popup.buffer, (nk_rect) (nk_null_rect));
 			if ((nk_panel_begin(ctx, title, (int) (NK_PANEL_POPUP))) != 0)
 			{
@@ -4279,7 +4256,6 @@ namespace NuklearSharp
 					root = root.parent;
 				}
 				win.popup.active = (int) (0);
-				ctx.memory.allocated = (ulong) (allocated);
 				ctx.current = win;
 				nk_free_panel(ctx, popup.layout);
 				popup.layout = null;

@@ -11,16 +11,8 @@ namespace Extended
 		private static readonly float[] ratio2 = {0.15f, 0.50f, 0.35f};
 		private static readonly string[] items2 = {"Item 0", "item 1", "item 2"};
 
-		private static readonly char[][] edit_buffers = {
-			new char[128],
-			new char[128],
-			new char[128],
-		};
+		private static readonly NkStr[] edit_strings = new NkStr[4];
 
-		private static readonly int[] text_len = new int[3]
-		{
-			0, 0, 0
-		};
 		private static int option = 1;
 		private static bool toggle0 = true;
 		private static bool toggle1;
@@ -169,12 +161,14 @@ namespace Extended
 			{
 				ctx.StyleSetFont(media.font_18.handle);
 				ctx.LayoutRowDynamic(30, 2);
+				ctx.Label("String:", Nuklear.NK_TEXT_RIGHT);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, ref edit_strings[0], 64, Nuklear.nk_filter_default);
 				ctx.Label("Floating point:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[0], ref text_len[0], 64, Nuklear.nk_filter_float);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, ref edit_strings[1], 64, Nuklear.nk_filter_float);
 				ctx.Label("Hexadecimal:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[1], ref text_len[1], 64, Nuklear.nk_filter_hex);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, ref edit_strings[2], 64, Nuklear.nk_filter_hex);
 				ctx.Label("Binary:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[2], ref text_len[2], 64, Nuklear.nk_filter_binary);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, ref edit_strings[3], 64, Nuklear.nk_filter_binary);
 				ctx.Label("Checkbox:", Nuklear.NK_TEXT_RIGHT);
 				ctx.CheckboxLabel("Check me", ref grid_check);
 				ctx.Label("Combobox:", Nuklear.NK_TEXT_RIGHT);
@@ -282,7 +276,7 @@ namespace Extended
      *------------------------------------------------*/
 			ui_header(ctx, media, "Radio buttons");
 			ui_widget(ctx, media, 35);
-/*			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
+			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
 				option = 0;
 			ui_widget(ctx, media, 35);
@@ -292,7 +286,7 @@ namespace Extended
 			ui_widget(ctx, media, 35);
 			if (ctx.ButtonSymbolLabel(option == 2 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
-				option = 2;*/
+				option = 2;
 
 			/*------------------------------------------------
      *                  CONTEXTUAL

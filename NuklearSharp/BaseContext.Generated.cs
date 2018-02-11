@@ -6,7 +6,8 @@ namespace NuklearSharp
 {
 	unsafe partial class BaseContext
 	{
-		public uint Convert(Nuklear.nk_buffer cmds, Nuklear.nk_buffer vertices, Nuklear.nk_buffer elements,
+		public uint Convert(NkBuffer<Nuklear.nk_draw_command> cmds, NkBuffer<byte> vertices,
+			NkBuffer<ushort> elements,
 			Nuklear.nk_convert_config config)
 		{
 			return Nuklear.nk_convert(_ctx, cmds, vertices, elements, config);
@@ -27,9 +28,9 @@ namespace NuklearSharp
 			Nuklear.nk_input_motion(_ctx, x, y);
 		}
 
-		public void InputKey(int key, int down)
+		public void InputKey(int key, bool down)
 		{
-			Nuklear.nk_input_key(_ctx, key, down);
+			Nuklear.nk_input_key(_ctx, key, down?1:0);
 		}
 
 		public void InputButton(int id, int x, int y, bool down)
@@ -1083,25 +1084,19 @@ namespace NuklearSharp
 			Nuklear.nk_edit_unfocus(_ctx);
 		}
 
-		public uint EditString(uint flags, char[] memory, ref int len, int max, Nuklear.NkPluginFilter filter)
+		public uint EditString(uint flags, ref NkStr str, int max, Nuklear.NkPluginFilter filter)
 		{
-			fixed (char* memory_ptr = memory)
+			if (str == null)
 			{
-				return Nuklear.nk_edit_string(_ctx, flags, memory_ptr, ref len, max, filter);
+				str = new NkStr();
 			}
+
+			return Nuklear.nk_edit_string(_ctx, flags, str, max, filter);
 		}
 
 		public uint EditBuffer(uint flags, Nuklear.nk_text_edit edit, Nuklear.NkPluginFilter filter)
 		{
 			return Nuklear.nk_edit_buffer(_ctx, flags, edit, filter);
-		}
-
-		public uint EditStringZeroTerminated(uint flags, string buffer, int max, Nuklear.NkPluginFilter filter)
-		{
-			fixed (char* buffer_ptr = buffer)
-			{
-				return Nuklear.nk_edit_string_zero_terminated(_ctx, flags, buffer_ptr, max, filter);
-			}
 		}
 
 		public void PropertyInt(string name, int min, ref int val, int max, int step, float inc_per_pixel)

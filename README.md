@@ -1,6 +1,6 @@
 ## Overview
 
-C# Port of the ANSI C GUI Library: https://github.com/vurtun/nuklear
+NuklearSharp is C# Port of the ANSI C GUI Library: https://github.com/vurtun/nuklear
 
 It is important to note, that this project is **port**, not **wrapper**. Original C code had been ported to C#. So NuklearSharp doesnt require any native binaries.
 
@@ -26,7 +26,7 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 	_nuklearContext = new NuklearContext(GraphicsDevice);
 
 	// Set default font
-	var fontAtlas = _nuklearContext.CreateFontAtlas();
+	var fontAtlas = new FontAtlasWrapper(_nuklearContext);
 	var font = fontAtlas.AddDefaultFont(22);
 	fontAtlas.Bake();
 
@@ -83,11 +83,12 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 
 ## Credits
 * [nuklear](https://github.com/vurtun/nuklear)
+* [stb](https://github.com/nothings/stb)
 * [ClangSharp](https://github.com/Microsoft/ClangSharp)
 * [sealang](https://github.com/pybee/sealang)
 * [MonoGame](http://www.monogame.net/)
 
-Also I would like to thank [@raizam](https://github.com/raizam) for donating his code that was used to make NuklearSharp.MonoGame and RaizamTest.
+Also I would like to thank [@raizam](https://github.com/raizam) as the whole project was his idea. Also he donated the code that was used to make NuklearSharp.MonoGame and RaizamTest.
 
 ## License
 ```
