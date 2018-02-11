@@ -58,32 +58,35 @@ namespace NuklearSharp
 
 		public static float nk_textedit_get_width(nk_text_edit edit, int line_start, int char_id, nk_user_font font)
 		{
-			int len = (int) (0);
-			char unicode = (char) 0;
-			char* str = nk_str_at_const(edit._string_, (int) (line_start + char_id), &unicode, ref len);
-			return (float) (font.width((nk_handle) (font.userdata), (float) (font.height), str, (int) (len)));
+			fixed (char* str2 = edit._string_.str)
+			{
+				char* str = str2 + line_start + char_id;
+				return (float)(font.width((nk_handle)(font.userdata), (float)(font.height), str, 1));
+			}
 		}
 
 		public static void nk_textedit_layout_row(nk_text_edit_row* r, nk_text_edit edit, int line_start_id, float row_height,
 			nk_user_font font)
 		{
-			int l = 0;
 			int glyphs = (int) (0);
-			char unicode;
 			char* remaining;
 			int len = (int) (nk_str_len_char(edit._string_));
-			char* end = nk_str_get_const(edit._string_) + len;
-			char* text = nk_str_at_const(edit._string_, (int) (line_start_id), &unicode, ref l);
-			nk_vec2 size =
-				(nk_vec2)
-					(nk_text_calculate_text_bounds(font, text, (int) (end - text), (float) (row_height), &remaining, null, &glyphs,
-						(int) (NK_STOP_ON_NEW_LINE)));
-			r->x0 = (float) (0.0f);
-			r->x1 = (float) (size.x);
-			r->baseline_y_delta = (float) (size.y);
-			r->ymin = (float) (0.0f);
-			r->ymax = (float) (size.y);
-			r->num_chars = (int) (glyphs);
+			fixed (char* str2 = edit._string_.str)
+			{
+				char* end = str2 + len;
+
+				char* text = str2 + line_start_id;
+				nk_vec2 size =
+					(nk_vec2)
+						(nk_text_calculate_text_bounds(font, text, (int) (end - text), (float) (row_height), &remaining, null, &glyphs,
+							(int) (NK_STOP_ON_NEW_LINE)));
+				r->x0 = (float) (0.0f);
+				r->x1 = (float) (size.x);
+				r->baseline_y_delta = (float) (size.y);
+				r->ymin = (float) (0.0f);
+				r->ymax = (float) (size.y);
+				r->num_chars = (int) (glyphs);
+			}
 		}
 
 		public static int nk_textedit_locate_coord(nk_text_edit edit, float x, float y, nk_user_font font, float row_height)
@@ -278,7 +281,7 @@ namespace NuklearSharp
 		{
 			if (idx <= 0) return (int) (1);
 			if (state._string_.len < idx) return (int) (1);
-			char c = state._string_.buffer[idx];
+			char c = state._string_.str[idx];
 			return
 				(int)
 					((((((((((((c) == (' ')) || ((c) == ('	'))) || ((c) == (0x3000))) || ((c) == (','))) || ((c) == (';'))) ||
@@ -956,7 +959,7 @@ namespace NuklearSharp
 		public static void nk_textedit_free(nk_text_edit state)
 		{
 			if (state == null) return;
-			state._string_.buffer.reset();
+			state._string_.str = string.Empty;
 		}
 
 		public static int nk_filter_default(nk_text_edit box, char unicode)

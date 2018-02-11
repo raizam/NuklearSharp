@@ -6,7 +6,7 @@ namespace NuklearSharp
 	public unsafe partial class Nuklear
 	{
 		public static uint nk_convert(nk_context ctx, NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
-			NkBuffer<short> elements,
+			NkBuffer<ushort> elements,
 			nk_convert_config config)
 		{
 			uint res = (uint) (NK_CONVERT_SUCCESS);
@@ -3532,9 +3532,9 @@ namespace NuklearSharp
 			max = (int) ((1) < (max) ? (max) : (1));
 			len = (int) ((len) < (max - 1) ? (len) : (max - 1));
 			nk_str_init_fixed(edit._string_, memory, (ulong) (max));
-			edit._string_.buffer.Count = len;
+			edit._string_.str = edit._string_.str.Substring(0, len);
 			state = (uint) (nk_edit_buffer(ctx, (uint) (flags), edit, filter));
-			len = ((int) (edit._string_.buffer.Size));
+			len = ((int) (edit._string_.str.Length));
 			if ((edit.active) != 0)
 			{
 				win.edit.cursor = (int) (edit.cursor);

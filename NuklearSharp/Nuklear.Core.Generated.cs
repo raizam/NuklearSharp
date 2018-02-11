@@ -83,11 +83,11 @@ namespace NuklearSharp
 
 		public unsafe partial class nk_str
 		{
-			public NkBuffer<char> buffer = new NkBuffer<char>();
+			public string str;
 
 			public int len
 			{
-				get { return buffer.Count; }
+				get { return str.Length; }
 			}
 		}
 
@@ -276,16 +276,15 @@ namespace NuklearSharp
 
 		public static void nk_str_init_fixed(nk_str str, void* memory, ulong size)
 		{
-			str.buffer.reset();
+			str.str = String.Empty;
 		}
 
 		public static int nk_str_append_text_char(nk_str s, char* str, int len)
 		{
 			if (((s == null) || (str == null)) || (len == 0)) return (int) (0);
-			for (var i = 0; i < len; ++i)
-			{
-				s.buffer.append(str[i]);
-			}
+
+			var s2 = new string(str);
+			s.str += s2;
 			return (int) (len);
 		}
 
@@ -329,12 +328,9 @@ namespace NuklearSharp
 
 		public static int nk_str_insert_at_char(nk_str s, int pos, char* str, int len)
 		{
-			s.buffer.extendAt(pos, len);
+			var s2 = new string(str);
 
-			for (var i = 0; i < len; ++i)
-			{
-				s.buffer.Data[i + pos] = str[i];
-			}
+			s.str = s.str.Substring(0, pos) + s2 + s.str.Substring(pos);
 
 			return len;
 		}
@@ -419,20 +415,20 @@ namespace NuklearSharp
 
 		public static void nk_str_remove_chars(nk_str s, int len)
 		{
-			s.buffer.cutFromEnd(len);
+			s.str = s.str.Substring(0, s.str.Length - len);
 		}
 
 		public static void nk_str_remove_runes(nk_str str, int len)
 		{
 			if ((str == null) || ((len) < (0))) return;
-			str.buffer.cutFromEnd(len);
+			nk_str_remove_chars(str, len);
 		}
 
 		public static void nk_str_delete_chars(nk_str s, int pos, int len)
 		{
 			if ((((s == null) || (len == 0)))) return;
 
-			s.buffer.narrowAt(pos, len);
+			s.str = s.str.Substring(0, pos) + s.str.Substring(pos + len);
 		}
 
 		public static void nk_str_delete_runes(nk_str s, int pos, int len)
@@ -442,7 +438,7 @@ namespace NuklearSharp
 
 		public static char nk_str_rune_at(nk_str str, int pos)
 		{
-			return str.buffer[pos];
+			return str.str[pos];
 		}
 
 		public static int nk_str_len(nk_str s)

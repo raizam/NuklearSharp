@@ -3051,19 +3051,20 @@ namespace NuklearSharp
 					int cut = (int) (nk_input_is_key_pressed(_in_, (int) (NK_KEY_CUT)));
 					if ((((copy) != 0) || ((cut) != 0)) && ((flags & NK_EDIT_CLIPBOARD) != 0))
 					{
-						int glyph_len = 0;
-						char unicode;
 						char* text;
 						int b = (int) (edit.select_start);
 						int e = (int) (edit.select_end);
 						int begin = (int) ((b) < (e) ? (b) : (e));
 						int end = (int) ((b) < (e) ? (e) : (b));
-/						text = nk_str_at_const(edit._string_, (int) (begin), &unicode, ref glyph_len);
-						if ((edit.clip.copy) != null) edit.clip.copy((nk_handle) (edit.clip.userdata), text, (int) (end - begin));
-						if (((cut) != 0) && ((flags & NK_EDIT_READ_ONLY) == 0))
+						fixed (char* str2 = edit._string_.str)
 						{
-							nk_textedit_cut(edit);
-							cursor_follow = (sbyte) (nk_true);
+							text = str2 + begin;
+							if ((edit.clip.copy) != null) edit.clip.copy((nk_handle) (edit.clip.userdata), text, (int) (end - begin));
+							if (((cut) != 0) && ((flags & NK_EDIT_READ_ONLY) == 0))
+							{
+								nk_textedit_cut(edit);
+								cursor_follow = (sbyte) (nk_true);
+							}
 						}
 					}
 				}
@@ -3091,302 +3092,312 @@ namespace NuklearSharp
 			else (state) = (uint) (NK_WIDGET_STATE_INACTIVE);
 			if ((is_hovered) != 0) state |= (uint) (NK_WIDGET_STATE_HOVERED);
 			{
-				char* text = nk_str_get_const(edit._string_);
-				int len = (int) (nk_str_len_char(edit._string_));
+				fixed (char* text = edit._string_.str)
 				{
-					nk_style_item background;
-					if ((state & NK_WIDGET_STATE_ACTIVED) != 0) background = style.active;
-					else if ((state & NK_WIDGET_STATE_HOVER) != 0) background = style.hover;
-					else background = style.normal;
-					if ((background.type) == (NK_STYLE_ITEM_COLOR))
+					int len = (int) (nk_str_len_char(edit._string_));
 					{
-						nk_stroke_rect(_out_, (nk_rect) (bounds), (float) (style.rounding), (float) (style.border),
-							(nk_color) (style.border_color));
-						nk_fill_rect(_out_, (nk_rect) (bounds), (float) (style.rounding), (nk_color) (background.data.color));
-					}
-					else nk_draw_image(_out_, (nk_rect) (bounds), background.data.image, (nk_color) (nk_white));
-				}
-				area.w = (float) ((0) < (area.w - style.cursor_size) ? (area.w - style.cursor_size) : (0));
-				if ((edit.active) != 0)
-				{
-					int total_lines = (int) (1);
-					nk_vec2 text_size = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
-					char* cursor_ptr = null;
-					char* select_begin_ptr = null;
-					char* select_end_ptr = null;
-					nk_vec2 cursor_pos = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
-					nk_vec2 selection_offset_start = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
-					nk_vec2 selection_offset_end = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
-					int selection_begin = (int) ((edit.select_start) < (edit.select_end) ? (edit.select_start) : (edit.select_end));
-					int selection_end = (int) ((edit.select_start) < (edit.select_end) ? (edit.select_end) : (edit.select_start));
-					float line_width = (float) (0.0f);
-					if (((text) != null) && ((len) != 0))
-					{
-						float glyph_width;
-						int glyph_len = (int) (0);
-						char unicode = (char) 0;
-						int text_len = (int) (0);
-						int glyphs = (int) (0);
-						int row_begin = (int) (0);
-						glyph_len = (int) (nk_utf_decode(text, &unicode, (int) (len)));
-						glyph_width = (float) (font.width((nk_handle) (font.userdata), (float) (font.height), text, (int) (glyph_len)));
-						line_width = (float) (0);
-						while (((text_len) < (len)) && ((glyph_len) != 0))
+						nk_style_item background;
+						if ((state & NK_WIDGET_STATE_ACTIVED) != 0) background = style.active;
+						else if ((state & NK_WIDGET_STATE_HOVER) != 0) background = style.hover;
+						else background = style.normal;
+						if ((background.type) == (NK_STYLE_ITEM_COLOR))
 						{
-							if ((cursor_ptr == null) && ((glyphs) == (edit.cursor)))
+							nk_stroke_rect(_out_, (nk_rect) (bounds), (float) (style.rounding), (float) (style.border),
+								(nk_color) (style.border_color));
+							nk_fill_rect(_out_, (nk_rect) (bounds), (float) (style.rounding), (nk_color) (background.data.color));
+						}
+						else nk_draw_image(_out_, (nk_rect) (bounds), background.data.image, (nk_color) (nk_white));
+					}
+					area.w = (float) ((0) < (area.w - style.cursor_size) ? (area.w - style.cursor_size) : (0));
+					if ((edit.active) != 0)
+					{
+						int total_lines = (int) (1);
+						nk_vec2 text_size = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
+						char* cursor_ptr = null;
+						char* select_begin_ptr = null;
+						char* select_end_ptr = null;
+						nk_vec2 cursor_pos = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
+						nk_vec2 selection_offset_start = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
+						nk_vec2 selection_offset_end = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
+						int selection_begin = (int) ((edit.select_start) < (edit.select_end) ? (edit.select_start) : (edit.select_end));
+						int selection_end = (int) ((edit.select_start) < (edit.select_end) ? (edit.select_end) : (edit.select_start));
+						float line_width = (float) (0.0f);
+						if (((text) != null) && ((len) != 0))
+						{
+							float glyph_width;
+							int glyph_len = (int) (0);
+							char unicode = (char) 0;
+							int text_len = (int) (0);
+							int glyphs = (int) (0);
+							int row_begin = (int) (0);
+							glyph_len = (int) (nk_utf_decode(text, &unicode, (int) (len)));
+							glyph_width = (float) (font.width((nk_handle) (font.userdata), (float) (font.height), text, (int) (glyph_len)));
+							line_width = (float) (0);
+							while (((text_len) < (len)) && ((glyph_len) != 0))
 							{
-								int glyph_offset;
-								nk_vec2 out_offset = new nk_vec2();
-								nk_vec2 row_size = new nk_vec2();
-								char* remaining;
-								cursor_pos.y = (float) ((float) (total_lines - 1)*row_height);
-								row_size =
-									(nk_vec2)
-										(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
-											&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
-								cursor_pos.x = (float) (row_size.x);
-								cursor_ptr = text + text_len;
-							}
-							if (((select_begin_ptr == null) && (edit.select_start != edit.select_end)) && ((glyphs) == (selection_begin)))
-							{
-								int glyph_offset;
-								nk_vec2 out_offset = new nk_vec2();
-								nk_vec2 row_size = new nk_vec2();
-								char* remaining;
-								selection_offset_start.y = (float) ((float) ((total_lines - 1) < (0) ? (0) : (total_lines - 1))*row_height);
-								row_size =
-									(nk_vec2)
-										(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
-											&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
-								selection_offset_start.x = (float) (row_size.x);
-								select_begin_ptr = text + text_len;
-							}
-							if (((select_end_ptr == null) && (edit.select_start != edit.select_end)) && ((glyphs) == (selection_end)))
-							{
-								int glyph_offset;
-								nk_vec2 out_offset = new nk_vec2();
-								nk_vec2 row_size = new nk_vec2();
-								char* remaining;
-								selection_offset_end.y = (float) ((float) (total_lines - 1)*row_height);
-								row_size =
-									(nk_vec2)
-										(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
-											&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
-								selection_offset_end.x = (float) (row_size.x);
-								select_end_ptr = text + text_len;
-							}
-							if ((unicode) == ('\n'))
-							{
-								text_size.x = (float) ((text_size.x) < (line_width) ? (line_width) : (text_size.x));
-								total_lines++;
-								line_width = (float) (0);
-								text_len++;
+								if ((cursor_ptr == null) && ((glyphs) == (edit.cursor)))
+								{
+									int glyph_offset;
+									nk_vec2 out_offset = new nk_vec2();
+									nk_vec2 row_size = new nk_vec2();
+									char* remaining;
+									cursor_pos.y = (float) ((float) (total_lines - 1)*row_height);
+									row_size =
+										(nk_vec2)
+											(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
+												&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
+									cursor_pos.x = (float) (row_size.x);
+									cursor_ptr = text + text_len;
+								}
+								if (((select_begin_ptr == null) && (edit.select_start != edit.select_end)) && ((glyphs) == (selection_begin)))
+								{
+									int glyph_offset;
+									nk_vec2 out_offset = new nk_vec2();
+									nk_vec2 row_size = new nk_vec2();
+									char* remaining;
+									selection_offset_start.y = (float) ((float) ((total_lines - 1) < (0) ? (0) : (total_lines - 1))*row_height);
+									row_size =
+										(nk_vec2)
+											(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
+												&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
+									selection_offset_start.x = (float) (row_size.x);
+									select_begin_ptr = text + text_len;
+								}
+								if (((select_end_ptr == null) && (edit.select_start != edit.select_end)) && ((glyphs) == (selection_end)))
+								{
+									int glyph_offset;
+									nk_vec2 out_offset = new nk_vec2();
+									nk_vec2 row_size = new nk_vec2();
+									char* remaining;
+									selection_offset_end.y = (float) ((float) (total_lines - 1)*row_height);
+									row_size =
+										(nk_vec2)
+											(nk_text_calculate_text_bounds(font, text + row_begin, (int) (text_len - row_begin), (float) (row_height),
+												&remaining, &out_offset, &glyph_offset, (int) (NK_STOP_ON_NEW_LINE)));
+									selection_offset_end.x = (float) (row_size.x);
+									select_end_ptr = text + text_len;
+								}
+								if ((unicode) == ('\n'))
+								{
+									text_size.x = (float) ((text_size.x) < (line_width) ? (line_width) : (text_size.x));
+									total_lines++;
+									line_width = (float) (0);
+									text_len++;
+									glyphs++;
+									row_begin = (int) (text_len);
+									glyph_len = (int) (nk_utf_decode(text + text_len, &unicode, (int) (len - text_len)));
+									glyph_width =
+										(float) (font.width((nk_handle) (font.userdata), (float) (font.height), text + text_len, (int) (glyph_len)));
+									continue;
+								}
 								glyphs++;
-								row_begin = (int) (text_len);
+								text_len += (int) (glyph_len);
+								line_width += (float) (glyph_width);
 								glyph_len = (int) (nk_utf_decode(text + text_len, &unicode, (int) (len - text_len)));
 								glyph_width =
 									(float) (font.width((nk_handle) (font.userdata), (float) (font.height), text + text_len, (int) (glyph_len)));
 								continue;
 							}
-							glyphs++;
-							text_len += (int) (glyph_len);
-							line_width += (float) (glyph_width);
-							glyph_len = (int) (nk_utf_decode(text + text_len, &unicode, (int) (len - text_len)));
-							glyph_width =
-								(float) (font.width((nk_handle) (font.userdata), (float) (font.height), text + text_len, (int) (glyph_len)));
-							continue;
-						}
-						text_size.y = (float) ((float) (total_lines)*row_height);
-						if ((cursor_ptr == null) && ((edit.cursor) == (edit._string_.len)))
-						{
-							cursor_pos.x = (float) (line_width);
-							cursor_pos.y = (float) (text_size.y - row_height);
-						}
-					}
-					{
-						if ((cursor_follow) != 0)
-						{
-							if ((flags & NK_EDIT_NO_HORIZONTAL_SCROLL) == 0)
+							text_size.y = (float) ((float) (total_lines)*row_height);
+							if ((cursor_ptr == null) && ((edit.cursor) == (edit._string_.len)))
 							{
-								float scroll_increment = (float) (area.w*0.25f);
-								if ((cursor_pos.x) < (edit.scrollbar.x))
-									edit.scrollbar.x =
-										((float) ((int) ((0.0f) < (cursor_pos.x - scroll_increment) ? (cursor_pos.x - scroll_increment) : (0.0f))));
-								if ((cursor_pos.x) >= (edit.scrollbar.x + area.w))
-									edit.scrollbar.x = ((float) ((int) ((0.0f) < (cursor_pos.x) ? (cursor_pos.x) : (0.0f))));
+								cursor_pos.x = (float) (line_width);
+								cursor_pos.y = (float) (text_size.y - row_height);
 							}
-							else edit.scrollbar.x = (float) (0);
+						}
+						{
+							if ((cursor_follow) != 0)
+							{
+								if ((flags & NK_EDIT_NO_HORIZONTAL_SCROLL) == 0)
+								{
+									float scroll_increment = (float) (area.w*0.25f);
+									if ((cursor_pos.x) < (edit.scrollbar.x))
+										edit.scrollbar.x =
+											((float) ((int) ((0.0f) < (cursor_pos.x - scroll_increment) ? (cursor_pos.x - scroll_increment) : (0.0f))));
+									if ((cursor_pos.x) >= (edit.scrollbar.x + area.w))
+										edit.scrollbar.x = ((float) ((int) ((0.0f) < (cursor_pos.x) ? (cursor_pos.x) : (0.0f))));
+								}
+								else edit.scrollbar.x = (float) (0);
+								if ((flags & NK_EDIT_MULTILINE) != 0)
+								{
+									if ((cursor_pos.y) < (edit.scrollbar.y))
+										edit.scrollbar.y = (float) ((0.0f) < (cursor_pos.y - row_height) ? (cursor_pos.y - row_height) : (0.0f));
+									if ((cursor_pos.y) >= (edit.scrollbar.y + area.h)) edit.scrollbar.y = (float) (edit.scrollbar.y + row_height);
+								}
+								else edit.scrollbar.y = (float) (0);
+							}
 							if ((flags & NK_EDIT_MULTILINE) != 0)
 							{
-								if ((cursor_pos.y) < (edit.scrollbar.y))
-									edit.scrollbar.y = (float) ((0.0f) < (cursor_pos.y - row_height) ? (cursor_pos.y - row_height) : (0.0f));
-								if ((cursor_pos.y) >= (edit.scrollbar.y + area.h)) edit.scrollbar.y = (float) (edit.scrollbar.y + row_height);
-							}
-							else edit.scrollbar.y = (float) (0);
-						}
-						if ((flags & NK_EDIT_MULTILINE) != 0)
-						{
-							uint ws = 0;
-							nk_rect scroll = new nk_rect();
-							float scroll_target;
-							float scroll_offset;
-							float scroll_step;
-							float scroll_inc;
-							scroll = (nk_rect) (area);
-							scroll.x = (float) ((bounds.x + bounds.w - style.border) - style.scrollbar_size.x);
-							scroll.w = (float) (style.scrollbar_size.x);
-							scroll_offset = (float) (edit.scrollbar.y);
-							scroll_step = (float) (scroll.h*0.10f);
-							scroll_inc = (float) (scroll.h*0.01f);
-							scroll_target = (float) (text_size.y);
-							edit.scrollbar.y =
-								(float)
-									(nk_do_scrollbarv(ref ws, _out_, (nk_rect) (scroll), (int) (0), (float) (scroll_offset),
-										(float) (scroll_target), (float) (scroll_step), (float) (scroll_inc), style.scrollbar, _in_, font));
-						}
-					}
-					{
-						nk_color background_color = new nk_color();
-						nk_color text_color = new nk_color();
-						nk_color sel_background_color = new nk_color();
-						nk_color sel_text_color = new nk_color();
-						nk_color cursor_color = new nk_color();
-						nk_color cursor_text_color = new nk_color();
-						nk_style_item background;
-						nk_push_scissor(_out_, (nk_rect) (clip));
-						if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
-						{
-							background = style.active;
-							text_color = (nk_color) (style.text_active);
-							sel_text_color = (nk_color) (style.selected_text_hover);
-							sel_background_color = (nk_color) (style.selected_hover);
-							cursor_color = (nk_color) (style.cursor_hover);
-							cursor_text_color = (nk_color) (style.cursor_text_hover);
-						}
-						else if ((state & NK_WIDGET_STATE_HOVER) != 0)
-						{
-							background = style.hover;
-							text_color = (nk_color) (style.text_hover);
-							sel_text_color = (nk_color) (style.selected_text_hover);
-							sel_background_color = (nk_color) (style.selected_hover);
-							cursor_text_color = (nk_color) (style.cursor_text_hover);
-							cursor_color = (nk_color) (style.cursor_hover);
-						}
-						else
-						{
-							background = style.normal;
-							text_color = (nk_color) (style.text_normal);
-							sel_text_color = (nk_color) (style.selected_text_normal);
-							sel_background_color = (nk_color) (style.selected_normal);
-							cursor_color = (nk_color) (style.cursor_normal);
-							cursor_text_color = (nk_color) (style.cursor_text_normal);
-						}
-						if ((background.type) == (NK_STYLE_ITEM_IMAGE))
-							background_color = (nk_color) (nk_rgba((int) (0), (int) (0), (int) (0), (int) (0)));
-						else background_color = (nk_color) (background.data.color);
-						if ((edit.select_start) == (edit.select_end))
-						{
-							char* begin = nk_str_get_const(edit._string_);
-							int l = (int) (nk_str_len_char(edit._string_));
-							nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
-								(float) (0), begin, (int) (l), (float) (row_height), font, (nk_color) (background_color),
-								(nk_color) (text_color), (int) (nk_false));
-						}
-						else
-						{
-							if ((edit.select_start != edit.select_end) && ((selection_begin) > (0)))
-							{
-								char* begin = nk_str_get_const(edit._string_);
-								nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
-									(float) (0), begin, (int) (select_begin_ptr - begin), (float) (row_height), font, (nk_color) (background_color),
-									(nk_color) (text_color), (int) (nk_false));
-							}
-							if (edit.select_start != edit.select_end)
-							{
-								if (select_end_ptr == null)
-								{
-									char* begin = nk_str_get_const(edit._string_);
-									select_end_ptr = begin + nk_str_len_char(edit._string_);
-								}
-								nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
-									(float) (area.y + selection_offset_start.y - edit.scrollbar.y), (float) (selection_offset_start.x),
-									select_begin_ptr, (int) (select_end_ptr - select_begin_ptr), (float) (row_height), font,
-									(nk_color) (sel_background_color), (nk_color) (sel_text_color), (int) (nk_true));
-							}
-							if (((edit.select_start != edit.select_end) && ((selection_end) < (edit._string_.len))))
-							{
-								char* begin = select_end_ptr;
-								char* end = nk_str_get_const(edit._string_) + nk_str_len_char(edit._string_);
-								nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
-									(float) (area.y + selection_offset_end.y - edit.scrollbar.y), (float) (selection_offset_end.x), begin,
-									(int) (end - begin), (float) (row_height), font, (nk_color) (background_color), (nk_color) (text_color),
-									(int) (nk_true));
+								uint ws = 0;
+								nk_rect scroll = new nk_rect();
+								float scroll_target;
+								float scroll_offset;
+								float scroll_step;
+								float scroll_inc;
+								scroll = (nk_rect) (area);
+								scroll.x = (float) ((bounds.x + bounds.w - style.border) - style.scrollbar_size.x);
+								scroll.w = (float) (style.scrollbar_size.x);
+								scroll_offset = (float) (edit.scrollbar.y);
+								scroll_step = (float) (scroll.h*0.10f);
+								scroll_inc = (float) (scroll.h*0.01f);
+								scroll_target = (float) (text_size.y);
+								edit.scrollbar.y =
+									(float)
+										(nk_do_scrollbarv(ref ws, _out_, (nk_rect) (scroll), (int) (0), (float) (scroll_offset),
+											(float) (scroll_target), (float) (scroll_step), (float) (scroll_inc), style.scrollbar, _in_, font));
 							}
 						}
-						if ((edit.select_start) == (edit.select_end))
 						{
-							if (((edit.cursor) >= (nk_str_len(edit._string_))) || (((cursor_ptr) != null) && ((*cursor_ptr) == ('\n'))))
+							nk_color background_color = new nk_color();
+							nk_color text_color = new nk_color();
+							nk_color sel_background_color = new nk_color();
+							nk_color sel_text_color = new nk_color();
+							nk_color cursor_color = new nk_color();
+							nk_color cursor_text_color = new nk_color();
+							nk_style_item background;
+							nk_push_scissor(_out_, (nk_rect) (clip));
+							if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
 							{
-								nk_rect cursor = new nk_rect();
-								cursor.w = (float) (style.cursor_size);
-								cursor.h = (float) (font.height);
-								cursor.x = (float) (area.x + cursor_pos.x - edit.scrollbar.x);
-								cursor.y = (float) (area.y + cursor_pos.y + row_height/2.0f - cursor.h/2.0f);
-								cursor.y -= (float) (edit.scrollbar.y);
-								nk_fill_rect(_out_, (nk_rect) (cursor), (float) (0), (nk_color) (cursor_color));
+								background = style.active;
+								text_color = (nk_color) (style.text_active);
+								sel_text_color = (nk_color) (style.selected_text_hover);
+								sel_background_color = (nk_color) (style.selected_hover);
+								cursor_color = (nk_color) (style.cursor_hover);
+								cursor_text_color = (nk_color) (style.cursor_text_hover);
+							}
+							else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+							{
+								background = style.hover;
+								text_color = (nk_color) (style.text_hover);
+								sel_text_color = (nk_color) (style.selected_text_hover);
+								sel_background_color = (nk_color) (style.selected_hover);
+								cursor_text_color = (nk_color) (style.cursor_text_hover);
+								cursor_color = (nk_color) (style.cursor_hover);
 							}
 							else
 							{
-								int glyph_len;
-								nk_rect label = new nk_rect();
-								nk_text txt = new nk_text();
-								char unicode;
-								glyph_len = (int) (nk_utf_decode(cursor_ptr, &unicode, (int) (4)));
-								label.x = (float) (area.x + cursor_pos.x - edit.scrollbar.x);
-								label.y = (float) (area.y + cursor_pos.y - edit.scrollbar.y);
-								label.w =
-									(float) (font.width((nk_handle) (font.userdata), (float) (font.height), cursor_ptr, (int) (glyph_len)));
-								label.h = (float) (row_height);
-								txt.padding = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
-								txt.background = (nk_color) (cursor_color);
-								txt.text = (nk_color) (cursor_text_color);
-								nk_fill_rect(_out_, (nk_rect) (label), (float) (0), (nk_color) (cursor_color));
-								nk_widget_text(_out_, (nk_rect) (label), cursor_ptr, (int) (glyph_len), &txt, (uint) (NK_TEXT_LEFT), font);
+								background = style.normal;
+								text_color = (nk_color) (style.text_normal);
+								sel_text_color = (nk_color) (style.selected_text_normal);
+								sel_background_color = (nk_color) (style.selected_normal);
+								cursor_color = (nk_color) (style.cursor_normal);
+								cursor_text_color = (nk_color) (style.cursor_text_normal);
+							}
+							if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+								background_color = (nk_color) (nk_rgba((int) (0), (int) (0), (int) (0), (int) (0)));
+							else background_color = (nk_color) (background.data.color);
+							if ((edit.select_start) == (edit.select_end))
+							{
+								fixed (char* begin = edit._string_.str)
+								{
+									int l = (int) (nk_str_len_char(edit._string_));
+									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
+										(float) (0), begin, (int) (l), (float) (row_height), font, (nk_color) (background_color),
+										(nk_color) (text_color), (int) (nk_false));
+								}
+							}
+							else
+							{
+								if ((edit.select_start != edit.select_end) && ((selection_begin) > (0)))
+								{
+									fixed (char* begin = edit._string_.str)
+									{
+										nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
+											(float) (0), begin, (int) (select_begin_ptr - begin), (float) (row_height), font,
+											(nk_color) (background_color),
+											(nk_color) (text_color), (int) (nk_false));
+									}
+								}
+								if (edit.select_start != edit.select_end)
+								{
+									if (select_end_ptr == null)
+									{
+/*										char* begin = nk_str_get_const(edit._string_);
+										select_end_ptr = begin + nk_str_len_char(edit._string_);*/
+									}
+									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
+										(float) (area.y + selection_offset_start.y - edit.scrollbar.y), (float) (selection_offset_start.x),
+										select_begin_ptr, (int) (select_end_ptr - select_begin_ptr), (float) (row_height), font,
+										(nk_color) (sel_background_color), (nk_color) (sel_text_color), (int) (nk_true));
+								}
+								if (((edit.select_start != edit.select_end) && ((selection_end) < (edit._string_.len))))
+								{
+									char* begin = select_end_ptr;
+/*									char* end = nk_str_get_const(edit._string_) + nk_str_len_char(edit._string_);
+									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
+										(float) (area.y + selection_offset_end.y - edit.scrollbar.y), (float) (selection_offset_end.x), begin,
+										(int) (end - begin), (float) (row_height), font, (nk_color) (background_color), (nk_color) (text_color),
+										(int) (nk_true));*/
+								}
+							}
+							if ((edit.select_start) == (edit.select_end))
+							{
+								if (((edit.cursor) >= (nk_str_len(edit._string_))) || (((cursor_ptr) != null) && ((*cursor_ptr) == ('\n'))))
+								{
+									nk_rect cursor = new nk_rect();
+									cursor.w = (float) (style.cursor_size);
+									cursor.h = (float) (font.height);
+									cursor.x = (float) (area.x + cursor_pos.x - edit.scrollbar.x);
+									cursor.y = (float) (area.y + cursor_pos.y + row_height/2.0f - cursor.h/2.0f);
+									cursor.y -= (float) (edit.scrollbar.y);
+									nk_fill_rect(_out_, (nk_rect) (cursor), (float) (0), (nk_color) (cursor_color));
+								}
+								else
+								{
+									int glyph_len;
+									nk_rect label = new nk_rect();
+									nk_text txt = new nk_text();
+									char unicode;
+									glyph_len = (int) (nk_utf_decode(cursor_ptr, &unicode, (int) (4)));
+									label.x = (float) (area.x + cursor_pos.x - edit.scrollbar.x);
+									label.y = (float) (area.y + cursor_pos.y - edit.scrollbar.y);
+									label.w =
+										(float) (font.width((nk_handle) (font.userdata), (float) (font.height), cursor_ptr, (int) (glyph_len)));
+									label.h = (float) (row_height);
+									txt.padding = (nk_vec2) (nk_vec2_((float) (0), (float) (0)));
+									txt.background = (nk_color) (cursor_color);
+									txt.text = (nk_color) (cursor_text_color);
+									nk_fill_rect(_out_, (nk_rect) (label), (float) (0), (nk_color) (cursor_color));
+									nk_widget_text(_out_, (nk_rect) (label), cursor_ptr, (int) (glyph_len), &txt, (uint) (NK_TEXT_LEFT), font);
+								}
 							}
 						}
 					}
-				}
-				else
-				{
-					int l = (int) (nk_str_len_char(edit._string_));
-					char* begin = nk_str_get_const(edit._string_);
-					nk_style_item background;
-					nk_color background_color = new nk_color();
-					nk_color text_color = new nk_color();
-					nk_push_scissor(_out_, (nk_rect) (clip));
-					if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
-					{
-						background = style.active;
-						text_color = (nk_color) (style.text_active);
-					}
-					else if ((state & NK_WIDGET_STATE_HOVER) != 0)
-					{
-						background = style.hover;
-						text_color = (nk_color) (style.text_hover);
-					}
 					else
 					{
-						background = style.normal;
-						text_color = (nk_color) (style.text_normal);
+						int l = (int) (nk_str_len_char(edit._string_));
+						fixed (char* begin = edit._string_.str)
+						{
+							nk_style_item background;
+							nk_color background_color = new nk_color();
+							nk_color text_color = new nk_color();
+							nk_push_scissor(_out_, (nk_rect) (clip));
+							if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+							{
+								background = style.active;
+								text_color = (nk_color) (style.text_active);
+							}
+							else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+							{
+								background = style.hover;
+								text_color = (nk_color) (style.text_hover);
+							}
+							else
+							{
+								background = style.normal;
+								text_color = (nk_color) (style.text_normal);
+							}
+							if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+								background_color = (nk_color) (nk_rgba((int) (0), (int) (0), (int) (0), (int) (0)));
+							else background_color = (nk_color) (background.data.color);
+							nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
+								(float) (0), begin, (int) (l), (float) (row_height), font, (nk_color) (background_color),
+								(nk_color) (text_color),
+								(int) (nk_false));
+						}
 					}
-					if ((background.type) == (NK_STYLE_ITEM_IMAGE))
-						background_color = (nk_color) (nk_rgba((int) (0), (int) (0), (int) (0), (int) (0)));
-					else background_color = (nk_color) (background.data.color);
-					nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
-						(float) (0), begin, (int) (l), (float) (row_height), font, (nk_color) (background_color), (nk_color) (text_color),
-						(int) (nk_false));
+					nk_push_scissor(_out_, (nk_rect) (old_clip));
 				}
-				nk_push_scissor(_out_, (nk_rect) (old_clip));
 			}
 
 			return (uint) (ret);
@@ -3658,7 +3669,7 @@ namespace NuklearSharp
 			else active = (int) ((state) == (NK_PROPERTY_EDIT) ? 1 : 0);
 			nk_textedit_clear_state(text_edit, (int) (NK_TEXT_EDIT_SINGLE_LINE), filters[filter]);
 			text_edit.active = ((byte) (active));
-			text_edit._string_.buffer.Count = (int) (length);
+			text_edit._string_.str = text_edit._string_.str.Substring(0, length);
 			text_edit.cursor =
 				(int) (((cursor) < (length) ? (cursor) : (length)) < (0) ? (0) : ((cursor) < (length) ? (cursor) : (length)));
 			text_edit.select_start =

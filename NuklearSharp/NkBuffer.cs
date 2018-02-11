@@ -63,39 +63,11 @@ namespace NuklearSharp
 			Array.Copy(oldData, _data, oldData.Length);
 		}
 
-		public void append(T data)
-		{
-			ensureSize(_count + 1);
-
-			_data[_count] = data;
-			++_count;
-		}
-
 		public void addToEnd(int length)
 		{
 			ensureSize(_count + length);
 
 			updateCount(length);
-		}
-
-		public void extendAt(int index, int length)
-		{
-			ensureSize(_count + length);
-
-			Array.Copy(_data, index, _data, index + length, length);
-
-			_count += length;
-		}
-
-		public void narrowAt(int index, int length)
-		{
-			Array.Copy(_data, index + length, _data, index, length);
-			updateCount(-length);
-		}
-
-		public void cutFromEnd(int length)
-		{
-			updateCount(-length);
 		}
 
 		private void updateCount(int delta)

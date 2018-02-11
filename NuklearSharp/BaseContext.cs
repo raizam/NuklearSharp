@@ -8,7 +8,7 @@ namespace NuklearSharp
 		private readonly Nuklear.nk_context _ctx;
 		private readonly NkBuffer<Nuklear.nk_draw_command> _cmds = new NkBuffer<Nuklear.nk_draw_command>();
 		private readonly NkBuffer<byte> _vertices = new NkBuffer<byte>();
-		private readonly NkBuffer<short> _indices = new NkBuffer<short>();
+		private readonly NkBuffer<ushort> _indices = new NkBuffer<ushort>();
 		private readonly Nuklear.nk_convert_config _convertConfig;
 
 		public Nuklear.nk_context Ctx
@@ -134,7 +134,7 @@ namespace NuklearSharp
 		/// <param name="indices_count"></param>
 		/// <param name="vertex_count"></param>
 		/// <param name="vertex_stride"></param>
-		protected internal abstract void SetBuffers(byte[] vertices, short[] indices, int indices_count, int vertex_count, int vertex_stride);
+		protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count, int vertex_stride);
 
 		/// <summary>
 		/// Draw

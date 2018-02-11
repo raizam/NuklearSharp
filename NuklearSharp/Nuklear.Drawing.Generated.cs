@@ -42,7 +42,7 @@ namespace NuklearSharp
 		}
 
 		public static void nk_draw_list_setup(nk_draw_list canvas, nk_convert_config config, NkBuffer<nk_draw_command> cmds,
-			NkBuffer<byte> vertices, NkBuffer<short> elements, int line_aa, int shape_aa)
+			NkBuffer<byte> vertices, NkBuffer<ushort> elements, int line_aa, int shape_aa)
 		{
 			if (((((canvas == null) || (config == null)) || (cmds == null)) || (vertices == null)) || (elements == null)) return;
 			canvas.buffer = cmds;
@@ -158,13 +158,14 @@ namespace NuklearSharp
 			{
 				float AA_SIZE = (float) (1.0f);
 				ulong i1 = (ulong) (0);
-				ulong index = (ulong) (list.vertices.Count);
+				ulong index = (ulong) (list.vertex_offset);
 				ulong idx_count = (ulong) ((thick_line) != 0 ? (count*18) : (count*12));
 				ulong vtx_count = (ulong) ((thick_line) != 0 ? (points_count*4) : (points_count*3));
 
 				int vtxStart = list.vertices.Count;
 				list.vertices.addToEnd((int) (vtx_count*list.config.vertex_size));
 				int idxStart = list.addElements((int) idx_count);
+				
 				nk_vec2* temp;
 				int points_total = (int) (((thick_line) != 0 ? 5 : 3)*(int) points_count);
 
@@ -177,9 +178,9 @@ namespace NuklearSharp
 					fixed (byte* vtx2 = list.vertices.Data)
 					{
 						void* vtx = (void*) (vtx2 + vtxStart);
-						fixed (short* ids2 = list.elements.Data)
+						fixed (ushort* ids2 = list.elements.Data)
 						{
-							short* ids = ids2 + idxStart;
+							ushort* ids = ids2 + idxStart;
 							if (normals == null) return;
 							temp = normals + points_count;
 							for (i1 = (ulong) (0); (i1) < (count); ++i1)
@@ -260,18 +261,18 @@ namespace NuklearSharp
 										(nk_vec2) (nk_vec2_((float) ((list.points[i2]).x + (dm).x), (float) ((list.points[i2]).y + (dm).y)));
 									temp[i2*2 + 1] =
 										(nk_vec2) (nk_vec2_((float) ((list.points[i2]).x - (dm).x), (float) ((list.points[i2]).y - (dm).y)));
-									ids[0] = ((short) (idx2 + 0));
-									ids[1] = ((short) (idx1 + 0));
-									ids[2] = ((short) (idx1 + 2));
-									ids[3] = ((short) (idx1 + 2));
-									ids[4] = ((short) (idx2 + 2));
-									ids[5] = ((short) (idx2 + 0));
-									ids[6] = ((short) (idx2 + 1));
-									ids[7] = ((short) (idx1 + 1));
-									ids[8] = ((short) (idx1 + 0));
-									ids[9] = ((short) (idx1 + 0));
-									ids[10] = ((short) (idx2 + 0));
-									ids[11] = ((short) (idx2 + 1));
+									ids[0] = ((ushort) (idx2 + 0));
+									ids[1] = ((ushort) (idx1 + 0));
+									ids[2] = ((ushort) (idx1 + 2));
+									ids[3] = ((ushort) (idx1 + 2));
+									ids[4] = ((ushort) (idx2 + 2));
+									ids[5] = ((ushort) (idx2 + 0));
+									ids[6] = ((ushort) (idx2 + 1));
+									ids[7] = ((ushort) (idx1 + 1));
+									ids[8] = ((ushort) (idx1 + 0));
+									ids[9] = ((ushort) (idx1 + 0));
+									ids[10] = ((ushort) (idx2 + 0));
+									ids[11] = ((ushort) (idx2 + 1));
 									ids += 12;
 									idx1 = (ulong) (idx2);
 								}
@@ -362,24 +363,24 @@ namespace NuklearSharp
 										(nk_vec2) (nk_vec2_((float) ((list.points[i2]).x - (dm_in).x), (float) ((list.points[i2]).y - (dm_in).y)));
 									temp[i2*4 + 3] =
 										(nk_vec2) (nk_vec2_((float) ((list.points[i2]).x - (dm_out).x), (float) ((list.points[i2]).y - (dm_out).y)));
-									ids[0] = ((short) (idx2 + 1));
-									ids[1] = ((short) (idx1 + 1));
-									ids[2] = ((short) (idx1 + 2));
-									ids[3] = ((short) (idx1 + 2));
-									ids[4] = ((short) (idx2 + 2));
-									ids[5] = ((short) (idx2 + 1));
-									ids[6] = ((short) (idx2 + 1));
-									ids[7] = ((short) (idx1 + 1));
-									ids[8] = ((short) (idx1 + 0));
-									ids[9] = ((short) (idx1 + 0));
-									ids[10] = ((short) (idx2 + 0));
-									ids[11] = ((short) (idx2 + 1));
-									ids[12] = ((short) (idx2 + 2));
-									ids[13] = ((short) (idx1 + 2));
-									ids[14] = ((short) (idx1 + 3));
-									ids[15] = ((short) (idx1 + 3));
-									ids[16] = ((short) (idx2 + 3));
-									ids[17] = ((short) (idx2 + 2));
+									ids[0] = ((ushort) (idx2 + 1));
+									ids[1] = ((ushort) (idx1 + 1));
+									ids[2] = ((ushort) (idx1 + 2));
+									ids[3] = ((ushort) (idx1 + 2));
+									ids[4] = ((ushort) (idx2 + 2));
+									ids[5] = ((ushort) (idx2 + 1));
+									ids[6] = ((ushort) (idx2 + 1));
+									ids[7] = ((ushort) (idx1 + 1));
+									ids[8] = ((ushort) (idx1 + 0));
+									ids[9] = ((ushort) (idx1 + 0));
+									ids[10] = ((ushort) (idx2 + 0));
+									ids[11] = ((ushort) (idx2 + 1));
+									ids[12] = ((ushort) (idx2 + 2));
+									ids[13] = ((ushort) (idx1 + 2));
+									ids[14] = ((ushort) (idx1 + 3));
+									ids[15] = ((ushort) (idx1 + 3));
+									ids[16] = ((ushort) (idx2 + 3));
+									ids[17] = ((ushort) (idx2 + 2));
 									ids += 18;
 									idx1 = (ulong) (idx2);
 								}
@@ -401,7 +402,7 @@ namespace NuklearSharp
 			else
 			{
 				ulong i1 = (ulong) (0);
-				ulong idx = (ulong) (list.vertices.Count);
+				ulong idx = (ulong) (list.vertex_offset);
 				ulong idx_count = (ulong) (count*6);
 				ulong vtx_count = (ulong) (count*4);
 
@@ -412,9 +413,9 @@ namespace NuklearSharp
 				fixed (byte* vtx2 = list.vertices.Data)
 				{
 					void* vtx = (void*) (vtx2 + vtxStart);
-					fixed (short* ids2 = list.elements.Data)
+					fixed (ushort* ids2 = list.elements.Data)
 					{
-						short* ids = ids2 + idxStart;
+						ushort* ids = ids2 + idxStart;
 
 						for (i1 = (ulong) (0); (i1) < (count); ++i1)
 						{
@@ -440,19 +441,18 @@ namespace NuklearSharp
 								(nk_vec2) (uv), (nk_colorf) (col));
 							vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (nk_vec2_((float) (p1.x - dy), (float) (p1.y + dx))),
 								(nk_vec2) (uv), (nk_colorf) (col));
-							ids[0] = ((short) (idx + 0));
-							ids[1] = ((short) (idx + 1));
-							ids[2] = ((short) (idx + 2));
-							ids[3] = ((short) (idx + 0));
-							ids[4] = ((short) (idx + 2));
-							ids[5] = ((short) (idx + 3));
+							ids[0] = ((ushort) (idx + 0));
+							ids[1] = ((ushort) (idx + 1));
+							ids[2] = ((ushort) (idx + 2));
+							ids[3] = ((ushort) (idx + 0));
+							ids[4] = ((ushort) (idx + 2));
+							ids[5] = ((ushort) (idx + 3));
 							ids += 6;
 							idx += (ulong) (4);
 						}
 					}
 				}
 			}
-
 		}
 
 		public static void nk_draw_list_fill_poly_convex(nk_draw_list list, nk_color color, int aliasing)
@@ -473,7 +473,7 @@ namespace NuklearSharp
 				ulong i1 = (ulong) (0);
 				float AA_SIZE = (float) (1.0f);
 				ulong vertex_offset = (ulong) (0);
-				ulong index = (ulong) (list.vertices.Count);
+				ulong index = (ulong) (list.vertex_offset);
 				ulong idx_count = (ulong) ((points_count - 2)*3 + points_count*6);
 				ulong vtx_count = (ulong) (points_count*2);
 
@@ -484,9 +484,9 @@ namespace NuklearSharp
 				fixed (byte* vtx2 = list.vertices.Data)
 				{
 					void* vtx = (void*) (vtx2 + vtxStart);
-					fixed (short* ids2 = list.elements.Data)
+					fixed (ushort* ids2 = list.elements.Data)
 					{
-						short* ids = ids2 + idxStart;
+						ushort* ids = ids2 + idxStart;
 						uint vtx_inner_idx = (uint) (index + 0);
 						uint vtx_outer_idx = (uint) (index + 1);
 						if ((vtx == null) || (ids == null)) return;
@@ -500,9 +500,9 @@ namespace NuklearSharp
 
 							for (i = (ulong) (2); (i) < (points_count); i++)
 							{
-								ids[0] = ((short) (vtx_inner_idx));
-								ids[1] = ((short) (vtx_inner_idx + ((i - 1) << 1)));
-								ids[2] = ((short) (vtx_inner_idx + (i << 1)));
+								ids[0] = ((ushort) (vtx_inner_idx));
+								ids[1] = ((ushort) (vtx_inner_idx + ((i - 1) << 1)));
+								ids[2] = ((ushort) (vtx_inner_idx + (i << 1)));
 								ids += 3;
 							}
 							for (i0 = (ulong) (points_count - 1) , i1 = (ulong) (0); (i1) < (points_count); i0 = (ulong) (i1++))
@@ -542,12 +542,12 @@ namespace NuklearSharp
 									(nk_vec2) (nk_vec2_((float) ((list.points[i1]).x + (dm).x), (float) ((list.points[i1]).y + (dm).y))),
 									(nk_vec2) (uv),
 									(nk_colorf) (col_trans));
-								ids[0] = ((short) (vtx_inner_idx + (i1 << 1)));
-								ids[1] = ((short) (vtx_inner_idx + (i0 << 1)));
-								ids[2] = ((short) (vtx_outer_idx + (i0 << 1)));
-								ids[3] = ((short) (vtx_outer_idx + (i0 << 1)));
-								ids[4] = ((short) (vtx_outer_idx + (i1 << 1)));
-								ids[5] = ((short) (vtx_inner_idx + (i1 << 1)));
+								ids[0] = ((ushort) (vtx_inner_idx + (i1 << 1)));
+								ids[1] = ((ushort) (vtx_inner_idx + (i0 << 1)));
+								ids[2] = ((ushort) (vtx_outer_idx + (i0 << 1)));
+								ids[3] = ((ushort) (vtx_outer_idx + (i0 << 1)));
+								ids[4] = ((ushort) (vtx_outer_idx + (i1 << 1)));
+								ids[5] = ((ushort) (vtx_inner_idx + (i1 << 1)));
 								ids += 6;
 							}
 						}
@@ -558,7 +558,7 @@ namespace NuklearSharp
 			else
 			{
 				ulong i = (ulong) (0);
-				ulong index = (ulong) (list.vertices.Count);
+				ulong index = (ulong) (list.vertex_offset);
 				ulong idx_count = (ulong) ((points_count - 2)*3);
 				ulong vtx_count = (ulong) (points_count);
 				int vtxStart = list.vertices.Count;
@@ -568,9 +568,9 @@ namespace NuklearSharp
 				fixed (byte* vtx2 = list.vertices.Data)
 				{
 					void* vtx = (void*) (vtx2 + vtxStart);
-					fixed (short* ids2 = list.elements.Data)
+					fixed (ushort* ids2 = list.elements.Data)
 					{
-						short* ids = ids2 + idxStart;
+						ushort* ids = ids2 + idxStart;
 						if ((vtx == null) || (ids == null)) return;
 						for (i = (ulong) (0); (i) < (vtx_count); ++i)
 						{
@@ -579,9 +579,9 @@ namespace NuklearSharp
 						}
 						for (i = (ulong) (2); (i) < (points_count); ++i)
 						{
-							ids[0] = ((short) (index));
-							ids[1] = ((short) (index + i - 1));
-							ids[2] = ((short) (index + i));
+							ids[0] = ((ushort) (index));
+							ids[1] = ((ushort) (index + i - 1));
+							ids[2] = ((ushort) (index + i));
 							ids += 3;
 						}
 					}
@@ -799,7 +799,7 @@ namespace NuklearSharp
 			nk_color_fv(&col_bottom.r, (nk_color) (bottom));
 			if (list == null) return;
 			nk_draw_list_push_image(list, (nk_handle) (list.config._null_.texture));
-			index = ((ushort) (list.vertices.Count));
+			index = ((ushort) (list.vertex_offset));
 			int vtxStart = list.vertices.Count;
 			list.vertices.addToEnd((int) (4*list.config.vertex_size));
 			int idxStart = list.addElements(6);
@@ -807,16 +807,16 @@ namespace NuklearSharp
 			fixed (byte* vtx2 = list.vertices.Data)
 			{
 				void* vtx = (void*) (vtx2 + vtxStart);
-				fixed (short* ids2 = list.elements.Data)
+				fixed (ushort* ids2 = list.elements.Data)
 				{
-					short* idx = ids2 + idxStart;
+					ushort* idx = ids2 + idxStart;
 					if ((vtx == null) || (idx == null)) return;
-					idx[0] = ((short) (index + 0));
-					idx[1] = ((short) (index + 1));
-					idx[2] = ((short) (index + 2));
-					idx[3] = ((short) (index + 0));
-					idx[4] = ((short) (index + 2));
-					idx[5] = ((short) (index + 3));
+					idx[0] = ((ushort) (index + 0));
+					idx[1] = ((ushort) (index + 1));
+					idx[2] = ((ushort) (index + 2));
+					idx[3] = ((ushort) (index + 0));
+					idx[4] = ((ushort) (index + 2));
+					idx[5] = ((ushort) (index + 3));
 					vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (nk_vec2_((float) (rect.x), (float) (rect.y))),
 						(nk_vec2) (list.config._null_.uv), (nk_colorf) (col_left));
 					vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (nk_vec2_((float) (rect.x + rect.w), (float) (rect.y))),
@@ -891,7 +891,7 @@ namespace NuklearSharp
 			uvd = (nk_vec2) (nk_vec2_((float) (uva.x), (float) (uvc.y)));
 			b = (nk_vec2) (nk_vec2_((float) (c.x), (float) (a.y)));
 			d = (nk_vec2) (nk_vec2_((float) (a.x), (float) (c.y)));
-			index = ((ushort) (list.vertices.Count));
+			index = ((ushort) (list.vertex_offset));
 			int vtxStart = list.vertices.Count;
 			list.vertices.addToEnd((int) (4*list.config.vertex_size));
 			int idxStart = list.addElements(6);
@@ -899,16 +899,16 @@ namespace NuklearSharp
 			fixed (byte* vtx2 = list.vertices.Data)
 			{
 				void* vtx = (void*) (vtx2 + vtxStart);
-				fixed (short* ids2 = list.elements.Data)
+				fixed (ushort* ids2 = list.elements.Data)
 				{
-					short* idx = ids2;
+					ushort* idx = ids2 + idxStart;
 					if ((vtx == null) || (idx == null)) return;
-					idx[0] = ((short) (index + 0));
-					idx[1] = ((short) (index + 1));
-					idx[2] = ((short) (index + 2));
-					idx[3] = ((short) (index + 0));
-					idx[4] = ((short) (index + 2));
-					idx[5] = ((short) (index + 3));
+					idx[0] = ((ushort) (index + 0));
+					idx[1] = ((ushort) (index + 1));
+					idx[2] = ((ushort) (index + 2));
+					idx[3] = ((ushort) (index + 0));
+					idx[4] = ((ushort) (index + 2));
+					idx[5] = ((ushort) (index + 3));
 					vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (a), (nk_vec2) (uva), (nk_colorf) (col));
 					vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (b), (nk_vec2) (uvb), (nk_colorf) (col));
 					vtx = nk_draw_vertex(vtx, list.config, (nk_vec2) (c), (nk_vec2) (uvc), (nk_colorf) (col));

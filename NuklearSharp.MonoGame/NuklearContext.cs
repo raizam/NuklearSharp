@@ -92,7 +92,7 @@ namespace NuklearSharp.MonoGame
 			_device.RasterizerState = _rasterizerState;
 		}
 
-		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int indices_count, int vertex_count, int vertex_stride)
+		protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count, int vertex_stride)
 		{
 			if (vertex_count == 0) return;
 

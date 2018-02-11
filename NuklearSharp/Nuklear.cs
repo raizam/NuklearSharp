@@ -169,10 +169,15 @@ namespace NuklearSharp
 			public NkBuffer<nk_draw_command> buffer;
 			public NkBuffer<byte> vertices;
 			public readonly NkBuffer<nk_vec2> normals = new NkBuffer<nk_vec2>();
-			public NkBuffer<short> elements;
+			public NkBuffer<ushort> elements;
 			public int line_AA;
 			public int shape_AA;
 			public nk_handle userdata;
+
+			public int vertex_offset
+			{
+				get { return vertices.Count/(int)config.vertex_size; }
+			}
 
 			public int addElements(int size)
 			{
