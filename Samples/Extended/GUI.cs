@@ -282,7 +282,7 @@ namespace Extended
      *------------------------------------------------*/
 			ui_header(ctx, media, "Radio buttons");
 			ui_widget(ctx, media, 35);
-/*			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
+			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
 				option = 0;
 			ui_widget(ctx, media, 35);
@@ -292,7 +292,7 @@ namespace Extended
 			ui_widget(ctx, media, 35);
 			if (ctx.ButtonSymbolLabel(option == 2 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
-				option = 2;*/
+				option = 2;
 
 			/*------------------------------------------------
      *                  CONTEXTUAL

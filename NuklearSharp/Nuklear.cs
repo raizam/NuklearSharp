@@ -95,23 +95,10 @@ namespace NuklearSharp
 			public byte ungrab;
 		}
 
-		public class nk_buffer
-		{
-			public nk_buffer_marker[] marker = new nk_buffer_marker[2];
-			public int type;
-			public nk_memory memory;
-			public float grow_factor;
-			public ulong allocated;
-			public ulong needed;
-			public ulong calls;
-			public ulong size;
-		}
-
 		public class nk_context
 		{
 			public nk_input input = new nk_input();
 			public nk_style style = new nk_style();
-			public nk_buffer memory = new nk_buffer();
 			public nk_clipboard clip = new nk_clipboard();
 			public uint last_widget_state;
 			public int button_behavior;
@@ -176,20 +163,27 @@ namespace NuklearSharp
 		public class nk_draw_list
 		{
 			public nk_rect clip_rect;
-			public nk_vec2[] circle_vtx = new nk_vec2[12];
+			public readonly nk_vec2[] circle_vtx = new nk_vec2[12];
 			public nk_convert_config config;
-			public nk_buffer buffer;
-			public nk_buffer vertices;
-			public nk_buffer elements;
-			public uint element_count;
-			public uint vertex_count;
-			public uint cmd_count;
-			public ulong cmd_offset;
-			public uint path_count;
-			public uint path_offset;
+			public readonly NkBuffer<nk_vec2> points = new NkBuffer<nk_vec2>();
+			public NkBuffer<nk_draw_command> buffer;
+			public NkBuffer<byte> vertices;
+			public readonly NkBuffer<nk_vec2> normals = new NkBuffer<nk_vec2>();
+			public NkBuffer<short> elements;
 			public int line_AA;
 			public int shape_AA;
 			public nk_handle userdata;
+
+			public int addElements(int size)
+			{
+				int result = elements.Count;
+
+				elements.addToEnd(size);
+
+				buffer.Data[buffer.Count - 1].elem_count += (uint)size;
+
+				return result;
+			}
 		}
 
 		public class nk_style_item_data
@@ -762,26 +756,18 @@ namespace NuklearSharp
 		{
 			if (memory == null) return 0;
 			nk_setup(ctx, font);
-			nk_buffer_init_fixed(ctx.memory, memory, size);
 			return 1;
-		}
-
-		public static void nk_buffer_init_default(nk_buffer buffer)
-		{
-			nk_buffer_init(buffer, 4*1024);
 		}
 
 		public static int nk_init(nk_context ctx, nk_user_font font)
 		{
 			nk_setup(ctx, font);
-			nk_buffer_init(ctx.memory, 4*1024);
 			return 1;
 		}
 
 		public static void nk_free(nk_context ctx)
 		{
 			if (ctx == null) return;
-			nk_buffer_free(ctx.memory);
 
 			ctx.seq = 0;
 			ctx.build = 0;
@@ -843,18 +829,6 @@ namespace NuklearSharp
 			{
 				return nk_popup_begin(ctx, type, ptr, flags, rect);
 			}
-		}
-
-		public static void nk_str_init_default(nk_str str)
-		{
-			nk_buffer_init(str.buffer, 32);
-			str.len = 0;
-		}
-
-		public static void nk_str_init(nk_str str, ulong size)
-		{
-			nk_buffer_init(str.buffer, size);
-			str.len = 0;
 		}
 
 		public static int nk_init_default(nk_context ctx, nk_user_font font)

@@ -83,8 +83,12 @@ namespace NuklearSharp
 
 		public unsafe partial class nk_str
 		{
-			public nk_buffer buffer = new nk_buffer();
-			public int len;
+			public NkBuffer<char> buffer = new NkBuffer<char>();
+
+			public int len
+			{
+				get { return buffer.Count; }
+			}
 		}
 
 		public unsafe partial class nk_chart_slot
@@ -272,19 +276,16 @@ namespace NuklearSharp
 
 		public static void nk_str_init_fixed(nk_str str, void* memory, ulong size)
 		{
-			nk_buffer_init_fixed(str.buffer, memory, (ulong) (size));
-			str.len = (int) (0);
+			str.buffer.reset();
 		}
 
 		public static int nk_str_append_text_char(nk_str s, char* str, int len)
 		{
-			sbyte* mem;
 			if (((s == null) || (str == null)) || (len == 0)) return (int) (0);
-			mem =
-				(sbyte*) (nk_buffer_alloc(s.buffer, (int) (NK_BUFFER_FRONT), (ulong) ((ulong) (len)*sizeof (char)), (ulong) (0)));
-			if (mem == null) return (int) (0);
-			nk_memcopy(mem, str, (ulong) ((ulong) (len)*sizeof (char)));
-			s.len += (int) (nk_utf_len(str, (int) (len)));
+			for (var i = 0; i < len; ++i)
+			{
+				s.buffer.append(str[i]);
+			}
 			return (int) (len);
 		}
 
@@ -328,47 +329,19 @@ namespace NuklearSharp
 
 		public static int nk_str_insert_at_char(nk_str s, int pos, char* str, int len)
 		{
-			int i;
-			void* mem;
-			sbyte* src;
-			sbyte* dst;
-			int copylen;
-			if ((((s == null) || (str == null)) || (len == 0)) || (((ulong) (pos)) > (s.buffer.allocated))) return (int) (0);
-			if (((s.buffer.allocated + (ulong) (len)) >= (s.buffer.memory.size)) && ((s.buffer.type) == (NK_BUFFER_FIXED)))
-				return (int) (0);
-			copylen = (int) ((int) (s.buffer.allocated) - pos);
-			if (copylen == 0)
+			s.buffer.extendAt(pos, len);
+
+			for (var i = 0; i < len; ++i)
 			{
-				nk_str_append_text_char(s, str, (int) (len));
-				return (int) (1);
+				s.buffer.Data[i + pos] = str[i];
 			}
 
-			mem = nk_buffer_alloc(s.buffer, (int) (NK_BUFFER_FRONT), (ulong) ((ulong) (len)*sizeof (char)), (ulong) (0));
-			if (mem == null) return (int) (0);
-			dst = ((sbyte*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos + len + (copylen - 1)))));
-			src = ((sbyte*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos + (copylen - 1)))));
-			for (i = (int) (0); (i) < (copylen); ++i)
-			{
-				*dst-- = (sbyte) (*src--);
-			}
-			mem = ((void*) ((byte*) (s.buffer.memory.ptr) + (pos)));
-			nk_memcopy(mem, str, (ulong) ((ulong) (len)*sizeof (char)));
-			s.len = (int) (nk_utf_len((char*) (s.buffer.memory.ptr), (int) (s.buffer.allocated)));
-			return (int) (1);
+			return len;
 		}
 
 		public static int nk_str_insert_at_rune(nk_str str, int pos, char* cstr, int len)
 		{
-			int glyph_len = 0;
-			char unicode;
-			char* begin;
-			char* buffer;
-			if (((str == null) || (cstr == null)) || (len == 0)) return (int) (0);
-			begin = nk_str_at_rune(str, (int) (pos), &unicode, ref glyph_len);
-			if (str.len == 0) return (int) (nk_str_append_text_char(str, cstr, (int) (len)));
-			buffer = nk_str_get_const(str);
-			if (begin == null) return (int) (0);
-			return (int) (nk_str_insert_at_char(str, (int) (begin - buffer), cstr, (int) (len)));
+			return (int) (nk_str_insert_at_char(str, pos, cstr, (int) (len)));
 		}
 
 		public static int nk_str_insert_text_char(nk_str str, int pos, char* text, int len)
@@ -446,189 +419,40 @@ namespace NuklearSharp
 
 		public static void nk_str_remove_chars(nk_str s, int len)
 		{
-			if (((s == null) || ((len) < (0))) || (((ulong) (len)) > (s.buffer.allocated))) return;
-			s.buffer.allocated -= ((ulong) (len));
-			s.len = (int) (nk_utf_len((char*) (s.buffer.memory.ptr), (int) (s.buffer.allocated)));
+			s.buffer.cutFromEnd(len);
 		}
 
 		public static void nk_str_remove_runes(nk_str str, int len)
 		{
-			int index;
-			char* begin;
-			char* end;
-			char unicode;
 			if ((str == null) || ((len) < (0))) return;
-			if ((len) >= (str.len))
-			{
-				str.len = (int) (0);
-				return;
-			}
-
-			index = (int) (str.len - len);
-			begin = nk_str_at_rune(str, (int) (index), &unicode, ref len);
-			end = (char*) (str.buffer.memory.ptr) + str.buffer.allocated;
-			nk_str_remove_chars(str, (int) ((int) (end - begin) + 1));
+			str.buffer.cutFromEnd(len);
 		}
 
 		public static void nk_str_delete_chars(nk_str s, int pos, int len)
 		{
-			if ((((s == null) || (len == 0)) || (((ulong) (pos)) > (s.buffer.allocated))) ||
-			    (((ulong) (pos + len)) > (s.buffer.allocated))) return;
-			if (((ulong) (pos + len)) < (s.buffer.allocated))
-			{
-				sbyte* dst = ((sbyte*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos))));
-				sbyte* src = ((sbyte*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos + len))));
-				nk_memcopy(dst, src, (ulong) (s.buffer.allocated - (ulong) (pos + len)));
-				s.buffer.allocated -= ((ulong) (len));
-			}
-			else nk_str_remove_chars(s, (int) (len));
-			s.len = (int) (nk_utf_len((char*) (s.buffer.memory.ptr), (int) (s.buffer.allocated)));
+			if ((((s == null) || (len == 0)))) return;
+
+			s.buffer.narrowAt(pos, len);
 		}
 
 		public static void nk_str_delete_runes(nk_str s, int pos, int len)
 		{
-			char* temp;
-			char unicode;
-			char* begin;
-			char* end;
-			int unused = 0;
-			if ((s.len) < (pos + len))
-				len =
-					(int)
-						(((s.len - pos) < (s.len) ? (s.len - pos) : (s.len)) < (0)
-							? (0)
-							: ((s.len - pos) < (s.len) ? (s.len - pos) : (s.len)));
-			if (len == 0) return;
-			temp = (char*) (s.buffer.memory.ptr);
-			begin = nk_str_at_rune(s, (int) (pos), &unicode, ref unused);
-			if (begin == null) return;
-			s.buffer.memory.ptr = begin;
-			end = nk_str_at_rune(s, (int) (len), &unicode, ref unused);
-			s.buffer.memory.ptr = temp;
-			if (end == null) return;
-			nk_str_delete_chars(s, (int) (begin - temp), (int) (end - begin));
-		}
-
-		public static char* nk_str_at_char(nk_str s, int pos)
-		{
-			if ((s == null) || ((pos) > ((int) (s.buffer.allocated)))) return null;
-			return ((char*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos))));
-		}
-
-		public static char* nk_str_at_rune(nk_str str, int pos, char* unicode, ref int len)
-		{
-			int i = (int) (0);
-			int src_len = (int) (0);
-			int glyph_len = (int) (0);
-			char* text;
-			int text_len;
-			if (((str == null) || (unicode == null))) return null;
-			if ((pos) < (0))
-			{
-				*unicode = (char) (0);
-				len = (int) (0);
-				return null;
-			}
-
-			text = (char*) (str.buffer.memory.ptr);
-			text_len = ((int) (str.buffer.allocated));
-			glyph_len = (int) (nk_utf_decode(text, unicode, (int) (text_len)));
-			while ((glyph_len) != 0)
-			{
-				if ((i) == (pos))
-				{
-					len = (int) (glyph_len);
-					break;
-				}
-				i++;
-				src_len = (int) (src_len + glyph_len);
-				glyph_len = (int) (nk_utf_decode(text + src_len, unicode, (int) (text_len - src_len)));
-			}
-			if (i != pos) return null;
-			return text + src_len;
-		}
-
-		public static char* nk_str_at_char_const(nk_str s, int pos)
-		{
-			if ((s == null) || ((pos) > ((int) (s.buffer.allocated)))) return null;
-			return ((char*) ((void*) ((byte*) (s.buffer.memory.ptr) + (pos))));
-		}
-
-		public static char* nk_str_at_const(nk_str str, int pos, char* unicode, ref int len)
-		{
-			int i = (int) (0);
-			int src_len = (int) (0);
-			int glyph_len = (int) (0);
-			char* text;
-			int text_len;
-			if (((str == null) || (unicode == null))) return null;
-			if ((pos) < (0))
-			{
-				*unicode = (char) (0);
-				len = (int) (0);
-				return null;
-			}
-
-			text = (char*) (str.buffer.memory.ptr);
-			text_len = ((int) (str.buffer.allocated));
-			glyph_len = (int) (nk_utf_decode(text, unicode, (int) (text_len)));
-			while ((glyph_len) != 0)
-			{
-				if ((i) == (pos))
-				{
-					len = (int) (glyph_len);
-					break;
-				}
-				i++;
-				src_len = (int) (src_len + glyph_len);
-				glyph_len = (int) (nk_utf_decode(text + src_len, unicode, (int) (text_len - src_len)));
-			}
-			if (i != pos) return null;
-			return text + src_len;
+			nk_str_delete_chars(s, pos, len);
 		}
 
 		public static char nk_str_rune_at(nk_str str, int pos)
 		{
-			int len = 0;
-			char unicode = (char) 0;
-			nk_str_at_const(str, (int) (pos), &unicode, ref len);
-			return unicode;
-		}
-
-		public static char* nk_str_get(nk_str s)
-		{
-			if (((s == null) || (s.len == 0)) || (s.buffer.allocated == 0)) return null;
-			return (char*) (s.buffer.memory.ptr);
-		}
-
-		public static char* nk_str_get_const(nk_str s)
-		{
-			if (((s == null) || (s.len == 0)) || (s.buffer.allocated == 0)) return null;
-			return (char*) (s.buffer.memory.ptr);
+			return str.buffer[pos];
 		}
 
 		public static int nk_str_len(nk_str s)
 		{
-			if (((s == null) || (s.len == 0)) || (s.buffer.allocated == 0)) return (int) (0);
-			return (int) (s.len);
+			return s.len;
 		}
 
 		public static int nk_str_len_char(nk_str s)
 		{
-			if (((s == null) || (s.len == 0)) || (s.buffer.allocated == 0)) return (int) (0);
-			return (int) (s.buffer.allocated);
-		}
-
-		public static void nk_str_clear(nk_str str)
-		{
-			nk_buffer_clear(str.buffer);
-			str.len = (int) (0);
-		}
-
-		public static void nk_str_free(nk_str str)
-		{
-			nk_buffer_free(str.buffer);
-			str.len = (int) (0);
+			return s.len;
 		}
 
 		public static float nk_font_text_width(nk_font font, float height, char* text, int len)

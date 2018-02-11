@@ -92,16 +92,16 @@ namespace NuklearSharp.MonoGame
 			_device.RasterizerState = _rasterizerState;
 		}
 
-		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride)
+		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int indices_count, int vertex_count, int vertex_stride)
 		{
 			if (vertex_count == 0) return;
 
-			var result = new VertexPositionColorTexture[vertices.Length/sizeof (VertexPositionColorTexture)];
+			var result = new VertexPositionColorTexture[vertex_count];
 
 			fixed (VertexPositionColorTexture* vx = &result[0])
 			{
 				var b = (byte*) vx;
-				for (int i = 0; i < vertices.Length; i++)
+				for (int i = 0; i < vertex_count * sizeof(VertexPositionColorTexture); i++)
 				{
 					*(b + i) = vertices[i];
 				}
@@ -115,7 +115,7 @@ namespace NuklearSharp.MonoGame
 			}
 
 			_vertexBuffer.SetData(result);
-			_indexBuffer.SetData(indices);
+			_indexBuffer.SetData(indices, 0, indices_count);
 		}
 
 		protected override void Draw(int x, int y, int w, int h, int textureId, int startIndex, int primitiveCount)

@@ -6,7 +6,8 @@ namespace NuklearSharp
 {
 	unsafe partial class BaseContext
 	{
-		public uint Convert(Nuklear.nk_buffer cmds, Nuklear.nk_buffer vertices, Nuklear.nk_buffer elements,
+		public uint Convert(NkBuffer<Nuklear.nk_draw_command> cmds, NkBuffer<byte> vertices,
+			NkBuffer<short> elements,
 			Nuklear.nk_convert_config config)
 		{
 			return Nuklear.nk_convert(_ctx, cmds, vertices, elements, config);

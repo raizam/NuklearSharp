@@ -3058,7 +3058,7 @@ namespace NuklearSharp
 						int e = (int) (edit.select_end);
 						int begin = (int) ((b) < (e) ? (b) : (e));
 						int end = (int) ((b) < (e) ? (e) : (b));
-						text = nk_str_at_const(edit._string_, (int) (begin), &unicode, ref glyph_len);
+/						text = nk_str_at_const(edit._string_, (int) (begin), &unicode, ref glyph_len);
 						if ((edit.clip.copy) != null) edit.clip.copy((nk_handle) (edit.clip.userdata), text, (int) (end - begin));
 						if (((cut) != 0) && ((flags & NK_EDIT_READ_ONLY) == 0))
 						{
@@ -3658,7 +3658,7 @@ namespace NuklearSharp
 			else active = (int) ((state) == (NK_PROPERTY_EDIT) ? 1 : 0);
 			nk_textedit_clear_state(text_edit, (int) (NK_TEXT_EDIT_SINGLE_LINE), filters[filter]);
 			text_edit.active = ((byte) (active));
-			text_edit._string_.len = (int) (length);
+			text_edit._string_.buffer.Count = (int) (length);
 			text_edit.cursor =
 				(int) (((cursor) < (length) ? (cursor) : (length)) < (0) ? (0) : ((cursor) < (length) ? (cursor) : (length)));
 			text_edit.select_start =
@@ -3671,10 +3671,6 @@ namespace NuklearSharp
 					(((select_end) < (length) ? (select_end) : (length)) < (0)
 						? (0)
 						: ((select_end) < (length) ? (select_end) : (length)));
-			text_edit._string_.buffer.allocated = ((ulong) (length));
-			text_edit._string_.buffer.memory.size = (ulong) (64);
-			text_edit._string_.buffer.memory.ptr = dst;
-			text_edit._string_.buffer.size = (ulong) (64);
 			text_edit.mode = (byte) (NK_TEXT_EDIT_MODE_INSERT);
 			nk_do_edit(ref ws, _out_, (nk_rect) (edit), (uint) (NK_EDIT_FIELD | NK_EDIT_AUTO_SELECT), filters[filter], text_edit,
 				style.edit, ((state) == (NK_PROPERTY_EDIT)) ? _in_ : null, font);

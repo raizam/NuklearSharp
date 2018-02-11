@@ -276,10 +276,9 @@ namespace NuklearSharp
 
 		public static int nk_is_word_boundary(nk_text_edit state, int idx)
 		{
-			int len = 0;
-			char c;
 			if (idx <= 0) return (int) (1);
-			if (nk_str_at_rune(state._string_, (int) (idx), &c, ref len) == null) return (int) (1);
+			if (state._string_.len < idx) return (int) (1);
+			char c = state._string_.buffer[idx];
 			return
 				(int)
 					((((((((((((c) == (' ')) || ((c) == ('	'))) || ((c) == (0x3000))) || ((c) == (','))) || ((c) == (';'))) ||
@@ -939,7 +938,6 @@ namespace NuklearSharp
 			if ((state == null)) return;
 
 			nk_textedit_clear_state(state, (int) (NK_TEXT_EDIT_SINGLE_LINE), null);
-			nk_str_init(state._string_, (ulong) (size));
 		}
 
 		public static void nk_textedit_init_default(nk_text_edit state)
@@ -947,7 +945,6 @@ namespace NuklearSharp
 			if (state == null) return;
 
 			nk_textedit_clear_state(state, (int) (NK_TEXT_EDIT_SINGLE_LINE), null);
-			nk_str_init_default(state._string_);
 		}
 
 		public static void nk_textedit_select_all(nk_text_edit state)
@@ -959,7 +956,7 @@ namespace NuklearSharp
 		public static void nk_textedit_free(nk_text_edit state)
 		{
 			if (state == null) return;
-			nk_str_free(state._string_);
+			state._string_.buffer.reset();
 		}
 
 		public static int nk_filter_default(nk_text_edit box, char unicode)

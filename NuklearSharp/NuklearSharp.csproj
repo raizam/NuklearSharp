@@ -34,6 +34,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NkBuffer.cs" />
     <Compile Include="Nuklear.Context.Generated.cs" />
     <Compile Include="Nuklear.Fonts.Generated.cs" />
     <Compile Include="Nuklear.RectPacts.Generated.cs" />
@@ -50,7 +51,6 @@
     <Compile Include="Nuklear.Enums.Generated.cs" />
     <Compile Include="Nuklear.GlobalVariables.Generated.cs" />
     <Compile Include="Nuklear.Input.Generated.cs" />
-    <Compile Include="Nuklear.Memory.Generated.cs" />
     <Compile Include="Nuklear.Styles.Generated.cs" />
     <Compile Include="Nuklear.TextEdit.Generated.cs" />
     <Compile Include="Nuklear.Utility.Generated.cs" />
