@@ -201,8 +201,8 @@ namespace Extended
 
 			// TODO: Add your drawing code here
 			GUI.basic_demo(_contextWrapper, _media);
-//			GUI.button_demo (_contextWrapper, _media);
-//			GUI.grid_demo (_contextWrapper, _media);
+			GUI.button_demo (_contextWrapper, _media);
+			GUI.grid_demo (_contextWrapper, _media);
 
 			 _contextWrapper.Draw ();
 

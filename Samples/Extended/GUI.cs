@@ -11,8 +11,16 @@ namespace Extended
 		private static readonly float[] ratio2 = {0.15f, 0.50f, 0.35f};
 		private static readonly string[] items2 = {"Item 0", "item 1", "item 2"};
 
-		private static readonly string[] text = new string[3];
-		private static readonly int[] text_len = new int[3];
+		private static readonly char[][] edit_buffers = {
+			new char[128],
+			new char[128],
+			new char[128],
+		};
+
+		private static readonly int[] text_len = new int[3]
+		{
+			0, 0, 0
+		};
 		private static int option = 1;
 		private static bool toggle0 = true;
 		private static bool toggle1;
@@ -26,6 +34,8 @@ namespace Extended
 		private static int selected_icon;
 		private static bool piemenu_active;
 		private static Nuklear.nk_vec2 piemenu_pos;
+		private static bool grid_check = true;
+		private static int selectedItem;
 
 		/// <summary>
 		///     User interfaces the piemenu.
@@ -151,9 +161,6 @@ namespace Extended
 		/// <param name="media">Media.</param>
 		public static void grid_demo(NuklearContext ctx, Media media)
 		{
-			var selectedItem = 0;
-			var check = true;
-
 			int i;
 			ctx.StyleSetFont(media.font_20.handle);
 			if (ctx.Begin("Grid Demo", Nuklear.nk_rect_(600, 350, 275, 250),
@@ -163,13 +170,13 @@ namespace Extended
 				ctx.StyleSetFont(media.font_18.handle);
 				ctx.LayoutRowDynamic(30, 2);
 				ctx.Label("Floating point:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, text[0], ref text_len[0], 64, Nuklear.nk_filter_float);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[0], ref text_len[0], 64, Nuklear.nk_filter_float);
 				ctx.Label("Hexadecimal:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, text[1], ref text_len[1], 64, Nuklear.nk_filter_hex);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[1], ref text_len[1], 64, Nuklear.nk_filter_hex);
 				ctx.Label("Binary:", Nuklear.NK_TEXT_RIGHT);
-				ctx.EditString(Nuklear.NK_EDIT_FIELD, text[2], ref text_len[2], 64, Nuklear.nk_filter_binary);
+				ctx.EditString(Nuklear.NK_EDIT_FIELD, edit_buffers[2], ref text_len[2], 64, Nuklear.nk_filter_binary);
 				ctx.Label("Checkbox:", Nuklear.NK_TEXT_RIGHT);
-				ctx.CheckboxLabel("Check me", ref check);
+				ctx.CheckboxLabel("Check me", ref grid_check);
 				ctx.Label("Combobox:", Nuklear.NK_TEXT_RIGHT);
 				if (ctx.ComboBeginLabel(items[selectedItem], Nuklear.nk_vec2_(ctx.WidgetWidth(), 200)))
 				{
@@ -275,7 +282,7 @@ namespace Extended
      *------------------------------------------------*/
 			ui_header(ctx, media, "Radio buttons");
 			ui_widget(ctx, media, 35);
-			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
+/*			if (ctx.ButtonSymbolLabel(option == 0 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
 				option = 0;
 			ui_widget(ctx, media, 35);
@@ -285,7 +292,7 @@ namespace Extended
 			ui_widget(ctx, media, 35);
 			if (ctx.ButtonSymbolLabel(option == 2 ? Nuklear.NK_SYMBOL_CIRCLE_OUTLINE : Nuklear.NK_SYMBOL_CIRCLE_SOLID, "Select",
 				Nuklear.NK_TEXT_LEFT))
-				option = 2;
+				option = 2;*/
 
 			/*------------------------------------------------
      *                  CONTEXTUAL

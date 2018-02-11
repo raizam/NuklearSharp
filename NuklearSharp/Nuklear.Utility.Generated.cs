@@ -2373,6 +2373,7 @@ namespace NuklearSharp
 				tri.x = (float) ((tri.x) < (0) ? (0) : (tri.x));
 			}
 			else tri.x = (float) (content.x + 2*style.padding.x);
+
 			if ((style.draw_begin) != null) style.draw_begin(_out_, (nk_handle) (style.userdata));
 			nk_draw_button_text_symbol(_out_, &bounds, &content, &tri, (uint) (state), style, str, (int) (len), (int) (symbol),
 				font);

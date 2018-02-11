@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace NuklearSharp
@@ -58,12 +57,12 @@ namespace NuklearSharp
 			public nk_handle texture = new nk_handle();
 			public nk_font_config config;
 
-			public float text_width(nk_handle handle, float height, char* s, int length)
+			public float text_width(nk_handle h, float height, char* s, int length)
 			{
 				return nk_font_text_width(this, height, s, length);
 			}
 
-			public void query_font_glyph(nk_handle handle, float height, nk_user_font_glyph* glyph, char codepoint,
+			public void query_font_glyph(nk_handle h, float height, nk_user_font_glyph* glyph, char codepoint,
 				char next_codepoint)
 			{
 				nk_font_query_font_glyph(this, height, glyph, codepoint, next_codepoint);
@@ -521,12 +520,8 @@ namespace NuklearSharp
 
 		public class nk_popup_buffer
 		{
-			public nk_command_base parent;
-			public nk_command_base first;
-			public nk_command_base last;
-			public int count;
-
-			public int active;
+			public nk_command_buffer old_buffer;
+			public readonly nk_command_buffer buffer = new nk_command_buffer();
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -667,7 +662,6 @@ namespace NuklearSharp
 				mouse_bounds.w = cursor.size.x;
 				mouse_bounds.h = cursor.size.y;
 				nk_draw_image(ctx.overlay, mouse_bounds, cursor.img, nk_white);
-				nk_finish_buffer(ctx, ctx.overlay);
 			}
 
 			var it = ctx.begin;
@@ -680,7 +674,7 @@ namespace NuklearSharp
 				cmd = it.buffer.last;
 
 				while ((next != null) &&
-				       ((next.buffer.count == 0) || ((next.flags & NK_WINDOW_HIDDEN) != 0)))
+				       (next.buffer == null || next.buffer.count == 0 || (next.flags & NK_WINDOW_HIDDEN) != 0))
 				{
 					next = next.next;
 				}
@@ -696,29 +690,22 @@ namespace NuklearSharp
 			{
 				var next = it.next;
 
-				if (it.popup.buf.active == 0) goto skip;
-				var buf = it.popup.buf;
+				if (it.popup.buf.buffer.count == 0) goto skip;
+
+				var buf = it.popup.buf.buffer;
 				cmd.next = buf.first;
 				cmd = buf.last;
 
-				buf.active = nk_false;
+				it.popup.buf.buffer.count = 0;
+
 				skip:
 				it = next;
 			}
 			if (cmd != null)
 			{
-				if (ctx.overlay.count > 0)
-				{
-					cmd.next = ctx.overlay.first;
-				}
-				else
-				{
-					cmd.next = null;
-				}
+				cmd.next = ctx.overlay.count > 0 ? ctx.overlay.first : null;
 			}
 		}
-
-
 
 		public static float nk_inv_sqrt(float number)
 		{
