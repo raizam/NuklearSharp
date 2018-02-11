@@ -7,8 +7,8 @@
     <ProjectGuid>{394928B3-ED31-44C2-8A5B-E3BC6AA3EF8B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FileBrowser</RootNamespace>
-    <AssemblyName>FileBrowser</AssemblyName>
+    <RootNamespace>Extended</RootNamespace>
+    <AssemblyName>Extended</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

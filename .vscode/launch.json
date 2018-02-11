@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"name": "RaizamTest",
-			"type": "coreclr",
+			"type": "mono",
 			"request": "launch",
 			"preLaunchTask": "build",
 			"program": "${workspaceFolder}/Samples/RaizamTest/bin/Debug/RaizamTest.exe",
@@ -15,6 +15,18 @@
 			"console": "internalConsole",
 			"stopAtEntry": false,
 			"internalConsoleOptions": "openOnSessionStart"
-		}
+		},
+		{
+			"name": "Extended",
+			"type": "mono",
+			"request": "launch",
+			"preLaunchTask": "build",
+			"program": "${workspaceFolder}/Samples/Extended/bin/Debug/Extended.exe",
+			"args": [],
+			"cwd": "${workspaceFolder}/Samples/Extended/bin/Debug/",
+			"console": "internalConsole",
+			"stopAtEntry": false,
+			"internalConsoleOptions": "openOnSessionStart"
+		}		
 	]
 }

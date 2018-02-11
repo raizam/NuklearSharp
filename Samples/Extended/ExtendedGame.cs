@@ -16,7 +16,6 @@ namespace Extended
 		private GraphicsDeviceManager _graphics;
 		private SpriteBatch _spriteBatch;
 		private NuklearContext _contextWrapper;
-		private Color _background = Color.Black;
 		private readonly Media _media = new Media();
 
 		public ExtendedGame()
@@ -153,7 +152,7 @@ namespace Extended
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(_background);
+			GraphicsDevice.Clear(new Color(0.3f, 0.3f, 0.3f));
 
 			// TODO: Add your drawing code here
 			GUI.basic_demo(_contextWrapper, _media);
