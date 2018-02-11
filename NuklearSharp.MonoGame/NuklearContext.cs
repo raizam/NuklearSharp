@@ -7,7 +7,6 @@ namespace NuklearSharp.MonoGame
 {
 	public class NuklearContext : BaseContext
 	{
-		private const float DepthBias = 0F;
 		private const int WHEEL_DELTA = 120;
 
 		private readonly GraphicsDevice _device;
@@ -15,8 +14,17 @@ namespace NuklearSharp.MonoGame
 		private readonly DynamicIndexBuffer _indexBuffer;
 		private readonly BasicEffect basicEffect;
 		private readonly List<Texture2D> _textures = new List<Texture2D>();
+		private readonly RasterizerState _rasterizerState = new RasterizerState
+		{
+			CullMode = CullMode.None,
+			ScissorTestEnable = true
+		};
 
-		private MouseState _previousMouseState = default(MouseState);
+		private BlendState _oldBlendState;
+		private RasterizerState _oldRasterizerState;
+		private SamplerState _oldSamplerState;
+		private DepthStencilState _oldDepthStencilState;
+
 		private int _previousWheel;
 
 		public List<Texture2D> Textures
@@ -72,15 +80,16 @@ namespace NuklearSharp.MonoGame
 			basicEffect.LightingEnabled = false;
 			_device.SetVertexBuffer(_vertexBuffer);
 			_device.Indices = _indexBuffer;
-			var rasterizerState = new RasterizerState
-			{
-				CullMode = CullMode.CullCounterClockwiseFace,
-				DepthBias = DepthBias,
-				ScissorTestEnable = true
-			};
 
+			_oldSamplerState = _device.SamplerStates[0];
+			_oldBlendState = _device.BlendState;
+			_oldDepthStencilState = _device.DepthStencilState;
+			_oldRasterizerState = _device.RasterizerState;
+
+			_device.SamplerStates[0] = SamplerState.LinearClamp;
 			_device.BlendState = BlendState.NonPremultiplied;
-			_device.RasterizerState = rasterizerState;
+			_device.DepthStencilState = DepthStencilState.None;
+			_device.RasterizerState = _rasterizerState;
 		}
 
 		protected override unsafe void SetBuffers(byte[] vertices, short[] indices, int vertex_count, int vertex_stride)
@@ -100,11 +109,9 @@ namespace NuklearSharp.MonoGame
 
 			for (var i = 0; i < result.Length; i++)
 			{
-				var z = result[i].Position.Z;
 				var c = result[i].Color;
 				result[i].Color = new Color(c.B, c.G, c.R, c.A);
-				if (float.IsNaN(z) || float.IsInfinity(z))
-					result[i].Position.Z = 0F;
+				result[i].Position.Z = 0;
 			}
 
 			_vertexBuffer.SetData(result);
@@ -130,6 +137,10 @@ namespace NuklearSharp.MonoGame
 
 		protected override void EndDraw()
 		{
+			_device.SamplerStates[0] = _oldSamplerState;
+			_device.BlendState = _oldBlendState;
+			_device.DepthStencilState = _oldDepthStencilState;
+			_device.RasterizerState = _oldRasterizerState;
 		}
 
 		private void UpdateInput()
@@ -138,22 +149,14 @@ namespace NuklearSharp.MonoGame
 
 			InputBegin();
 
-			if (_previousMouseState.LeftButton == ButtonState.Released && state.LeftButton == ButtonState.Pressed)
-				InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, 1);
-			else if (_previousMouseState.LeftButton == ButtonState.Pressed && state.LeftButton == ButtonState.Released)
-				InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, 0);
-
-			if (_previousMouseState.RightButton == ButtonState.Released && state.RightButton == ButtonState.Pressed)
-				InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, 1);
-			else if (_previousMouseState.RightButton == ButtonState.Pressed && state.RightButton == ButtonState.Released)
-				InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, 0);
+			InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, state.LeftButton == ButtonState.Pressed);
+			InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, state.RightButton == ButtonState.Pressed);
 
 			InputMotion(state.X, state.Y);
 			InputScroll(new Nuklear.nk_vec2 {x = 0, y = (state.ScrollWheelValue - _previousWheel)/WHEEL_DELTA});
 			InputEnd();
 
 			_previousWheel = state.ScrollWheelValue;
-			_previousMouseState = state;
 		}
 
 		public bool BeginTitled(string name, string title, Rectangle bounds, uint flags)

@@ -32,9 +32,9 @@ namespace NuklearSharp
 			Nuklear.nk_input_key(_ctx, key, down);
 		}
 
-		public void InputButton(int id, int x, int y, int down)
+		public void InputButton(int id, int x, int y, bool down)
 		{
-			Nuklear.nk_input_button(_ctx, id, x, y, down);
+			Nuklear.nk_input_button(_ctx, id, x, y, down?1:0);
 		}
 
 		public void InputScroll(Nuklear.nk_vec2 val)
@@ -160,11 +160,6 @@ namespace NuklearSharp
 			Nuklear.nk_setup(_ctx, font);
 		}
 
-		public void SetUserData(Nuklear.nk_handle handle)
-		{
-			Nuklear.nk_set_user_data(_ctx, handle);
-		}
-
 		public void Clear()
 		{
 			Nuklear.nk_clear(_ctx);
@@ -178,26 +173,6 @@ namespace NuklearSharp
 		public void Start(Nuklear.nk_window win)
 		{
 			Nuklear.nk_start(_ctx, win);
-		}
-
-		public void StartPopup(Nuklear.nk_window win)
-		{
-			Nuklear.nk_start_popup(_ctx, win);
-		}
-
-		public void FinishPopup(Nuklear.nk_window win)
-		{
-			Nuklear.nk_finish_popup(_ctx, win);
-		}
-
-		public void FinishBuffer(Nuklear.nk_command_buffer buffer)
-		{
-			Nuklear.nk_finish_buffer(_ctx, buffer);
-		}
-
-		public void Finish(Nuklear.nk_window win)
-		{
-			Nuklear.nk_finish(_ctx, win);
 		}
 
 		public bool PanelBegin(string title, int panel_type)
@@ -969,7 +944,7 @@ namespace NuklearSharp
 		{
 			fixed (char* text_ptr = text)
 			{
-				int i;
+				int i = active?1:0;
 				var res = Nuklear.nk_checkbox_text(_ctx, text_ptr, text.Length, &i) != 0;
 				active = i != 0;
 				return res;
@@ -980,7 +955,7 @@ namespace NuklearSharp
 		{
 			fixed (char* text_ptr = text)
 			{
-				uint f;
+				uint f = flags;
 				var res = Nuklear.nk_checkbox_flags_text(_ctx, text_ptr, text.Length, &f, value) != 0;
 
 				flags = f;
@@ -1008,7 +983,7 @@ namespace NuklearSharp
 		{
 			fixed (char* label_ptr = label)
 			{
-				int i;
+				int i = active?1:0;
 				var res = Nuklear.nk_checkbox_label(_ctx, label_ptr, &i) != 0;
 				active = i != 0;
 				return res;
@@ -1019,7 +994,7 @@ namespace NuklearSharp
 		{
 			fixed (char* label_ptr = label)
 			{
-				uint f;
+				uint f = flags;
 				var res = Nuklear.nk_checkbox_flags_label(_ctx, label_ptr, &f, value) != 0;
 				flags = f;
 				return res;
@@ -1038,7 +1013,7 @@ namespace NuklearSharp
 		{
 			fixed (char* text_ptr = text)
 			{
-				int i;
+				int i = active?1:0;
 				var res = Nuklear.nk_radio_text(_ctx, text_ptr, text.Length, &i) != 0;
 				active = i != 0;
 				return res;
@@ -1057,7 +1032,7 @@ namespace NuklearSharp
 		{
 			fixed (char* label_ptr = label)
 			{
-				int i;
+				int i = active?1:0;
 				var res = Nuklear.nk_radio_label(_ctx, label_ptr, &i) != 0;
 				active = i != 0;
 				return res;
@@ -1086,7 +1061,7 @@ namespace NuklearSharp
 
 		public bool Progress(ref ulong cur, ulong max, int is_modifyable)
 		{
-			ulong temp;
+			ulong temp = cur;
 			var res = Nuklear.nk_progress(_ctx, &temp, max, is_modifyable) != 0;
 			cur = temp;
 
@@ -1108,7 +1083,7 @@ namespace NuklearSharp
 			Nuklear.nk_edit_unfocus(_ctx);
 		}
 
-		public uint EditString(uint flags, string memory, ref int len, int max, Nuklear.NkPluginFilter filter)
+		public uint EditString(uint flags, char[] memory, ref int len, int max, Nuklear.NkPluginFilter filter)
 		{
 			fixed (char* memory_ptr = memory)
 			{
@@ -1553,7 +1528,7 @@ namespace NuklearSharp
 		{
 			fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
 			{
-				int s;
+				int s = selected;
 				Nuklear.nk_combobox_string(_ctx, items_separated_by_zeros_ptr, &s, count, item_height, size);
 				selected = s;
 			}
@@ -1564,7 +1539,7 @@ namespace NuklearSharp
 		{
 			fixed (char* items_separated_by_separator_ptr = items_separated_by_separator)
 			{
-				int s;
+				int s = selected;
 				Nuklear.nk_combobox_separator(_ctx, items_separated_by_separator_ptr, separator, &s, count, item_height, size);
 				selected = s;
 			}
@@ -1573,7 +1548,7 @@ namespace NuklearSharp
 		public void ComboboxCallback(Nuklear.NkComboCallback item_getter, IntPtr userdata, ref int selected, int count,
 			int item_height, Nuklear.nk_vec2 size)
 		{
-			int s;
+			int s = selected;
 			Nuklear.nk_combobox_callback(_ctx, item_getter, userdata.ToPointer(), &s, count, item_height, size);
 			selected = s;
 		}

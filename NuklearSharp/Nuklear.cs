@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace NuklearSharp
@@ -58,12 +57,12 @@ namespace NuklearSharp
 			public nk_handle texture = new nk_handle();
 			public nk_font_config config;
 
-			public float text_width(nk_handle handle, float height, char* s, int length)
+			public float text_width(nk_handle h, float height, char* s, int length)
 			{
 				return nk_font_text_width(this, height, s, length);
 			}
 
-			public void query_font_glyph(nk_handle handle, float height, nk_user_font_glyph* glyph, char codepoint,
+			public void query_font_glyph(nk_handle h, float height, nk_user_font_glyph* glyph, char codepoint,
 				char next_codepoint)
 			{
 				nk_font_query_font_glyph(this, height, glyph, codepoint, next_codepoint);
@@ -510,22 +509,9 @@ namespace NuklearSharp
 
 		public class nk_command_buffer
 		{
-			private readonly List<nk_command_base> _commands = new List<nk_command_base>();
-
-			public List<nk_command_base> commands
-			{
-				get { return _commands; }
-			}
-
-			public nk_command_base begin
-			{
-				get { return _commands[0]; }
-			}
-
-			public nk_command_base last
-			{
-				get { return _commands[_commands.Count - 1]; }
-			}
+			public nk_command_base first;
+			public nk_command_base last;
+			public int count;
 
 			public nk_rect clip;
 			public int use_clipping;
@@ -534,36 +520,8 @@ namespace NuklearSharp
 
 		public class nk_popup_buffer
 		{
-			private List<nk_command_base> _commands;
-			private int _lastIndex;
-
-			public List<nk_command_base> commands
-			{
-				get { return _commands; }
-
-				set
-				{
-					if (value != null)
-					{
-						_commands = value;
-						_lastIndex = value.Count - 1;
-					}
-				}
-			}
-
-			public nk_command_base begin
-			{
-				get { return _commands[0]; }
-				set { _commands[0] = value; }
-			}
-
-			public nk_command_base last
-			{
-				get { return _commands[_commands.Count - 1]; }
-				set { _commands[_commands.Count - 1] = value; }
-			}
-
-			public int active;
+			public nk_command_buffer old_buffer;
+			public readonly nk_command_buffer buffer = new nk_command_buffer();
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
@@ -629,14 +587,16 @@ namespace NuklearSharp
 		public static void nk_command_buffer_init(nk_command_buffer cmdbuf, int clip)
 		{
 			cmdbuf.use_clipping = clip;
-			cmdbuf.commands.Clear();
+			cmdbuf.first = cmdbuf.last = null;
+			cmdbuf.count = 0;
 		}
 
-		public static void nk_command_buffer_reset(nk_command_buffer buffer)
+		public static void nk_command_buffer_reset(nk_command_buffer cmdbuf)
 		{
-			if (buffer == null) return;
-			buffer.commands.Clear();
-			buffer.clip = nk_null_rect;
+			if (cmdbuf == null) return;
+			cmdbuf.first = cmdbuf.last = null;
+			cmdbuf.count = 0;
+			cmdbuf.clip = nk_null_rect;
 		}
 
 		public static nk_command_base nk_command_buffer_push(nk_command_buffer b, int t)
@@ -652,7 +612,18 @@ namespace NuklearSharp
 				type = t
 			};
 
-			b.commands.Add(command);
+			if (b.last == null)
+			{
+				b.first = command;
+				b.last = command;
+			}
+			else
+			{
+				b.last.next = command;
+				b.last = command;
+			}
+
+			++b.count;
 
 			return command;
 		}
@@ -668,7 +639,7 @@ namespace NuklearSharp
 
 			var iter = ctx.begin;
 			while ((iter != null) &&
-			       ((iter.buffer.commands.Count == 0) || (iter.flags & NK_WINDOW_HIDDEN) != 0 || (iter.seq != ctx.seq)))
+			       ((iter.buffer.count == 0) || (iter.flags & NK_WINDOW_HIDDEN) != 0 || (iter.seq != ctx.seq)))
 			{
 				iter = iter.next;
 			}
@@ -691,7 +662,6 @@ namespace NuklearSharp
 				mouse_bounds.w = cursor.size.x;
 				mouse_bounds.h = cursor.size.y;
 				nk_draw_image(ctx.overlay, mouse_bounds, cursor.img, nk_white);
-				nk_finish_buffer(ctx, ctx.overlay);
 			}
 
 			var it = ctx.begin;
@@ -704,38 +674,38 @@ namespace NuklearSharp
 				cmd = it.buffer.last;
 
 				while ((next != null) &&
-				       ((next.buffer.last == next.buffer.begin) || ((next.flags & NK_WINDOW_HIDDEN) != 0)))
+				       (next.buffer == null || next.buffer.count == 0 || (next.flags & NK_WINDOW_HIDDEN) != 0))
 				{
 					next = next.next;
 				}
-				if (next != null) cmd.next = next.buffer.begin;
+
+				if (next != null) cmd.next = next.buffer.first;
 				cont:
 				it = next;
 			}
-			/*it = ctx.begin;
+
+			it = ctx.begin;
 
 			while (it != null)
 			{
-				nk_window _next_ = it.next;
-				nk_popup_buffer buf;
+				var next = it.next;
 
-				if (it.popup.buf.active == 0) goto skip;
-				buf = it.popup.buf;
-				cmd.next = buf.begin;
-				cmd = ((nk_command*) ((void*) ((buffer) + (buf->last))));
-				buf->active = (int) (nk_false);
+				if (it.popup.buf.buffer.count == 0) goto skip;
+
+				var buf = it.popup.buf.buffer;
+				cmd.next = buf.first;
+				cmd = buf.last;
+
+				it.popup.buf.buffer.count = 0;
+
 				skip:
-				;
-				it = _next_;
+				it = next;
 			}
-			if ((cmd) != null)
+			if (cmd != null)
 			{
-				if (ctx.overlay.end != ctx.overlay.begin) cmd->_next_ = (ulong) (ctx.overlay.begin);
-				else cmd->_next_ = (ulong) (ctx.memory.allocated);
-			}*/
+				cmd.next = ctx.overlay.count > 0 ? ctx.overlay.first : null;
+			}
 		}
-
-
 
 		public static float nk_inv_sqrt(float number)
 		{

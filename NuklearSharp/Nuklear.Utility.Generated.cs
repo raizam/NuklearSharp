@@ -2344,7 +2344,7 @@ namespace NuklearSharp
 		{
 			int ret;
 			nk_rect content = new nk_rect();
-			if ((_out_ == null) || (style == null)) return (int) (nk_false);
+			if (((_out_ == null) || (style == null))) return (int) (nk_false);
 			ret = (int) (nk_do_button(ref state, _out_, (nk_rect) (bounds), style, _in_, (int) (b), &content));
 			content.x += (float) (style.image_padding.x);
 			content.y += (float) (style.image_padding.y);
@@ -2373,6 +2373,7 @@ namespace NuklearSharp
 				tri.x = (float) ((tri.x) < (0) ? (0) : (tri.x));
 			}
 			else tri.x = (float) (content.x + 2*style.padding.x);
+
 			if ((style.draw_begin) != null) style.draw_begin(_out_, (nk_handle) (style.userdata));
 			nk_draw_button_text_symbol(_out_, &bounds, &content, &tri, (uint) (state), style, str, (int) (len), (int) (symbol),
 				font);
@@ -3681,7 +3682,6 @@ namespace NuklearSharp
 			{
 				len = (int) (text_edit._string_.len);
 			}
-
 			cursor = (int) (text_edit.cursor);
 			select_begin = (int) (text_edit.select_start);
 			select_end = (int) (text_edit.select_end);

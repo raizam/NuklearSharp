@@ -14,9 +14,9 @@ namespace NuklearSharp
 			    (config.vertex_layout == null)) return (uint) (NK_CONVERT_INVALID_PARAM);
 			nk_draw_list_setup(ctx.draw_list, config, cmds, vertices, elements, (int) (config.line_AA), (int) (config.shape_AA));
 			var top_window = nk__begin(ctx);
-			foreach (var cmd in top_window.buffer.commands)
+
+			for(var cmd = top_window.buffer.first; cmd != null; cmd = cmd.next)
 			{
-				ctx.draw_list.userdata = (nk_handle) (cmd.userdata);
 				switch (cmd.header.type)
 				{
 					case NK_COMMAND_NOP:
@@ -1020,13 +1020,6 @@ namespace NuklearSharp
 			nk_draw_list_init(ctx.draw_list);
 		}
 
-		public static void nk_set_user_data(nk_context ctx, nk_handle handle)
-		{
-			if (ctx == null) return;
-			ctx.userdata = (nk_handle) (handle);
-			if ((ctx.current) != null) ctx.current.buffer.userdata = (nk_handle) (handle);
-		}
-
 		public static void nk_clear(nk_context ctx)
 		{
 			nk_window iter;
@@ -1088,7 +1081,9 @@ namespace NuklearSharp
 		public static void nk_start_buffer(nk_context ctx, nk_command_buffer buffer)
 		{
 			if ((ctx == null) || (buffer == null)) return;
-			buffer.commands.Clear();
+
+			buffer.first = buffer.last = null;
+			buffer.count = 0;
 			buffer.clip = (nk_rect) (nk_null_rect);
 		}
 
@@ -1099,36 +1094,29 @@ namespace NuklearSharp
 
 		public static void nk_start_popup(nk_context ctx, nk_window win)
 		{
-			nk_popup_buffer buf;
 			if ((ctx == null) || (win == null)) return;
-			buf = win.popup.buf;
-			buf.active = (int) (nk_true);
+			
+			var buf = win.popup.buf.buffer;
+
+			buf.first = buf.last = null;
+			buf.count = 0;
+
+			win.popup.buf.old_buffer = win.buffer;
+			win.buffer = buf;
 		}
 
 		public static void nk_finish_popup(nk_context ctx, nk_window win)
 		{
-			nk_popup_buffer buf;
 			if ((ctx == null) || (win == null)) return;
-			buf = win.popup.buf;
-		}
 
-		public static void nk_finish_buffer(nk_context ctx, nk_command_buffer buffer)
-		{
-			if ((ctx == null) || (buffer == null)) return;
+			win.buffer = win.popup.buf.old_buffer;
 		}
 
 		public static void nk_finish(nk_context ctx, nk_window win)
 		{
-			nk_popup_buffer buf;
-			nk_command* parent_last;
-			void* memory;
-			if ((ctx == null) || (win == null)) return;
-			nk_finish_buffer(ctx, win.buffer);
-			if (win.popup.buf.active == 0) return;
-			buf = win.popup.buf;
-			memory = ctx.memory.memory.ptr;
-/*			parent_last = ((nk_command*) ((void*) ((byte*) (memory) + (buf.parent))));
-			parent_last->next = (ulong) (buf.end);*/
+			if ((ctx == null) || (win == null) || win.popup.active == 0) return;
+
+
 		}
 
 		public static int nk_panel_begin(nk_context ctx, char* title, int panel_type)
@@ -1155,7 +1143,6 @@ namespace NuklearSharp
 			layout = win.layout;
 			_out_ = win.buffer;
 			_in_ = (win.flags & NK_WINDOW_NO_INPUT) != 0 ? null : ctx.input;
-			win.buffer.userdata = (nk_handle) (ctx.userdata);
 			scrollbar_size = (nk_vec2) (style.window.scrollbar_size);
 			panel_padding = (nk_vec2) (nk_panel_get_padding(style, (int) (panel_type)));
 			if (((win.flags & NK_WINDOW_MOVABLE) != 0) && ((win.flags & NK_WINDOW_ROM) == 0))
@@ -1518,17 +1505,9 @@ namespace NuklearSharp
 							: (layout.flags & NK_WINDOW_DYNAMIC) != 0
 								? layout.bounds.y + layout.bounds.h + layout.footer_height
 								: window.bounds.y + window.bounds.h);
-				nk_stroke_line(_out_, (float) (window.bounds.x), (float) (window.bounds.y),
-					(float) (window.bounds.x + window.bounds.w), (float) (window.bounds.y), (float) (layout.border),
-					(nk_color) (border_color));
-				nk_stroke_line(_out_, (float) (window.bounds.x), (float) (padding_y), (float) (window.bounds.x + window.bounds.w),
-					(float) (padding_y), (float) (layout.border), (nk_color) (border_color));
-				nk_stroke_line(_out_, (float) (window.bounds.x + layout.border*0.5f), (float) (window.bounds.y),
-					(float) (window.bounds.x + layout.border*0.5f), (float) (padding_y), (float) (layout.border),
-					(nk_color) (border_color));
-				nk_stroke_line(_out_, (float) (window.bounds.x + window.bounds.w - layout.border*0.5f), (float) (window.bounds.y),
-					(float) (window.bounds.x + window.bounds.w - layout.border*0.5f), (float) (padding_y), (float) (layout.border),
-					(nk_color) (border_color));
+				nk_rect b = window.bounds;
+				b.h = padding_y - window.bounds.y;
+				nk_stroke_rect(_out_, b, 0, layout.border, border_color);
 			}
 
 			if ((((layout.flags & NK_WINDOW_SCALABLE) != 0) && ((_in_) != null)) && ((layout.flags & NK_WINDOW_MINIMIZED) == 0))
@@ -4271,9 +4250,9 @@ namespace NuklearSharp
 			popup.flags = (uint) (flags);
 			popup.flags |= (uint) (NK_WINDOW_BORDER);
 			if ((type) == (NK_POPUP_DYNAMIC)) popup.flags |= (uint) (NK_WINDOW_DYNAMIC);
-			popup.buffer = (nk_command_buffer) (win.buffer);
 			nk_start_popup(ctx, win);
-			allocated = (ulong) (ctx.memory.allocated);
+			popup.buffer = (nk_command_buffer)(win.buffer);
+			allocated = (ulong)(ctx.memory.allocated);
 			nk_push_scissor(popup.buffer, (nk_rect) (nk_null_rect));
 			if ((nk_panel_begin(ctx, title, (int) (NK_PANEL_POPUP))) != 0)
 			{
@@ -4299,7 +4278,6 @@ namespace NuklearSharp
 					root.flags |= (uint) (NK_WINDOW_REMOVE_ROM);
 					root = root.parent;
 				}
-				win.popup.buf.active = (int) (0);
 				win.popup.active = (int) (0);
 				ctx.memory.allocated = (ulong) (allocated);
 				ctx.current = win;
