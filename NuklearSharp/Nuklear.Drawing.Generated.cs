@@ -85,6 +85,7 @@ namespace NuklearSharp
 			list.buffer.Data[list.buffer.Count - 1].clip_rect = (nk_rect) (clip);
 			list.buffer.Data[list.buffer.Count - 1].texture = (nk_handle) (texture);
 			list.clip_rect = (nk_rect) (clip);
+
 			return result;
 		}
 
@@ -162,10 +163,11 @@ namespace NuklearSharp
 				ulong idx_count = (ulong) ((thick_line) != 0 ? (count*18) : (count*12));
 				ulong vtx_count = (ulong) ((thick_line) != 0 ? (points_count*4) : (points_count*3));
 
+
 				int vtxStart = list.vertices.Count;
-				list.vertices.addToEnd((int) (vtx_count*list.config.vertex_size));
-				int idxStart = list.addElements((int) idx_count);
-				
+				list.vertices.addToEnd((int)(vtx_count * list.config.vertex_size));
+				int idxStart = list.addElements((int)idx_count);
+
 				nk_vec2* temp;
 				int points_total = (int) (((thick_line) != 0 ? 5 : 3)*(int) points_count);
 
@@ -472,7 +474,6 @@ namespace NuklearSharp
 				ulong i0 = (ulong) (0);
 				ulong i1 = (ulong) (0);
 				float AA_SIZE = (float) (1.0f);
-				ulong vertex_offset = (ulong) (0);
 				ulong index = (ulong) (list.vertex_offset);
 				ulong idx_count = (ulong) ((points_count - 2)*3 + points_count*6);
 				ulong vtx_count = (ulong) (points_count*2);

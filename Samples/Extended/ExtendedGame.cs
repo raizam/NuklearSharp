@@ -94,10 +94,6 @@ namespace Extended
 			_spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			_contextWrapper = new NuklearContext(GraphicsDevice);
-			_contextWrapper.ConvertConfig._null_ = new Nuklear.nk_draw_null_texture
-			{
-				texture = new Nuklear.nk_handle {id = 1}
-			};
 
 			// Fonts
 			var fontData = File.ReadAllBytes(GetAssetPath("Fonts/Roboto-Regular.ttf"));
@@ -123,7 +119,7 @@ namespace Extended
 				_media.font_22 = fontAtlas.AddFont(stream, 22);
 			}
 
-			fontAtlas.Bake();
+			_contextWrapper.ConvertConfig._null_ =  fontAtlas.Bake();
 
 			_media.uncheckd = LoadImage("Icons/unchecked.png");
 			_media.checkd = LoadImage("Icons/checked.png");

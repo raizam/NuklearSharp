@@ -712,11 +712,12 @@ namespace NuklearSharp
 			var conv = new nk_inv_sqrt_union
 			{
 				i = 0,
+				f = number,
 			};
-			conv.f = number;
 			var x2 = number*0.5f;
 			conv.i = 0x5f375A84 - (conv.i >> 1);
 			conv.f = conv.f*(threehalfs - (x2*conv.f*conv.f));
+
 			return conv.f;
 		}
 

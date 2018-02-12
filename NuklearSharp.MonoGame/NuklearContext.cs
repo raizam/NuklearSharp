@@ -10,8 +10,8 @@ namespace NuklearSharp.MonoGame
 		private const int WHEEL_DELTA = 120;
 
 		private readonly GraphicsDevice _device;
-		private readonly DynamicVertexBuffer _vertexBuffer;
-		private readonly DynamicIndexBuffer _indexBuffer;
+		private DynamicVertexBuffer _vertexBuffer;
+		private DynamicIndexBuffer _indexBuffer;
 		private readonly BasicEffect basicEffect;
 		private readonly List<Texture2D> _textures = new List<Texture2D>();
 		private readonly RasterizerState _rasterizerState = new RasterizerState
@@ -24,6 +24,7 @@ namespace NuklearSharp.MonoGame
 		private RasterizerState _oldRasterizerState;
 		private SamplerState _oldSamplerState;
 		private DepthStencilState _oldDepthStencilState;
+		private KeyboardState _previousKeyboardState;
 
 		private int _previousWheel;
 
@@ -35,9 +36,9 @@ namespace NuklearSharp.MonoGame
 		public NuklearContext(GraphicsDevice device)
 		{
 			_device = device;
-			_vertexBuffer = new DynamicVertexBuffer(device, VertexPositionColorTexture.VertexDeclaration, 30000,
+			_vertexBuffer = new DynamicVertexBuffer(device, VertexPositionColorTexture.VertexDeclaration, 2000,
 				BufferUsage.WriteOnly);
-			_indexBuffer = new DynamicIndexBuffer(device, typeof (ushort), 10000, BufferUsage.WriteOnly);
+			_indexBuffer = new DynamicIndexBuffer(device, typeof (ushort), 6000, BufferUsage.WriteOnly);
 			basicEffect = new BasicEffect(device);
 		}
 
@@ -92,7 +93,8 @@ namespace NuklearSharp.MonoGame
 			_device.RasterizerState = _rasterizerState;
 		}
 
-		protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count, int vertex_stride)
+		protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count,
+			int vertex_stride)
 		{
 			if (vertex_count == 0) return;
 
@@ -101,20 +103,33 @@ namespace NuklearSharp.MonoGame
 			fixed (VertexPositionColorTexture* vx = &result[0])
 			{
 				var b = (byte*) vx;
-				for (int i = 0; i < vertex_count * sizeof(VertexPositionColorTexture); i++)
+				for (int i = 0; i < vertex_count*sizeof (VertexPositionColorTexture); i++)
 				{
 					*(b + i) = vertices[i];
 				}
 			}
 
-			for (var i = 0; i < result.Length; i++)
+			for (var i = 0; i < vertex_count; i++)
 			{
 				var c = result[i].Color;
 				result[i].Color = new Color(c.B, c.G, c.R, c.A);
-				result[i].Position.Z = 0;
 			}
 
+			if (_vertexBuffer.VertexCount < result.Length)
+			{
+				// Resize vertex buffer if data doesnt fit
+				_vertexBuffer = new DynamicVertexBuffer(_device, VertexPositionColorTexture.VertexDeclaration, result.Length*2,
+					BufferUsage.WriteOnly);
+			}
 			_vertexBuffer.SetData(result);
+
+
+			if (_indexBuffer.IndexCount < indices_count)
+			{
+				// Resize index buffer if data doesnt fit
+				_indexBuffer = new DynamicIndexBuffer(_device, typeof (ushort), indices_count*2, BufferUsage.WriteOnly);
+			}
+
 			_indexBuffer.SetData(indices, 0, indices_count);
 		}
 
@@ -145,18 +160,63 @@ namespace NuklearSharp.MonoGame
 
 		private void UpdateInput()
 		{
-			var state = Mouse.GetState();
+			var mouseState = Mouse.GetState();
+			var keyboardState = Keyboard.GetState();
 
 			InputBegin();
 
-			InputButton(Nuklear.NK_BUTTON_LEFT, state.X, state.Y, state.LeftButton == ButtonState.Pressed);
-			InputButton(Nuklear.NK_BUTTON_RIGHT, state.X, state.Y, state.RightButton == ButtonState.Pressed);
+			InputKey(Nuklear.NK_KEY_DEL, keyboardState.IsKeyDown(Keys.Delete));
+			InputKey(Nuklear.NK_KEY_ENTER, keyboardState.IsKeyDown(Keys.Enter));
+			InputKey(Nuklear.NK_KEY_TAB, keyboardState.IsKeyDown(Keys.Tab));
+			InputKey(Nuklear.NK_KEY_BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
+			InputKey(Nuklear.NK_KEY_LEFT, keyboardState.IsKeyDown(Keys.Left));
+			InputKey(Nuklear.NK_KEY_RIGHT, keyboardState.IsKeyDown(Keys.Right));
+			InputKey(Nuklear.NK_KEY_UP, keyboardState.IsKeyDown(Keys.Up));
+			InputKey(Nuklear.NK_KEY_DOWN, keyboardState.IsKeyDown(Keys.Down));
+			if (keyboardState.IsKeyDown(Keys.LeftControl) ||
+				keyboardState.IsKeyDown(Keys.RightControl))
+			{
+				InputKey(Nuklear.NK_KEY_COPY, keyboardState.IsKeyDown(Keys.C));
+				InputKey(Nuklear.NK_KEY_PASTE, keyboardState.IsKeyDown(Keys.P));
+				InputKey(Nuklear.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.X));
+				InputKey(Nuklear.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.E));
+				InputKey(Nuklear.NK_KEY_SHIFT, true);
+			}
+			else
+			{
+				InputKey(Nuklear.NK_KEY_COPY, false);
+				InputKey(Nuklear.NK_KEY_PASTE, false);
+				InputKey(Nuklear.NK_KEY_CUT, false);
+				InputKey(Nuklear.NK_KEY_SHIFT, false);
+			}
 
-			InputMotion(state.X, state.Y);
-			InputScroll(new Nuklear.nk_vec2 {x = 0, y = (state.ScrollWheelValue - _previousWheel)/WHEEL_DELTA});
+			var isShiftDown = keyboardState.IsKeyDown(Keys.LeftShift) ||
+			                  keyboardState.IsKeyDown(Keys.RightShift);
+
+			var pressedKeys = keyboardState.GetPressedKeys();
+			for (var i = 0; i < pressedKeys.Length; ++i)
+			{
+				var key = pressedKeys[i];
+				if (!_previousKeyboardState.IsKeyDown(key))
+				{
+					var ch = key.ToChar(isShiftDown);
+					if (ch != null)
+					{
+						InputChar(ch.Value);
+					}
+				}
+			}
+
+			InputButton(Nuklear.NK_BUTTON_LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
+			InputButton(Nuklear.NK_BUTTON_MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
+			InputButton(Nuklear.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
+
+			InputMotion(mouseState.X, mouseState.Y);
+			InputScroll(new Nuklear.nk_vec2 {x = 0, y = (mouseState.ScrollWheelValue - _previousWheel)/WHEEL_DELTA});
 			InputEnd();
 
-			_previousWheel = state.ScrollWheelValue;
+			_previousWheel = mouseState.ScrollWheelValue;
+			_previousKeyboardState = keyboardState;
 		}
 
 		public bool BeginTitled(string name, string title, Rectangle bounds, uint flags)

@@ -17,7 +17,7 @@ namespace NuklearSharp
 		public unsafe partial class nk_text_edit
 		{
 			public nk_clipboard clip = new nk_clipboard();
-			public nk_str _string_ = new nk_str();
+			public NkStr _string_;
 			public NkPluginFilter filter;
 			public nk_vec2 scrollbar = new nk_vec2();
 			public int cursor;
@@ -61,7 +61,7 @@ namespace NuklearSharp
 			fixed (char* str2 = edit._string_.str)
 			{
 				char* str = str2 + line_start + char_id;
-				return (float)(font.width((nk_handle)(font.userdata), (float)(font.height), str, 1));
+				return (float) (font.width((nk_handle) (font.userdata), (float) (font.height), str, 1));
 			}
 		}
 
@@ -70,7 +70,7 @@ namespace NuklearSharp
 		{
 			int glyphs = (int) (0);
 			char* remaining;
-			int len = (int) (nk_str_len_char(edit._string_));
+			int len = (int) (edit._string_.len);
 			fixed (char* str2 = edit._string_.str)
 			{
 				char* end = str2 + len;
@@ -127,7 +127,7 @@ namespace NuklearSharp
 				}
 			}
 
-			if ((nk_str_rune_at(edit._string_, (int) (i + r.num_chars - 1))) == ('\n')) return (int) (i + r.num_chars - 1);
+			if ((edit._string_[i + r.num_chars - 1] == ('\n'))) return (int) (i + r.num_chars - 1);
 			else return (int) (i + r.num_chars);
 		}
 
@@ -217,7 +217,7 @@ namespace NuklearSharp
 		public static void nk_textedit_delete(nk_text_edit state, int where, int len)
 		{
 			nk_textedit_makeundo_delete(state, (int) (where), (int) (len));
-			nk_str_delete_runes(state._string_, (int) (where), (int) (len));
+			state._string_.remove_at((int) (where), (int) (len));
 			state.has_preferred_x = (byte) (0);
 		}
 
@@ -342,7 +342,7 @@ namespace NuklearSharp
 			nk_textedit_clamp(state);
 			nk_textedit_delete_selection(state);
 			glyphs = (int) (nk_utf_len(ctext, (int) (len)));
-			if ((nk_str_insert_text_char(state._string_, (int) (state.cursor), text, (int) (len))) != 0)
+			if ((state._string_.insert_at((int) (state.cursor), text, (int) (len))) != 0)
 			{
 				nk_textedit_makeundo_insert(state, (int) (state.cursor), (int) (glyphs));
 				state.cursor += (int) (len);
@@ -371,9 +371,9 @@ namespace NuklearSharp
 					if ((state.mode) == (NK_TEXT_EDIT_MODE_REPLACE))
 					{
 						nk_textedit_makeundo_replace(state, (int) (state.cursor), (int) (1), (int) (1));
-						nk_str_delete_runes(state._string_, (int) (state.cursor), (int) (1));
+						state._string_.remove_at((int) (state.cursor), (int) (1));
 					}
-					if ((nk_str_insert_text_utf8(state._string_, (int) (state.cursor), text + text_len, (int) (1))) != 0)
+					if ((state._string_.insert_at((int) (state.cursor), text + text_len, (int) (1))) != 0)
 					{
 						++state.cursor;
 						state.has_preferred_x = (byte) (0);
@@ -382,7 +382,7 @@ namespace NuklearSharp
 				else
 				{
 					nk_textedit_delete_selection(state);
-					if ((nk_str_insert_text_utf8(state._string_, (int) (state.cursor), text + text_len, (int) (1))) != 0)
+					if ((state._string_.insert_at((int) (state.cursor), text + text_len, (int) (1))) != 0)
 					{
 						nk_textedit_makeundo_insert(state, (int) (state.cursor), (int) (1));
 						++state.cursor;
@@ -662,7 +662,7 @@ namespace NuklearSharp
 						nk_textedit_find_charpos(&find, state, (int) (state.cursor), (int) (state.single_line), font, (float) (row_height));
 						state.has_preferred_x = (byte) (0);
 						state.cursor = (int) (find.first_char + find.length);
-						if (((find.length) > (0)) && ((nk_str_rune_at(state._string_, (int) (state.cursor - 1))) == ('\n')))
+						if (((find.length) > (0)) && ((state._string_[(int) (state.cursor - 1)]) == ('\n')))
 							--state.cursor;
 						state.select_end = (int) (state.cursor);
 					}
@@ -674,7 +674,7 @@ namespace NuklearSharp
 						nk_textedit_find_charpos(&find, state, (int) (state.cursor), (int) (state.single_line), font, (float) (row_height));
 						state.has_preferred_x = (byte) (0);
 						state.cursor = (int) (find.first_char + find.length);
-						if (((find.length) > (0)) && ((nk_str_rune_at(state._string_, (int) (state.cursor - 1))) == ('\n')))
+						if (((find.length) > (0)) && ((state._string_[(int) (state.cursor - 1)]) == ('\n')))
 							--state.cursor;
 					}
 				}
@@ -816,15 +816,15 @@ namespace NuklearSharp
 					s.redo_char_point = ((short) (s.redo_char_point - u.delete_length));
 					for (i = (int) (0); (i) < (u.delete_length); ++i)
 					{
-						s.undo_char[r->char_storage + i] = (char) (nk_str_rune_at(state._string_, (int) (u.where + i)));
+						s.undo_char[r->char_storage + i] = (char) (state._string_[(int) (u.where + i)]);
 					}
 				}
-				nk_str_delete_runes(state._string_, (int) (u.where), (int) (u.delete_length));
+				state._string_.remove_at((int) (u.where), (int) (u.delete_length));
 			}
 
 			if ((u.insert_length) != 0)
 			{
-				nk_str_insert_text_runes(state._string_, (int) (u.where), (char*) s.undo_char + u.char_storage,
+				state._string_.insert_at((int) (u.where), (char*) s.undo_char + u.char_storage,
 					(int) (u.insert_length));
 				s.undo_char_point = ((short) (s.undo_char_point - u.insert_length));
 			}
@@ -860,15 +860,15 @@ namespace NuklearSharp
 					s.undo_char_point = ((short) (s.undo_char_point + u->insert_length));
 					for (i = (int) (0); (i) < (u->insert_length); ++i)
 					{
-						s.undo_char[u->char_storage + i] = (char) (nk_str_rune_at(state._string_, (int) (u->where + i)));
+						s.undo_char[u->char_storage + i] = (char) (state._string_[(int) (u->where + i)]);
 					}
 				}
-				nk_str_delete_runes(state._string_, (int) (r.where), (int) (r.delete_length));
+				state._string_.remove_at((int) (r.where), (int) (r.delete_length));
 			}
 
 			if ((r.insert_length) != 0)
 			{
-				nk_str_insert_text_runes(state._string_, (int) (r.where), (char*) s.undo_char + r.char_storage,
+				state._string_.insert_at((int) (r.where), (char*) s.undo_char + r.char_storage,
 					(int) (r.insert_length));
 			}
 
@@ -890,10 +890,9 @@ namespace NuklearSharp
 			{
 				for (i = (int) (0); (i) < (length); ++i)
 				{
-					p[i] = (char) (nk_str_rune_at(state._string_, (int) (where + i)));
+					p[i] = (char) (state._string_[(int) (where + i)]);
 				}
 			}
-
 		}
 
 		public static void nk_textedit_makeundo_replace(nk_text_edit state, int where, int old_length, int new_length)
@@ -904,10 +903,9 @@ namespace NuklearSharp
 			{
 				for (i = (int) (0); (i) < (old_length); ++i)
 				{
-					p[i] = (char) (nk_str_rune_at(state._string_, (int) (where + i)));
+					p[i] = (char) (state._string_[(int) (where + i)]);
 				}
 			}
-
 		}
 
 		public static void nk_textedit_clear_state(nk_text_edit state, int type, NkPluginFilter filter)
@@ -933,7 +931,6 @@ namespace NuklearSharp
 			if (((memory == null)) || (size == 0)) return;
 
 			nk_textedit_clear_state(state, (int) (NK_TEXT_EDIT_SINGLE_LINE), null);
-			nk_str_init_fixed(state._string_, memory, (ulong) (size));
 		}
 
 		public static void nk_textedit_init(nk_text_edit state, ulong size)

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace NuklearSharp
+﻿namespace NuklearSharp
 {
 	public abstract unsafe partial class BaseContext
 	{
@@ -101,7 +98,10 @@ namespace NuklearSharp
 			for(var i = 0; i < _cmds.Count; ++i)
 			{
 				var cmd = _cmds[i];
-				if (cmd.elem_count == 0) continue;
+				if (cmd.elem_count == 0)
+				{
+					continue;
+				}
 
 				Draw((int) cmd.clip_rect.x, (int) cmd.clip_rect.y, (int) cmd.clip_rect.w, (int) cmd.clip_rect.h,
 					cmd.texture.id, (int) offset, (int)(cmd.elem_count / 3));

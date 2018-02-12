@@ -1439,8 +1439,8 @@ namespace NuklearSharp
 								(((values[value_index]) < ((float) (127)) ? (values[value_index]) : ((float) (127))) < ((float) (-127))
 									? ((float) (-127))
 									: ((values[value_index]) < ((float) (127)) ? (values[value_index]) : ((float) (127))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
-						attribute = (void*) (((sbyte*) (attribute) + sizeof (char)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (byte)));
+						attribute = (void*) (((sbyte*) (attribute) + sizeof (byte)));
 					}
 						break;
 					case NK_FORMAT_SSHORT:
@@ -1450,7 +1450,7 @@ namespace NuklearSharp
 								(((values[value_index]) < ((float) (32767)) ? (values[value_index]) : ((float) (32767))) < ((float) (-32767))
 									? ((float) (-32767))
 									: ((values[value_index]) < ((float) (32767)) ? (values[value_index]) : ((float) (32767))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (short)));
 						attribute = (void*) ((sbyte*) (attribute) + sizeof (short));
 					}
 						break;
@@ -1462,7 +1462,7 @@ namespace NuklearSharp
 								 ((float) (-2147483647))
 									? ((float) (-2147483647))
 									: ((values[value_index]) < ((float) (2147483647)) ? (values[value_index]) : ((float) (2147483647))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (int)));
 						attribute = (void*) ((sbyte*) (attribute) + sizeof (int));
 					}
 						break;
@@ -1473,7 +1473,7 @@ namespace NuklearSharp
 								(((values[value_index]) < ((float) (256)) ? (values[value_index]) : ((float) (256))) < ((float) (0))
 									? ((float) (0))
 									: ((values[value_index]) < ((float) (256)) ? (values[value_index]) : ((float) (256))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (byte)));
 						attribute = (void*) (((sbyte*) (attribute) + sizeof (byte)));
 					}
 						break;
@@ -1484,7 +1484,7 @@ namespace NuklearSharp
 								(((values[value_index]) < ((float) (65535)) ? (values[value_index]) : ((float) (65535))) < ((float) (0))
 									? ((float) (0))
 									: ((values[value_index]) < ((float) (65535)) ? (values[value_index]) : ((float) (65535))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (short)));
 						attribute = (void*) ((sbyte*) (attribute) + sizeof (short));
 					}
 						break;
@@ -1496,7 +1496,7 @@ namespace NuklearSharp
 								 ((float) (0))
 									? ((float) (0))
 									: ((values[value_index]) < ((float) (4294967295u)) ? (values[value_index]) : ((float) (4294967295u))));
-						nk_memcopy(attribute, &value, (ulong) (sizeof (double)));
+						nk_memcopy(attribute, &value, (ulong) (sizeof (uint)));
 						attribute = (void*) ((sbyte*) (attribute) + sizeof (uint));
 					}
 						break;
@@ -3094,7 +3094,7 @@ namespace NuklearSharp
 			{
 				fixed (char* text = edit._string_.str)
 				{
-					int len = (int) (nk_str_len_char(edit._string_));
+					int len = (int) (edit._string_.len);
 					{
 						nk_style_item background;
 						if ((state & NK_WIDGET_STATE_ACTIVED) != 0) background = style.active;
@@ -3290,7 +3290,7 @@ namespace NuklearSharp
 							{
 								fixed (char* begin = edit._string_.str)
 								{
-									int l = (int) (nk_str_len_char(edit._string_));
+									int l = (int) (edit._string_.len);
 									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x), (float) (area.y - edit.scrollbar.y),
 										(float) (0), begin, (int) (l), (float) (row_height), font, (nk_color) (background_color),
 										(nk_color) (text_color), (int) (nk_false));
@@ -3312,8 +3312,8 @@ namespace NuklearSharp
 								{
 									if (select_end_ptr == null)
 									{
-/*										char* begin = nk_str_get_const(edit._string_);
-										select_end_ptr = begin + nk_str_len_char(edit._string_);*/
+										char* begin = text;
+										select_end_ptr = begin + edit._string_.len;
 									}
 									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
 										(float) (area.y + selection_offset_start.y - edit.scrollbar.y), (float) (selection_offset_start.x),
@@ -3323,16 +3323,16 @@ namespace NuklearSharp
 								if (((edit.select_start != edit.select_end) && ((selection_end) < (edit._string_.len))))
 								{
 									char* begin = select_end_ptr;
-/*									char* end = nk_str_get_const(edit._string_) + nk_str_len_char(edit._string_);
+									char* end = text + edit._string_.len;
 									nk_edit_draw_text(_out_, style, (float) (area.x - edit.scrollbar.x),
 										(float) (area.y + selection_offset_end.y - edit.scrollbar.y), (float) (selection_offset_end.x), begin,
 										(int) (end - begin), (float) (row_height), font, (nk_color) (background_color), (nk_color) (text_color),
-										(int) (nk_true));*/
+										(int) (nk_true));
 								}
 							}
 							if ((edit.select_start) == (edit.select_end))
 							{
-								if (((edit.cursor) >= (nk_str_len(edit._string_))) || (((cursor_ptr) != null) && ((*cursor_ptr) == ('\n'))))
+								if (((edit.cursor) >= (edit._string_.len)) || (((cursor_ptr) != null) && ((*cursor_ptr) == ('\n'))))
 								{
 									nk_rect cursor = new nk_rect();
 									cursor.w = (float) (style.cursor_size);
@@ -3365,7 +3365,7 @@ namespace NuklearSharp
 					}
 					else
 					{
-						int l = (int) (nk_str_len_char(edit._string_));
+						int l = (int) (edit._string_.len);
 						fixed (char* begin = edit._string_.str)
 						{
 							nk_style_item background;

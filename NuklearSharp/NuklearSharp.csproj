@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="NkBuffer.cs" />
+    <Compile Include="NkStr.cs" />
     <Compile Include="Nuklear.Context.Generated.cs" />
     <Compile Include="Nuklear.Fonts.Generated.cs" />
     <Compile Include="Nuklear.RectPacts.Generated.cs" />
