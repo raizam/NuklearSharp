@@ -879,7 +879,7 @@ namespace NuklearSharp
 
 			int old_state, state;
 			string buffer;
-			int len, cursor, select_begin, select_end;
+			int cursor, select_begin, select_end;
 			if ((win.property.active != 0) && (hash == win.property.name))
 			{
 				old_state = win.property.state;
