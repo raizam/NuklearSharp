@@ -17,7 +17,7 @@ namespace NuklearSharp
 		public unsafe partial class nk_text_edit
 		{
 			public nk_clipboard clip = new nk_clipboard();
-			public NkStr _string_;
+			public NkStr _string_ = new NkStr();
 			public NkPluginFilter filter;
 			public nk_vec2 scrollbar = new nk_vec2();
 			public int cursor;

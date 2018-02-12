@@ -97,7 +97,7 @@ namespace Extended
 
 			// Fonts
 			var fontData = File.ReadAllBytes(GetAssetPath("Fonts/Roboto-Regular.ttf"));
-			var fontAtlas = _contextWrapper.CreateFontAtlas();
+			var fontAtlas = new FontAtlasWrapper(_contextWrapper);
 
 			using (var stream = new MemoryStream(fontData))
 			{

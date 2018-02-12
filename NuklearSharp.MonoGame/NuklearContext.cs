@@ -40,6 +40,34 @@ namespace NuklearSharp.MonoGame
 				BufferUsage.WriteOnly);
 			_indexBuffer = new DynamicIndexBuffer(device, typeof (ushort), 6000, BufferUsage.WriteOnly);
 			basicEffect = new BasicEffect(device);
+
+			ConvertConfig.vertex_size = (uint) VertexPositionColorTexture.VertexDeclaration.VertexStride;
+
+			ConvertConfig.vertex_layout = new[]
+			{
+				new Nuklear.nk_draw_vertex_layout_element
+				{
+					attribute = Nuklear.NK_VERTEX_POSITION,
+					format = Nuklear.NK_FORMAT_FLOAT,
+					offset = 0
+				},
+				new Nuklear.nk_draw_vertex_layout_element
+				{
+					attribute = Nuklear.NK_VERTEX_COLOR,
+					format = Nuklear.NK_FORMAT_B8G8R8A8,
+					offset = 12
+				},
+				new Nuklear.nk_draw_vertex_layout_element
+				{
+					attribute = Nuklear.NK_VERTEX_TEXCOORD,
+					format = Nuklear.NK_FORMAT_FLOAT,
+					offset = 16
+				},
+				new Nuklear.nk_draw_vertex_layout_element
+				{
+					attribute = Nuklear.NK_VERTEX_ATTRIBUTE_COUNT
+				}
+			};
 		}
 
 		public int CreateTexture(Texture2D texture)
@@ -93,8 +121,7 @@ namespace NuklearSharp.MonoGame
 			_device.RasterizerState = _rasterizerState;
 		}
 
-		protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count,
-			int vertex_stride)
+		protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count)
 		{
 			if (vertex_count == 0) return;
 

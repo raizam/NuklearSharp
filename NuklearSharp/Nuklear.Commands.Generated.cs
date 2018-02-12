@@ -77,8 +77,7 @@ namespace NuklearSharp
 		{
 			public int active;
 			public int prev;
-			public PinnedArray<sbyte> buffer = new PinnedArray<sbyte>(64);
-			public int length;
+			public string buffer;
 			public int cursor;
 			public int select_start;
 			public int select_end;

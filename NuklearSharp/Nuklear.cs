@@ -855,9 +855,8 @@ namespace NuklearSharp
 		{
 			var bounds = new nk_rect();
 			uint hash;
-			char* dummy_buffer = stackalloc char[64];
+			string dummy_buffer = null;
 			var dummy_state = NK_PROPERTY_DEFAULT;
-			var dummy_length = 0;
 			var dummy_cursor = 0;
 			var dummy_select_begin = 0;
 			var dummy_select_end = 0;
@@ -879,18 +878,17 @@ namespace NuklearSharp
 				: ctx.input;
 
 			int old_state, state;
-			char* buffer;
+			string buffer;
 			int len, cursor, select_begin, select_end;
 			if ((win.property.active != 0) && (hash == win.property.name))
 			{
 				old_state = win.property.state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-					win.property.buffer, ref win.property.length, ref win.property.state, ref win.property.cursor,
+					ref win.property.buffer, ref win.property.state, ref win.property.cursor,
 					ref win.property.select_start, ref win.property.select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
 				state = win.property.state;
 				buffer = win.property.buffer;
-				len = win.property.length;
 				cursor = win.property.cursor;
 				select_begin = win.property.select_start;
 				select_end = win.property.select_end;
@@ -899,12 +897,11 @@ namespace NuklearSharp
 			{
 				old_state = dummy_state;
 				nk_do_property(ref ctx.last_widget_state, win.buffer, bounds, name, variant, inc_per_pixel,
-					dummy_buffer, ref dummy_length, ref dummy_state, ref dummy_cursor,
+					ref dummy_buffer, ref dummy_state, ref dummy_cursor,
 					ref dummy_select_begin, ref dummy_select_end, style.property, filter, _in_, style.font,
 					ctx.text_edit, ctx.button_behavior);
 				state = dummy_state;
 				buffer = dummy_buffer;
-				len = dummy_length;
 				cursor = dummy_cursor;
 				select_begin = dummy_select_begin;
 				select_end = dummy_select_end;
@@ -914,8 +911,7 @@ namespace NuklearSharp
 			if ((_in_ != null) && (state != NK_PROPERTY_DEFAULT) && (win.property.active == 0))
 			{
 				win.property.active = 1;
-				nk_memcopy(win.property.buffer, buffer, (ulong) len);
-				win.property.length = len;
+				win.property.buffer = buffer;
 				win.property.cursor = cursor;
 				win.property.state = state;
 				win.property.name = hash;

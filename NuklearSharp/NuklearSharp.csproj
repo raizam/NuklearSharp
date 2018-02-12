@@ -41,7 +41,6 @@
     <Compile Include="Nuklear.RectPacts.Generated.cs" />
     <Compile Include="Runtime\CRuntime.cs" />
     <Compile Include="FontAtlasWrapper.cs" />
-    <Compile Include="NkVertex.cs" />
     <Compile Include="Nuklear.Commands.Generated.cs" />
     <Compile Include="Nuklear.Config.Generated.cs" />
     <Compile Include="Nuklear.Core.Generated.cs" />

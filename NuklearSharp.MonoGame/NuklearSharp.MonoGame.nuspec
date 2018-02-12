@@ -11,6 +11,9 @@
 		<description>MonoGame backend for the NuklearSharp</description>
 		<copyright>Copyright 2018</copyright>
 		<tags>ui gui nuklear monogame</tags>
+		<dependencies>
+			<dependency id="NuklearSharp" version="$version$" />
+		</dependencies>
 	</metadata>
 	<files>
 		<file src="bin\Release\NuklearSharp.MonoGame.dll" target="lib\portable-net45+win+wp81+MonoAndroid10+MonoTouch10\NuklearSharp.MonoGame.dll"/>

@@ -30,45 +30,14 @@
 
 			_convertConfig = new Nuklear.nk_convert_config
 			{
-				vertex_size = (uint)sizeof(NkVertex),
 				vertex_alignment = 4,
 				global_alpha = 1f,
 				shape_AA = Nuklear.NK_ANTI_ALIASING_ON,
 				line_AA = Nuklear.NK_ANTI_ALIASING_ON,
 				circle_segment_count = 22,
 				curve_segment_count = 22,
-				arc_segment_count = 22,
-				vertex_layout = new[]
-				{
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_POSITION,
-						format = Nuklear.NK_FORMAT_FLOAT,
-						offset = 0
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_COLOR,
-						format = Nuklear.NK_FORMAT_B8G8R8A8,
-						offset = 12
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_TEXCOORD,
-						format = Nuklear.NK_FORMAT_FLOAT,
-						offset = 16
-					},
-					new Nuklear.nk_draw_vertex_layout_element
-					{
-						attribute = Nuklear.NK_VERTEX_ATTRIBUTE_COUNT
-					}
-				}
+				arc_segment_count = 22
 			};
-		}
-
-		public FontAtlasWrapper CreateFontAtlas()
-		{
-			return new FontAtlasWrapper(this);
 		}
 
 		public void SetFont(Nuklear.nk_font font)
@@ -87,14 +56,12 @@
 			_indices.reset();
 			Convert(_cmds, _vertices, _indices, _convertConfig);
 
-			var vSize = (ulong) sizeof (NkVertex);
-
-			var vertex_count = (uint) ((ulong)_vertices.Count/vSize);
+			var vertex_count = (uint) ((ulong)_vertices.Count/_convertConfig.vertex_size);
 
 			/* iterate over and execute each draw command */
 			uint offset = 0;
 
-			SetBuffers(_vertices.Data, _indices.Data, _indices.Count, (int) vertex_count, sizeof (NkVertex));
+			SetBuffers(_vertices.Data, _indices.Data, _indices.Count, (int) vertex_count);
 			for(var i = 0; i < _cmds.Count; ++i)
 			{
 				var cmd = _cmds[i];
@@ -134,7 +101,7 @@
 		/// <param name="indices_count"></param>
 		/// <param name="vertex_count"></param>
 		/// <param name="vertex_stride"></param>
-		protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count, int vertex_stride);
+		protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count);
 
 		/// <summary>
 		/// Draw

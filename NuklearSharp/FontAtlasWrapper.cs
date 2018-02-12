@@ -9,7 +9,7 @@ namespace NuklearSharp
 		private readonly Nuklear.nk_font_atlas _atlas = new Nuklear.nk_font_atlas();
 		private readonly BaseContext _context;
 
-		internal FontAtlasWrapper(BaseContext context)
+		public FontAtlasWrapper(BaseContext context)
 		{
 			if (context == null)
 			{

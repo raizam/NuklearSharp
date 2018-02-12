@@ -3486,7 +3486,7 @@ namespace NuklearSharp
 		}
 
 		public static void nk_do_property(ref uint ws, nk_command_buffer _out_, nk_rect property, char* name,
-			nk_property_variant* variant, float inc_per_pixel, char* buffer, ref int len, ref int state, ref int cursor,
+			nk_property_variant* variant, float inc_per_pixel, ref string buffer, ref int state, ref int cursor,
 			ref int select_begin, ref int select_end, nk_style_property style, int filter, nk_input _in_, nk_user_font font,
 			nk_text_edit text_edit, int behavior)
 		{
@@ -3496,13 +3496,9 @@ namespace NuklearSharp
 
 			int active;
 			int old;
-			int num_len = 0;
 			int name_len;
-			char* _string_ = stackalloc char[64];
 			float size;
-			char* dst = null;
-			bool length_is_len = false;
-			int length;
+			string dst = null;
 			nk_rect left = new nk_rect();
 			nk_rect right = new nk_rect();
 			nk_rect label = new nk_rect();
@@ -3524,14 +3520,17 @@ namespace NuklearSharp
 			right.x = (float) (property.x + property.w - (right.w + style.padding.x));
 			if ((state) == (NK_PROPERTY_EDIT))
 			{
-				size = (float) (font.width((nk_handle) (font.userdata), (float) (font.height), buffer, (int) (len)));
+				fixed (char* ptr = buffer)
+				{
+					size = (float) (font.width((nk_handle) (font.userdata), (float) (font.height), ptr, buffer.Length));
+				}
 				size += (float) (style.edit.cursor_size);
-				length = len;
-				length_is_len = true;
 				dst = buffer;
 			}
 			else
 			{
+				int num_len = 0;
+				char* _string_ = stackalloc char[64];
 				switch (variant->kind)
 				{
 					default:
@@ -3550,8 +3549,12 @@ namespace NuklearSharp
 						break;
 				}
 				size = (float) (font.width((nk_handle) (font.userdata), (float) (font.height), _string_, (int) (num_len)));
-				dst = _string_;
-				length = num_len;
+				dst = new string(_string_);
+
+				if (dst.Length > num_len)
+				{
+					dst = dst.Substring(0, num_len);
+				}
 			}
 
 			edit.w = (float) (size + 2*style.padding.x);
@@ -3659,17 +3662,17 @@ namespace NuklearSharp
 
 			if ((old != NK_PROPERTY_EDIT) && ((state) == (NK_PROPERTY_EDIT)))
 			{
-				nk_memcopy(buffer, dst, (ulong) (length));
-				cursor = (int) (nk_utf_len(buffer, (int) (length)));
-				len = (int) (length);
-				length = len;
-				dst = buffer;
+				buffer = dst;
+				cursor = buffer != null?buffer.Length:0;
 				active = (int) (0);
 			}
 			else active = (int) ((state) == (NK_PROPERTY_EDIT) ? 1 : 0);
 			nk_textedit_clear_state(text_edit, (int) (NK_TEXT_EDIT_SINGLE_LINE), filters[filter]);
 			text_edit.active = ((byte) (active));
-			text_edit._string_.str = text_edit._string_.str.Substring(0, length);
+
+			text_edit._string_.str = dst;
+
+			int length = dst != null ? dst.Length : 0;
 			text_edit.cursor =
 				(int) (((cursor) < (length) ? (cursor) : (length)) < (0) ? (0) : ((cursor) < (length) ? (cursor) : (length)));
 			text_edit.select_start =
@@ -3685,10 +3688,6 @@ namespace NuklearSharp
 			text_edit.mode = (byte) (NK_TEXT_EDIT_MODE_INSERT);
 			nk_do_edit(ref ws, _out_, (nk_rect) (edit), (uint) (NK_EDIT_FIELD | NK_EDIT_AUTO_SELECT), filters[filter], text_edit,
 				style.edit, ((state) == (NK_PROPERTY_EDIT)) ? _in_ : null, font);
-			if (length_is_len)
-			{
-				len = (int) (text_edit._string_.len);
-			}
 			cursor = (int) (text_edit.cursor);
 			select_begin = (int) (text_edit.select_start);
 			select_end = (int) (text_edit.select_end);
@@ -3697,40 +3696,43 @@ namespace NuklearSharp
 			if (((active) != 0) && (text_edit.active == 0))
 			{
 				state = (int) (NK_PROPERTY_DEFAULT);
-				buffer[len] = ('\0');
-				switch (variant->kind)
+
+				fixed (char* ptr = buffer)
 				{
-					default:
-						break;
-					case NK_PROPERTY_INT:
-						variant->value.i = (int) (nk_strtoi(buffer, null));
-						variant->value.i =
-							(int)
-								(((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)) <
-								 (variant->min_value.i)
-									? (variant->min_value.i)
-									: ((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)));
-						break;
-					case NK_PROPERTY_FLOAT:
-						nk_string_float_limit(buffer, (int) (2));
-						variant->value.f = (float) (nk_strtof(buffer, null));
-						variant->value.f =
-							(float)
-								(((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)) <
-								 (variant->min_value.f)
-									? (variant->min_value.f)
-									: ((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)));
-						break;
-					case NK_PROPERTY_DOUBLE:
-						nk_string_float_limit(buffer, (int) (2));
-						variant->value.d = (double) (nk_strtod(buffer, null));
-						variant->value.d =
-							(double)
-								(((variant->value.d) < (variant->max_value.d) ? (variant->value.d) : (variant->max_value.d)) <
-								 (variant->min_value.d)
-									? (variant->min_value.d)
-									: ((variant->value.d) < (variant->max_value.d) ? (variant->value.d) : (variant->max_value.d)));
-						break;
+					switch (variant->kind)
+					{
+						default:
+							break;
+						case NK_PROPERTY_INT:
+							variant->value.i = (int) (nk_strtoi(ptr, null));
+							variant->value.i =
+								(int)
+									(((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)) <
+									 (variant->min_value.i)
+										? (variant->min_value.i)
+										: ((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)));
+							break;
+						case NK_PROPERTY_FLOAT:
+							nk_string_float_limit(ptr, (int)(2));
+							variant->value.f = (float)(nk_strtof(ptr, null));
+							variant->value.f =
+								(float)
+									(((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)) <
+									 (variant->min_value.f)
+										? (variant->min_value.f)
+										: ((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)));
+							break;
+						case NK_PROPERTY_DOUBLE:
+							nk_string_float_limit(ptr, (int)(2));
+							variant->value.d = (double)(nk_strtod(ptr, null));
+							variant->value.d =
+								(double)
+									(((variant->value.d) < (variant->max_value.d) ? (variant->value.d) : (variant->max_value.d)) <
+									 (variant->min_value.d)
+										? (variant->min_value.d)
+										: ((variant->value.d) < (variant->max_value.d) ? (variant->value.d) : (variant->max_value.d)));
+							break;
+					}
 				}
 			}
 
