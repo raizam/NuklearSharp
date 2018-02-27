@@ -79,7 +79,6 @@ It is important to note, that this project is **port**, not **wrapper**. Origina
 	base.Draw(gameTime);
 ```
 7. Run and observe the following result: ![](/Screenshots/sample.gif)
-8. Full source code of the above sample is available here: [NuklearTest.zip](https://github.com/rds1983/NuklearSharp/releases/download/0.1.0.7/NuklearTest.zip)
 
 ## Credits
 * [nuklear](https://github.com/vurtun/nuklear)
