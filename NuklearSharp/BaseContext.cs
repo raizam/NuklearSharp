@@ -1,6 +1,6 @@
 ﻿namespace NuklearSharp
 {
-    public abstract unsafe partial class BaseContext
+    public abstract partial class BaseContext
     {
         private readonly NkContext _ctx;
         private readonly NkBuffer<nk_draw_command> _cmds = new NkBuffer<nk_draw_command>();

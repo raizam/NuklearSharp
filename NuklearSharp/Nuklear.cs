@@ -38,25 +38,22 @@ namespace NuklearSharp
             public float text_width(NkHandle h, float height, char* s, int length)
             {
                 char unicode;
-                int textLen = (int)(0);
-                float textWidth = (float)(0);
-                int glyphLen = (int)(0);
-                float scale = (float)(0);
+                int textLen;
+                float textWidth = 0;
 
-                if (((this == null) || (s == null)) || (length == 0)) return (float)(0);
-                scale = (float)(height / this.Info.height);
-                glyphLen = (int)(textLen = (int)(Nk.nk_utf_decode(s, &unicode, (int)length)));
-                if (glyphLen == 0) return (float)(0);
-                while ((textLen <= length) && ((glyphLen) != 0))
+                if (s == null || length == 0) return 0;
+                var scale = height / Info.height;
+                var glyphLen = textLen = Nk.nk_utf_decode(s, &unicode, length);
+                if (glyphLen == 0) return 0;
+                while (textLen <= length && glyphLen != 0)
                 {
-                    nk_font_glyph* g;
-                    if ((unicode) == (0xFFFD)) break;
-                    g = Nk.nk_font_find_glyph(this, unicode);
-                    textWidth += (float)(g->xadvance * scale);
-                    glyphLen = (int)(Nk.nk_utf_decode(s + textLen, &unicode, (int)(length - textLen)));
-                    textLen += (int)(glyphLen);
+                    if (unicode == 0xFFFD) break;
+                    var g = Nk.nk_font_find_glyph(this, unicode);
+                    textWidth += g->xadvance * scale;
+                    glyphLen = Nk.nk_utf_decode(s + textLen, &unicode, length - textLen);
+                    textLen += glyphLen;
                 }
-                return (float)(textWidth);
+                return textWidth;
             }
 
             public void query_font_glyph(NkHandle h, float height, NkUserFontGlyph* glyph, char codepoint,
@@ -303,7 +300,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        internal unsafe struct NkInvSqrtUnion
+        internal struct NkInvSqrtUnion
         {
             [FieldOffset(0)] public uint i;
 
@@ -635,8 +632,8 @@ namespace NuklearSharp
             }
 
             var iter = ctx.Begin;
-            while ((iter != null) &&
-                   ((iter.Buffer.Count == 0) || (iter.Flags & NK_WINDOW_HIDDEN) != 0 || (iter.Seq != ctx.Seq)))
+            while (iter != null &&
+                   (iter.Buffer.Count == 0 || (iter.Flags & NK_WINDOW_HIDDEN) != 0 || iter.Seq != ctx.Seq))
             {
                 iter = iter.Next;
             }
@@ -648,7 +645,7 @@ namespace NuklearSharp
         public static void nk_build(NkContext ctx)
         {
             if (ctx.Style.CursorActive == null) ctx.Style.CursorActive = ctx.Style.Cursors[NK_CURSOR_ARROW];
-            if ((ctx.Style.CursorActive != null) && (ctx.Input.mouse.Grabbed == 0) && ((ctx.Style.CursorVisible) != 0))
+            if (ctx.Style.CursorActive != null && ctx.Input.mouse.Grabbed == 0 && ctx.Style.CursorVisible != 0)
             {
                 var mouseBounds = new NkRect();
                 var cursor = ctx.Style.CursorActive;
@@ -666,11 +663,11 @@ namespace NuklearSharp
             for (; it != null;)
             {
                 var next = it.Next;
-                if (((it.Flags & NK_WINDOW_HIDDEN) != 0) || (it.Seq != ctx.Seq))
+                if ((it.Flags & NK_WINDOW_HIDDEN) != 0 || it.Seq != ctx.Seq)
                     goto cont;
                 cmd = it.Buffer.Last;
 
-                while ((next != null) &&
+                while (next != null &&
                        (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & NK_WINDOW_HIDDEN) != 0))
                 {
                     next = next.Next;
@@ -710,11 +707,11 @@ namespace NuklearSharp
             var conv = new NkInvSqrtUnion
             {
                 i = 0,
-                f = number,
+                f = number
             };
             var x2 = number * 0.5f;
             conv.i = 0x5f375A84 - (conv.i >> 1);
-            conv.f = conv.f * (threehalfs - (x2 * conv.f * conv.f));
+            conv.f = conv.f * (threehalfs - x2 * conv.f * conv.f);
 
             return conv.f;
         }
@@ -841,7 +838,7 @@ namespace NuklearSharp
             var dummyCursor = 0;
             var dummySelectBegin = 0;
             var dummySelectEnd = 0;
-            if ((ctx == null) || (ctx.Current == null) || (ctx.Current.Layout == null)) return;
+            if (ctx == null || ctx.Current == null || ctx.Current.Layout == null) return;
             var win = ctx.Current;
             var layout = win.Layout;
             var style = ctx.Style;
@@ -854,14 +851,14 @@ namespace NuklearSharp
             }
             else hash = nk_murmur_hash(name, nk_strlen(name), 42);
 
-            var _in_ = ((s == NK_WIDGET_ROM) && (win.Property.active == 0)) || ((layout.Flags & NK_WINDOW_ROM) != 0)
+            var _in_ = s == NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & NK_WINDOW_ROM) != 0
                 ? null
                 : ctx.Input;
 
             int oldState, state;
             string buffer;
             int cursor, selectBegin, selectEnd;
-            if ((win.Property.active != 0) && (hash == win.Property.name))
+            if (win.Property.active != 0 && hash == win.Property.name)
             {
                 oldState = win.Property.state;
                 nk_do_property(ref ctx.LastWidgetState, win.Buffer, bounds, name, variant, incPerPixel,
@@ -889,7 +886,7 @@ namespace NuklearSharp
             }
 
             ctx.TextEdit.clip = ctx.Clip;
-            if ((_in_ != null) && (state != NK_PROPERTY_DEFAULT) && (win.Property.active == 0))
+            if (_in_ != null && state != NK_PROPERTY_DEFAULT && win.Property.active == 0)
             {
                 win.Property.active = 1;
                 win.Property.buffer = buffer;
@@ -905,7 +902,7 @@ namespace NuklearSharp
                 }
             }
 
-            if ((state == NK_PROPERTY_DEFAULT) && (oldState != NK_PROPERTY_DEFAULT))
+            if (state == NK_PROPERTY_DEFAULT && oldState != NK_PROPERTY_DEFAULT)
             {
                 if (oldState == NK_PROPERTY_DRAG)
                 {
@@ -922,7 +919,7 @@ namespace NuklearSharp
         public static void nk_stroke_polygon(NkCommandBuffer b, float* points, int pointCount, float lineThickness,
             NkColor col)
         {
-            if ((b == null) || (col.a == 0) || (lineThickness <= 0)) return;
+            if (b == null || col.a == 0 || lineThickness <= 0) return;
             var cmd = (NkCommandPolygon)nk_command_buffer_push(b, NK_COMMAND_POLYGON);
             if (cmd == null) return;
             cmd.Color = col;
@@ -938,9 +935,8 @@ namespace NuklearSharp
 
         public static void nk_fill_polygon(NkCommandBuffer b, float* points, int pointCount, NkColor col)
         {
-            NkCommandPolygonFilled cmd;
-            if ((b == null) || (col.a == 0)) return;
-            cmd = (NkCommandPolygonFilled)nk_command_buffer_push(b, NK_COMMAND_POLYGON_FILLED);
+            if (b == null || col.a == 0) return;
+            var cmd = (NkCommandPolygonFilled)nk_command_buffer_push(b, NK_COMMAND_POLYGON_FILLED);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;
@@ -955,7 +951,7 @@ namespace NuklearSharp
         public static void nk_stroke_polyline(NkCommandBuffer b, float* points, int pointCount, float lineThickness,
             NkColor col)
         {
-            if ((b == null) || (col.a == 0) || (lineThickness <= 0)) return;
+            if (b == null || col.a == 0 || lineThickness <= 0) return;
             var cmd = (NkCommandPolyline)nk_command_buffer_push(b, NK_COMMAND_POLYLINE);
             if (cmd == null) return;
             cmd.Color = col;
@@ -989,18 +985,18 @@ namespace NuklearSharp
                 font = src.font,
                 fallback_glyph = src.fallback_glyph,
                 n = src.n,
-                p = src.p,
+                p = src.p
             };
         }
 
         public static int nk_strlen(byte* str)
         {
-            int siz = (int)(0);
-            while (((str) != null) && (*str++ != '\0'))
+            int siz = 0;
+            while (str != null && *str++ != '\0')
             {
                 siz++;
             }
-            return (int)(siz);
+            return siz;
         }
 
 
@@ -1026,10 +1022,12 @@ namespace NuklearSharp
 
         public static NkVec2 nk_rect_pos(NkRect r)
         {
-            NkVec2 ret = new NkVec2();
-            ret.x = (float)(r.x);
-            ret.y = (float)(r.y);
-            return (NkVec2)(ret);
+            NkVec2 ret = new NkVec2
+            {
+                x = r.x,
+                y = r.y
+            };
+            return ret;
         }
     }
 }

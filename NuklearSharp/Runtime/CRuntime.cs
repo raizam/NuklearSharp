@@ -67,7 +67,7 @@ namespace NuklearSharp
 
         public static uint _lrotl(uint x, int y)
         {
-            return (x << y) | (x >> (32 - y));
+            return x << y | x >> 32 - y;
         }
 
         public static void* Realloc(void* ptr, long newSize)
@@ -112,7 +112,7 @@ namespace NuklearSharp
                     *exponent = exp - 1022 - 54;
                 }
                 // Set exponent to -1 so that number is in [0.5, 1).
-                number = BitConverter.Int64BitsToDouble((bits & DblExpClrMask) | 0x3fe0000000000000L);
+                number = BitConverter.Int64BitsToDouble(bits & DblExpClrMask | 0x3fe0000000000000L);
             }
 
             return number;
@@ -257,7 +257,7 @@ namespace NuklearSharp
                 ptr++;
             }
 
-            return ((ulong)ptr - (ulong)str - 1);
+            return (ulong)ptr - (ulong)str - 1;
         }
     }
 }

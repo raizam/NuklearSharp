@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace NuklearSharp
@@ -62,7 +61,7 @@ namespace NuklearSharp
             list.Elements.Reset();
             list.Points.Reset();
             list.Normals.Reset();
-            list.ClipRect = (NkRect)(nk_null_rect);
+            list.ClipRect = (NkRect)nk_null_rect;
         }
 
         public static int nk_draw_list_alloc_path(NkDrawList list, int count)

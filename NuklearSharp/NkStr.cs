@@ -21,7 +21,7 @@
 
         public int Append(char* ptr, int l)
         {
-            if (ptr == null || (l == 0)) return 0;
+            if (ptr == null || l == 0) return 0;
 
             var s2 = new string(ptr);
             Str += s2;

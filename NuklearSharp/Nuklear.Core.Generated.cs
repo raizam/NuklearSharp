@@ -1,10 +1,9 @@
-using System;
 using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
 
-        [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct NkColor
         {
             public byte r;

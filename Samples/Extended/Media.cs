@@ -1,5 +1,4 @@
-﻿using System;
-using NuklearSharp;
+﻿using NuklearSharp;
 
 namespace Extended
 {
@@ -28,10 +27,6 @@ namespace Extended
         public NkImage Edit;
         public NkImage[] Images = new NkImage[9];
         public NkImage[] Menu = new NkImage[6];
-
-        public Media()
-        {
-        }
     }
 }
 

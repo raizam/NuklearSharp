@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NuklearSharp
+﻿namespace NuklearSharp
 {
     public unsafe delegate float NkTextWidthDelegate(NkHandle handle, float height, char* text, int length);
 

@@ -5,7 +5,7 @@ namespace NuklearSharp
     public class NkBuffer<T>
     {
         private T[] _data;
-        private int _count = 0;
+        private int _count;
 
         public T[] Data
         {

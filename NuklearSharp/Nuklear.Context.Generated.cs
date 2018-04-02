@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-
 namespace NuklearSharp
 {
     public unsafe partial class Nk

@@ -69,43 +69,43 @@ namespace NuklearSharp.MonoGame
                     return isShiftDown ? 'Z' : 'z';
             }
 
-            if ((key == Keys.D0 && !isShiftDown) || key == Keys.NumPad0)
+            if (key == Keys.D0 && !isShiftDown || key == Keys.NumPad0)
             {
                 return '0';
             }
-            if ((key == Keys.D1 && !isShiftDown) || key == Keys.NumPad1)
+            if (key == Keys.D1 && !isShiftDown || key == Keys.NumPad1)
             {
                 return '1';
             }
-            if ((key == Keys.D2 && !isShiftDown) || key == Keys.NumPad2)
+            if (key == Keys.D2 && !isShiftDown || key == Keys.NumPad2)
             {
                 return '2';
             }
-            if ((key == Keys.D3 && !isShiftDown) || key == Keys.NumPad3)
+            if (key == Keys.D3 && !isShiftDown || key == Keys.NumPad3)
             {
                 return '3';
             }
-            if ((key == Keys.D4 && !isShiftDown) || key == Keys.NumPad4)
+            if (key == Keys.D4 && !isShiftDown || key == Keys.NumPad4)
             {
                 return '4';
             }
-            if ((key == Keys.D5 && !isShiftDown) || key == Keys.NumPad5)
+            if (key == Keys.D5 && !isShiftDown || key == Keys.NumPad5)
             {
                 return '5';
             }
-            if ((key == Keys.D6 && !isShiftDown) || key == Keys.NumPad6)
+            if (key == Keys.D6 && !isShiftDown || key == Keys.NumPad6)
             {
                 return '6';
             }
-            if ((key == Keys.D7 && !isShiftDown) || key == Keys.NumPad7)
+            if (key == Keys.D7 && !isShiftDown || key == Keys.NumPad7)
             {
                 return '7';
             }
-            if ((key == Keys.D8 && !isShiftDown) || key == Keys.NumPad8)
+            if (key == Keys.D8 && !isShiftDown || key == Keys.NumPad8)
             {
                 return '8';
             }
-            if ((key == Keys.D9 && !isShiftDown) || key == Keys.NumPad9)
+            if (key == Keys.D9 && !isShiftDown || key == Keys.NumPad9)
             {
                 return '9';
             }
