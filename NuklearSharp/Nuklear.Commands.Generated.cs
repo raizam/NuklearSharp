@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         public unsafe partial class nk_scroll
         {
             public uint x;
@@ -96,7 +95,8 @@ namespace NuklearSharp
             public nk_table next;
             public nk_table prev;
         }
-
+    public unsafe static partial class Nk
+    {
         public static void nk_push_scissor(NkCommandBuffer b, NkRect r)
         {
             NkCommandScissor cmd;

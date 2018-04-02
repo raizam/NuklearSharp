@@ -3,32 +3,10 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public static unsafe partial class Nk
-    {
-        public delegate float NkTextWidthDelegate(NkHandle handle, float height, char* text, int length);
 
-        public delegate void NkQueryFontGlyphDelegate(NkHandle handle,
-            float height, NkUserFontGlyph* glyph, char codepoint, char nextCodepoint);
-
-        public delegate void NkCommandCustomCallback(
-            NkDrawList list, short x, short y, ushort w, ushort h, NkHandle callbackData);
-
-        public delegate void NkPluginPaste(NkHandle handle, nk_text_edit textEdit);
-
-        public delegate void NkPluginCopy(NkHandle handle, char* text, int length);
-
-        public delegate void NkDrawNotify(NkCommandBuffer buffer, NkHandle handle);
-
-        public delegate int NkPluginFilter(nk_text_edit textEdit, char unicode);
-
-        public delegate float NkFloatValueGetter(void* handle, int index);
-
-        public delegate float NkComboCallback(void* handle, int index, char** item);
-
-        public delegate int QSortComparer(void* a, void* b);
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct NkHandle
+        public unsafe struct NkHandle
         {
             [FieldOffset(0)] public void* ptr;
 
@@ -45,7 +23,7 @@ namespace NuklearSharp
             public NkQueryFontGlyphDelegate Query;
         }
 
-        public class NkFont
+        public unsafe class NkFont
         {
             public NkFont Next;
             public NkUserFont Handle = new NkUserFont();
@@ -67,15 +45,15 @@ namespace NuklearSharp
 
                 if (((this == null) || (s == null)) || (length == 0)) return (float)(0);
                 scale = (float)(height / this.Info.height);
-                glyphLen = (int)(textLen = (int)(nk_utf_decode(s, &unicode, (int)length)));
+                glyphLen = (int)(textLen = (int)(Nk.nk_utf_decode(s, &unicode, (int)length)));
                 if (glyphLen == 0) return (float)(0);
                 while ((textLen <= length) && ((glyphLen) != 0))
                 {
                     nk_font_glyph* g;
                     if ((unicode) == (0xFFFD)) break;
-                    g = nk_font_find_glyph(this, unicode);
+                    g = Nk.nk_font_find_glyph(this, unicode);
                     textWidth += (float)(g->xadvance * scale);
-                    glyphLen = (int)(nk_utf_decode(s + textLen, &unicode, (int)(length - textLen)));
+                    glyphLen = (int)(Nk.nk_utf_decode(s + textLen, &unicode, (int)(length - textLen)));
                     textLen += (int)(glyphLen);
                 }
                 return (float)(textWidth);
@@ -84,7 +62,7 @@ namespace NuklearSharp
             public void query_font_glyph(NkHandle h, float height, NkUserFontGlyph* glyph, char codepoint,
                 char nextCodepoint)
             {
-                nk_font_query_font_glyph(this, height, glyph, codepoint, nextCodepoint);
+                Nk.nk_font_query_font_glyph(this, height, glyph, codepoint, nextCodepoint);
             }
         }
 
@@ -97,14 +75,14 @@ namespace NuklearSharp
 
         public class NkKeyboard
         {
-            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[NK_KEY_MAX]);
+            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[Nk.NK_KEY_MAX]);
             public PinnedArray<char> Text = new PinnedArray<char>(new char[16]);
             public int TextLen;
         }
 
         public class NkMouse
         {
-            public PinnedArray<nk_mouse_button> Buttons = new PinnedArray<nk_mouse_button>(new nk_mouse_button[NK_BUTTON_MAX]);
+            public PinnedArray<nk_mouse_button> Buttons = new PinnedArray<nk_mouse_button>(new nk_mouse_button[Nk.NK_BUTTON_MAX]);
             public NkVec2 Pos;
             public NkVec2 Prev;
             public NkVec2 Delta;
@@ -223,7 +201,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct NkRpContext
+        public unsafe struct NkRpContext
         {
             public int width;
             public int height;
@@ -236,20 +214,19 @@ namespace NuklearSharp
             public nk_rp_node extra_0, extra_1;
         }
 
-        public class NkFontAtlas
+        public unsafe class NkFontAtlas
         {
             public void* Pixel;
             public int TexWidth;
             public int TexHeight;
             public NkRectI Custom;
-            public NkCursor[] Cursors = new NkCursor[NK_CURSOR_COUNT];
+            public NkCursor[] Cursors = new NkCursor[Nk.NK_CURSOR_COUNT];
             public int GlyphCount;
             public nk_font_glyph* Glyphs;
             public NkFont DefaultFont;
             public NkFont Fonts;
             public nk_font_config Config;
             public int FontNum;
-
             public NkFontAtlas()
             {
                 for (var i = 0; i < Cursors.Length; ++i)
@@ -292,7 +269,7 @@ namespace NuklearSharp
         public class NkStyle
         {
             public NkUserFont Font;
-            public NkCursor[] Cursors = new NkCursor[NK_CURSOR_COUNT];
+            public NkCursor[] Cursors = new NkCursor[Nk.NK_CURSOR_COUNT];
             public NkCursor CursorActive;
             public NkCursor CursorLast;
             public int CursorVisible;
@@ -326,7 +303,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        private struct NkInvSqrtUnion
+        internal unsafe struct NkInvSqrtUnion
         {
             [FieldOffset(0)] public uint i;
 
@@ -334,7 +311,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Explicit)]
-        private struct NkMurmurHashUnion
+        internal unsafe struct NkMurmurHashUnion
         {
             [FieldOffset(0)] public uint* i;
 
@@ -501,7 +478,7 @@ namespace NuklearSharp
             public NkColor Col = new NkColor();
         }
 
-        public class NkCommandText : NkCommandBase
+        public unsafe class NkCommandText : NkCommandBase
         {
             public NkUserFont Font;
             public NkColor Background;
@@ -563,7 +540,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct NkUserFontGlyph
+        public unsafe struct NkUserFontGlyph
         {
             public fixed float uv_x[2];
             public fixed float uv_y[2];
@@ -573,6 +550,8 @@ namespace NuklearSharp
             public float xadvance;
         }
 
+    public static unsafe partial class Nk
+    {
 
         private static readonly Func<object>[] CommandCreators =
         {

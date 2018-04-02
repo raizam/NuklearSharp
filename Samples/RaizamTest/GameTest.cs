@@ -40,7 +40,7 @@ namespace RaizamTest
 
             _nuklearContext = new NuklearContext(GraphicsDevice);
 
-            Nk.NkFont font;
+            NkFont font;
             using (var stream = File.OpenRead(Path.Combine(Content.RootDirectory, "Fonts/Roboto-Regular.ttf")))
             {
                 var fontAtlas = new FontAtlasWrapper(_nuklearContext);

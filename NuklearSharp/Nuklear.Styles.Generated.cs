@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         public unsafe partial class nk_style_text
         {
             public NkColor color = new NkColor();
@@ -305,7 +304,8 @@ namespace NuklearSharp
             public NkVec2 menu_padding = new NkVec2();
             public NkVec2 tooltip_padding = new NkVec2();
         }
-
+    public unsafe static partial class Nk
+    {
         public static NkVec2 nk_panel_get_padding(NkStyle style, int type)
         {
             switch (type)

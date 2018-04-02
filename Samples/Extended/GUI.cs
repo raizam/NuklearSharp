@@ -25,7 +25,7 @@ namespace Extended
         private static int _selectedImage = 3;
         private static int _selectedIcon;
         private static bool _piemenuActive;
-        private static Nk.NkVec2 _piemenuPos;
+        private static NkVec2 _piemenuPos;
         private static bool _gridCheck = true;
         private static int _selectedItem2;
 
@@ -38,8 +38,8 @@ namespace Extended
         /// <param name="radius">Radius.</param>
         /// <param name="icons">Icons.</param>
         /// <param name="item_count">Item count.</param>
-        public static int ui_piemenu(NuklearContext ctx, Nk.NkVec2 pos, float radius,
-            Nk.NkImage[] icons, int itemCount)
+        public static int ui_piemenu(NuklearContext ctx, NkVec2 pos, float radius,
+            NkImage[] icons, int itemCount)
         {
             var ret = -1;
 
@@ -65,7 +65,7 @@ namespace Extended
                 ctx.Ctx.Style.Window.spacing = Nk.nk_vec2_(4, 4);
                 ctx.Ctx.Style.Window.padding = Nk.nk_vec2_(8, 8);
                 ctx.LayoutRowDynamic(totalSpace.h, 1);
-                Nk.NkRect bounds;
+                NkRect bounds;
                 Nk.nk_widget(&bounds, ctx.Ctx);
 
                 /* outer circle */
@@ -87,7 +87,7 @@ namespace Extended
                     int i;
                     for (i = 0; i < itemCount; ++i)
                     {
-                        Nk.NkRect content;
+                        NkRect content;
                         Nk.nk_fill_arc(o, center.x, center.y, bounds.w / 2.0f,
                             aMin, aMax, activeItem == i ? Nk.nk_rgb(45, 100, 255) : Nk.nk_rgb(60, 60, 60));
 
@@ -114,7 +114,7 @@ namespace Extended
                 }
                 {
                     /* inner circle */
-                    Nk.NkRect inner;
+                    NkRect inner;
                     inner.x = bounds.x + bounds.w / 2 - bounds.w / 4;
                     inner.y = bounds.y + bounds.h / 2 - bounds.h / 4;
                     inner.w = bounds.w / 2;

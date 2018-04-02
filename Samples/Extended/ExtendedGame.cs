@@ -65,7 +65,7 @@ namespace Extended
             }
         }
 
-        private Nk.NkImage LoadImage(string path)
+        private NkImage LoadImage(string path)
         {
             using (var stream = File.OpenRead(GetAssetPath(path)))
             {

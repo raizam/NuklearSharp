@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_draw_null_texture
         {
@@ -27,7 +26,8 @@ namespace NuklearSharp
             public NkRect clip_rect;
             public NkHandle texture;
         }
-
+    public unsafe static partial class Nk
+    {
         public static void nk_draw_list_init(NkDrawList list)
         {
             ulong i = (ulong)(0);

@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_text_undo_record
         {
@@ -55,7 +54,8 @@ namespace NuklearSharp
             public float ymax;
             public int num_chars;
         }
-
+    public unsafe static partial class Nk
+    {
         public static float nk_textedit_get_width(nk_text_edit edit, int line_start, int char_id, NkUserFont font)
         {
             fixed (char* str2 = edit._string_.Str)

@@ -2,33 +2,33 @@
 {
     public abstract unsafe partial class BaseContext
     {
-        private readonly Nk.NkContext _ctx;
-        private readonly NkBuffer<Nk.nk_draw_command> _cmds = new NkBuffer<Nk.nk_draw_command>();
+        private readonly NkContext _ctx;
+        private readonly NkBuffer<nk_draw_command> _cmds = new NkBuffer<nk_draw_command>();
         private readonly NkBuffer<byte> _vertices = new NkBuffer<byte>();
         private readonly NkBuffer<ushort> _indices = new NkBuffer<ushort>();
-        private readonly Nk.NkConvertConfig _convertConfig;
+        private readonly NkConvertConfig _convertConfig;
 
-        public Nk.NkContext Ctx
+        public NkContext Ctx
         {
             get { return _ctx; }
         }
 
-        public NkBuffer<Nk.nk_draw_command> Cmds
+        public NkBuffer<nk_draw_command> Cmds
         {
             get { return _cmds; }
         }
 
-        public Nk.NkConvertConfig ConvertConfig
+        public NkConvertConfig ConvertConfig
         {
             get { return _convertConfig; }
         }
 
         protected BaseContext()
         {
-            _ctx = new Nk.NkContext();
+            _ctx = new NkContext();
             Nk.nk_setup(_ctx, null);
 
-            _convertConfig = new Nk.NkConvertConfig
+            _convertConfig = new NkConvertConfig
             {
                 VertexAlignment = 4,
                 GlobalAlpha = 1f,
@@ -40,7 +40,7 @@
             };
         }
 
-        public void SetFont(Nk.NkFont font)
+        public void SetFont(NkFont font)
         {
             Nk.nk_style_set_font(_ctx, font.Handle);
         }

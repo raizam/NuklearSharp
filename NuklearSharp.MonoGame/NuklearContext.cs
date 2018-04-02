@@ -45,25 +45,25 @@ namespace NuklearSharp.MonoGame
 
             ConvertConfig.VertexLayout = new[]
             {
-                new Nk.nk_draw_vertex_layout_element
+                new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_POSITION,
                     format = Nk.NK_FORMAT_FLOAT,
                     offset = 0
                 },
-                new Nk.nk_draw_vertex_layout_element
+                new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_COLOR,
                     format = Nk.NK_FORMAT_B8G8R8A8,
                     offset = 12
                 },
-                new Nk.nk_draw_vertex_layout_element
+                new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_TEXCOORD,
                     format = Nk.NK_FORMAT_FLOAT,
                     offset = 16
                 },
-                new Nk.nk_draw_vertex_layout_element
+                new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_ATTRIBUTE_COUNT
                 }
@@ -239,7 +239,7 @@ namespace NuklearSharp.MonoGame
             InputButton(Nk.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
 
             InputMotion(mouseState.X, mouseState.Y);
-            InputScroll(new Nk.NkVec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
+            InputScroll(new NkVec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
             InputEnd();
 
             _previousWheel = mouseState.ScrollWheelValue;

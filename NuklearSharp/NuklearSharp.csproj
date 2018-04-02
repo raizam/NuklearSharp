@@ -34,7 +34,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NkBase.cs" />
+    <Compile Include="Delegates.cs" />
     <Compile Include="NkBuffer.cs" />
     <Compile Include="NkStr.cs" />
     <Compile Include="Nuklear.Context.Generated.cs" />

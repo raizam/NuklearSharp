@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct NkColor
         {
@@ -101,7 +100,8 @@ namespace NuklearSharp
             public NkColor background;
             public NkColor text;
         }
-
+    public unsafe static partial class Nk
+    {
         public static NkRect nk_recta(NkVec2 pos, NkVec2 size)
         {
             return (NkRect)(nk_rect_((float)(pos.x), (float)(pos.y), (float)(size.x), (float)(size.y)));

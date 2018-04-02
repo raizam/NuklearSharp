@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_mouse_button
         {
@@ -18,7 +17,8 @@ namespace NuklearSharp
             public NkKeyboard keyboard = new NkKeyboard();
             public NkMouse mouse = new NkMouse();
         }
-
+    public unsafe static partial class Nk
+    {
         public static int nk_input_has_mouse_click(nk_input i, int id)
         {
             nk_mouse_button* btn;

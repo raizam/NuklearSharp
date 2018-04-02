@@ -6,7 +6,7 @@ namespace NuklearSharp
 {
     public unsafe class FontAtlasWrapper
     {
-        private readonly Nk.NkFontAtlas _atlas = new Nk.NkFontAtlas();
+        private readonly NkFontAtlas _atlas = new NkFontAtlas();
         private readonly BaseContext _context;
 
         public FontAtlasWrapper(BaseContext context)
@@ -21,14 +21,14 @@ namespace NuklearSharp
             Nk.nk_font_atlas_begin(_atlas);
         }
 
-        public Nk.NkFont AddDefaultFont(float height)
+        public NkFont AddDefaultFont(float height)
         {
             return Nk.nk_font_atlas_add_default(_atlas, height, null);
         }
 
-        public Nk.NkFont AddFont(Stream input, float height)
+        public NkFont AddFont(Stream input, float height)
         {
-            Nk.NkFont font;
+            NkFont font;
             using (var memoryStream = new MemoryStream())
             {
                 input.CopyTo(memoryStream);
@@ -43,7 +43,7 @@ namespace NuklearSharp
             return font;
         }
 
-        public Nk.nk_draw_null_texture Bake()
+        public nk_draw_null_texture Bake()
         {
             int w = 0, h = 0;
 
@@ -54,8 +54,8 @@ namespace NuklearSharp
 
             var textureId = _context.CreateTexture(w, h, arr);
 
-            Nk.nk_draw_null_texture result;
-            Nk.nk_font_atlas_end(_atlas, new Nk.NkHandle { id = textureId }, &result);
+            nk_draw_null_texture result;
+            Nk.nk_font_atlas_end(_atlas, new NkHandle { id = textureId }, &result);
 
             return result;
         }

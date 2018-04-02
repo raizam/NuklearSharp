@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         public unsafe partial class nk_font_config
         {
             public nk_font_config next;
@@ -207,7 +206,8 @@ namespace NuklearSharp
             public nk_rp_rect* rects;
             public nk_tt_pack_range* ranges;
         }
-
+    public unsafe static partial class Nk
+    {
         public static int nk_tt_InitFont(nk_tt_fontinfo* info, byte* data2, int fontstart)
         {
             uint cmap;

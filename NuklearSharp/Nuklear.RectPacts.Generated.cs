@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_rp_rect
         {
@@ -31,6 +30,9 @@ namespace NuklearSharp
             public int y;
             public nk_rp_node** prev_link;
         }
+
+    public unsafe static partial class Nk
+    {
 
         public static void nk_rp_setup_allow_out_of_mem(NkRpContext* context, int allow_out_of_mem)
         {

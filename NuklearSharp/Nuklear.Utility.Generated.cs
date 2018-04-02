@@ -3,8 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nk
-    {
+
         public unsafe partial class nk_baked_font
         {
             public float height;
@@ -28,7 +27,8 @@ namespace NuklearSharp
             public uint i;
             public float f;
         }
-
+    public unsafe static partial class Nk
+    {
         public static float nk_sqrt(float x)
         {
             return (float)(x * nk_inv_sqrt((float)(x)));
