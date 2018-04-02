@@ -23,30 +23,52 @@ namespace NuklearSharp
         NK_VERTEX_ATTRIBUTE_COUNT = 3
     }
 
-    public enum NkDrawVertexLayoutFormat
+    public enum VertexLayoutFormat
     {
-        NK_FORMAT_SCHAR = 0,
-        NK_FORMAT_SSHORT = 1,
-        NK_FORMAT_SINT = 2,
-        NK_FORMAT_UCHAR = 3,
-        NK_FORMAT_USHORT = 4,
-        NK_FORMAT_UINT = 5,
-        NK_FORMAT_FLOAT = 6,
-        NK_FORMAT_DOUBLE = 7,
-        NK_FORMAT_COLOR_BEGIN = 8,
-        NK_FORMAT_R8G8B8 = 8,
-        NK_FORMAT_R16G15B16 = 9,
-        NK_FORMAT_R32G32B32 = 10,
-        NK_FORMAT_R8G8B8A8 = 11,
-        NK_FORMAT_B8G8R8A8 = 12,
-        NK_FORMAT_R16G15B16A16 = 13,
-        NK_FORMAT_R32G32B32A32 = 14,
-        NK_FORMAT_R32G32B32A32_FLOAT = 15,
-        NK_FORMAT_R32G32B32A32_DOUBLE = 16,
-        NK_FORMAT_RGB32 = 17,
-        NK_FORMAT_RGBA32 = 18,
-        NK_FORMAT_COLOR_END = 18,
-        NK_FORMAT_COUNT = 19
+        //public const int NkDrawVertexLayoutFormat.SCHAR = 0;
+        //public const int NkDrawVertexLayoutFormat.SSHORT = 1;
+        //public const int NkDrawVertexLayoutFormat.SINT = 2;
+        //public const int NkDrawVertexLayoutFormat.UCHAR = 3;
+        //public const int NkDrawVertexLayoutFormat.USHORT = 4;
+        //public const int NkDrawVertexLayoutFormat.UINT = 5;
+        //public const int NkDrawVertexLayoutFormat.FLOAT = 6;
+        //public const int NkDrawVertexLayoutFormat.DOUBLE = 7;
+        //public const int NkDrawVertexLayoutFormat.COLOR_BEGIN = 8;
+        //public const int NkDrawVertexLayoutFormat.R8G8B8 = NkDrawVertexLayoutFormat.COLOR_BEGIN;
+        //public const int NkDrawVertexLayoutFormat.R16G15B16 = 10;
+        //public const int NkDrawVertexLayoutFormat.R32G32B32 = 11;
+        //public const int NkDrawVertexLayoutFormat.R8G8B8A8 = 12;
+        //public const int NkDrawVertexLayoutFormat.B8G8R8A8 = 13;
+        //public const int NkDrawVertexLayoutFormat.R16G15B16A16 = 14;
+        //public const int NkDrawVertexLayoutFormat.R32G32B32A32 = 15;
+        //public const int NkDrawVertexLayoutFormat.R32G32B32A32_FLOAT = 16;
+        //public const int NkDrawVertexLayoutFormat.R32G32B32A32_DOUBLE = 17;
+        //public const int NkDrawVertexLayoutFormat.RGB32 = 18;
+        //public const int NkDrawVertexLayoutFormat.RGBA32 = 19;
+        //public const int NkDrawVertexLayoutFormat.COLOR_END = NkDrawVertexLayoutFormat.RGBA32;
+        //public const int NkDrawVertexLayoutFormat.COUNT = 21;
+        SCHAR = 0,
+        SSHORT = 1,
+        SINT = 2,
+        UCHAR = 3,
+        USHORT = 4,
+        UINT = 5,
+        FLOAT = 6,
+        DOUBLE = 7,
+        COLOR_BEGIN = 8,
+        R8G8B8 = 8,
+        R16G15B16 = 10,
+        R32G32B32 = 11,
+        R8G8B8A8 = 12,
+        B8G8R8A8 = 13,
+        R16G15B16A16 = 14,
+        R32G32B32A32 = 15,
+        R32G32B32A32_FLOAT = 16,
+        R32G32B32A32_DOUBLE = 17,
+        RGB32 = 18,
+        RGBA32 = 19,
+        COLOR_END = 19,
+        COUNT = 21
     }
 
     public enum NkStyleItemType
@@ -719,28 +741,7 @@ namespace NuklearSharp
         public const int NK_VERTEX_COLOR = 1;
         public const int NK_VERTEX_TEXCOORD = 2;
         public const int NK_VERTEX_ATTRIBUTE_COUNT = 3;
-        public const int NK_FORMAT_SCHAR = 0;
-        public const int NK_FORMAT_SSHORT = 1;
-        public const int NK_FORMAT_SINT = 2;
-        public const int NK_FORMAT_UCHAR = 3;
-        public const int NK_FORMAT_USHORT = 4;
-        public const int NK_FORMAT_UINT = 5;
-        public const int NK_FORMAT_FLOAT = 6;
-        public const int NK_FORMAT_DOUBLE = 7;
-        public const int NK_FORMAT_COLOR_BEGIN = 8;
-        public const int NK_FORMAT_R8G8B8 = NK_FORMAT_COLOR_BEGIN;
-        public const int NK_FORMAT_R16G15B16 = 10;
-        public const int NK_FORMAT_R32G32B32 = 11;
-        public const int NK_FORMAT_R8G8B8A8 = 12;
-        public const int NK_FORMAT_B8G8R8A8 = 13;
-        public const int NK_FORMAT_R16G15B16A16 = 14;
-        public const int NK_FORMAT_R32G32B32A32 = 15;
-        public const int NK_FORMAT_R32G32B32A32_FLOAT = 16;
-        public const int NK_FORMAT_R32G32B32A32_DOUBLE = 17;
-        public const int NK_FORMAT_RGB32 = 18;
-        public const int NK_FORMAT_RGBA32 = 19;
-        public const int NK_FORMAT_COLOR_END = NK_FORMAT_RGBA32;
-        public const int NK_FORMAT_COUNT = 21;
+
         public const int NK_STYLE_ITEM_COLOR = 0;
         public const int NK_STYLE_ITEM_IMAGE = 1;
         public const int NK_HEADER_LEFT = 0;

@@ -1329,10 +1329,10 @@ namespace NuklearSharp
             return memory;
         }
 
-        public static void nk_draw_vertex_color(void* attr, float* vals, int format)
+        public static void nk_draw_vertex_color(void* attr, float* vals, VertexLayoutFormat format)
         {
             float* val = stackalloc float[4];
-            if (((format) < (NK_FORMAT_COLOR_BEGIN)) || ((format) > (NK_FORMAT_COLOR_END))) return;
+            if (((format) < (VertexLayoutFormat.COLOR_BEGIN)) || ((format) > (VertexLayoutFormat.COLOR_END))) return;
             val[0] = (float)((0) < ((1.0f) < (vals[0]) ? (1.0f) : (vals[0])) ? ((1.0f) < (vals[0]) ? (1.0f) : (vals[0])) : (0));
             val[1] = (float)((0) < ((1.0f) < (vals[1]) ? (1.0f) : (vals[1])) ? ((1.0f) < (vals[1]) ? (1.0f) : (vals[1])) : (0));
             val[2] = (float)((0) < ((1.0f) < (vals[2]) ? (1.0f) : (vals[2])) ? ((1.0f) < (vals[2]) ? (1.0f) : (vals[2])) : (0));
@@ -1342,21 +1342,21 @@ namespace NuklearSharp
                 default:
                     ;
                     break;
-                case NK_FORMAT_R8G8B8A8:
-                case NK_FORMAT_R8G8B8:
+                case VertexLayoutFormat.R8G8B8A8:
+                case VertexLayoutFormat.R8G8B8:
                     {
                         NkColor col = (NkColor)(nk_rgba_fv(val));
                         nk_memcopy(attr, &col.r, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_B8G8R8A8:
+                case VertexLayoutFormat.B8G8R8A8:
                     {
                         NkColor col = (NkColor)(nk_rgba_fv(val));
                         NkColor bgra = (NkColor)(nk_rgba((int)(col.b), (int)(col.g), (int)(col.r), (int)(col.a)));
                         nk_memcopy(attr, &bgra, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_R16G15B16:
+                case VertexLayoutFormat.R16G15B16:
                     {
                         ushort* col = stackalloc ushort[3];
                         col[0] = ((ushort)(val[0] * (float)(65535)));
@@ -1365,7 +1365,7 @@ namespace NuklearSharp
                         nk_memcopy(attr, col, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_R16G15B16A16:
+                case VertexLayoutFormat.R16G15B16A16:
                     {
                         ushort* col = stackalloc ushort[4];
                         col[0] = ((ushort)(val[0] * (float)(65535)));
@@ -1375,7 +1375,7 @@ namespace NuklearSharp
                         nk_memcopy(attr, col, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_R32G32B32:
+                case VertexLayoutFormat.R32G32B32:
                     {
                         uint* col = stackalloc uint[3];
                         col[0] = ((uint)(val[0] * (float)(4294967295u)));
@@ -1384,7 +1384,7 @@ namespace NuklearSharp
                         nk_memcopy(attr, col, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_R32G32B32A32:
+                case VertexLayoutFormat.R32G32B32A32:
                     {
                         uint* col = stackalloc uint[4];
                         col[0] = ((uint)(val[0] * (float)(4294967295u)));
@@ -1394,10 +1394,10 @@ namespace NuklearSharp
                         nk_memcopy(attr, col, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_R32G32B32A32_FLOAT:
+                case VertexLayoutFormat.R32G32B32A32_FLOAT:
                     nk_memcopy(attr, val, (ulong)(sizeof(float) * 4));
                     break;
-                case NK_FORMAT_R32G32B32A32_DOUBLE:
+                case VertexLayoutFormat.R32G32B32A32_DOUBLE:
                     {
                         double* col = stackalloc double[4];
                         col[0] = ((double)(val[0]));
@@ -1407,8 +1407,8 @@ namespace NuklearSharp
                         nk_memcopy(attr, col, (ulong)(sizeof(NkColor)));
                     }
                     break;
-                case NK_FORMAT_RGB32:
-                case NK_FORMAT_RGBA32:
+                case VertexLayoutFormat.RGB32:
+                case VertexLayoutFormat.RGBA32:
                     {
                         NkColor col = (NkColor)(nk_rgba_fv(val));
                         uint color = (uint)(nk_color_u32((NkColor)(col)));
@@ -1419,11 +1419,11 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_draw_vertex_element(void* dst, float* values, int value_count, int format)
+        public static void nk_draw_vertex_element(void* dst, float* values, int value_count, VertexLayoutFormat format)
         {
             int value_index;
             void* attribute = dst;
-            if (((format) >= (NK_FORMAT_COLOR_BEGIN)) && (format <= NK_FORMAT_COLOR_END)) return;
+            if (((format) >= (VertexLayoutFormat.COLOR_BEGIN)) && (format <= VertexLayoutFormat.COLOR_END)) return;
             for (value_index = (int)(0); (value_index) < (value_count); ++value_index)
             {
                 switch (format)
@@ -1431,7 +1431,7 @@ namespace NuklearSharp
                     default:
                         ;
                         break;
-                    case NK_FORMAT_SCHAR:
+                    case VertexLayoutFormat.SCHAR:
                         {
                             sbyte value =
                                 (sbyte)
@@ -1442,7 +1442,7 @@ namespace NuklearSharp
                             attribute = (void*)(((sbyte*)(attribute) + sizeof(byte)));
                         }
                         break;
-                    case NK_FORMAT_SSHORT:
+                    case VertexLayoutFormat.SSHORT:
                         {
                             short value =
                                 (short)
@@ -1453,7 +1453,7 @@ namespace NuklearSharp
                             attribute = (void*)((sbyte*)(attribute) + sizeof(short));
                         }
                         break;
-                    case NK_FORMAT_SINT:
+                    case VertexLayoutFormat.SINT:
                         {
                             int value =
                                 (int)
@@ -1465,7 +1465,7 @@ namespace NuklearSharp
                             attribute = (void*)((sbyte*)(attribute) + sizeof(int));
                         }
                         break;
-                    case NK_FORMAT_UCHAR:
+                    case VertexLayoutFormat.UCHAR:
                         {
                             byte value =
                                 (byte)
@@ -1476,7 +1476,7 @@ namespace NuklearSharp
                             attribute = (void*)(((sbyte*)(attribute) + sizeof(byte)));
                         }
                         break;
-                    case NK_FORMAT_USHORT:
+                    case VertexLayoutFormat.USHORT:
                         {
                             ushort value =
                                 (ushort)
@@ -1487,7 +1487,7 @@ namespace NuklearSharp
                             attribute = (void*)((sbyte*)(attribute) + sizeof(short));
                         }
                         break;
-                    case NK_FORMAT_UINT:
+                    case VertexLayoutFormat.UINT:
                         {
                             uint value =
                                 (uint)
@@ -1499,11 +1499,11 @@ namespace NuklearSharp
                             attribute = (void*)((sbyte*)(attribute) + sizeof(uint));
                         }
                         break;
-                    case NK_FORMAT_FLOAT:
+                    case VertexLayoutFormat.FLOAT:
                         nk_memcopy(attribute, &values[value_index], (ulong)(sizeof(float)));
                         attribute = (void*)(((sbyte*)(attribute) + sizeof(float)));
                         break;
-                    case NK_FORMAT_DOUBLE:
+                    case VertexLayoutFormat.DOUBLE:
                         {
                             double value = (double)(values[value_index]);
                             nk_memcopy(attribute, &value, (ulong)(sizeof(double)));
@@ -1530,13 +1530,13 @@ namespace NuklearSharp
                             ;
                             break;
                         case NK_VERTEX_POSITION:
-                            nk_draw_vertex_element(address, &pos.x, (int)(2), (int)(elem_iter->format));
+                            nk_draw_vertex_element(address, &pos.x, (int)(2), elem_iter->format);
                             break;
                         case NK_VERTEX_TEXCOORD:
-                            nk_draw_vertex_element(address, &uv.x, (int)(2), (int)(elem_iter->format));
+                            nk_draw_vertex_element(address, &uv.x, (int) (2), elem_iter->format);
                             break;
                         case NK_VERTEX_COLOR:
-                            nk_draw_vertex_color(address, &color.r, (int)(elem_iter->format));
+                            nk_draw_vertex_color(address, &color.r, elem_iter->format);
                             break;
                     }
                     elem_iter++;

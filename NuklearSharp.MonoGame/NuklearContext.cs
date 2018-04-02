@@ -48,19 +48,19 @@ namespace NuklearSharp.MonoGame
                 new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_POSITION,
-                    format = Nk.NK_FORMAT_FLOAT,
+                    format = VertexLayoutFormat.FLOAT,
                     offset = 0
                 },
                 new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_COLOR,
-                    format = Nk.NK_FORMAT_B8G8R8A8,
+                    format = VertexLayoutFormat.B8G8R8A8,
                     offset = 12
                 },
                 new nk_draw_vertex_layout_element
                 {
                     attribute = Nk.NK_VERTEX_TEXCOORD,
-                    format = Nk.NK_FORMAT_FLOAT,
+                    format = VertexLayoutFormat.FLOAT,
                     offset = 16
                 },
                 new nk_draw_vertex_layout_element
