@@ -156,20 +156,20 @@ namespace NuklearSharp
             return (int)(nk_false);
         }
 
-        public static int nk_toggle_behavior(nk_input _in_, NkRect select, ref uint state, int active)
+        public static int nk_toggle_behavior(nk_input _in_, NkRect select, ref NkWidgetStates state, int active)
         {
-            if (((state) & NK_WIDGET_STATE_MODIFIED) != 0)
-                (state) = (uint)(NK_WIDGET_STATE_INACTIVE | NK_WIDGET_STATE_MODIFIED);
-            else (state) = (uint)(NK_WIDGET_STATE_INACTIVE);
-            if ((nk_button_behavior(ref state, select, _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
+            if (((state) & NkWidgetStates.MODIFIED) != 0)
+                (state) = (NkWidgetStates.INACTIVE | NkWidgetStates.MODIFIED);
+            else (state) = (NkWidgetStates.INACTIVE);
+            if ((nk_button_behavior(ref state, select, _in_, NkButtonBehavior.Default)) != 0)
             {
-                state = (uint)(NK_WIDGET_STATE_ACTIVE);
+                state = (NkWidgetStates.ACTIVE);
                 active = active != 0 ? 0 : 1;
             }
 
-            if (((state & NK_WIDGET_STATE_HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(select)) == 0))
-                state |= (uint)(NK_WIDGET_STATE_ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(select))) != 0) state |= (uint)(NK_WIDGET_STATE_LEFT);
+            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(select)) == 0))
+                state |= (NkWidgetStates.ENTERED);
+            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(select))) != 0) state |= (NkWidgetStates.LEFT);
             return (int)(active);
         }
     }

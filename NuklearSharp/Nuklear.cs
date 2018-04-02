@@ -94,7 +94,7 @@ namespace NuklearSharp
             public nk_input Input = new nk_input();
             public NkStyle Style = new NkStyle();
             public NkClipboard Clip = new NkClipboard();
-            public uint LastWidgetState;
+            public NkWidgetStates LastWidgetState;
             public NkButtonBehavior ButtonBehavior;
             public nk_configuration_stacks Stacks = new nk_configuration_stacks();
             public float DeltaTimeSeconds;

@@ -383,7 +383,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowCollapse(string name, int c)
+        public void WindowCollapse(string name, NkCollapseStates c)
         {
             fixed (char* name_ptr = name)
             {
@@ -391,7 +391,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowCollapseIf(string name, int c, int cond)
+        public void WindowCollapseIf(string name, NkCollapseStates c, int cond)
         {
             fixed (char* name_ptr = name)
             {

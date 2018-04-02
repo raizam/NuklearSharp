@@ -156,17 +156,9 @@ namespace NuklearSharp
     //    NK_MODIFIABLE = 1
     //}
 
-    //public enum NkOrientation
-    //{
-    //    NK_VERTICAL = 0,
-    //    NK_HORIZONTAL = 1
-    //}
 
-    //public enum NkCollapseStates
-    //{
-    //    NK_MINIMIZED = 0,
-    //    NK_MAXIMIZED = 1
-    //}
+
+
 
     //public enum NkShowStates
     //{
@@ -297,24 +289,7 @@ namespace NuklearSharp
     //    NK_WINDOW_NO_INPUT = 1024
     //}
 
-    //public enum NkWidgetLayoutStates
-    //{
-    //    NK_WIDGET_INVALID = 0,
-    //    NK_WIDGET_VALID = 1,
-    //    NK_WIDGET_ROM = 2
-    //}
 
-    //public enum NkWidgetStates
-    //{
-    //    NK_WIDGET_STATE_MODIFIED = 2,
-    //    NK_WIDGET_STATE_INACTIVE = 4,
-    //    NK_WIDGET_STATE_ENTERED = 8,
-    //    NK_WIDGET_STATE_HOVER = 16,
-    //    NK_WIDGET_STATE_ACTIVED = 32,
-    //    NK_WIDGET_STATE_LEFT = 64,
-    //    NK_WIDGET_STATE_HOVERED = 18,
-    //    NK_WIDGET_STATE_ACTIVE = 34
-    //}
 
     //[Flags]
     //public enum NkTextAlign
@@ -521,8 +496,38 @@ namespace NuklearSharp
 
     public enum NkButtonBehavior
     {
-        NK_BUTTON_DEFAULT = 0,
-        NK_BUTTON_REPEATER = 1
+        Default = 0,
+        Repeater = 1
+    }
+    public enum NkOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1
+    }
+    public enum NkCollapseStates
+    {
+        NK_MINIMIZED = 0,
+        NK_MAXIMIZED = 1
+    }
+
+    public enum NkWidgetLayoutStates
+    {
+        NK_WIDGET_INVALID = 0,
+        NK_WIDGET_VALID = 1,
+        NK_WIDGET_ROM = 2
+    }
+
+    [Flags]
+    public enum NkWidgetStates
+    {
+        MODIFIED = 2,
+        INACTIVE = 4,
+        ENTERED = 8,
+        HOVER = 16,
+        ACTIVED = 32,
+        LEFT = 64,
+        HOVERED = 18,
+        ACTIVE = 34
     }
 
     unsafe partial class Nk
@@ -535,12 +540,12 @@ namespace NuklearSharp
         //public const int NK_LEFT = 3;
         //public const int NK_BUTTON_DEFAULT = 0;
         //public const int NK_BUTTON_REPEATER = 1;
-        public const int NK_FIXED = nk_false;
-        public const int NK_MODIFIABLE = nk_true;
-        public const int NK_VERTICAL = 0;
-        public const int NK_HORIZONTAL = 1;
-        public const int NK_MINIMIZED = nk_false;
-        public const int NK_MAXIMIZED = nk_true;
+      //  public const int NK_FIXED = nk_false;
+      //  public const int NK_MODIFIABLE = nk_true;
+        //public const int NK_VERTICAL = 0;
+        //public const int NK_HORIZONTAL = 1;
+        //public const int NK_MINIMIZED = nk_false;
+        //public const int NK_MAXIMIZED = nk_true;
         public const int NK_HIDDEN = nk_false;
         public const int NK_SHOWN = nk_true;
         public const int NK_CHART_LINES = 0;
@@ -627,14 +632,14 @@ namespace NuklearSharp
         public const int NK_WIDGET_INVALID = 0;
         public const int NK_WIDGET_VALID = 1;
         public const int NK_WIDGET_ROM = 2;
-        public const int NK_WIDGET_STATE_MODIFIED = (1 << (1));
-        public const int NK_WIDGET_STATE_INACTIVE = (1 << (2));
-        public const int NK_WIDGET_STATE_ENTERED = (1 << (3));
-        public const int NK_WIDGET_STATE_HOVER = (1 << (4));
-        public const int NK_WIDGET_STATE_ACTIVED = (1 << (5));
-        public const int NK_WIDGET_STATE_LEFT = (1 << (6));
-        public const int NK_WIDGET_STATE_HOVERED = NK_WIDGET_STATE_HOVER | NK_WIDGET_STATE_MODIFIED;
-        public const int NK_WIDGET_STATE_ACTIVE = NK_WIDGET_STATE_ACTIVED | NK_WIDGET_STATE_MODIFIED;
+        //public const int NkWidgetStates.MODIFIED = (1 << (1));
+        //public const int NkWidgetStates.INACTIVE = (1 << (2));
+        //public const int NkWidgetStates.ENTERED = (1 << (3));
+        //public const int NkWidgetStates.HOVER = (1 << (4));
+        //public const int NkWidgetStates.ACTIVED = (1 << (5));
+        //public const int NkWidgetStates.LEFT = (1 << (6));
+        //public const int NkWidgetStates.HOVERED = NkWidgetStates.HOVER | NkWidgetStates.MODIFIED;
+        //public const int NkWidgetStates.ACTIVE = NkWidgetStates.ACTIVED | NkWidgetStates.MODIFIED;
         public const int NK_TEXT_ALIGN_LEFT = 0x01;
         public const int NK_TEXT_ALIGN_CENTERED = 0x02;
         public const int NK_TEXT_ALIGN_RIGHT = 0x04;

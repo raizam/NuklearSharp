@@ -587,12 +587,12 @@ namespace NuklearSharp
 
         }
 
-        public static NkStyleItem nk_draw_button(NkCommandBuffer _out_, NkRect* bounds, uint state,
+        public static NkStyleItem nk_draw_button(NkCommandBuffer _out_, NkRect* bounds, NkWidgetStates state,
             nk_style_button style)
         {
             NkStyleItem background;
-            if ((state & NK_WIDGET_STATE_HOVER) != 0) background = style.hover;
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) background = style.active;
+            if ((state & NkWidgetStates.HOVER) != 0) background = style.hover;
+            else if ((state & NkWidgetStates.ACTIVED) != 0) background = style.active;
             else background = style.normal;
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
@@ -608,59 +608,59 @@ namespace NuklearSharp
             return background;
         }
 
-        public static void nk_draw_button_text(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, uint state,
+        public static void nk_draw_button_text(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
             nk_style_button style, char* txt, int len, uint text_alignment, NkUserFont font)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
-            background = nk_draw_button(_out_, bounds, (uint)(state), style);
+            background = nk_draw_button(_out_, bounds, (state), style);
             if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (NkColor)(background.Data.Color);
             else text.background = (NkColor)(style.text_background);
-            if ((state & NK_WIDGET_STATE_HOVER) != 0) text.text = (NkColor)(style.text_hover);
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) text.text = (NkColor)(style.text_active);
+            if ((state & NkWidgetStates.HOVER) != 0) text.text = (NkColor)(style.text_hover);
+            else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = (NkColor)(style.text_active);
             else text.text = (NkColor)(style.text_normal);
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             nk_widget_text(_out_, (NkRect)(*content), txt, (int)(len), &text, (uint)(text_alignment), font);
         }
 
-        public static void nk_draw_button_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, uint state,
+        public static void nk_draw_button_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
             nk_style_button style, int type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             NkColor bg = new NkColor();
             NkStyleItem background;
-            background = nk_draw_button(_out_, bounds, (uint)(state), style);
+            background = nk_draw_button(_out_, bounds, (state), style);
             if ((background.Type) == (NK_STYLE_ITEM_COLOR)) bg = (NkColor)(background.Data.Color);
             else bg = (NkColor)(style.text_background);
-            if ((state & NK_WIDGET_STATE_HOVER) != 0) sym = (NkColor)(style.text_hover);
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) sym = (NkColor)(style.text_active);
+            if ((state & NkWidgetStates.HOVER) != 0) sym = (NkColor)(style.text_hover);
+            else if ((state & NkWidgetStates.ACTIVED) != 0) sym = (NkColor)(style.text_active);
             else sym = (NkColor)(style.text_normal);
             nk_draw_symbol(_out_, (int)(type), (NkRect)(*content), (NkColor)(bg), (NkColor)(sym), (float)(1),
                 font);
         }
 
-        public static void nk_draw_button_image(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, uint state,
+        public static void nk_draw_button_image(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
             nk_style_button style, NkImage img)
         {
-            nk_draw_button(_out_, bounds, (uint)(state), style);
+            nk_draw_button(_out_, bounds, (state), style);
             nk_draw_image(_out_, (NkRect)(*content), img, (NkColor)(nk_white));
         }
 
         public static void nk_draw_button_text_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* label,
-            NkRect* symbol, uint state, nk_style_button style, char* str, int len, int type, NkUserFont font)
+            NkRect* symbol, NkWidgetStates state, nk_style_button style, char* str, int len, int type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             nk_text text = new nk_text();
             NkStyleItem background;
-            background = nk_draw_button(_out_, bounds, (uint)(state), style);
+            background = nk_draw_button(_out_, bounds, (state), style);
             if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (NkColor)(background.Data.Color);
             else text.background = (NkColor)(style.text_background);
-            if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            if ((state & NkWidgetStates.HOVER) != 0)
             {
                 sym = (NkColor)(style.text_hover);
                 text.text = (NkColor)(style.text_hover);
             }
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            else if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 sym = (NkColor)(style.text_active);
                 text.text = (NkColor)(style.text_active);
@@ -678,34 +678,34 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_button_text_image(NkCommandBuffer _out_, NkRect* bounds, NkRect* label,
-            NkRect* image, uint state, nk_style_button style, char* str, int len, NkUserFont font, NkImage img)
+            NkRect* image, NkWidgetStates state, nk_style_button style, char* str, int len, NkUserFont font, NkImage img)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
-            background = nk_draw_button(_out_, bounds, (uint)(state), style);
+            background = nk_draw_button(_out_, bounds, (state), style);
             if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (NkColor)(background.Data.Color);
             else text.background = (NkColor)(style.text_background);
-            if ((state & NK_WIDGET_STATE_HOVER) != 0) text.text = (NkColor)(style.text_hover);
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) text.text = (NkColor)(style.text_active);
+            if ((state & NkWidgetStates.HOVER) != 0) text.text = (NkColor)(style.text_hover);
+            else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = (NkColor)(style.text_active);
             else text.text = (NkColor)(style.text_normal);
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
             nk_draw_image(_out_, (NkRect)(*image), img, (NkColor)(nk_white));
         }
 
-        public static void nk_draw_checkbox(NkCommandBuffer _out_, uint state, nk_style_toggle style, int active,
+        public static void nk_draw_checkbox(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, int active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
             NkStyleItem cursor;
             nk_text text = new nk_text();
-            if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
                 text.text = (NkColor)(style.text_hover);
             }
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            else if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -738,19 +738,19 @@ namespace NuklearSharp
             nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
         }
 
-        public static void nk_draw_option(NkCommandBuffer _out_, uint state, nk_style_toggle style, int active,
+        public static void nk_draw_option(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, int active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
             NkStyleItem cursor;
             nk_text text = new nk_text();
-            if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
                 text.text = (NkColor)(style.text_hover);
             }
-            else if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            else if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -783,7 +783,7 @@ namespace NuklearSharp
             nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
         }
 
-        public static void nk_draw_selectable(NkCommandBuffer _out_, uint state, nk_style_selectable style, int active,
+        public static void nk_draw_selectable(NkCommandBuffer _out_, NkWidgetStates state, nk_style_selectable style, int active,
             NkRect* bounds, NkRect* icon, NkImage img, char* _string_, int len, uint align, NkUserFont font)
         {
             NkStyleItem background;
@@ -791,12 +791,12 @@ namespace NuklearSharp
             text.padding = (NkVec2)(style.padding);
             if (active == 0)
             {
-                if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+                if ((state & NkWidgetStates.ACTIVED) != 0)
                 {
                     background = style.pressed;
                     text.text = (NkColor)(style.text_pressed);
                 }
-                else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+                else if ((state & NkWidgetStates.HOVER) != 0)
                 {
                     background = style.hover;
                     text.text = (NkColor)(style.text_hover);
@@ -809,12 +809,12 @@ namespace NuklearSharp
             }
             else
             {
-                if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+                if ((state & NkWidgetStates.ACTIVED) != 0)
                 {
                     background = style.pressed_active;
                     text.text = (NkColor)(style.text_pressed_active);
                 }
-                else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+                else if ((state & NkWidgetStates.HOVER) != 0)
                 {
                     background = style.hover_active;
                     text.text = (NkColor)(style.text_hover_active);
@@ -842,7 +842,7 @@ namespace NuklearSharp
             nk_widget_text(_out_, (NkRect)(*bounds), _string_, (int)(len), &text, (uint)(align), font);
         }
 
-        public static void nk_draw_slider(NkCommandBuffer _out_, uint state, nk_style_slider style, NkRect* bounds,
+        public static void nk_draw_slider(NkCommandBuffer _out_, NkWidgetStates state, nk_style_slider style, NkRect* bounds,
             NkRect* visual_cursor, float min, float value, float max)
         {
             NkRect fill = new NkRect();
@@ -850,13 +850,13 @@ namespace NuklearSharp
             NkStyleItem background;
             NkColor bar_color = new NkColor();
             NkStyleItem cursor;
-            if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.active;
                 bar_color = (NkColor)(style.bar_active);
                 cursor = style.cursor_active;
             }
-            else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            else if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 bar_color = (NkColor)(style.bar_hover);
@@ -895,17 +895,17 @@ namespace NuklearSharp
             else nk_fill_circle(_out_, (NkRect)(*visual_cursor), (NkColor)(cursor.Data.Color));
         }
 
-        public static void nk_draw_progress(NkCommandBuffer _out_, uint state, nk_style_progress style,
+        public static void nk_draw_progress(NkCommandBuffer _out_, NkWidgetStates state, nk_style_progress style,
             NkRect* bounds, NkRect* scursor, ulong value, ulong max)
         {
             NkStyleItem background;
             NkStyleItem cursor;
-            if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.active;
                 cursor = style.cursor_active;
             }
-            else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            else if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -932,17 +932,17 @@ namespace NuklearSharp
             else nk_draw_image(_out_, (NkRect)(*scursor), cursor.Data.Image, (NkColor)(nk_white));
         }
 
-        public static void nk_draw_scrollbar(NkCommandBuffer _out_, uint state, nk_style_scrollbar style,
+        public static void nk_draw_scrollbar(NkCommandBuffer _out_, NkWidgetStates state, nk_style_scrollbar style,
             NkRect* bounds, NkRect* scroll)
         {
             NkStyleItem background;
             NkStyleItem cursor;
-            if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.active;
                 cursor = style.cursor_active;
             }
-            else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            else if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -1048,16 +1048,16 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_property(NkCommandBuffer _out_, nk_style_property style, NkRect* bounds,
-            NkRect* label, uint state, char* name, int len, NkUserFont font)
+            NkRect* label, NkWidgetStates state, char* name, int len, NkUserFont font)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
-            if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
+            if ((state & NkWidgetStates.ACTIVED) != 0)
             {
                 background = style.active;
                 text.text = (NkColor)(style.label_active);
             }
-            else if ((state & NK_WIDGET_STATE_HOVER) != 0)
+            else if ((state & NkWidgetStates.HOVER) != 0)
             {
                 background = style.hover;
                 text.text = (NkColor)(style.label_hover);
