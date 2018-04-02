@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_color
@@ -57,7 +57,7 @@ namespace NuklearSharp
 
         public unsafe partial class nk_image
         {
-            public nk_handle handle = new nk_handle();
+            public NkHandle handle = new NkHandle();
             public ushort w;
             public ushort h;
             public PinnedArray<ushort> region = new PinnedArray<ushort>(4);
@@ -76,7 +76,7 @@ namespace NuklearSharp
             public int end;
             public int count;
             public int total_height;
-            public nk_context ctx;
+            public NkContext ctx;
             public uint* scroll_pointer;
             public uint scroll_value;
         }
@@ -172,11 +172,11 @@ namespace NuklearSharp
             return (nk_colorf)(o);
         }
 
-        public static nk_image nk_subimage_handle(nk_handle handle, ushort w, ushort h, nk_rect r)
+        public static nk_image nk_subimage_handle(NkHandle handle, ushort w, ushort h, nk_rect r)
         {
             nk_image s = new nk_image();
 
-            s.handle = (nk_handle)(handle);
+            s.handle = (NkHandle)(handle);
             s.w = (ushort)(w);
             s.h = (ushort)(h);
             s.region[0] = ((ushort)(r.x));
@@ -186,11 +186,11 @@ namespace NuklearSharp
             return (nk_image)(s);
         }
 
-        public static nk_image nk_image_handle(nk_handle handle)
+        public static nk_image nk_image_handle(NkHandle handle)
         {
             nk_image s = new nk_image();
 
-            s.handle = (nk_handle)(handle);
+            s.handle = (NkHandle)(handle);
             s.w = (ushort)(0);
             s.h = (ushort)(0);
             s.region[0] = (ushort)(0);
@@ -254,17 +254,17 @@ namespace NuklearSharp
 
         }
 
-        public static void* nk_malloc(nk_handle unused, void* old, ulong size)
+        public static void* nk_malloc(NkHandle unused, void* old, ulong size)
         {
-            return CRuntime.malloc((ulong)(size));
+            return CRuntime.Malloc((ulong)(size));
         }
 
-        public static void nk_mfree(nk_handle unused, void* ptr)
+        public static void nk_mfree(NkHandle unused, void* ptr)
         {
-            CRuntime.free(ptr);
+            CRuntime.Free(ptr);
         }
 
-        public static float nk_font_text_width(nk_font font, float height, char* text, int len)
+        public static float nk_font_text_width(NkFont font, float height, char* text, int len)
         {
             char unicode;
             int text_len = (int)(0);
@@ -273,7 +273,7 @@ namespace NuklearSharp
             float scale = (float)(0);
 
             if (((font == null) || (text == null)) || (len == 0)) return (float)(0);
-            scale = (float)(height / font.info.height);
+            scale = (float)(height / font.Info.height);
             glyph_len = (int)(text_len = (int)(nk_utf_decode(text, &unicode, (int)(len))));
             if (glyph_len == 0) return (float)(0);
             while ((text_len <= len) && ((glyph_len) != 0))
@@ -288,7 +288,7 @@ namespace NuklearSharp
             return (float)(text_width);
         }
 
-        public static void nk_font_query_font_glyph(nk_font font, float height, nk_user_font_glyph* glyph, char codepoint,
+        public static void nk_font_query_font_glyph(NkFont font, float height, NkUserFontGlyph* glyph, char codepoint,
             char next_codepoint)
         {
             float scale;
@@ -296,7 +296,7 @@ namespace NuklearSharp
 
 
             if ((font == null) || (glyph == null)) return;
-            scale = (float)(height / font.info.height);
+            scale = (float)(height / font.Info.height);
             g = nk_font_find_glyph(font, codepoint);
             glyph->width = (float)((g->x1 - g->x0) * scale);
             glyph->height = (float)((g->y1 - g->y0) * scale);
@@ -308,72 +308,72 @@ namespace NuklearSharp
             glyph->uv_y[1] = g->v1;
         }
 
-        public static nk_style_item nk_style_item_image(nk_image img)
+        public static NkStyleItem nk_style_item_image(nk_image img)
         {
-            nk_style_item i = new nk_style_item();
-            i.type = (int)(NK_STYLE_ITEM_IMAGE);
-            i.data.image = (nk_image)(img);
-            return (nk_style_item)(i);
+            NkStyleItem i = new NkStyleItem();
+            i.Type = (int)(NK_STYLE_ITEM_IMAGE);
+            i.Data.Image = (nk_image)(img);
+            return (NkStyleItem)(i);
         }
 
-        public static nk_style_item nk_style_item_color(nk_color col)
+        public static NkStyleItem nk_style_item_color(nk_color col)
         {
-            nk_style_item i = new nk_style_item();
-            i.type = (int)(NK_STYLE_ITEM_COLOR);
-            i.data.color = (nk_color)(col);
-            return (nk_style_item)(i);
+            NkStyleItem i = new NkStyleItem();
+            i.Type = (int)(NK_STYLE_ITEM_COLOR);
+            i.Data.Color = (nk_color)(col);
+            return (NkStyleItem)(i);
         }
 
-        public static void nk_layout_widget_space(nk_rect* bounds, nk_context ctx, nk_window win, int modify)
+        public static void nk_layout_widget_space(nk_rect* bounds, NkContext ctx, NkWindow win, int modify)
         {
-            nk_panel layout;
-            nk_style style;
+            NkPanel layout;
+            NkStyle style;
             nk_vec2 spacing = new nk_vec2();
             nk_vec2 padding = new nk_vec2();
             float item_offset = (float)(0);
             float item_width = (float)(0);
             float item_spacing = (float)(0);
             float panel_space = (float)(0);
-            if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return;
-            win = ctx.current;
-            layout = win.layout;
-            style = ctx.style;
-            spacing = (nk_vec2)(style.window.spacing);
-            padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.type)));
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
+            win = ctx.Current;
+            layout = win.Layout;
+            style = ctx.Style;
+            spacing = (nk_vec2)(style.Window.spacing);
+            padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.Type)));
             panel_space =
                 (float)
-                    (nk_layout_row_calculate_usable_space(ctx.style, (int)(layout.type), (float)(layout.bounds.w),
-                        (int)(layout.row.columns)));
-            switch (layout.row.type)
+                    (nk_layout_row_calculate_usable_space(ctx.Style, (int)(layout.Type), (float)(layout.Bounds.w),
+                        (int)(layout.Row.columns)));
+            switch (layout.Row.type)
             {
                 case NK_LAYOUT_DYNAMIC_FIXED:
                     {
-                        item_width = (float)(((1.0f) < (panel_space - 1.0f) ? (panel_space - 1.0f) : (1.0f)) / (float)(layout.row.columns));
-                        item_offset = (float)((float)(layout.row.index) * item_width);
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
+                        item_width = (float)(((1.0f) < (panel_space - 1.0f) ? (panel_space - 1.0f) : (1.0f)) / (float)(layout.Row.columns));
+                        item_offset = (float)((float)(layout.Row.index) * item_width);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
                 case NK_LAYOUT_DYNAMIC_ROW:
                     {
-                        item_width = (float)(layout.row.item_width * panel_space);
-                        item_offset = (float)(layout.row.item_offset);
+                        item_width = (float)(layout.Row.item_width * panel_space);
+                        item_offset = (float)(layout.Row.item_offset);
                         item_spacing = (float)(0);
                         if ((modify) != 0)
                         {
-                            layout.row.item_offset += (float)(item_width + spacing.x);
-                            layout.row.filled += (float)(layout.row.item_width);
-                            layout.row.index = (int)(0);
+                            layout.Row.item_offset += (float)(item_width + spacing.x);
+                            layout.Row.filled += (float)(layout.Row.item_width);
+                            layout.Row.index = (int)(0);
                         }
                     }
                     break;
                 case NK_LAYOUT_DYNAMIC_FREE:
                     {
-                        bounds->x = (float)(layout.at_x + (layout.bounds.w * layout.row.item.x));
-                        bounds->x -= ((float)(layout.offset.x));
-                        bounds->y = (float)(layout.at_y + (layout.row.height * layout.row.item.y));
-                        bounds->y -= ((float)(layout.offset.y));
-                        bounds->w = (float)(layout.bounds.w * layout.row.item.w);
-                        bounds->h = (float)(layout.row.height * layout.row.item.h);
+                        bounds->x = (float)(layout.AtX + (layout.Bounds.w * layout.Row.item.x));
+                        bounds->x -= ((float)(layout.Offset.x));
+                        bounds->y = (float)(layout.AtY + (layout.Row.height * layout.Row.item.y));
+                        bounds->y -= ((float)(layout.Offset.y));
+                        bounds->w = (float)(layout.Bounds.w * layout.Row.item.w);
+                        bounds->h = (float)(layout.Row.height * layout.Row.item.h);
                         return;
                     }
                 case NK_LAYOUT_DYNAMIC:
@@ -381,57 +381,57 @@ namespace NuklearSharp
                         float ratio;
                         ratio =
                             (float)
-                                (((layout.row.ratio[layout.row.index]) < (0)) ? layout.row.item_width : layout.row.ratio[layout.row.index]);
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
+                                (((layout.Row.ratio[layout.Row.index]) < (0)) ? layout.Row.item_width : layout.Row.ratio[layout.Row.index]);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                         item_width = (float)(ratio * panel_space);
-                        item_offset = (float)(layout.row.item_offset);
+                        item_offset = (float)(layout.Row.item_offset);
                         if ((modify) != 0)
                         {
-                            layout.row.item_offset += (float)(item_width);
-                            layout.row.filled += (float)(ratio);
+                            layout.Row.item_offset += (float)(item_width);
+                            layout.Row.filled += (float)(ratio);
                         }
                     }
                     break;
                 case NK_LAYOUT_STATIC_FIXED:
                     {
-                        item_width = (float)(layout.row.item_width);
-                        item_offset = (float)((float)(layout.row.index) * item_width);
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
+                        item_width = (float)(layout.Row.item_width);
+                        item_offset = (float)((float)(layout.Row.index) * item_width);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
                 case NK_LAYOUT_STATIC_ROW:
                     {
-                        item_width = (float)(layout.row.item_width);
-                        item_offset = (float)(layout.row.item_offset);
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
-                        if ((modify) != 0) layout.row.item_offset += (float)(item_width);
+                        item_width = (float)(layout.Row.item_width);
+                        item_offset = (float)(layout.Row.item_offset);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
+                        if ((modify) != 0) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
                 case NK_LAYOUT_STATIC_FREE:
                     {
-                        bounds->x = (float)(layout.at_x + layout.row.item.x);
-                        bounds->w = (float)(layout.row.item.w);
-                        if (((bounds->x + bounds->w) > (layout.max_x)) && ((modify) != 0)) layout.max_x = (float)(bounds->x + bounds->w);
-                        bounds->x -= ((float)(layout.offset.x));
-                        bounds->y = (float)(layout.at_y + layout.row.item.y);
-                        bounds->y -= ((float)(layout.offset.y));
-                        bounds->h = (float)(layout.row.item.h);
+                        bounds->x = (float)(layout.AtX + layout.Row.item.x);
+                        bounds->w = (float)(layout.Row.item.w);
+                        if (((bounds->x + bounds->w) > (layout.MaxX)) && ((modify) != 0)) layout.MaxX = (float)(bounds->x + bounds->w);
+                        bounds->x -= ((float)(layout.Offset.x));
+                        bounds->y = (float)(layout.AtY + layout.Row.item.y);
+                        bounds->y -= ((float)(layout.Offset.y));
+                        bounds->h = (float)(layout.Row.item.h);
                         return;
                     }
                 case NK_LAYOUT_STATIC:
                     {
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
-                        item_width = (float)(layout.row.ratio[layout.row.index]);
-                        item_offset = (float)(layout.row.item_offset);
-                        if ((modify) != 0) layout.row.item_offset += (float)(item_width);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
+                        item_width = (float)(layout.Row.ratio[layout.Row.index]);
+                        item_offset = (float)(layout.Row.item_offset);
+                        if ((modify) != 0) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
                 case NK_LAYOUT_TEMPLATE:
                     {
-                        item_width = (float)(layout.row.templates[layout.row.index]);
-                        item_offset = (float)(layout.row.item_offset);
-                        item_spacing = (float)((float)(layout.row.index) * spacing.x);
-                        if ((modify) != 0) layout.row.item_offset += (float)(item_width);
+                        item_width = (float)(layout.Row.templates[layout.Row.index]);
+                        item_offset = (float)(layout.Row.item_offset);
+                        item_spacing = (float)((float)(layout.Row.index) * spacing.x);
+                        if ((modify) != 0) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
                 default:
@@ -440,65 +440,65 @@ namespace NuklearSharp
             }
 
             bounds->w = (float)(item_width);
-            bounds->h = (float)(layout.row.height - spacing.y);
-            bounds->y = (float)(layout.at_y - (float)(layout.offset.y));
-            bounds->x = (float)(layout.at_x + item_offset + item_spacing + padding.x);
-            if (((bounds->x + bounds->w) > (layout.max_x)) && ((modify) != 0)) layout.max_x = (float)(bounds->x + bounds->w);
-            bounds->x -= ((float)(layout.offset.x));
+            bounds->h = (float)(layout.Row.height - spacing.y);
+            bounds->y = (float)(layout.AtY - (float)(layout.Offset.y));
+            bounds->x = (float)(layout.AtX + item_offset + item_spacing + padding.x);
+            if (((bounds->x + bounds->w) > (layout.MaxX)) && ((modify) != 0)) layout.MaxX = (float)(bounds->x + bounds->w);
+            bounds->x -= ((float)(layout.Offset.x));
         }
 
-        public static void nk_panel_alloc_space(nk_rect* bounds, nk_context ctx)
+        public static void nk_panel_alloc_space(nk_rect* bounds, NkContext ctx)
         {
-            nk_window win;
-            nk_panel layout;
-            if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return;
-            win = ctx.current;
-            layout = win.layout;
-            if ((layout.row.index) >= (layout.row.columns)) nk_panel_alloc_row(ctx, win);
+            NkWindow win;
+            NkPanel layout;
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
+            win = ctx.Current;
+            layout = win.Layout;
+            if ((layout.Row.index) >= (layout.Row.columns)) nk_panel_alloc_row(ctx, win);
             nk_layout_widget_space(bounds, ctx, win, (int)(nk_true));
-            layout.row.index++;
+            layout.Row.index++;
         }
 
-        public static void nk_layout_peek(nk_rect* bounds, nk_context ctx)
+        public static void nk_layout_peek(nk_rect* bounds, NkContext ctx)
         {
             float y;
             int index;
-            nk_window win;
-            nk_panel layout;
-            if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return;
-            win = ctx.current;
-            layout = win.layout;
-            y = (float)(layout.at_y);
-            index = (int)(layout.row.index);
-            if ((layout.row.index) >= (layout.row.columns))
+            NkWindow win;
+            NkPanel layout;
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
+            win = ctx.Current;
+            layout = win.Layout;
+            y = (float)(layout.AtY);
+            index = (int)(layout.Row.index);
+            if ((layout.Row.index) >= (layout.Row.columns))
             {
-                layout.at_y += (float)(layout.row.height);
-                layout.row.index = (int)(0);
+                layout.AtY += (float)(layout.Row.height);
+                layout.Row.index = (int)(0);
             }
 
             nk_layout_widget_space(bounds, ctx, win, (int)(nk_false));
-            if (layout.row.index == 0)
+            if (layout.Row.index == 0)
             {
-                bounds->x -= (float)(layout.row.item_offset);
+                bounds->x -= (float)(layout.Row.item_offset);
             }
 
-            layout.at_y = (float)(y);
-            layout.row.index = (int)(index);
+            layout.AtY = (float)(y);
+            layout.Row.index = (int)(index);
         }
 
-        public static int nk_widget(nk_rect* bounds, nk_context ctx)
+        public static int nk_widget(nk_rect* bounds, NkContext ctx)
         {
             nk_rect c = new nk_rect();
             nk_rect v = new nk_rect();
-            nk_window win;
-            nk_panel layout;
+            NkWindow win;
+            NkPanel layout;
             nk_input _in_;
-            if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return (int)(NK_WIDGET_INVALID);
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(NK_WIDGET_INVALID);
             nk_panel_alloc_space(bounds, ctx);
-            win = ctx.current;
-            layout = win.layout;
-            _in_ = ctx.input;
-            c = (nk_rect)(layout.clip);
+            win = ctx.Current;
+            layout = win.Layout;
+            _in_ = ctx.Input;
+            c = (nk_rect)(layout.Clip);
             bounds->x = ((float)((int)(bounds->x)));
             bounds->y = ((float)((int)(bounds->y)));
             bounds->w = ((float)((int)(bounds->w)));
@@ -513,45 +513,45 @@ namespace NuklearSharp
                 !(!(((((bounds->x) > (c.x + c.w)) || ((bounds->x + bounds->w) < (c.x))) || ((bounds->y) > (c.y + c.h))) ||
                     ((bounds->y + bounds->h) < (c.y))))) return (int)(NK_WIDGET_INVALID);
             if (
-                !((((v.x) <= (_in_.mouse.pos.x)) && ((_in_.mouse.pos.x) < (v.x + v.w))) &&
-                  (((v.y) <= (_in_.mouse.pos.y)) && ((_in_.mouse.pos.y) < (v.y + v.h))))) return (int)(NK_WIDGET_ROM);
+                !((((v.x) <= (_in_.mouse.Pos.x)) && ((_in_.mouse.Pos.x) < (v.x + v.w))) &&
+                  (((v.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (v.y + v.h))))) return (int)(NK_WIDGET_ROM);
             return (int)(NK_WIDGET_VALID);
         }
 
-        public static int nk_widget_fitting(nk_rect* bounds, nk_context ctx, nk_vec2 item_padding)
+        public static int nk_widget_fitting(nk_rect* bounds, NkContext ctx, nk_vec2 item_padding)
         {
-            nk_window win;
-            nk_style style;
-            nk_panel layout;
+            NkWindow win;
+            NkStyle style;
+            NkPanel layout;
             int state;
             nk_vec2 panel_padding = new nk_vec2();
-            if (((ctx == null) || (ctx.current == null)) || (ctx.current.layout == null)) return (int)(NK_WIDGET_INVALID);
-            win = ctx.current;
-            style = ctx.style;
-            layout = win.layout;
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(NK_WIDGET_INVALID);
+            win = ctx.Current;
+            style = ctx.Style;
+            layout = win.Layout;
             state = (int)(nk_widget(bounds, ctx));
-            panel_padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.type)));
-            if ((layout.row.index) == (1))
+            panel_padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            if ((layout.Row.index) == (1))
             {
                 bounds->w += (float)(panel_padding.x);
                 bounds->x -= (float)(panel_padding.x);
             }
             else bounds->x -= (float)(item_padding.x);
-            if ((layout.row.index) == (layout.row.columns)) bounds->w += (float)(panel_padding.x);
+            if ((layout.Row.index) == (layout.Row.columns)) bounds->w += (float)(panel_padding.x);
             else bounds->w += (float)(item_padding.x);
             return (int)(state);
         }
 
         public static void nk_list_view_end(nk_list_view view)
         {
-            nk_context ctx;
-            nk_window win;
-            nk_panel layout;
+            NkContext ctx;
+            NkWindow win;
+            NkPanel layout;
             if ((view == null) || (view.ctx == null)) return;
             ctx = view.ctx;
-            win = ctx.current;
-            layout = win.layout;
-            layout.at_y = (float)(layout.bounds.y + (float)(view.total_height));
+            win = ctx.Current;
+            layout = win.Layout;
+            layout.AtY = (float)(layout.Bounds.y + (float)(view.total_height));
             *view.scroll_pointer = (uint)(*view.scroll_pointer + view.scroll_value);
             nk_group_end(view.ctx);
         }

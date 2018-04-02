@@ -7,12 +7,12 @@ namespace NuklearSharp.MonoGame
 {
     public class NuklearContext : BaseContext
     {
-        private const int WHEEL_DELTA = 120;
+        private const int WheelDelta = 120;
 
         private readonly GraphicsDevice _device;
         private DynamicVertexBuffer _vertexBuffer;
         private DynamicIndexBuffer _indexBuffer;
-        private readonly BasicEffect basicEffect;
+        private readonly BasicEffect _basicEffect;
         private readonly List<Texture2D> _textures = new List<Texture2D>();
         private readonly RasterizerState _rasterizerState = new RasterizerState
         {
@@ -39,33 +39,33 @@ namespace NuklearSharp.MonoGame
             _vertexBuffer = new DynamicVertexBuffer(device, VertexPositionColorTexture.VertexDeclaration, 2000,
                 BufferUsage.WriteOnly);
             _indexBuffer = new DynamicIndexBuffer(device, typeof(ushort), 6000, BufferUsage.WriteOnly);
-            basicEffect = new BasicEffect(device);
+            _basicEffect = new BasicEffect(device);
 
-            ConvertConfig.vertex_size = (uint)VertexPositionColorTexture.VertexDeclaration.VertexStride;
+            ConvertConfig.VertexSize = (uint)VertexPositionColorTexture.VertexDeclaration.VertexStride;
 
-            ConvertConfig.vertex_layout = new[]
+            ConvertConfig.VertexLayout = new[]
             {
-                new Nuklear.nk_draw_vertex_layout_element
+                new Nk.nk_draw_vertex_layout_element
                 {
-                    attribute = Nuklear.NK_VERTEX_POSITION,
-                    format = Nuklear.NK_FORMAT_FLOAT,
+                    attribute = Nk.NK_VERTEX_POSITION,
+                    format = Nk.NK_FORMAT_FLOAT,
                     offset = 0
                 },
-                new Nuklear.nk_draw_vertex_layout_element
+                new Nk.nk_draw_vertex_layout_element
                 {
-                    attribute = Nuklear.NK_VERTEX_COLOR,
-                    format = Nuklear.NK_FORMAT_B8G8R8A8,
+                    attribute = Nk.NK_VERTEX_COLOR,
+                    format = Nk.NK_FORMAT_B8G8R8A8,
                     offset = 12
                 },
-                new Nuklear.nk_draw_vertex_layout_element
+                new Nk.nk_draw_vertex_layout_element
                 {
-                    attribute = Nuklear.NK_VERTEX_TEXCOORD,
-                    format = Nuklear.NK_FORMAT_FLOAT,
+                    attribute = Nk.NK_VERTEX_TEXCOORD,
+                    format = Nk.NK_FORMAT_FLOAT,
                     offset = 16
                 },
-                new Nuklear.nk_draw_vertex_layout_element
+                new Nk.nk_draw_vertex_layout_element
                 {
-                    attribute = Nuklear.NK_VERTEX_ATTRIBUTE_COUNT
+                    attribute = Nk.NK_VERTEX_ATTRIBUTE_COUNT
                 }
             };
         }
@@ -87,26 +87,26 @@ namespace NuklearSharp.MonoGame
 
         private static void GetProjectionMatrix(int width, int height, out Matrix mtx)
         {
-            const float L = 0.5f;
-            var R = width + 0.5f;
+            const float l = 0.5f;
+            var r = width + 0.5f;
             const float T = 0.5f;
-            var B = height + 0.5f;
-            mtx = new Matrix(2.0f / (R - L), 0.0f, 0.0f, 0.0f, 0.0f, 2.0f / (T - B), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-                (R + L) / (L - R), (T + B) / (B - T), 0.0f, 1.0f);
+            var b = height + 0.5f;
+            mtx = new Matrix(2.0f / (r - l), 0.0f, 0.0f, 0.0f, 0.0f, 2.0f / (T - b), 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+                (r + l) / (l - r), (T + b) / (b - T), 0.0f, 1.0f);
         }
 
         protected override void BeginDraw()
         {
             UpdateInput();
 
-            basicEffect.World = Matrix.Identity;
+            _basicEffect.World = Matrix.Identity;
             Matrix projection;
             GetProjectionMatrix(_device.PresentationParameters.Bounds.Width, _device.PresentationParameters.Bounds.Height,
                 out projection);
-            basicEffect.Projection = projection;
-            basicEffect.VertexColorEnabled = true;
-            basicEffect.TextureEnabled = true;
-            basicEffect.LightingEnabled = false;
+            _basicEffect.Projection = projection;
+            _basicEffect.VertexColorEnabled = true;
+            _basicEffect.TextureEnabled = true;
+            _basicEffect.LightingEnabled = false;
             _device.SetVertexBuffer(_vertexBuffer);
             _device.Indices = _indexBuffer;
 
@@ -121,22 +121,22 @@ namespace NuklearSharp.MonoGame
             _device.RasterizerState = _rasterizerState;
         }
 
-        protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count)
+        protected override unsafe void SetBuffers(byte[] vertices, ushort[] indices, int indicesCount, int vertexCount)
         {
-            if (vertex_count == 0) return;
+            if (vertexCount == 0) return;
 
-            var result = new VertexPositionColorTexture[vertex_count];
+            var result = new VertexPositionColorTexture[vertexCount];
 
             fixed (VertexPositionColorTexture* vx = &result[0])
             {
                 var b = (byte*)vx;
-                for (int i = 0; i < vertex_count * sizeof(VertexPositionColorTexture); i++)
+                for (int i = 0; i < vertexCount * sizeof(VertexPositionColorTexture); i++)
                 {
                     *(b + i) = vertices[i];
                 }
             }
 
-            for (var i = 0; i < vertex_count; i++)
+            for (var i = 0; i < vertexCount; i++)
             {
                 var c = result[i].Color;
                 result[i].Color = new Color(c.B, c.G, c.R, c.A);
@@ -151,13 +151,13 @@ namespace NuklearSharp.MonoGame
             _vertexBuffer.SetData(result);
 
 
-            if (_indexBuffer.IndexCount < indices_count)
+            if (_indexBuffer.IndexCount < indicesCount)
             {
                 // Resize index buffer if data doesnt fit
-                _indexBuffer = new DynamicIndexBuffer(_device, typeof(ushort), indices_count * 2, BufferUsage.WriteOnly);
+                _indexBuffer = new DynamicIndexBuffer(_device, typeof(ushort), indicesCount * 2, BufferUsage.WriteOnly);
             }
 
-            _indexBuffer.SetData(indices, 0, indices_count);
+            _indexBuffer.SetData(indices, 0, indicesCount);
         }
 
         protected override void Draw(int x, int y, int w, int h, int textureId, int startIndex, int primitiveCount)
@@ -165,12 +165,12 @@ namespace NuklearSharp.MonoGame
             _device.ScissorRectangle = new Rectangle(x, y, w, h);
             if (textureId != 0)
             {
-                basicEffect.TextureEnabled = true;
-                basicEffect.Texture = _textures[textureId - 1];
+                _basicEffect.TextureEnabled = true;
+                _basicEffect.Texture = _textures[textureId - 1];
             }
-            else basicEffect.TextureEnabled = false;
+            else _basicEffect.TextureEnabled = false;
 
-            foreach (var pass in basicEffect.CurrentTechnique.Passes)
+            foreach (var pass in _basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 _device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, startIndex, primitiveCount);
@@ -192,29 +192,29 @@ namespace NuklearSharp.MonoGame
 
             InputBegin();
 
-            InputKey(Nuklear.NK_KEY_DEL, keyboardState.IsKeyDown(Keys.Delete));
-            InputKey(Nuklear.NK_KEY_ENTER, keyboardState.IsKeyDown(Keys.Enter));
-            InputKey(Nuklear.NK_KEY_TAB, keyboardState.IsKeyDown(Keys.Tab));
-            InputKey(Nuklear.NK_KEY_BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
-            InputKey(Nuklear.NK_KEY_LEFT, keyboardState.IsKeyDown(Keys.Left));
-            InputKey(Nuklear.NK_KEY_RIGHT, keyboardState.IsKeyDown(Keys.Right));
-            InputKey(Nuklear.NK_KEY_UP, keyboardState.IsKeyDown(Keys.Up));
-            InputKey(Nuklear.NK_KEY_DOWN, keyboardState.IsKeyDown(Keys.Down));
+            InputKey(Nk.NK_KEY_DEL, keyboardState.IsKeyDown(Keys.Delete));
+            InputKey(Nk.NK_KEY_ENTER, keyboardState.IsKeyDown(Keys.Enter));
+            InputKey(Nk.NK_KEY_TAB, keyboardState.IsKeyDown(Keys.Tab));
+            InputKey(Nk.NK_KEY_BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
+            InputKey(Nk.NK_KEY_LEFT, keyboardState.IsKeyDown(Keys.Left));
+            InputKey(Nk.NK_KEY_RIGHT, keyboardState.IsKeyDown(Keys.Right));
+            InputKey(Nk.NK_KEY_UP, keyboardState.IsKeyDown(Keys.Up));
+            InputKey(Nk.NK_KEY_DOWN, keyboardState.IsKeyDown(Keys.Down));
             if (keyboardState.IsKeyDown(Keys.LeftControl) ||
                 keyboardState.IsKeyDown(Keys.RightControl))
             {
-                InputKey(Nuklear.NK_KEY_COPY, keyboardState.IsKeyDown(Keys.C));
-                InputKey(Nuklear.NK_KEY_PASTE, keyboardState.IsKeyDown(Keys.P));
-                InputKey(Nuklear.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.X));
-                InputKey(Nuklear.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.E));
-                InputKey(Nuklear.NK_KEY_SHIFT, true);
+                InputKey(Nk.NK_KEY_COPY, keyboardState.IsKeyDown(Keys.C));
+                InputKey(Nk.NK_KEY_PASTE, keyboardState.IsKeyDown(Keys.P));
+                InputKey(Nk.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.X));
+                InputKey(Nk.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.E));
+                InputKey(Nk.NK_KEY_SHIFT, true);
             }
             else
             {
-                InputKey(Nuklear.NK_KEY_COPY, false);
-                InputKey(Nuklear.NK_KEY_PASTE, false);
-                InputKey(Nuklear.NK_KEY_CUT, false);
-                InputKey(Nuklear.NK_KEY_SHIFT, false);
+                InputKey(Nk.NK_KEY_COPY, false);
+                InputKey(Nk.NK_KEY_PASTE, false);
+                InputKey(Nk.NK_KEY_CUT, false);
+                InputKey(Nk.NK_KEY_SHIFT, false);
             }
 
             var isShiftDown = keyboardState.IsKeyDown(Keys.LeftShift) ||
@@ -234,12 +234,12 @@ namespace NuklearSharp.MonoGame
                 }
             }
 
-            InputButton(Nuklear.NK_BUTTON_LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
-            InputButton(Nuklear.NK_BUTTON_MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
-            InputButton(Nuklear.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
+            InputButton(Nk.NK_BUTTON_LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
+            InputButton(Nk.NK_BUTTON_MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
+            InputButton(Nk.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
 
             InputMotion(mouseState.X, mouseState.Y);
-            InputScroll(new Nuklear.nk_vec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WHEEL_DELTA });
+            InputScroll(new Nk.nk_vec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
             InputEnd();
 
             _previousWheel = mouseState.ScrollWheelValue;

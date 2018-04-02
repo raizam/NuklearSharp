@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         public unsafe partial class nk_scroll
         {
@@ -46,9 +46,9 @@ namespace NuklearSharp
 
         public unsafe partial class nk_popup_state
         {
-            public nk_window win;
+            public NkWindow win;
             public int type;
-            public nk_popup_buffer buf = new nk_popup_buffer();
+            public NkPopupBuffer buf = new NkPopupBuffer();
             public uint name;
             public int active;
             public uint combo_count;
@@ -97,310 +97,310 @@ namespace NuklearSharp
             public nk_table prev;
         }
 
-        public static void nk_push_scissor(nk_command_buffer b, nk_rect r)
+        public static void nk_push_scissor(NkCommandBuffer b, nk_rect r)
         {
-            nk_command_scissor cmd;
+            NkCommandScissor cmd;
             if (b == null) return;
-            b.clip.x = (float)(r.x);
-            b.clip.y = (float)(r.y);
-            b.clip.w = (float)(r.w);
-            b.clip.h = (float)(r.h);
-            cmd = (nk_command_scissor)(nk_command_buffer_push(b, (int)(NK_COMMAND_SCISSOR)));
+            b.Clip.x = (float)(r.x);
+            b.Clip.y = (float)(r.y);
+            b.Clip.w = (float)(r.w);
+            b.Clip.h = (float)(r.h);
+            cmd = (NkCommandScissor)(nk_command_buffer_push(b, (int)(NK_COMMAND_SCISSOR)));
             if (cmd == null) return;
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)((0) < (r.w) ? (r.w) : (0)));
-            cmd.h = ((ushort)((0) < (r.h) ? (r.h) : (0)));
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)((0) < (r.w) ? (r.w) : (0)));
+            cmd.H = ((ushort)((0) < (r.h) ? (r.h) : (0)));
         }
 
-        public static void nk_stroke_line(nk_command_buffer b, float x0, float y0, float x1, float y1,
+        public static void nk_stroke_line(NkCommandBuffer b, float x0, float y0, float x1, float y1,
             float line_thickness, nk_color c)
         {
-            nk_command_line cmd;
+            NkCommandLine cmd;
             if ((b == null) || (line_thickness <= 0)) return;
-            cmd = (nk_command_line)(nk_command_buffer_push(b, (int)(NK_COMMAND_LINE)));
+            cmd = (NkCommandLine)(nk_command_buffer_push(b, (int)(NK_COMMAND_LINE)));
             if (cmd == null) return;
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.begin.x = ((short)(x0));
-            cmd.begin.y = ((short)(y0));
-            cmd.end.x = ((short)(x1));
-            cmd.end.y = ((short)(y1));
-            cmd.color = (nk_color)(c);
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.Begin.x = ((short)(x0));
+            cmd.Begin.y = ((short)(y0));
+            cmd.End.x = ((short)(x1));
+            cmd.End.y = ((short)(y1));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_stroke_curve(nk_command_buffer b, float ax, float ay, float ctrl0x, float ctrl0y,
+        public static void nk_stroke_curve(NkCommandBuffer b, float ax, float ay, float ctrl0x, float ctrl0y,
             float ctrl1x, float ctrl1y, float bx, float by, float line_thickness, nk_color col)
         {
-            nk_command_curve cmd;
+            NkCommandCurve cmd;
             if (((b == null) || ((col.a) == (0))) || (line_thickness <= 0)) return;
-            cmd = (nk_command_curve)(nk_command_buffer_push(b, (int)(NK_COMMAND_CURVE)));
+            cmd = (NkCommandCurve)(nk_command_buffer_push(b, (int)(NK_COMMAND_CURVE)));
             if (cmd == null) return;
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.begin.x = ((short)(ax));
-            cmd.begin.y = ((short)(ay));
-            cmd.ctrl_0.x = ((short)(ctrl0x));
-            cmd.ctrl_0.y = ((short)(ctrl0y));
-            cmd.ctrl_1.x = ((short)(ctrl1x));
-            cmd.ctrl_1.y = ((short)(ctrl1y));
-            cmd.end.x = ((short)(bx));
-            cmd.end.y = ((short)(by));
-            cmd.color = (nk_color)(col);
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.Begin.x = ((short)(ax));
+            cmd.Begin.y = ((short)(ay));
+            cmd.Ctrl0.x = ((short)(ctrl0x));
+            cmd.Ctrl0.y = ((short)(ctrl0y));
+            cmd.Ctrl1.x = ((short)(ctrl1x));
+            cmd.Ctrl1.y = ((short)(ctrl1y));
+            cmd.End.x = ((short)(bx));
+            cmd.End.y = ((short)(by));
+            cmd.Color = (nk_color)(col);
         }
 
-        public static void nk_stroke_rect(nk_command_buffer b, nk_rect rect, float rounding, float line_thickness,
+        public static void nk_stroke_rect(NkCommandBuffer b, nk_rect rect, float rounding, float line_thickness,
             nk_color c)
         {
-            nk_command_rect cmd;
+            NkCommandRect cmd;
             if (((((b == null) || ((c.a) == (0))) || ((rect.w) == (0))) || ((rect.h) == (0))) || (line_thickness <= 0))
                 return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    !(!(((((b.clip.x) > (rect.x + rect.w)) || ((b.clip.x + b.clip.w) < (rect.x))) ||
-                         ((b.clip.y) > (rect.y + rect.h))) || ((b.clip.y + b.clip.h) < (rect.y))))) return;
+                    !(!(((((b.Clip.x) > (rect.x + rect.w)) || ((b.Clip.x + b.Clip.w) < (rect.x))) ||
+                         ((b.Clip.y) > (rect.y + rect.h))) || ((b.Clip.y + b.Clip.h) < (rect.y))))) return;
             }
 
-            cmd = (nk_command_rect)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT)));
+            cmd = (NkCommandRect)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT)));
             if (cmd == null) return;
-            cmd.rounding = ((ushort)(rounding));
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.x = ((short)(rect.x));
-            cmd.y = ((short)(rect.y));
-            cmd.w = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
-            cmd.h = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
-            cmd.color = (nk_color)(c);
+            cmd.Rounding = ((ushort)(rounding));
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.X = ((short)(rect.x));
+            cmd.Y = ((short)(rect.y));
+            cmd.W = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
+            cmd.H = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_fill_rect(nk_command_buffer b, nk_rect rect, float rounding, nk_color c)
+        public static void nk_fill_rect(NkCommandBuffer b, nk_rect rect, float rounding, nk_color c)
         {
-            nk_command_rect_filled cmd;
+            NkCommandRectFilled cmd;
             if ((((b == null) || ((c.a) == (0))) || ((rect.w) == (0))) || ((rect.h) == (0))) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    !(!(((((b.clip.x) > (rect.x + rect.w)) || ((b.clip.x + b.clip.w) < (rect.x))) ||
-                         ((b.clip.y) > (rect.y + rect.h))) || ((b.clip.y + b.clip.h) < (rect.y))))) return;
+                    !(!(((((b.Clip.x) > (rect.x + rect.w)) || ((b.Clip.x + b.Clip.w) < (rect.x))) ||
+                         ((b.Clip.y) > (rect.y + rect.h))) || ((b.Clip.y + b.Clip.h) < (rect.y))))) return;
             }
 
-            cmd = (nk_command_rect_filled)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT_FILLED)));
+            cmd = (NkCommandRectFilled)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT_FILLED)));
             if (cmd == null) return;
-            cmd.rounding = ((ushort)(rounding));
-            cmd.x = ((short)(rect.x));
-            cmd.y = ((short)(rect.y));
-            cmd.w = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
-            cmd.h = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
-            cmd.color = (nk_color)(c);
+            cmd.Rounding = ((ushort)(rounding));
+            cmd.X = ((short)(rect.x));
+            cmd.Y = ((short)(rect.y));
+            cmd.W = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
+            cmd.H = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_fill_rect_multi_color(nk_command_buffer b, nk_rect rect, nk_color left, nk_color top,
+        public static void nk_fill_rect_multi_color(NkCommandBuffer b, nk_rect rect, nk_color left, nk_color top,
             nk_color right, nk_color bottom)
         {
-            nk_command_rect_multi_color cmd;
+            NkCommandRectMultiColor cmd;
             if (((b == null) || ((rect.w) == (0))) || ((rect.h) == (0))) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    !(!(((((b.clip.x) > (rect.x + rect.w)) || ((b.clip.x + b.clip.w) < (rect.x))) ||
-                         ((b.clip.y) > (rect.y + rect.h))) || ((b.clip.y + b.clip.h) < (rect.y))))) return;
+                    !(!(((((b.Clip.x) > (rect.x + rect.w)) || ((b.Clip.x + b.Clip.w) < (rect.x))) ||
+                         ((b.Clip.y) > (rect.y + rect.h))) || ((b.Clip.y + b.Clip.h) < (rect.y))))) return;
             }
 
-            cmd = (nk_command_rect_multi_color)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT_MULTI_COLOR)));
+            cmd = (NkCommandRectMultiColor)(nk_command_buffer_push(b, (int)(NK_COMMAND_RECT_MULTI_COLOR)));
             if (cmd == null) return;
-            cmd.x = ((short)(rect.x));
-            cmd.y = ((short)(rect.y));
-            cmd.w = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
-            cmd.h = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
-            cmd.left = (nk_color)(left);
-            cmd.top = (nk_color)(top);
-            cmd.right = (nk_color)(right);
-            cmd.bottom = (nk_color)(bottom);
+            cmd.X = ((short)(rect.x));
+            cmd.Y = ((short)(rect.y));
+            cmd.W = ((ushort)((0) < (rect.w) ? (rect.w) : (0)));
+            cmd.H = ((ushort)((0) < (rect.h) ? (rect.h) : (0)));
+            cmd.Left = (nk_color)(left);
+            cmd.Top = (nk_color)(top);
+            cmd.Right = (nk_color)(right);
+            cmd.Bottom = (nk_color)(bottom);
         }
 
-        public static void nk_stroke_circle(nk_command_buffer b, nk_rect r, float line_thickness, nk_color c)
+        public static void nk_stroke_circle(NkCommandBuffer b, nk_rect r, float line_thickness, nk_color c)
         {
-            nk_command_circle cmd;
+            NkCommandCircle cmd;
             if ((((b == null) || ((r.w) == (0))) || ((r.h) == (0))) || (line_thickness <= 0)) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    !(!(((((b.clip.x) > (r.x + r.w)) || ((b.clip.x + b.clip.w) < (r.x))) || ((b.clip.y) > (r.y + r.h))) ||
-                        ((b.clip.y + b.clip.h) < (r.y))))) return;
+                    !(!(((((b.Clip.x) > (r.x + r.w)) || ((b.Clip.x + b.Clip.w) < (r.x))) || ((b.Clip.y) > (r.y + r.h))) ||
+                        ((b.Clip.y + b.Clip.h) < (r.y))))) return;
             }
 
-            cmd = (nk_command_circle)(nk_command_buffer_push(b, (int)(NK_COMMAND_CIRCLE)));
+            cmd = (NkCommandCircle)(nk_command_buffer_push(b, (int)(NK_COMMAND_CIRCLE)));
             if (cmd == null) return;
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)((r.w) < (0) ? (0) : (r.w)));
-            cmd.h = ((ushort)((r.h) < (0) ? (0) : (r.h)));
-            cmd.color = (nk_color)(c);
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)((r.w) < (0) ? (0) : (r.w)));
+            cmd.H = ((ushort)((r.h) < (0) ? (0) : (r.h)));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_fill_circle(nk_command_buffer b, nk_rect r, nk_color c)
+        public static void nk_fill_circle(NkCommandBuffer b, nk_rect r, nk_color c)
         {
-            nk_command_circle_filled cmd;
+            NkCommandCircleFilled cmd;
             if ((((b == null) || ((c.a) == (0))) || ((r.w) == (0))) || ((r.h) == (0))) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    !(!(((((b.clip.x) > (r.x + r.w)) || ((b.clip.x + b.clip.w) < (r.x))) || ((b.clip.y) > (r.y + r.h))) ||
-                        ((b.clip.y + b.clip.h) < (r.y))))) return;
+                    !(!(((((b.Clip.x) > (r.x + r.w)) || ((b.Clip.x + b.Clip.w) < (r.x))) || ((b.Clip.y) > (r.y + r.h))) ||
+                        ((b.Clip.y + b.Clip.h) < (r.y))))) return;
             }
 
-            cmd = (nk_command_circle_filled)(nk_command_buffer_push(b, (int)(NK_COMMAND_CIRCLE_FILLED)));
+            cmd = (NkCommandCircleFilled)(nk_command_buffer_push(b, (int)(NK_COMMAND_CIRCLE_FILLED)));
             if (cmd == null) return;
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)((r.w) < (0) ? (0) : (r.w)));
-            cmd.h = ((ushort)((r.h) < (0) ? (0) : (r.h)));
-            cmd.color = (nk_color)(c);
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)((r.w) < (0) ? (0) : (r.w)));
+            cmd.H = ((ushort)((r.h) < (0) ? (0) : (r.h)));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_stroke_arc(nk_command_buffer b, float cx, float cy, float radius, float a_min, float a_max,
+        public static void nk_stroke_arc(NkCommandBuffer b, float cx, float cy, float radius, float a_min, float a_max,
             float line_thickness, nk_color c)
         {
-            nk_command_arc cmd;
+            NkCommandArc cmd;
             if (((b == null) || ((c.a) == (0))) || (line_thickness <= 0)) return;
-            cmd = (nk_command_arc)(nk_command_buffer_push(b, (int)(NK_COMMAND_ARC)));
+            cmd = (NkCommandArc)(nk_command_buffer_push(b, (int)(NK_COMMAND_ARC)));
             if (cmd == null) return;
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.cx = ((short)(cx));
-            cmd.cy = ((short)(cy));
-            cmd.r = ((ushort)(radius));
-            cmd.a[0] = (float)(a_min);
-            cmd.a[1] = (float)(a_max);
-            cmd.color = (nk_color)(c);
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.Cx = ((short)(cx));
+            cmd.Cy = ((short)(cy));
+            cmd.R = ((ushort)(radius));
+            cmd.A[0] = (float)(a_min);
+            cmd.A[1] = (float)(a_max);
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_fill_arc(nk_command_buffer b, float cx, float cy, float radius, float a_min, float a_max,
+        public static void nk_fill_arc(NkCommandBuffer b, float cx, float cy, float radius, float a_min, float a_max,
             nk_color c)
         {
-            nk_command_arc_filled cmd;
+            NkCommandArcFilled cmd;
             if ((b == null) || ((c.a) == (0))) return;
-            cmd = (nk_command_arc_filled)(nk_command_buffer_push(b, (int)(NK_COMMAND_ARC_FILLED)));
+            cmd = (NkCommandArcFilled)(nk_command_buffer_push(b, (int)(NK_COMMAND_ARC_FILLED)));
             if (cmd == null) return;
-            cmd.cx = ((short)(cx));
-            cmd.cy = ((short)(cy));
-            cmd.r = ((ushort)(radius));
-            cmd.a[0] = (float)(a_min);
-            cmd.a[1] = (float)(a_max);
-            cmd.color = (nk_color)(c);
+            cmd.Cx = ((short)(cx));
+            cmd.Cy = ((short)(cy));
+            cmd.R = ((ushort)(radius));
+            cmd.A[0] = (float)(a_min);
+            cmd.A[1] = (float)(a_max);
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_stroke_triangle(nk_command_buffer b, float x0, float y0, float x1, float y1, float x2,
+        public static void nk_stroke_triangle(NkCommandBuffer b, float x0, float y0, float x1, float y1, float x2,
             float y2, float line_thickness, nk_color c)
         {
-            nk_command_triangle cmd;
+            NkCommandTriangle cmd;
             if (((b == null) || ((c.a) == (0))) || (line_thickness <= 0)) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    ((!((((b.clip.x) <= (x0)) && ((x0) < (b.clip.x + b.clip.w))) &&
-                        (((b.clip.y) <= (y0)) && ((y0) < (b.clip.y + b.clip.h))))) &&
-                     (!((((b.clip.x) <= (x1)) && ((x1) < (b.clip.x + b.clip.w))) &&
-                        (((b.clip.y) <= (y1)) && ((y1) < (b.clip.y + b.clip.h)))))) &&
-                    (!((((b.clip.x) <= (x2)) && ((x2) < (b.clip.x + b.clip.w))) &&
-                       (((b.clip.y) <= (y2)) && ((y2) < (b.clip.y + b.clip.h)))))) return;
+                    ((!((((b.Clip.x) <= (x0)) && ((x0) < (b.Clip.x + b.Clip.w))) &&
+                        (((b.Clip.y) <= (y0)) && ((y0) < (b.Clip.y + b.Clip.h))))) &&
+                     (!((((b.Clip.x) <= (x1)) && ((x1) < (b.Clip.x + b.Clip.w))) &&
+                        (((b.Clip.y) <= (y1)) && ((y1) < (b.Clip.y + b.Clip.h)))))) &&
+                    (!((((b.Clip.x) <= (x2)) && ((x2) < (b.Clip.x + b.Clip.w))) &&
+                       (((b.Clip.y) <= (y2)) && ((y2) < (b.Clip.y + b.Clip.h)))))) return;
             }
 
-            cmd = (nk_command_triangle)(nk_command_buffer_push(b, (int)(NK_COMMAND_TRIANGLE)));
+            cmd = (NkCommandTriangle)(nk_command_buffer_push(b, (int)(NK_COMMAND_TRIANGLE)));
             if (cmd == null) return;
-            cmd.line_thickness = ((ushort)(line_thickness));
-            cmd.a.x = ((short)(x0));
-            cmd.a.y = ((short)(y0));
-            cmd.b.x = ((short)(x1));
-            cmd.b.y = ((short)(y1));
-            cmd.c.x = ((short)(x2));
-            cmd.c.y = ((short)(y2));
-            cmd.color = (nk_color)(c);
+            cmd.LineThickness = ((ushort)(line_thickness));
+            cmd.A.x = ((short)(x0));
+            cmd.A.y = ((short)(y0));
+            cmd.B.x = ((short)(x1));
+            cmd.B.y = ((short)(y1));
+            cmd.C.x = ((short)(x2));
+            cmd.C.y = ((short)(y2));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_fill_triangle(nk_command_buffer b, float x0, float y0, float x1, float y1, float x2,
+        public static void nk_fill_triangle(NkCommandBuffer b, float x0, float y0, float x1, float y1, float x2,
             float y2, nk_color c)
         {
-            nk_command_triangle_filled cmd;
+            NkCommandTriangleFilled cmd;
             if ((b == null) || ((c.a) == (0))) return;
             if (b == null) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
                 if (
-                    ((!((((b.clip.x) <= (x0)) && ((x0) < (b.clip.x + b.clip.w))) &&
-                        (((b.clip.y) <= (y0)) && ((y0) < (b.clip.y + b.clip.h))))) &&
-                     (!((((b.clip.x) <= (x1)) && ((x1) < (b.clip.x + b.clip.w))) &&
-                        (((b.clip.y) <= (y1)) && ((y1) < (b.clip.y + b.clip.h)))))) &&
-                    (!((((b.clip.x) <= (x2)) && ((x2) < (b.clip.x + b.clip.w))) &&
-                       (((b.clip.y) <= (y2)) && ((y2) < (b.clip.y + b.clip.h)))))) return;
+                    ((!((((b.Clip.x) <= (x0)) && ((x0) < (b.Clip.x + b.Clip.w))) &&
+                        (((b.Clip.y) <= (y0)) && ((y0) < (b.Clip.y + b.Clip.h))))) &&
+                     (!((((b.Clip.x) <= (x1)) && ((x1) < (b.Clip.x + b.Clip.w))) &&
+                        (((b.Clip.y) <= (y1)) && ((y1) < (b.Clip.y + b.Clip.h)))))) &&
+                    (!((((b.Clip.x) <= (x2)) && ((x2) < (b.Clip.x + b.Clip.w))) &&
+                       (((b.Clip.y) <= (y2)) && ((y2) < (b.Clip.y + b.Clip.h)))))) return;
             }
 
-            cmd = (nk_command_triangle_filled)(nk_command_buffer_push(b, (int)(NK_COMMAND_TRIANGLE_FILLED)));
+            cmd = (NkCommandTriangleFilled)(nk_command_buffer_push(b, (int)(NK_COMMAND_TRIANGLE_FILLED)));
             if (cmd == null) return;
-            cmd.a.x = ((short)(x0));
-            cmd.a.y = ((short)(y0));
-            cmd.b.x = ((short)(x1));
-            cmd.b.y = ((short)(y1));
-            cmd.c.x = ((short)(x2));
-            cmd.c.y = ((short)(y2));
-            cmd.color = (nk_color)(c);
+            cmd.A.x = ((short)(x0));
+            cmd.A.y = ((short)(y0));
+            cmd.B.x = ((short)(x1));
+            cmd.B.y = ((short)(y1));
+            cmd.C.x = ((short)(x2));
+            cmd.C.y = ((short)(y2));
+            cmd.Color = (nk_color)(c);
         }
 
-        public static void nk_draw_image(nk_command_buffer b, nk_rect r, nk_image img, nk_color col)
+        public static void nk_draw_image(NkCommandBuffer b, nk_rect r, nk_image img, nk_color col)
         {
-            nk_command_image cmd;
+            NkCommandImage cmd;
             if (b == null) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
-                if ((((b.clip.w) == (0)) || ((b.clip.h) == (0))) ||
-                    (!(!(((((b.clip.x) > (r.x + r.w)) || ((b.clip.x + b.clip.w) < (r.x))) || ((b.clip.y) > (r.y + r.h))) ||
-                         ((b.clip.y + b.clip.h) < (r.y)))))) return;
+                if ((((b.Clip.w) == (0)) || ((b.Clip.h) == (0))) ||
+                    (!(!(((((b.Clip.x) > (r.x + r.w)) || ((b.Clip.x + b.Clip.w) < (r.x))) || ((b.Clip.y) > (r.y + r.h))) ||
+                         ((b.Clip.y + b.Clip.h) < (r.y)))))) return;
             }
 
-            cmd = (nk_command_image)(nk_command_buffer_push(b, (int)(NK_COMMAND_IMAGE)));
+            cmd = (NkCommandImage)(nk_command_buffer_push(b, (int)(NK_COMMAND_IMAGE)));
             if (cmd == null) return;
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)((0) < (r.w) ? (r.w) : (0)));
-            cmd.h = ((ushort)((0) < (r.h) ? (r.h) : (0)));
-            cmd.img = (nk_image)(img);
-            cmd.col = (nk_color)(col);
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)((0) < (r.w) ? (r.w) : (0)));
+            cmd.H = ((ushort)((0) < (r.h) ? (r.h) : (0)));
+            cmd.Img = (nk_image)(img);
+            cmd.Col = (nk_color)(col);
         }
 
-        public static void nk_push_custom(nk_command_buffer b, nk_rect r, NkCommandCustomCallback cb, nk_handle usr)
+        public static void nk_push_custom(NkCommandBuffer b, nk_rect r, NkCommandCustomCallback cb, NkHandle usr)
         {
-            nk_command_custom cmd;
+            NkCommandCustom cmd;
             if (b == null) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
-                if ((((b.clip.w) == (0)) || ((b.clip.h) == (0))) ||
-                    (!(!(((((b.clip.x) > (r.x + r.w)) || ((b.clip.x + b.clip.w) < (r.x))) || ((b.clip.y) > (r.y + r.h))) ||
-                         ((b.clip.y + b.clip.h) < (r.y)))))) return;
+                if ((((b.Clip.w) == (0)) || ((b.Clip.h) == (0))) ||
+                    (!(!(((((b.Clip.x) > (r.x + r.w)) || ((b.Clip.x + b.Clip.w) < (r.x))) || ((b.Clip.y) > (r.y + r.h))) ||
+                         ((b.Clip.y + b.Clip.h) < (r.y)))))) return;
             }
 
-            cmd = (nk_command_custom)(nk_command_buffer_push(b, (int)(NK_COMMAND_CUSTOM)));
+            cmd = (NkCommandCustom)(nk_command_buffer_push(b, (int)(NK_COMMAND_CUSTOM)));
             if (cmd == null) return;
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)((0) < (r.w) ? (r.w) : (0)));
-            cmd.h = ((ushort)((0) < (r.h) ? (r.h) : (0)));
-            cmd.callback_data = (nk_handle)(usr);
-            cmd.callback = cb;
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)((0) < (r.w) ? (r.w) : (0)));
+            cmd.H = ((ushort)((0) < (r.h) ? (r.h) : (0)));
+            cmd.CallbackData = (NkHandle)(usr);
+            cmd.Callback = cb;
         }
 
-        public static void nk_draw_text(nk_command_buffer b, nk_rect r, char* _string_, int length, nk_user_font font,
+        public static void nk_draw_text(NkCommandBuffer b, nk_rect r, char* _string_, int length, NkUserFont font,
             nk_color bg, nk_color fg)
         {
             float text_width = (float)(0);
-            nk_command_text cmd;
+            NkCommandText cmd;
             if ((((b == null) || (_string_ == null)) || (length == 0)) || (((bg.a) == (0)) && ((fg.a) == (0)))) return;
-            if ((b.use_clipping) != 0)
+            if ((b.UseClipping) != 0)
             {
-                if ((((b.clip.w) == (0)) || ((b.clip.h) == (0))) ||
-                    (!(!(((((b.clip.x) > (r.x + r.w)) || ((b.clip.x + b.clip.w) < (r.x))) || ((b.clip.y) > (r.y + r.h))) ||
-                         ((b.clip.y + b.clip.h) < (r.y)))))) return;
+                if ((((b.Clip.w) == (0)) || ((b.Clip.h) == (0))) ||
+                    (!(!(((((b.Clip.x) > (r.x + r.w)) || ((b.Clip.x + b.Clip.w) < (r.x))) || ((b.Clip.y) > (r.y + r.h))) ||
+                         ((b.Clip.y + b.Clip.h) < (r.y)))))) return;
             }
 
             text_width =
-                (float)(font.width((nk_handle)(font.userdata), (float)(font.height), _string_, (int)(length)));
+                (float)(font.Width((NkHandle)(font.Userdata), (float)(font.Height), _string_, (int)(length)));
             if ((text_width) > (r.w))
             {
                 int glyphs = (int)(0);
@@ -412,24 +412,24 @@ namespace NuklearSharp
             }
 
             if (length == 0) return;
-            cmd = (nk_command_text)(nk_command_buffer_push(b, (int)(NK_COMMAND_TEXT)));
+            cmd = (NkCommandText)(nk_command_buffer_push(b, (int)(NK_COMMAND_TEXT)));
             if (cmd == null) return;
-            cmd.x = ((short)(r.x));
-            cmd.y = ((short)(r.y));
-            cmd.w = ((ushort)(r.w));
-            cmd.h = ((ushort)(r.h));
-            cmd.background = (nk_color)(bg);
-            cmd.foreground = (nk_color)(fg);
-            cmd.font = font;
-            cmd.length = (int)(length);
-            cmd.height = (float)(font.height);
-            cmd._string_ = new PinnedArray<char>(length);
-            CRuntime.memcpy((void*)cmd._string_, _string_, length * sizeof(char));
-            cmd._string_[length] = ('\0');
+            cmd.X = ((short)(r.x));
+            cmd.Y = ((short)(r.y));
+            cmd.W = ((ushort)(r.w));
+            cmd.H = ((ushort)(r.h));
+            cmd.Background = (nk_color)(bg);
+            cmd.Foreground = (nk_color)(fg);
+            cmd.Font = font;
+            cmd.Length = (int)(length);
+            cmd.Height = (float)(font.Height);
+            cmd.String = new PinnedArray<char>(length);
+            CRuntime.Memcpy((void*)cmd.String, _string_, length * sizeof(char));
+            cmd.String[length] = ('\0');
         }
 
-        public static void nk_widget_text(nk_command_buffer o, nk_rect b, char* _string_, int len, nk_text* t, uint a,
-            nk_user_font f)
+        public static void nk_widget_text(NkCommandBuffer o, nk_rect b, char* _string_, int len, nk_text* t, uint a,
+            NkUserFont f)
         {
             nk_rect label = new nk_rect();
             float text_width;
@@ -438,8 +438,8 @@ namespace NuklearSharp
             label.x = (float)(0);
             label.w = (float)(0);
             label.y = (float)(b.y + t->padding.y);
-            label.h = (float)((f.height) < (b.h - 2 * t->padding.y) ? (f.height) : (b.h - 2 * t->padding.y));
-            text_width = (float)(f.width((nk_handle)(f.userdata), (float)(f.height), _string_, (int)(len)));
+            label.h = (float)((f.Height) < (b.h - 2 * t->padding.y) ? (f.Height) : (b.h - 2 * t->padding.y));
+            text_width = (float)(f.Width((NkHandle)(f.Userdata), (float)(f.Height), _string_, (int)(len)));
             text_width += (float)(2.0f * t->padding.x);
             if ((a & NK_TEXT_ALIGN_LEFT) != 0)
             {
@@ -466,25 +466,25 @@ namespace NuklearSharp
             else return;
             if ((a & NK_TEXT_ALIGN_MIDDLE) != 0)
             {
-                label.y = (float)(b.y + b.h / 2.0f - f.height / 2.0f);
+                label.y = (float)(b.y + b.h / 2.0f - f.Height / 2.0f);
                 label.h =
                     (float)
-                        ((b.h / 2.0f) < (b.h - (b.h / 2.0f + f.height / 2.0f))
-                            ? (b.h - (b.h / 2.0f + f.height / 2.0f))
+                        ((b.h / 2.0f) < (b.h - (b.h / 2.0f + f.Height / 2.0f))
+                            ? (b.h - (b.h / 2.0f + f.Height / 2.0f))
                             : (b.h / 2.0f));
             }
             else if ((a & NK_TEXT_ALIGN_BOTTOM) != 0)
             {
-                label.y = (float)(b.y + b.h - f.height);
-                label.h = (float)(f.height);
+                label.y = (float)(b.y + b.h - f.Height);
+                label.h = (float)(f.Height);
             }
 
             nk_draw_text(o, (nk_rect)(label), _string_, (int)(len), f, (nk_color)(t->background),
                 (nk_color)(t->text));
         }
 
-        public static void nk_widget_text_wrap(nk_command_buffer o, nk_rect b, char* _string_, int len, nk_text* t,
-            nk_user_font f)
+        public static void nk_widget_text_wrap(NkCommandBuffer o, nk_rect b, char* _string_, int len, nk_text* t,
+            NkUserFont f)
         {
             float width;
             int glyphs = (int)(0);
@@ -505,14 +505,14 @@ namespace NuklearSharp
             line.x = (float)(b.x + t->padding.x);
             line.y = (float)(b.y + t->padding.y);
             line.w = (float)(b.w - 2 * t->padding.x);
-            line.h = (float)(2 * t->padding.y + f.height);
+            line.h = (float)(2 * t->padding.y + f.Height);
             fitting = (int)(nk_text_clamp(f, _string_, (int)(len), (float)(line.w), &glyphs, &width, seperator, 1));
             while ((done) < (len))
             {
                 if ((fitting == 0) || ((line.y + line.h) >= (b.y + b.h))) break;
                 nk_widget_text(o, (nk_rect)(line), &_string_[done], (int)(fitting), &text, (uint)(NK_TEXT_LEFT), f);
                 done += (int)(fitting);
-                line.y += (float)(f.height + 2 * t->padding.y);
+                line.y += (float)(f.Height + 2 * t->padding.y);
                 fitting =
                     (int)
                         (nk_text_clamp(f, &_string_[done], (int)(len - done), (float)(line.w), &glyphs, &width,
@@ -520,8 +520,8 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_draw_symbol(nk_command_buffer _out_, int type, nk_rect content, nk_color background,
-            nk_color foreground, float border_width, nk_user_font font)
+        public static void nk_draw_symbol(NkCommandBuffer _out_, int type, nk_rect content, nk_color background,
+            nk_color foreground, float border_width, NkUserFont font)
         {
             switch (type)
             {
@@ -588,20 +588,20 @@ namespace NuklearSharp
 
         }
 
-        public static nk_style_item nk_draw_button(nk_command_buffer _out_, nk_rect* bounds, uint state,
+        public static NkStyleItem nk_draw_button(NkCommandBuffer _out_, nk_rect* bounds, uint state,
             nk_style_button style)
         {
-            nk_style_item background;
+            NkStyleItem background;
             if ((state & NK_WIDGET_STATE_HOVER) != 0) background = style.hover;
             else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) background = style.active;
             else background = style.normal;
-            if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
+                nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
             }
             else
             {
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (float)(style.border),
                     (nk_color)(style.border_color));
             }
@@ -609,13 +609,13 @@ namespace NuklearSharp
             return background;
         }
 
-        public static void nk_draw_button_text(nk_command_buffer _out_, nk_rect* bounds, nk_rect* content, uint state,
-            nk_style_button style, char* txt, int len, uint text_alignment, nk_user_font font)
+        public static void nk_draw_button_text(NkCommandBuffer _out_, nk_rect* bounds, nk_rect* content, uint state,
+            nk_style_button style, char* txt, int len, uint text_alignment, NkUserFont font)
         {
             nk_text text = new nk_text();
-            nk_style_item background;
+            NkStyleItem background;
             background = nk_draw_button(_out_, bounds, (uint)(state), style);
-            if ((background.type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.data.color);
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.Data.Color);
             else text.background = (nk_color)(style.text_background);
             if ((state & NK_WIDGET_STATE_HOVER) != 0) text.text = (nk_color)(style.text_hover);
             else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) text.text = (nk_color)(style.text_active);
@@ -624,14 +624,14 @@ namespace NuklearSharp
             nk_widget_text(_out_, (nk_rect)(*content), txt, (int)(len), &text, (uint)(text_alignment), font);
         }
 
-        public static void nk_draw_button_symbol(nk_command_buffer _out_, nk_rect* bounds, nk_rect* content, uint state,
-            nk_style_button style, int type, nk_user_font font)
+        public static void nk_draw_button_symbol(NkCommandBuffer _out_, nk_rect* bounds, nk_rect* content, uint state,
+            nk_style_button style, int type, NkUserFont font)
         {
             nk_color sym = new nk_color();
             nk_color bg = new nk_color();
-            nk_style_item background;
+            NkStyleItem background;
             background = nk_draw_button(_out_, bounds, (uint)(state), style);
-            if ((background.type) == (NK_STYLE_ITEM_COLOR)) bg = (nk_color)(background.data.color);
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR)) bg = (nk_color)(background.Data.Color);
             else bg = (nk_color)(style.text_background);
             if ((state & NK_WIDGET_STATE_HOVER) != 0) sym = (nk_color)(style.text_hover);
             else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) sym = (nk_color)(style.text_active);
@@ -640,21 +640,21 @@ namespace NuklearSharp
                 font);
         }
 
-        public static void nk_draw_button_image(nk_command_buffer _out_, nk_rect* bounds, nk_rect* content, uint state,
+        public static void nk_draw_button_image(NkCommandBuffer _out_, nk_rect* bounds, nk_rect* content, uint state,
             nk_style_button style, nk_image img)
         {
             nk_draw_button(_out_, bounds, (uint)(state), style);
             nk_draw_image(_out_, (nk_rect)(*content), img, (nk_color)(nk_white));
         }
 
-        public static void nk_draw_button_text_symbol(nk_command_buffer _out_, nk_rect* bounds, nk_rect* label,
-            nk_rect* symbol, uint state, nk_style_button style, char* str, int len, int type, nk_user_font font)
+        public static void nk_draw_button_text_symbol(NkCommandBuffer _out_, nk_rect* bounds, nk_rect* label,
+            nk_rect* symbol, uint state, nk_style_button style, char* str, int len, int type, NkUserFont font)
         {
             nk_color sym = new nk_color();
             nk_text text = new nk_text();
-            nk_style_item background;
+            NkStyleItem background;
             background = nk_draw_button(_out_, bounds, (uint)(state), style);
-            if ((background.type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.data.color);
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.Data.Color);
             else text.background = (nk_color)(style.text_background);
             if ((state & NK_WIDGET_STATE_HOVER) != 0)
             {
@@ -678,13 +678,13 @@ namespace NuklearSharp
             nk_widget_text(_out_, (nk_rect)(*label), str, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
         }
 
-        public static void nk_draw_button_text_image(nk_command_buffer _out_, nk_rect* bounds, nk_rect* label,
-            nk_rect* image, uint state, nk_style_button style, char* str, int len, nk_user_font font, nk_image img)
+        public static void nk_draw_button_text_image(NkCommandBuffer _out_, nk_rect* bounds, nk_rect* label,
+            nk_rect* image, uint state, nk_style_button style, char* str, int len, NkUserFont font, nk_image img)
         {
             nk_text text = new nk_text();
-            nk_style_item background;
+            NkStyleItem background;
             background = nk_draw_button(_out_, bounds, (uint)(state), style);
-            if ((background.type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.data.color);
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR)) text.background = (nk_color)(background.Data.Color);
             else text.background = (nk_color)(style.text_background);
             if ((state & NK_WIDGET_STATE_HOVER) != 0) text.text = (nk_color)(style.text_hover);
             else if ((state & NK_WIDGET_STATE_ACTIVED) != 0) text.text = (nk_color)(style.text_active);
@@ -694,11 +694,11 @@ namespace NuklearSharp
             nk_draw_image(_out_, (nk_rect)(*image), img, (nk_color)(nk_white));
         }
 
-        public static void nk_draw_checkbox(nk_command_buffer _out_, uint state, nk_style_toggle style, int active,
-            nk_rect* label, nk_rect* selector, nk_rect* cursors, char* _string_, int len, nk_user_font font)
+        public static void nk_draw_checkbox(NkCommandBuffer _out_, uint state, nk_style_toggle style, int active,
+            nk_rect* label, nk_rect* selector, nk_rect* cursors, char* _string_, int len, NkUserFont font)
         {
-            nk_style_item background;
-            nk_style_item cursor;
+            NkStyleItem background;
+            NkStyleItem cursor;
             nk_text text = new nk_text();
             if ((state & NK_WIDGET_STATE_HOVER) != 0)
             {
@@ -719,18 +719,18 @@ namespace NuklearSharp
                 text.text = (nk_color)(style.text_normal);
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_COLOR))
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR))
             {
                 nk_fill_rect(_out_, (nk_rect)(*selector), (float)(0), (nk_color)(style.border_color));
                 nk_fill_rect(_out_, (nk_rect)(nk_shrink_rect_((nk_rect)(*selector), (float)(style.border))),
-                    (float)(0), (nk_color)(background.data.color));
+                    (float)(0), (nk_color)(background.Data.Color));
             }
-            else nk_draw_image(_out_, (nk_rect)(*selector), background.data.image, (nk_color)(nk_white));
+            else nk_draw_image(_out_, (nk_rect)(*selector), background.Data.Image, (nk_color)(nk_white));
             if ((active) != 0)
             {
-                if ((cursor.type) == (NK_STYLE_ITEM_IMAGE))
-                    nk_draw_image(_out_, (nk_rect)(*cursors), cursor.data.image, (nk_color)(nk_white));
-                else nk_fill_rect(_out_, (nk_rect)(*cursors), (float)(0), (nk_color)(cursor.data.color));
+                if ((cursor.Type) == (NK_STYLE_ITEM_IMAGE))
+                    nk_draw_image(_out_, (nk_rect)(*cursors), cursor.Data.Image, (nk_color)(nk_white));
+                else nk_fill_rect(_out_, (nk_rect)(*cursors), (float)(0), (nk_color)(cursor.Data.Color));
             }
 
             text.padding.x = (float)(0);
@@ -739,11 +739,11 @@ namespace NuklearSharp
             nk_widget_text(_out_, (nk_rect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
         }
 
-        public static void nk_draw_option(nk_command_buffer _out_, uint state, nk_style_toggle style, int active,
-            nk_rect* label, nk_rect* selector, nk_rect* cursors, char* _string_, int len, nk_user_font font)
+        public static void nk_draw_option(NkCommandBuffer _out_, uint state, nk_style_toggle style, int active,
+            nk_rect* label, nk_rect* selector, nk_rect* cursors, char* _string_, int len, NkUserFont font)
         {
-            nk_style_item background;
-            nk_style_item cursor;
+            NkStyleItem background;
+            NkStyleItem cursor;
             nk_text text = new nk_text();
             if ((state & NK_WIDGET_STATE_HOVER) != 0)
             {
@@ -764,18 +764,18 @@ namespace NuklearSharp
                 text.text = (nk_color)(style.text_normal);
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_COLOR))
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR))
             {
                 nk_fill_circle(_out_, (nk_rect)(*selector), (nk_color)(style.border_color));
                 nk_fill_circle(_out_, (nk_rect)(nk_shrink_rect_((nk_rect)(*selector), (float)(style.border))),
-                    (nk_color)(background.data.color));
+                    (nk_color)(background.Data.Color));
             }
-            else nk_draw_image(_out_, (nk_rect)(*selector), background.data.image, (nk_color)(nk_white));
+            else nk_draw_image(_out_, (nk_rect)(*selector), background.Data.Image, (nk_color)(nk_white));
             if ((active) != 0)
             {
-                if ((cursor.type) == (NK_STYLE_ITEM_IMAGE))
-                    nk_draw_image(_out_, (nk_rect)(*cursors), cursor.data.image, (nk_color)(nk_white));
-                else nk_fill_circle(_out_, (nk_rect)(*cursors), (nk_color)(cursor.data.color));
+                if ((cursor.Type) == (NK_STYLE_ITEM_IMAGE))
+                    nk_draw_image(_out_, (nk_rect)(*cursors), cursor.Data.Image, (nk_color)(nk_white));
+                else nk_fill_circle(_out_, (nk_rect)(*cursors), (nk_color)(cursor.Data.Color));
             }
 
             text.padding.x = (float)(0);
@@ -784,10 +784,10 @@ namespace NuklearSharp
             nk_widget_text(_out_, (nk_rect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
         }
 
-        public static void nk_draw_selectable(nk_command_buffer _out_, uint state, nk_style_selectable style, int active,
-            nk_rect* bounds, nk_rect* icon, nk_image img, char* _string_, int len, uint align, nk_user_font font)
+        public static void nk_draw_selectable(NkCommandBuffer _out_, uint state, nk_style_selectable style, int active,
+            nk_rect* bounds, nk_rect* icon, nk_image img, char* _string_, int len, uint align, NkUserFont font)
         {
-            nk_style_item background;
+            NkStyleItem background;
             nk_text text = new nk_text();
             text.padding = (nk_vec2)(style.padding);
             if (active == 0)
@@ -827,15 +827,15 @@ namespace NuklearSharp
                 }
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
+                nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
                 text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             }
             else
             {
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
-                text.background = (nk_color)(background.data.color);
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
+                text.background = (nk_color)(background.Data.Color);
             }
 
             if (((img) != null) && ((icon) != null))
@@ -843,14 +843,14 @@ namespace NuklearSharp
             nk_widget_text(_out_, (nk_rect)(*bounds), _string_, (int)(len), &text, (uint)(align), font);
         }
 
-        public static void nk_draw_slider(nk_command_buffer _out_, uint state, nk_style_slider style, nk_rect* bounds,
+        public static void nk_draw_slider(NkCommandBuffer _out_, uint state, nk_style_slider style, nk_rect* bounds,
             nk_rect* visual_cursor, float min, float value, float max)
         {
             nk_rect fill = new nk_rect();
             nk_rect bar = new nk_rect();
-            nk_style_item background;
+            NkStyleItem background;
             nk_color bar_color = new nk_color();
-            nk_style_item cursor;
+            NkStyleItem cursor;
             if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.active;
@@ -878,29 +878,29 @@ namespace NuklearSharp
             fill.x = (float)(bar.x);
             fill.y = (float)(bar.y);
             fill.h = (float)(bar.h);
-            if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
+                nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
             }
             else
             {
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (float)(style.border),
                     (nk_color)(style.border_color));
             }
 
             nk_fill_rect(_out_, (nk_rect)(bar), (float)(style.rounding), (nk_color)(bar_color));
             nk_fill_rect(_out_, (nk_rect)(fill), (float)(style.rounding), (nk_color)(style.bar_filled));
-            if ((cursor.type) == (NK_STYLE_ITEM_IMAGE))
-                nk_draw_image(_out_, (nk_rect)(*visual_cursor), cursor.data.image, (nk_color)(nk_white));
-            else nk_fill_circle(_out_, (nk_rect)(*visual_cursor), (nk_color)(cursor.data.color));
+            if ((cursor.Type) == (NK_STYLE_ITEM_IMAGE))
+                nk_draw_image(_out_, (nk_rect)(*visual_cursor), cursor.Data.Image, (nk_color)(nk_white));
+            else nk_fill_circle(_out_, (nk_rect)(*visual_cursor), (nk_color)(cursor.Data.Color));
         }
 
-        public static void nk_draw_progress(nk_command_buffer _out_, uint state, nk_style_progress style,
+        public static void nk_draw_progress(NkCommandBuffer _out_, uint state, nk_style_progress style,
             nk_rect* bounds, nk_rect* scursor, ulong value, ulong max)
         {
-            nk_style_item background;
-            nk_style_item cursor;
+            NkStyleItem background;
+            NkStyleItem cursor;
             if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.active;
@@ -917,27 +917,27 @@ namespace NuklearSharp
                 cursor = style.cursor_normal;
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_COLOR))
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR))
             {
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (float)(style.border),
                     (nk_color)(style.border_color));
             }
-            else nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
-            if ((cursor.type) == (NK_STYLE_ITEM_COLOR))
+            else nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
+            if ((cursor.Type) == (NK_STYLE_ITEM_COLOR))
             {
-                nk_fill_rect(_out_, (nk_rect)(*scursor), (float)(style.rounding), (nk_color)(cursor.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*scursor), (float)(style.rounding), (nk_color)(cursor.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*scursor), (float)(style.rounding), (float)(style.border),
                     (nk_color)(style.border_color));
             }
-            else nk_draw_image(_out_, (nk_rect)(*scursor), cursor.data.image, (nk_color)(nk_white));
+            else nk_draw_image(_out_, (nk_rect)(*scursor), cursor.Data.Image, (nk_color)(nk_white));
         }
 
-        public static void nk_draw_scrollbar(nk_command_buffer _out_, uint state, nk_style_scrollbar style,
+        public static void nk_draw_scrollbar(NkCommandBuffer _out_, uint state, nk_style_scrollbar style,
             nk_rect* bounds, nk_rect* scroll)
         {
-            nk_style_item background;
-            nk_style_item cursor;
+            NkStyleItem background;
+            NkStyleItem cursor;
             if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.active;
@@ -954,28 +954,28 @@ namespace NuklearSharp
                 cursor = style.cursor_normal;
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_COLOR))
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR))
             {
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (float)(style.border),
                     (nk_color)(style.border_color));
             }
             else
             {
-                nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
+                nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_COLOR))
+            if ((background.Type) == (NK_STYLE_ITEM_COLOR))
             {
-                nk_fill_rect(_out_, (nk_rect)(*scroll), (float)(style.rounding_cursor), (nk_color)(cursor.data.color));
+                nk_fill_rect(_out_, (nk_rect)(*scroll), (float)(style.rounding_cursor), (nk_color)(cursor.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*scroll), (float)(style.rounding_cursor),
                     (float)(style.border_cursor), (nk_color)(style.cursor_border_color));
             }
-            else nk_draw_image(_out_, (nk_rect)(*scroll), cursor.data.image, (nk_color)(nk_white));
+            else nk_draw_image(_out_, (nk_rect)(*scroll), cursor.Data.Image, (nk_color)(nk_white));
         }
 
-        public static void nk_edit_draw_text(nk_command_buffer _out_, nk_style_edit style, float pos_x, float pos_y,
-            float x_offset, char* text, int byte_len, float row_height, nk_user_font font, nk_color background,
+        public static void nk_edit_draw_text(NkCommandBuffer _out_, nk_style_edit style, float pos_x, float pos_y,
+            float x_offset, char* text, int byte_len, float row_height, NkUserFont font, nk_color background,
             nk_color foreground, int is_selected)
         {
             if ((((text == null) || (byte_len == 0)) || (_out_ == null)) || (style == null)) return;
@@ -1024,7 +1024,7 @@ namespace NuklearSharp
                     }
                     glyph_width =
                         (float)
-                            (font.width((nk_handle)(font.userdata), (float)(font.height), text + text_len,
+                            (font.Width((NkHandle)(font.Userdata), (float)(font.Height), text + text_len,
                                 (int)(glyph_len)));
                     line_width += (float)(glyph_width);
                     text_len += (int)(glyph_len);
@@ -1048,11 +1048,11 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_draw_property(nk_command_buffer _out_, nk_style_property style, nk_rect* bounds,
-            nk_rect* label, uint state, char* name, int len, nk_user_font font)
+        public static void nk_draw_property(NkCommandBuffer _out_, nk_style_property style, nk_rect* bounds,
+            nk_rect* label, uint state, char* name, int len, NkUserFont font)
         {
             nk_text text = new nk_text();
-            nk_style_item background;
+            NkStyleItem background;
             if ((state & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.active;
@@ -1069,24 +1069,24 @@ namespace NuklearSharp
                 text.text = (nk_color)(style.label_normal);
             }
 
-            if ((background.type) == (NK_STYLE_ITEM_IMAGE))
+            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(_out_, (nk_rect)(*bounds), background.data.image, (nk_color)(nk_white));
+                nk_draw_image(_out_, (nk_rect)(*bounds), background.Data.Image, (nk_color)(nk_white));
                 text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             }
             else
             {
-                text.background = (nk_color)(background.data.color);
-                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.data.color));
+                text.background = (nk_color)(background.Data.Color);
+                nk_fill_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (nk_color)(background.Data.Color));
                 nk_stroke_rect(_out_, (nk_rect)(*bounds), (float)(style.rounding), (float)(style.border),
-                    (nk_color)(background.data.color));
+                    (nk_color)(background.Data.Color));
             }
 
             text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
             nk_widget_text(_out_, (nk_rect)(*label), name, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
         }
 
-        public static void nk_draw_color_picker(nk_command_buffer o, nk_rect* matrix, nk_rect* hue_bar,
+        public static void nk_draw_color_picker(NkCommandBuffer o, nk_rect* matrix, nk_rect* hue_bar,
             nk_rect* alpha_bar, nk_colorf col)
         {
             nk_color black = (nk_color)(nk_black);
@@ -1144,38 +1144,38 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_push_table(nk_window win, nk_table tbl)
+        public static void nk_push_table(NkWindow win, nk_table tbl)
         {
-            if (win.tables == null)
+            if (win.Tables == null)
             {
-                win.tables = tbl;
+                win.Tables = tbl;
                 tbl.next = null;
                 tbl.prev = null;
                 tbl.size = (uint)(0);
-                win.table_count = (uint)(1);
+                win.TableCount = (uint)(1);
                 return;
             }
 
-            win.tables.prev = tbl;
-            tbl.next = win.tables;
+            win.Tables.prev = tbl;
+            tbl.next = win.Tables;
             tbl.prev = null;
             tbl.size = (uint)(0);
-            win.tables = tbl;
-            win.table_count++;
+            win.Tables = tbl;
+            win.TableCount++;
         }
 
-        public static void nk_remove_table(nk_window win, nk_table tbl)
+        public static void nk_remove_table(NkWindow win, nk_table tbl)
         {
-            if ((win.tables) == (tbl)) win.tables = tbl.next;
+            if ((win.Tables) == (tbl)) win.Tables = tbl.next;
             if ((tbl.next) != null) tbl.next.prev = tbl.prev;
             if ((tbl.prev) != null) tbl.prev.next = tbl.next;
             tbl.next = null;
             tbl.prev = null;
         }
 
-        public static uint* nk_find_value(nk_window win, uint name)
+        public static uint* nk_find_value(NkWindow win, uint name)
         {
-            nk_table iter = win.tables;
+            nk_table iter = win.Tables;
             while ((iter) != null)
             {
                 uint i = (uint)(0);
@@ -1184,7 +1184,7 @@ namespace NuklearSharp
                 {
                     if ((iter.keys[i]) == (name))
                     {
-                        iter.seq = (uint)(win.seq);
+                        iter.seq = (uint)(win.Seq);
                         return (uint*)iter.values + i;
                     }
                 }

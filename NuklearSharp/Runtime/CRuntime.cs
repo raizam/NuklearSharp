@@ -4,53 +4,53 @@ namespace NuklearSharp
 {
     internal static unsafe class CRuntime
     {
-        public const long DBL_EXP_MASK = 0x7ff0000000000000L;
-        public const int DBL_MANT_BITS = 52;
-        public const long DBL_SGN_MASK = -1 - 0x7fffffffffffffffL;
-        public const long DBL_MANT_MASK = 0x000fffffffffffffL;
-        public const long DBL_EXP_CLR_MASK = DBL_SGN_MASK | DBL_MANT_MASK;
+        public const long DblExpMask = 0x7ff0000000000000L;
+        public const int DblMantBits = 52;
+        public const long DblSgnMask = -1 - 0x7fffffffffffffffL;
+        public const long DblMantMask = 0x000fffffffffffffL;
+        public const long DblExpClrMask = DblSgnMask | DblMantMask;
 
-        public static void* malloc(ulong size)
+        public static void* Malloc(ulong size)
         {
             return Operations.Malloc((long)size);
         }
 
-        public static void memcpy(void* a, void* b, long size)
+        public static void Memcpy(void* a, void* b, long size)
         {
             Operations.Memcpy(a, b, size);
         }
 
-        public static void memcpy(void* a, void* b, ulong size)
+        public static void Memcpy(void* a, void* b, ulong size)
         {
-            memcpy(a, b, (long)size);
+            Memcpy(a, b, (long)size);
         }
 
-        public static void memmove(void* a, void* b, long size)
+        public static void Memmove(void* a, void* b, long size)
         {
             Operations.MemMove(a, b, size);
         }
 
-        public static void memmove(void* a, void* b, ulong size)
+        public static void Memmove(void* a, void* b, ulong size)
         {
-            memmove(a, b, (long)size);
+            Memmove(a, b, (long)size);
         }
 
-        public static int memcmp(void* a, void* b, long size)
+        public static int Memcmp(void* a, void* b, long size)
         {
             return Operations.Memcmp(a, b, size);
         }
 
-        public static int memcmp(void* a, void* b, ulong size)
+        public static int Memcmp(void* a, void* b, ulong size)
         {
-            return memcmp(a, b, (long)size);
+            return Memcmp(a, b, (long)size);
         }
 
-        public static void free(void* a)
+        public static void Free(void* a)
         {
             Operations.Free(a);
         }
 
-        public static void memset(void* ptr, int value, long size)
+        public static void Memset(void* ptr, int value, long size)
         {
             byte* bptr = (byte*)ptr;
             var bval = (byte)value;
@@ -60,9 +60,9 @@ namespace NuklearSharp
             }
         }
 
-        public static void memset(void* ptr, int value, ulong size)
+        public static void Memset(void* ptr, int value, ulong size)
         {
-            memset(ptr, value, (long)size);
+            Memset(ptr, value, (long)size);
         }
 
         public static uint _lrotl(uint x, int y)
@@ -70,17 +70,17 @@ namespace NuklearSharp
             return (x << y) | (x >> (32 - y));
         }
 
-        public static void* realloc(void* ptr, long newSize)
+        public static void* Realloc(void* ptr, long newSize)
         {
             return Operations.Realloc(ptr, newSize);
         }
 
-        public static void* realloc(void* ptr, ulong newSize)
+        public static void* Realloc(void* ptr, ulong newSize)
         {
-            return realloc(ptr, (long)newSize);
+            return Realloc(ptr, (long)newSize);
         }
 
-        public static int abs(int v)
+        public static int Abs(int v)
         {
             return Math.Abs(v);
         }
@@ -91,10 +91,10 @@ namespace NuklearSharp
         /// <param name="number"></param>
         /// <param name="exponent"></param>
         /// <returns></returns>
-        public static double frexp(double number, int* exponent)
+        public static double Frexp(double number, int* exponent)
         {
             var bits = BitConverter.DoubleToInt64Bits(number);
-            var exp = (int)((bits & DBL_EXP_MASK) >> DBL_MANT_BITS);
+            var exp = (int)((bits & DblExpMask) >> DblMantBits);
             *exponent = 0;
 
             if (exp == 0x7ff || number == 0D)
@@ -108,63 +108,63 @@ namespace NuklearSharp
                     // Subnormal, scale number so that it is in [1, 2).
                     number *= BitConverter.Int64BitsToDouble(0x4350000000000000L); // 2^54
                     bits = BitConverter.DoubleToInt64Bits(number);
-                    exp = (int)((bits & DBL_EXP_MASK) >> DBL_MANT_BITS);
+                    exp = (int)((bits & DblExpMask) >> DblMantBits);
                     *exponent = exp - 1022 - 54;
                 }
                 // Set exponent to -1 so that number is in [0.5, 1).
-                number = BitConverter.Int64BitsToDouble((bits & DBL_EXP_CLR_MASK) | 0x3fe0000000000000L);
+                number = BitConverter.Int64BitsToDouble((bits & DblExpClrMask) | 0x3fe0000000000000L);
             }
 
             return number;
         }
 
-        public static double pow(double a, double b)
+        public static double Pow(double a, double b)
         {
             return Math.Pow(a, b);
         }
 
-        public static float fabs(double a)
+        public static float Fabs(double a)
         {
             return (float)Math.Abs(a);
         }
 
-        public static double ceil(double a)
+        public static double Ceil(double a)
         {
             return Math.Ceiling(a);
         }
 
 
-        public static double floor(double a)
+        public static double Floor(double a)
         {
             return Math.Floor(a);
         }
 
-        public static double log(double value)
+        public static double Log(double value)
         {
             return Math.Log(value);
         }
 
-        public static double exp(double value)
+        public static double Exp(double value)
         {
             return Math.Exp(value);
         }
 
-        public static double cos(double value)
+        public static double Cos(double value)
         {
             return Math.Cos(value);
         }
 
-        public static double acos(double value)
+        public static double Acos(double value)
         {
             return Math.Acos(value);
         }
 
-        public static double sin(double value)
+        public static double Sin(double value)
         {
             return Math.Sin(value);
         }
 
-        public static int memcmp(byte* a, byte[] b, ulong size)
+        public static int Memcmp(byte* a, byte[] b, ulong size)
         {
             fixed (void* bptr = b)
             {
@@ -172,14 +172,14 @@ namespace NuklearSharp
             }
         }
 
-        public static double ldexp(double number, int exponent)
+        public static double Ldexp(double number, int exponent)
         {
             return number * Math.Pow(2, exponent);
         }
 
         public delegate int QSortComparer(void* a, void* b);
 
-        private static void qsortSwap(byte* data, long size, long pos1, long pos2)
+        private static void QsortSwap(byte* data, long size, long pos1, long pos2)
         {
             var a = data + size * pos1;
             var b = data + size * pos2;
@@ -195,7 +195,7 @@ namespace NuklearSharp
             }
         }
 
-        private static long qsortPartition(byte* data, long size, QSortComparer comparer, long left, long right)
+        private static long QsortPartition(byte* data, long size, QSortComparer comparer, long left, long right)
         {
             void* pivot = data + size * left;
             var i = left - 1;
@@ -217,38 +217,38 @@ namespace NuklearSharp
                     return j;
                 }
 
-                qsortSwap(data, size, i, j);
+                QsortSwap(data, size, i, j);
             }
         }
 
 
-        private static void qsortInternal(byte* data, long size, QSortComparer comparer, long left, long right)
+        private static void QsortInternal(byte* data, long size, QSortComparer comparer, long left, long right)
         {
             if (left < right)
             {
-                var p = qsortPartition(data, size, comparer, left, right);
+                var p = QsortPartition(data, size, comparer, left, right);
 
-                qsortInternal(data, size, comparer, left, p);
-                qsortInternal(data, size, comparer, p + 1, right);
+                QsortInternal(data, size, comparer, left, p);
+                QsortInternal(data, size, comparer, p + 1, right);
             }
         }
 
-        public static void qsort(void* data, ulong count, ulong size, QSortComparer comparer)
+        public static void Qsort(void* data, ulong count, ulong size, QSortComparer comparer)
         {
-            qsortInternal((byte*)data, (long)size, comparer, 0, (long)count - 1);
+            QsortInternal((byte*)data, (long)size, comparer, 0, (long)count - 1);
         }
 
-        public static double sqrt(double val)
+        public static double Sqrt(double val)
         {
             return Math.Sqrt(val);
         }
 
-        public static double fmod(double x, double y)
+        public static double Fmod(double x, double y)
         {
             return x % y;
         }
 
-        public static ulong strlen(sbyte* str)
+        public static ulong Strlen(sbyte* str)
         {
             var ptr = str;
 

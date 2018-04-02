@@ -6,7 +6,7 @@ namespace NuklearSharp
 {
     public unsafe class FontAtlasWrapper
     {
-        private readonly Nuklear.nk_font_atlas _atlas = new Nuklear.nk_font_atlas();
+        private readonly Nk.NkFontAtlas _atlas = new Nk.NkFontAtlas();
         private readonly BaseContext _context;
 
         public FontAtlasWrapper(BaseContext context)
@@ -18,17 +18,17 @@ namespace NuklearSharp
 
             _context = context;
 
-            Nuklear.nk_font_atlas_begin(_atlas);
+            Nk.nk_font_atlas_begin(_atlas);
         }
 
-        public Nuklear.nk_font AddDefaultFont(float height)
+        public Nk.NkFont AddDefaultFont(float height)
         {
-            return Nuklear.nk_font_atlas_add_default(_atlas, height, null);
+            return Nk.nk_font_atlas_add_default(_atlas, height, null);
         }
 
-        public Nuklear.nk_font AddFont(Stream input, float height)
+        public Nk.NkFont AddFont(Stream input, float height)
         {
-            Nuklear.nk_font font;
+            Nk.NkFont font;
             using (var memoryStream = new MemoryStream())
             {
                 input.CopyTo(memoryStream);
@@ -36,26 +36,26 @@ namespace NuklearSharp
 
                 fixed (void* ptr = bytes)
                 {
-                    font = Nuklear.nk_font_atlas_add_from_memory(_atlas, ptr, (ulong)bytes.Length, height, null);
+                    font = Nk.nk_font_atlas_add_from_memory(_atlas, ptr, (ulong)bytes.Length, height, null);
                 }
             }
 
             return font;
         }
 
-        public Nuklear.nk_draw_null_texture Bake()
+        public Nk.nk_draw_null_texture Bake()
         {
             int w = 0, h = 0;
 
-            var image = (int*)Nuklear.nk_font_atlas_bake(_atlas, ref w, ref h, Nuklear.NK_FONT_ATLAS_RGBA32);
+            var image = (int*)Nk.nk_font_atlas_bake(_atlas, ref w, ref h, Nk.NK_FONT_ATLAS_RGBA32);
             var buffSize = w * h * 4;
             var arr = new byte[buffSize];
             Marshal.Copy((IntPtr)image, arr, 0, buffSize);
 
             var textureId = _context.CreateTexture(w, h, arr);
 
-            Nuklear.nk_draw_null_texture result;
-            Nuklear.nk_font_atlas_end(_atlas, new Nuklear.nk_handle { id = textureId }, &result);
+            Nk.nk_draw_null_texture result;
+            Nk.nk_font_atlas_end(_atlas, new Nk.NkHandle { id = textureId }, &result);
 
             return result;
         }

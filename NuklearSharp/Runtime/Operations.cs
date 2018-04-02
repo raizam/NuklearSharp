@@ -4,12 +4,12 @@ namespace NuklearSharp
 {
     internal static unsafe class Operations
     {
-        internal static ConcurrentDictionary<long, Pointer> _pointers = new ConcurrentDictionary<long, Pointer>();
+        internal static ConcurrentDictionary<long, Pointer> Pointers = new ConcurrentDictionary<long, Pointer>();
 
         internal static void* Malloc(long size)
         {
             var result = new PinnedArray<byte>(size);
-            _pointers[(long)result.Ptr] = result;
+            Pointers[(long)result.Ptr] = result;
 
             return result.Ptr;
         }
@@ -28,15 +28,15 @@ namespace NuklearSharp
         {
             using (var temp = new PinnedArray<byte>(size))
             {
-                CRuntime.memcpy(temp.Ptr, b, size);
-                CRuntime.memcpy(a, temp.Ptr, size);
+                CRuntime.Memcpy(temp.Ptr, b, size);
+                CRuntime.Memcpy(a, temp.Ptr, size);
             }
         }
 
         internal static void Free(void* a)
         {
             Pointer pointer;
-            if (!_pointers.TryRemove((long)a, out pointer))
+            if (!Pointers.TryRemove((long)a, out pointer))
             {
                 return;
             }
@@ -47,7 +47,7 @@ namespace NuklearSharp
         internal static void* Realloc(void* a, long newSize)
         {
             Pointer pointer;
-            if (!_pointers.TryGetValue((long)a, out pointer))
+            if (!Pointers.TryGetValue((long)a, out pointer))
             {
                 // Allocate new
                 return Malloc(newSize);
@@ -60,9 +60,9 @@ namespace NuklearSharp
             }
 
             var result = Malloc(newSize);
-            CRuntime.memcpy(result, a, pointer.Size);
+            CRuntime.Memcpy(result, a, pointer.Size);
 
-            _pointers.TryRemove((long)pointer.Ptr, out pointer);
+            Pointers.TryRemove((long)pointer.Ptr, out pointer);
             pointer.Dispose();
 
             return result;

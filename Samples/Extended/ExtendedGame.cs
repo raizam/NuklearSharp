@@ -65,12 +65,12 @@ namespace Extended
             }
         }
 
-        private Nuklear.nk_image LoadImage(string path)
+        private Nk.nk_image LoadImage(string path)
         {
             using (var stream = File.OpenRead(GetAssetPath(path)))
             {
                 var texture = Texture2D.FromStream(GraphicsDevice, stream);
-                var result = Nuklear.nk_image_id(_contextWrapper.CreateTexture(texture));
+                var result = Nk.nk_image_id(_contextWrapper.CreateTexture(texture));
 
                 result.w = (ushort)texture.Width;
                 result.h = (ushort)texture.Height;
@@ -101,52 +101,52 @@ namespace Extended
 
             using (var stream = new MemoryStream(fontData))
             {
-                _media.font_14 = fontAtlas.AddFont(stream, 14);
+                _media.Font14 = fontAtlas.AddFont(stream, 14);
             }
 
             using (var stream = new MemoryStream(fontData))
             {
-                _media.font_18 = fontAtlas.AddFont(stream, 18);
+                _media.Font18 = fontAtlas.AddFont(stream, 18);
             }
 
             using (var stream = new MemoryStream(fontData))
             {
-                _media.font_20 = fontAtlas.AddFont(stream, 20);
+                _media.Font20 = fontAtlas.AddFont(stream, 20);
             }
 
             using (var stream = new MemoryStream(fontData))
             {
-                _media.font_22 = fontAtlas.AddFont(stream, 22);
+                _media.Font22 = fontAtlas.AddFont(stream, 22);
             }
 
-            _contextWrapper.ConvertConfig._null_ = fontAtlas.Bake();
+            _contextWrapper.ConvertConfig.Null = fontAtlas.Bake();
 
-            _media.uncheckd = LoadImage("Icons/unchecked.png");
-            _media.checkd = LoadImage("Icons/checked.png");
-            _media.rocket = LoadImage("Icons/rocket.png");
-            _media.cloud = LoadImage("Icons/cloud.png");
-            _media.pen = LoadImage("Icons/pen.png");
-            _media.play = LoadImage("Icons/play.png");
-            _media.pause = LoadImage("Icons/pause.png");
-            _media.stop = LoadImage("Icons/stop.png");
-            _media.next = LoadImage("Icons/next.png");
-            _media.prev = LoadImage("Icons/prev.png");
-            _media.tools = LoadImage("Icons/tools.png");
-            _media.dir = LoadImage("Icons/directory.png");
-            _media.copy = LoadImage("Icons/copy.png");
-            _media.convert = LoadImage("Icons/export.png");
-            _media.del = LoadImage("Icons/delete.png");
-            _media.edit = LoadImage("Icons/edit.png");
-            _media.menu[0] = LoadImage("Icons/home.png");
-            _media.menu[1] = LoadImage("Icons/phone.png");
-            _media.menu[2] = LoadImage("Icons/plane.png");
-            _media.menu[3] = LoadImage("Icons/wifi.png");
-            _media.menu[4] = LoadImage("Icons/settings.png");
-            _media.menu[5] = LoadImage("Icons/volume.png");
+            _media.Uncheckd = LoadImage("Icons/unchecked.png");
+            _media.Checkd = LoadImage("Icons/checked.png");
+            _media.Rocket = LoadImage("Icons/rocket.png");
+            _media.Cloud = LoadImage("Icons/cloud.png");
+            _media.Pen = LoadImage("Icons/pen.png");
+            _media.Play = LoadImage("Icons/play.png");
+            _media.Pause = LoadImage("Icons/pause.png");
+            _media.Stop = LoadImage("Icons/stop.png");
+            _media.Next = LoadImage("Icons/next.png");
+            _media.Prev = LoadImage("Icons/prev.png");
+            _media.Tools = LoadImage("Icons/tools.png");
+            _media.Dir = LoadImage("Icons/directory.png");
+            _media.Copy = LoadImage("Icons/copy.png");
+            _media.Convert = LoadImage("Icons/export.png");
+            _media.Del = LoadImage("Icons/delete.png");
+            _media.Edit = LoadImage("Icons/edit.png");
+            _media.Menu[0] = LoadImage("Icons/home.png");
+            _media.Menu[1] = LoadImage("Icons/phone.png");
+            _media.Menu[2] = LoadImage("Icons/plane.png");
+            _media.Menu[3] = LoadImage("Icons/wifi.png");
+            _media.Menu[4] = LoadImage("Icons/settings.png");
+            _media.Menu[5] = LoadImage("Icons/volume.png");
 
-            for (var i = 0; i < _media.images.Length; ++i)
+            for (var i = 0; i < _media.Images.Length; ++i)
             {
-                _media.images[i] = LoadImage("Images/image" + (i + 1) + ".png");
+                _media.Images[i] = LoadImage("Images/image" + (i + 1) + ".png");
             }
 
             base.Initialize();
@@ -197,9 +197,9 @@ namespace Extended
             GraphicsDevice.Clear(new Color(0.3f, 0.3f, 0.3f));
 
             // TODO: Add your drawing code here
-            GUI.basic_demo(_contextWrapper, _media);
-            GUI.button_demo(_contextWrapper, _media);
-            GUI.grid_demo(_contextWrapper, _media);
+            Gui.basic_demo(_contextWrapper, _media);
+            Gui.button_demo(_contextWrapper, _media);
+            Gui.grid_demo(_contextWrapper, _media);
 
             _contextWrapper.Draw();
 

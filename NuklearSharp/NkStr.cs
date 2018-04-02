@@ -2,48 +2,48 @@
 {
     public unsafe class NkStr
     {
-        public string str;
+        public string Str;
 
-        public int len
+        public int Len
         {
-            get { return str == null ? 0 : str.Length; }
+            get { return Str == null ? 0 : Str.Length; }
         }
 
         public char this[ulong index]
         {
-            get { return str[(int)index]; }
+            get { return Str[(int)index]; }
         }
 
         public char this[int index]
         {
-            get { return str[index]; }
+            get { return Str[index]; }
         }
 
-        public int append(char* ptr, int l)
+        public int Append(char* ptr, int l)
         {
             if (ptr == null || (l == 0)) return 0;
 
             var s2 = new string(ptr);
-            str += s2;
+            Str += s2;
             return l;
         }
 
-        public int append(char* ptr)
+        public int Append(char* ptr)
         {
-            return append(ptr, Nuklear.nk_strlen(ptr));
+            return Append(ptr, Nk.nk_strlen(ptr));
         }
 
         public int insert_at(int pos, char* ptr, int l)
         {
             var s2 = new string(ptr);
 
-            if (str == null)
+            if (Str == null)
             {
-                str = s2;
+                Str = s2;
             }
             else
             {
-                str = str.Substring(0, pos) + s2 + str.Substring(pos);
+                Str = Str.Substring(0, pos) + s2 + Str.Substring(pos);
             }
 
             return l;
@@ -51,21 +51,21 @@
 
         public int insert_at(int pos, char* ptr)
         {
-            return insert_at(pos, ptr, Nuklear.nk_strlen(ptr));
+            return insert_at(pos, ptr, Nk.nk_strlen(ptr));
         }
 
-        public void remove(int l)
+        public void Remove(int l)
         {
-            if (len == 0) return;
+            if (Len == 0) return;
 
-            str = str.Substring(0, str.Length - l);
+            Str = Str.Substring(0, Str.Length - l);
         }
 
         public void remove_at(int pos, int l)
         {
             if (l == 0) return;
 
-            str = str.Substring(0, pos) + str.Substring(pos + l);
+            Str = Str.Substring(0, pos) + Str.Substring(pos + l);
         }
     }
 }

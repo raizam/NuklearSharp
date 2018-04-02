@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_text_undo_record
@@ -16,7 +16,7 @@ namespace NuklearSharp
 
         public unsafe partial class nk_text_edit
         {
-            public nk_clipboard clip = new nk_clipboard();
+            public NkClipboard clip = new NkClipboard();
             public NkStr _string_ = new NkStr();
             public NkPluginFilter filter;
             public nk_vec2 scrollbar = new nk_vec2();
@@ -31,7 +31,7 @@ namespace NuklearSharp
             public byte active;
             public byte padding1;
             public float preferred_x;
-            public nk_text_undo_state undo = new nk_text_undo_state();
+            public NkTextUndoState undo = new NkTextUndoState();
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -56,22 +56,22 @@ namespace NuklearSharp
             public int num_chars;
         }
 
-        public static float nk_textedit_get_width(nk_text_edit edit, int line_start, int char_id, nk_user_font font)
+        public static float nk_textedit_get_width(nk_text_edit edit, int line_start, int char_id, NkUserFont font)
         {
-            fixed (char* str2 = edit._string_.str)
+            fixed (char* str2 = edit._string_.Str)
             {
                 char* str = str2 + line_start + char_id;
-                return (float)(font.width((nk_handle)(font.userdata), (float)(font.height), str, 1));
+                return (float)(font.Width((NkHandle)(font.Userdata), (float)(font.Height), str, 1));
             }
         }
 
         public static void nk_textedit_layout_row(nk_text_edit_row* r, nk_text_edit edit, int line_start_id, float row_height,
-            nk_user_font font)
+            NkUserFont font)
         {
             int glyphs = (int)(0);
             char* remaining;
-            int len = (int)(edit._string_.len);
-            fixed (char* str2 = edit._string_.str)
+            int len = (int)(edit._string_.Len);
+            fixed (char* str2 = edit._string_.Str)
             {
                 char* end = str2 + len;
 
@@ -89,10 +89,10 @@ namespace NuklearSharp
             }
         }
 
-        public static int nk_textedit_locate_coord(nk_text_edit edit, float x, float y, nk_user_font font, float row_height)
+        public static int nk_textedit_locate_coord(nk_text_edit edit, float x, float y, NkUserFont font, float row_height)
         {
             nk_text_edit_row r = new nk_text_edit_row();
-            int n = (int)(edit._string_.len);
+            int n = (int)(edit._string_.Len);
             float base_y = (float)(0);
             float prev_x;
             int i = (int)(0);
@@ -131,7 +131,7 @@ namespace NuklearSharp
             else return (int)(i + r.num_chars);
         }
 
-        public static void nk_textedit_click(nk_text_edit state, float x, float y, nk_user_font font, float row_height)
+        public static void nk_textedit_click(nk_text_edit state, float x, float y, NkUserFont font, float row_height)
         {
             state.cursor = (int)(nk_textedit_locate_coord(state, (float)(x), (float)(y), font, (float)(row_height)));
             state.select_start = (int)(state.cursor);
@@ -139,7 +139,7 @@ namespace NuklearSharp
             state.has_preferred_x = (byte)(0);
         }
 
-        public static void nk_textedit_drag(nk_text_edit state, float x, float y, nk_user_font font, float row_height)
+        public static void nk_textedit_drag(nk_text_edit state, float x, float y, NkUserFont font, float row_height)
         {
             int p = (int)(nk_textedit_locate_coord(state, (float)(x), (float)(y), font, (float)(row_height)));
             if ((state.select_start) == (state.select_end)) state.select_start = (int)(state.cursor);
@@ -147,11 +147,11 @@ namespace NuklearSharp
         }
 
         public static void nk_textedit_find_charpos(nk_text_find* find, nk_text_edit state, int n, int single_line,
-            nk_user_font font, float row_height)
+            NkUserFont font, float row_height)
         {
             nk_text_edit_row r = new nk_text_edit_row();
             int prev_start = (int)(0);
-            int z = (int)(state._string_.len);
+            int z = (int)(state._string_.Len);
             int i = (int)(0);
             int first;
             nk_zero(&r, (ulong)(sizeof(nk_text_edit_row)));
@@ -203,7 +203,7 @@ namespace NuklearSharp
 
         public static void nk_textedit_clamp(nk_text_edit state)
         {
-            int n = (int)(state._string_.len);
+            int n = (int)(state._string_.Len);
             if (((state).select_start != (state).select_end))
             {
                 if ((state.select_start) > (n)) state.select_start = (int)(n);
@@ -280,8 +280,8 @@ namespace NuklearSharp
         public static int nk_is_word_boundary(nk_text_edit state, int idx)
         {
             if (idx <= 0) return (int)(1);
-            if (state._string_.len < idx) return (int)(1);
-            char c = state._string_.str[idx];
+            if (state._string_.Len < idx) return (int)(1);
+            char c = state._string_.Str[idx];
             return
                 (int)
                     ((((((((((((c) == (' ')) || ((c) == ('	'))) || ((c) == (0x3000))) || ((c) == (','))) || ((c) == (';'))) ||
@@ -304,7 +304,7 @@ namespace NuklearSharp
 
         public static int nk_textedit_move_to_word_next(nk_text_edit state)
         {
-            int len = (int)(state._string_.len);
+            int len = (int)(state._string_.Len);
             int c = (int)(state.cursor + 1);
             while (((c) < (len)) && (nk_is_word_boundary(state, (int)(c)) == 0))
             {
@@ -350,7 +350,7 @@ namespace NuklearSharp
                 return (int)(1);
             }
 
-            if ((state.undo.undo_point) != 0) --state.undo.undo_point;
+            if ((state.undo.UndoPoint) != 0) --state.undo.UndoPoint;
             return (int)(0);
         }
 
@@ -366,7 +366,7 @@ namespace NuklearSharp
                 if ((unicode) == (127)) goto next;
                 if (((unicode) == ('\n')) && ((state.single_line) != 0)) goto next;
                 if (((state.filter) != null) && (state.filter(state, unicode) == 0)) goto next;
-                if ((!((state).select_start != (state).select_end)) && ((state.cursor) < (state._string_.len)))
+                if ((!((state).select_start != (state).select_end)) && ((state.cursor) < (state._string_.Len)))
                 {
                     if ((state.mode) == (NK_TEXT_EDIT_MODE_REPLACE))
                     {
@@ -396,7 +396,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_textedit_key(nk_text_edit state, int key, int shift_mod, nk_user_font font, float row_height)
+        public static void nk_textedit_key(nk_text_edit state, int key, int shift_mod, NkUserFont font, float row_height)
         {
             retry:
             ;
@@ -582,7 +582,7 @@ namespace NuklearSharp
                     if (((state).select_start != (state).select_end)) nk_textedit_delete_selection(state);
                     else
                     {
-                        int n = (int)(state._string_.len);
+                        int n = (int)(state._string_.Len);
                         if ((state.cursor) < (n)) nk_textedit_delete(state, (int)(state.cursor), (int)(1));
                     }
                     state.has_preferred_x = (byte)(0);
@@ -618,12 +618,12 @@ namespace NuklearSharp
                     if ((shift_mod) != 0)
                     {
                         nk_textedit_prep_selection_at_cursor(state);
-                        state.cursor = (int)(state.select_end = (int)(state._string_.len));
+                        state.cursor = (int)(state.select_end = (int)(state._string_.Len));
                         state.has_preferred_x = (byte)(0);
                     }
                     else
                     {
-                        state.cursor = (int)(state._string_.len);
+                        state.cursor = (int)(state._string_.Len);
                         state.select_start = (int)(state.select_end = (int)(0));
                         state.has_preferred_x = (byte)(0);
                     }
@@ -635,7 +635,7 @@ namespace NuklearSharp
                             nk_text_find find = new nk_text_find();
                             nk_textedit_clamp(state);
                             nk_textedit_prep_selection_at_cursor(state);
-                            if (((state._string_.len) != 0) && ((state.cursor) == (state._string_.len))) --state.cursor;
+                            if (((state._string_.Len) != 0) && ((state.cursor) == (state._string_.Len))) --state.cursor;
                             nk_textedit_find_charpos(&find, state, (int)(state.cursor), (int)(state.single_line), font, (float)(row_height));
                             state.cursor = (int)(state.select_end = (int)(find.first_char));
                             state.has_preferred_x = (byte)(0);
@@ -643,7 +643,7 @@ namespace NuklearSharp
                         else
                         {
                             nk_text_find find = new nk_text_find();
-                            if (((state._string_.len) != 0) && ((state.cursor) == (state._string_.len))) --state.cursor;
+                            if (((state._string_.Len) != 0) && ((state.cursor) == (state._string_.Len))) --state.cursor;
                             nk_textedit_clamp(state);
                             nk_textedit_move_to_first(state);
                             nk_textedit_find_charpos(&find, state, (int)(state.cursor), (int)(state.single_line), font, (float)(row_height));
@@ -683,88 +683,88 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_textedit_flush_redo(nk_text_undo_state state)
+        public static void nk_textedit_flush_redo(NkTextUndoState state)
         {
-            state.redo_point = (short)(99);
-            state.redo_char_point = (short)(999);
+            state.RedoPoint = (short)(99);
+            state.RedoCharPoint = (short)(999);
         }
 
-        public static void nk_textedit_discard_undo(nk_text_undo_state state)
+        public static void nk_textedit_discard_undo(NkTextUndoState state)
         {
-            if ((state.undo_point) > (0))
+            if ((state.UndoPoint) > (0))
             {
-                if ((state.undo_rec[0].char_storage) >= (0))
+                if ((state.UndoRec[0].char_storage) >= (0))
                 {
-                    int n = (int)(state.undo_rec[0].insert_length);
+                    int n = (int)(state.UndoRec[0].insert_length);
                     int i;
-                    state.undo_char_point = ((short)(state.undo_char_point - n));
-                    nk_memcopy(state.undo_char, (char*)(char*)state.undo_char + n,
-                        (ulong)((ulong)(state.undo_char_point) * sizeof(uint)));
-                    for (i = (int)(0); (i) < (state.undo_point); ++i)
+                    state.UndoCharPoint = ((short)(state.UndoCharPoint - n));
+                    nk_memcopy(state.UndoChar, (char*)(char*)state.UndoChar + n,
+                        (ulong)((ulong)(state.UndoCharPoint) * sizeof(uint)));
+                    for (i = (int)(0); (i) < (state.UndoPoint); ++i)
                     {
-                        if ((((nk_text_undo_record*)state.undo_rec + i)->char_storage) >= (0))
-                            ((nk_text_undo_record*)state.undo_rec + i)->char_storage =
-                                ((short)(((nk_text_undo_record*)state.undo_rec + i)->char_storage - n));
+                        if ((((nk_text_undo_record*)state.UndoRec + i)->char_storage) >= (0))
+                            ((nk_text_undo_record*)state.UndoRec + i)->char_storage =
+                                ((short)(((nk_text_undo_record*)state.UndoRec + i)->char_storage - n));
                     }
                 }
-                --state.undo_point;
-                nk_memcopy(state.undo_rec, (nk_text_undo_record*)state.undo_rec + 1,
-                    (ulong)((ulong)(state.undo_point) * (ulong)sizeof(nk_text_undo_record)));
+                --state.UndoPoint;
+                nk_memcopy(state.UndoRec, (nk_text_undo_record*)state.UndoRec + 1,
+                    (ulong)((ulong)(state.UndoPoint) * (ulong)sizeof(nk_text_undo_record)));
             }
 
         }
 
-        public static void nk_textedit_discard_redo(nk_text_undo_state state)
+        public static void nk_textedit_discard_redo(NkTextUndoState state)
         {
             ulong num;
             int k = (int)(99 - 1);
-            if (state.redo_point <= k)
+            if (state.RedoPoint <= k)
             {
-                if ((state.undo_rec[k].char_storage) >= (0))
+                if ((state.UndoRec[k].char_storage) >= (0))
                 {
-                    int n = (int)(state.undo_rec[k].insert_length);
+                    int n = (int)(state.UndoRec[k].insert_length);
                     int i;
-                    state.redo_char_point = ((short)(state.redo_char_point + n));
-                    num = ((ulong)(999 - state.redo_char_point));
-                    nk_memcopy((char*)state.undo_char + state.redo_char_point, (char*)state.undo_char + state.redo_char_point - n,
+                    state.RedoCharPoint = ((short)(state.RedoCharPoint + n));
+                    num = ((ulong)(999 - state.RedoCharPoint));
+                    nk_memcopy((char*)state.UndoChar + state.RedoCharPoint, (char*)state.UndoChar + state.RedoCharPoint - n,
                         (ulong)(num * sizeof(char)));
-                    for (i = (int)(state.redo_point); (i) < (k); ++i)
+                    for (i = (int)(state.RedoPoint); (i) < (k); ++i)
                     {
-                        if ((((nk_text_undo_record*)state.undo_rec + i)->char_storage) >= (0))
+                        if ((((nk_text_undo_record*)state.UndoRec + i)->char_storage) >= (0))
                         {
-                            ((nk_text_undo_record*)state.undo_rec + i)->char_storage =
-                                ((short)(((nk_text_undo_record*)state.undo_rec + i)->char_storage + n));
+                            ((nk_text_undo_record*)state.UndoRec + i)->char_storage =
+                                ((short)(((nk_text_undo_record*)state.UndoRec + i)->char_storage + n));
                         }
                     }
                 }
-                ++state.redo_point;
-                num = ((ulong)(99 - state.redo_point));
+                ++state.RedoPoint;
+                num = ((ulong)(99 - state.RedoPoint));
                 if ((num) != 0)
-                    nk_memcopy((nk_text_undo_record*)state.undo_rec + state.redo_point - 1,
-                        (nk_text_undo_record*)state.undo_rec + state.redo_point, (ulong)(num * (ulong)sizeof(nk_text_undo_record)));
+                    nk_memcopy((nk_text_undo_record*)state.UndoRec + state.RedoPoint - 1,
+                        (nk_text_undo_record*)state.UndoRec + state.RedoPoint, (ulong)(num * (ulong)sizeof(nk_text_undo_record)));
             }
 
         }
 
-        public static nk_text_undo_record* nk_textedit_create_undo_record(nk_text_undo_state state, int numchars)
+        public static nk_text_undo_record* nk_textedit_create_undo_record(NkTextUndoState state, int numchars)
         {
             nk_textedit_flush_redo(state);
-            if ((state.undo_point) == (99)) nk_textedit_discard_undo(state);
+            if ((state.UndoPoint) == (99)) nk_textedit_discard_undo(state);
             if ((numchars) > (999))
             {
-                state.undo_point = (short)(0);
-                state.undo_char_point = (short)(0);
+                state.UndoPoint = (short)(0);
+                state.UndoCharPoint = (short)(0);
                 return null;
             }
 
-            while ((state.undo_char_point + numchars) > (999))
+            while ((state.UndoCharPoint + numchars) > (999))
             {
                 nk_textedit_discard_undo(state);
             }
-            return (nk_text_undo_record*)state.undo_rec + (state.undo_point++);
+            return (nk_text_undo_record*)state.UndoRec + (state.UndoPoint++);
         }
 
-        public static char* nk_textedit_createundo(nk_text_undo_state state, int pos, int insert_len, int delete_len)
+        public static char* nk_textedit_createundo(NkTextUndoState state, int pos, int insert_len, int delete_len)
         {
             nk_text_undo_record* r = nk_textedit_create_undo_record(state, (int)(insert_len));
             if ((r) == (null)) return null;
@@ -778,45 +778,45 @@ namespace NuklearSharp
             }
             else
             {
-                r->char_storage = (short)(state.undo_char_point);
-                state.undo_char_point = ((short)(state.undo_char_point + insert_len));
-                return (char*)state.undo_char + r->char_storage;
+                r->char_storage = (short)(state.UndoCharPoint);
+                state.UndoCharPoint = ((short)(state.UndoCharPoint + insert_len));
+                return (char*)state.UndoChar + r->char_storage;
             }
 
         }
 
         public static void nk_textedit_undo(nk_text_edit state)
         {
-            nk_text_undo_state s = state.undo;
+            NkTextUndoState s = state.undo;
             nk_text_undo_record u = new nk_text_undo_record();
             nk_text_undo_record* r;
-            if ((s.undo_point) == (0)) return;
-            u = (nk_text_undo_record)(s.undo_rec[s.undo_point - 1]);
-            r = (nk_text_undo_record*)s.undo_rec + s.redo_point - 1;
+            if ((s.UndoPoint) == (0)) return;
+            u = (nk_text_undo_record)(s.UndoRec[s.UndoPoint - 1]);
+            r = (nk_text_undo_record*)s.UndoRec + s.RedoPoint - 1;
             r->char_storage = (short)(-1);
             r->insert_length = (short)(u.delete_length);
             r->delete_length = (short)(u.insert_length);
             r->where = (int)(u.where);
             if ((u.delete_length) != 0)
             {
-                if ((s.undo_char_point + u.delete_length) >= (999))
+                if ((s.UndoCharPoint + u.delete_length) >= (999))
                 {
                     r->insert_length = (short)(0);
                 }
                 else
                 {
                     int i;
-                    while ((s.undo_char_point + u.delete_length) > (s.redo_char_point))
+                    while ((s.UndoCharPoint + u.delete_length) > (s.RedoCharPoint))
                     {
                         nk_textedit_discard_redo(s);
-                        if ((s.redo_point) == (99)) return;
+                        if ((s.RedoPoint) == (99)) return;
                     }
-                    r = (nk_text_undo_record*)s.undo_rec + s.redo_point - 1;
-                    r->char_storage = ((short)(s.redo_char_point - u.delete_length));
-                    s.redo_char_point = ((short)(s.redo_char_point - u.delete_length));
+                    r = (nk_text_undo_record*)s.UndoRec + s.RedoPoint - 1;
+                    r->char_storage = ((short)(s.RedoCharPoint - u.delete_length));
+                    s.RedoCharPoint = ((short)(s.RedoCharPoint - u.delete_length));
                     for (i = (int)(0); (i) < (u.delete_length); ++i)
                     {
-                        s.undo_char[r->char_storage + i] = (char)(state._string_[(int)(u.where + i)]);
+                        s.UndoChar[r->char_storage + i] = (char)(state._string_[(int)(u.where + i)]);
                     }
                 }
                 state._string_.remove_at((int)(u.where), (int)(u.delete_length));
@@ -824,31 +824,31 @@ namespace NuklearSharp
 
             if ((u.insert_length) != 0)
             {
-                state._string_.insert_at((int)(u.where), (char*)s.undo_char + u.char_storage,
+                state._string_.insert_at((int)(u.where), (char*)s.UndoChar + u.char_storage,
                     (int)(u.insert_length));
-                s.undo_char_point = ((short)(s.undo_char_point - u.insert_length));
+                s.UndoCharPoint = ((short)(s.UndoCharPoint - u.insert_length));
             }
 
             state.cursor = (int)((short)(u.where + u.insert_length));
-            s.undo_point--;
-            s.redo_point--;
+            s.UndoPoint--;
+            s.RedoPoint--;
         }
 
         public static void nk_textedit_redo(nk_text_edit state)
         {
-            nk_text_undo_state s = state.undo;
+            NkTextUndoState s = state.undo;
             nk_text_undo_record* u;
             nk_text_undo_record r = new nk_text_undo_record();
-            if ((s.redo_point) == (99)) return;
-            u = (nk_text_undo_record*)s.undo_rec + s.undo_point;
-            r = (nk_text_undo_record)(s.undo_rec[s.redo_point]);
+            if ((s.RedoPoint) == (99)) return;
+            u = (nk_text_undo_record*)s.UndoRec + s.UndoPoint;
+            r = (nk_text_undo_record)(s.UndoRec[s.RedoPoint]);
             u->delete_length = (short)(r.insert_length);
             u->insert_length = (short)(r.delete_length);
             u->where = (int)(r.where);
             u->char_storage = (short)(-1);
             if ((r.delete_length) != 0)
             {
-                if ((s.undo_char_point + u->insert_length) > (s.redo_char_point))
+                if ((s.UndoCharPoint + u->insert_length) > (s.RedoCharPoint))
                 {
                     u->insert_length = (short)(0);
                     u->delete_length = (short)(0);
@@ -856,11 +856,11 @@ namespace NuklearSharp
                 else
                 {
                     int i;
-                    u->char_storage = (short)(s.undo_char_point);
-                    s.undo_char_point = ((short)(s.undo_char_point + u->insert_length));
+                    u->char_storage = (short)(s.UndoCharPoint);
+                    s.UndoCharPoint = ((short)(s.UndoCharPoint + u->insert_length));
                     for (i = (int)(0); (i) < (u->insert_length); ++i)
                     {
-                        s.undo_char[u->char_storage + i] = (char)(state._string_[(int)(u->where + i)]);
+                        s.UndoChar[u->char_storage + i] = (char)(state._string_[(int)(u->where + i)]);
                     }
                 }
                 state._string_.remove_at((int)(r.where), (int)(r.delete_length));
@@ -868,13 +868,13 @@ namespace NuklearSharp
 
             if ((r.insert_length) != 0)
             {
-                state._string_.insert_at((int)(r.where), (char*)s.undo_char + r.char_storage,
+                state._string_.insert_at((int)(r.where), (char*)s.UndoChar + r.char_storage,
                     (int)(r.insert_length));
             }
 
             state.cursor = (int)(r.where + r.insert_length);
-            s.undo_point++;
-            s.redo_point++;
+            s.UndoPoint++;
+            s.RedoPoint++;
         }
 
         public static void nk_textedit_makeundo_insert(nk_text_edit state, int where, int length)
@@ -910,10 +910,10 @@ namespace NuklearSharp
 
         public static void nk_textedit_clear_state(nk_text_edit state, int type, NkPluginFilter filter)
         {
-            state.undo.undo_point = (short)(0);
-            state.undo.undo_char_point = (short)(0);
-            state.undo.redo_point = (short)(99);
-            state.undo.redo_char_point = (short)(999);
+            state.undo.UndoPoint = (short)(0);
+            state.undo.UndoCharPoint = (short)(0);
+            state.undo.RedoPoint = (short)(99);
+            state.undo.RedoCharPoint = (short)(999);
             state.select_end = (int)(state.select_start = (int)(0));
             state.cursor = (int)(0);
             state.has_preferred_x = (byte)(0);
@@ -950,13 +950,13 @@ namespace NuklearSharp
         public static void nk_textedit_select_all(nk_text_edit state)
         {
             state.select_start = (int)(0);
-            state.select_end = (int)(state._string_.len);
+            state.select_end = (int)(state._string_.Len);
         }
 
         public static void nk_textedit_free(nk_text_edit state)
         {
             if (state == null) return;
-            state._string_.str = string.Empty;
+            state._string_.Str = string.Empty;
         }
 
         public static int nk_filter_default(nk_text_edit box, char unicode)

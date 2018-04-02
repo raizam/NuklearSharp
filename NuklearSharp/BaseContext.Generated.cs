@@ -6,316 +6,316 @@ namespace NuklearSharp
 {
     unsafe partial class BaseContext
     {
-        public uint Convert(NkBuffer<Nuklear.nk_draw_command> cmds, NkBuffer<byte> vertices,
+        public uint Convert(NkBuffer<Nk.nk_draw_command> cmds, NkBuffer<byte> vertices,
             NkBuffer<ushort> elements,
-            Nuklear.nk_convert_config config)
+            Nk.NkConvertConfig config)
         {
-            return Nuklear.nk_convert(_ctx, cmds, vertices, elements, config);
+            return Nk.nk_convert(_ctx, cmds, vertices, elements, config);
         }
 
         public void InputBegin()
         {
-            Nuklear.nk_input_begin(_ctx);
+            Nk.nk_input_begin(_ctx);
         }
 
         public void InputEnd()
         {
-            Nuklear.nk_input_end(_ctx);
+            Nk.nk_input_end(_ctx);
         }
 
         public void InputMotion(int x, int y)
         {
-            Nuklear.nk_input_motion(_ctx, x, y);
+            Nk.nk_input_motion(_ctx, x, y);
         }
 
         public void InputKey(int key, bool down)
         {
-            Nuklear.nk_input_key(_ctx, key, down ? 1 : 0);
+            Nk.nk_input_key(_ctx, key, down ? 1 : 0);
         }
 
         public void InputButton(int id, int x, int y, bool down)
         {
-            Nuklear.nk_input_button(_ctx, id, x, y, down ? 1 : 0);
+            Nk.nk_input_button(_ctx, id, x, y, down ? 1 : 0);
         }
 
-        public void InputScroll(Nuklear.nk_vec2 val)
+        public void InputScroll(Nk.nk_vec2 val)
         {
-            Nuklear.nk_input_scroll(_ctx, val);
+            Nk.nk_input_scroll(_ctx, val);
         }
 
         public void InputGlyph(string glyph)
         {
             fixed (char* glyph_ptr = glyph)
             {
-                Nuklear.nk_input_glyph(_ctx, glyph_ptr);
+                Nk.nk_input_glyph(_ctx, glyph_ptr);
             }
         }
 
         public void InputChar(char c)
         {
-            Nuklear.nk_input_char(_ctx, c);
+            Nk.nk_input_char(_ctx, c);
         }
 
         public void StyleDefault()
         {
-            Nuklear.nk_style_default(_ctx);
+            Nk.nk_style_default(_ctx);
         }
 
-        public void StyleFromTable(Nuklear.nk_color[] table)
+        public void StyleFromTable(Nk.nk_color[] table)
         {
-            Nuklear.nk_style_from_table(_ctx, table);
+            Nk.nk_style_from_table(_ctx, table);
         }
 
-        public void StyleSetFont(Nuklear.nk_user_font font)
+        public void StyleSetFont(Nk.NkUserFont font)
         {
-            Nuklear.nk_style_set_font(_ctx, font);
+            Nk.nk_style_set_font(_ctx, font);
         }
 
-        public bool StylePushFont(Nuklear.nk_user_font font)
+        public bool StylePushFont(Nk.NkUserFont font)
         {
-            return Nuklear.nk_style_push_font(_ctx, font) != 0;
+            return Nk.nk_style_push_font(_ctx, font) != 0;
         }
 
         public bool StylePopFont()
         {
-            return Nuklear.nk_style_pop_font(_ctx) != 0;
+            return Nk.nk_style_pop_font(_ctx) != 0;
         }
 
-        public bool StylePushStyleItem(Nuklear.nk_style_item address, Nuklear.nk_style_item value)
+        public bool StylePushStyleItem(Nk.NkStyleItem address, Nk.NkStyleItem value)
         {
-            return Nuklear.nk_style_push_style_item(_ctx, address, value) != 0;
+            return Nk.nk_style_push_style_item(_ctx, address, value) != 0;
         }
 
         public bool StylePushFloat(float* address, float value)
         {
-            return Nuklear.nk_style_push_float(_ctx, address, value) != 0;
+            return Nk.nk_style_push_float(_ctx, address, value) != 0;
         }
 
-        public bool StylePushVec2(Nuklear.nk_vec2* address, Nuklear.nk_vec2 value)
+        public bool StylePushVec2(Nk.nk_vec2* address, Nk.nk_vec2 value)
         {
-            return Nuklear.nk_style_push_vec2(_ctx, address, value) != 0;
+            return Nk.nk_style_push_vec2(_ctx, address, value) != 0;
         }
 
         public bool StylePushFlags(uint* address, uint value)
         {
-            return Nuklear.nk_style_push_flags(_ctx, address, value) != 0;
+            return Nk.nk_style_push_flags(_ctx, address, value) != 0;
         }
 
-        public bool StylePushColor(Nuklear.nk_color* address, Nuklear.nk_color value)
+        public bool StylePushColor(Nk.nk_color* address, Nk.nk_color value)
         {
-            return Nuklear.nk_style_push_color(_ctx, address, value) != 0;
+            return Nk.nk_style_push_color(_ctx, address, value) != 0;
         }
 
         public bool StylePopStyleItem()
         {
-            return Nuklear.nk_style_pop_style_item(_ctx) != 0;
+            return Nk.nk_style_pop_style_item(_ctx) != 0;
         }
 
         public bool StylePopFloat()
         {
-            return Nuklear.nk_style_pop_float(_ctx) != 0;
+            return Nk.nk_style_pop_float(_ctx) != 0;
         }
 
         public bool StylePopVec2()
         {
-            return Nuklear.nk_style_pop_vec2(_ctx) != 0;
+            return Nk.nk_style_pop_vec2(_ctx) != 0;
         }
 
         public bool StylePopFlags()
         {
-            return Nuklear.nk_style_pop_flags(_ctx) != 0;
+            return Nk.nk_style_pop_flags(_ctx) != 0;
         }
 
         public bool StylePopColor()
         {
-            return Nuklear.nk_style_pop_color(_ctx) != 0;
+            return Nk.nk_style_pop_color(_ctx) != 0;
         }
 
         public bool StyleSetCursor(int c)
         {
-            return Nuklear.nk_style_set_cursor(_ctx, c) != 0;
+            return Nk.nk_style_set_cursor(_ctx, c) != 0;
         }
 
         public void StyleShowCursor()
         {
-            Nuklear.nk_style_show_cursor(_ctx);
+            Nk.nk_style_show_cursor(_ctx);
         }
 
         public void StyleHideCursor()
         {
-            Nuklear.nk_style_hide_cursor(_ctx);
+            Nk.nk_style_hide_cursor(_ctx);
         }
 
-        public void StyleLoadCursor(int cursor, Nuklear.nk_cursor c)
+        public void StyleLoadCursor(int cursor, Nk.nk_cursor c)
         {
-            Nuklear.nk_style_load_cursor(_ctx, cursor, c);
+            Nk.nk_style_load_cursor(_ctx, cursor, c);
         }
 
-        public void StyleLoadAllCursors(Nuklear.nk_cursor[] cursors)
+        public void StyleLoadAllCursors(Nk.nk_cursor[] cursors)
         {
-            Nuklear.nk_style_load_all_cursors(_ctx, cursors);
+            Nk.nk_style_load_all_cursors(_ctx, cursors);
         }
 
-        public void Setup(Nuklear.nk_user_font font)
+        public void Setup(Nk.NkUserFont font)
         {
-            Nuklear.nk_setup(_ctx, font);
+            Nk.nk_setup(_ctx, font);
         }
 
         public void Clear()
         {
-            Nuklear.nk_clear(_ctx);
+            Nk.nk_clear(_ctx);
         }
 
-        public void StartBuffer(Nuklear.nk_command_buffer buffer)
+        public void StartBuffer(Nk.NkCommandBuffer buffer)
         {
-            Nuklear.nk_start_buffer(_ctx, buffer);
+            Nk.nk_start_buffer(_ctx, buffer);
         }
 
-        public void Start(Nuklear.nk_window win)
+        public void Start(Nk.NkWindow win)
         {
-            Nuklear.nk_start(_ctx, win);
+            Nk.nk_start(_ctx, win);
         }
 
         public bool PanelBegin(string title, int panel_type)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_panel_begin(_ctx, title_ptr, panel_type) != 0;
+                return Nk.nk_panel_begin(_ctx, title_ptr, panel_type) != 0;
             }
         }
 
         public void PanelEnd()
         {
-            Nuklear.nk_panel_end(_ctx);
+            Nk.nk_panel_end(_ctx);
         }
 
-        public uint* AddValue(Nuklear.nk_window win, uint name, uint value)
+        public uint* AddValue(Nk.NkWindow win, uint name, uint value)
         {
-            return Nuklear.nk_add_value(_ctx, win, name, value);
+            return Nk.nk_add_value(_ctx, win, name, value);
         }
 
-        public Nuklear.nk_window FindWindow(uint hash, string name)
+        public Nk.NkWindow FindWindow(uint hash, string name)
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_find_window(_ctx, hash, name_ptr);
+                return Nk.nk_find_window(_ctx, hash, name_ptr);
             }
         }
 
-        public void InsertWindow(Nuklear.nk_window win, int loc)
+        public void InsertWindow(Nk.NkWindow win, int loc)
         {
-            Nuklear.nk_insert_window(_ctx, win, loc);
+            Nk.nk_insert_window(_ctx, win, loc);
         }
 
-        public void RemoveWindow(Nuklear.nk_window win)
+        public void RemoveWindow(Nk.NkWindow win)
         {
-            Nuklear.nk_remove_window(_ctx, win);
+            Nk.nk_remove_window(_ctx, win);
         }
 
-        public bool Begin(string title, Nuklear.nk_rect bounds, uint flags)
+        public bool Begin(string title, Nk.nk_rect bounds, uint flags)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_begin(_ctx, title_ptr, bounds, flags) != 0;
+                return Nk.nk_begin(_ctx, title_ptr, bounds, flags) != 0;
             }
         }
 
-        public bool BeginTitled(string name, string title, Nuklear.nk_rect bounds, uint flags)
+        public bool BeginTitled(string name, string title, Nk.nk_rect bounds, uint flags)
         {
             fixed (char* name_ptr = name)
             {
                 fixed (char* title_ptr = title)
                 {
-                    return Nuklear.nk_begin_titled(_ctx, name_ptr, title_ptr, bounds, flags) != 0;
+                    return Nk.nk_begin_titled(_ctx, name_ptr, title_ptr, bounds, flags) != 0;
                 }
             }
         }
 
         public void End()
         {
-            Nuklear.nk_end(_ctx);
+            Nk.nk_end(_ctx);
         }
 
-        public Nuklear.nk_rect WindowGetBounds()
+        public Nk.nk_rect WindowGetBounds()
         {
-            return Nuklear.nk_window_get_bounds(_ctx);
+            return Nk.nk_window_get_bounds(_ctx);
         }
 
-        public Nuklear.nk_vec2 WindowGetPosition()
+        public Nk.nk_vec2 WindowGetPosition()
         {
-            return Nuklear.nk_window_get_position(_ctx);
+            return Nk.nk_window_get_position(_ctx);
         }
 
-        public Nuklear.nk_vec2 WindowGetSize()
+        public Nk.nk_vec2 WindowGetSize()
         {
-            return Nuklear.nk_window_get_size(_ctx);
+            return Nk.nk_window_get_size(_ctx);
         }
 
         public float WindowGetWidth()
         {
-            return Nuklear.nk_window_get_width(_ctx);
+            return Nk.nk_window_get_width(_ctx);
         }
 
         public float WindowGetHeight()
         {
-            return Nuklear.nk_window_get_height(_ctx);
+            return Nk.nk_window_get_height(_ctx);
         }
 
-        public Nuklear.nk_rect WindowGetContentRegion()
+        public Nk.nk_rect WindowGetContentRegion()
         {
-            return Nuklear.nk_window_get_content_region(_ctx);
+            return Nk.nk_window_get_content_region(_ctx);
         }
 
-        public Nuklear.nk_vec2 WindowGetContentRegionMin()
+        public Nk.nk_vec2 WindowGetContentRegionMin()
         {
-            return Nuklear.nk_window_get_content_region_min(_ctx);
+            return Nk.nk_window_get_content_region_min(_ctx);
         }
 
-        public Nuklear.nk_vec2 WindowGetContentRegionMax()
+        public Nk.nk_vec2 WindowGetContentRegionMax()
         {
-            return Nuklear.nk_window_get_content_region_max(_ctx);
+            return Nk.nk_window_get_content_region_max(_ctx);
         }
 
-        public Nuklear.nk_vec2 WindowGetContentRegionSize()
+        public Nk.nk_vec2 WindowGetContentRegionSize()
         {
-            return Nuklear.nk_window_get_content_region_size(_ctx);
+            return Nk.nk_window_get_content_region_size(_ctx);
         }
 
-        public Nuklear.nk_command_buffer WindowGetCanvas()
+        public Nk.NkCommandBuffer WindowGetCanvas()
         {
-            return Nuklear.nk_window_get_canvas(_ctx);
+            return Nk.nk_window_get_canvas(_ctx);
         }
 
-        public Nuklear.nk_panel WindowGetPanel()
+        public Nk.NkPanel WindowGetPanel()
         {
-            return Nuklear.nk_window_get_panel(_ctx);
+            return Nk.nk_window_get_panel(_ctx);
         }
 
         public bool WindowHasFocus()
         {
-            return Nuklear.nk_window_has_focus(_ctx) != 0;
+            return Nk.nk_window_has_focus(_ctx) != 0;
         }
 
         public bool WindowIsHovered()
         {
-            return Nuklear.nk_window_is_hovered(_ctx) != 0;
+            return Nk.nk_window_is_hovered(_ctx) != 0;
         }
 
         public bool WindowIsAnyHovered()
         {
-            return Nuklear.nk_window_is_any_hovered(_ctx) != 0;
+            return Nk.nk_window_is_any_hovered(_ctx) != 0;
         }
 
         public bool ItemIsAnyActive()
         {
-            return Nuklear.nk_item_is_any_active(_ctx) != 0;
+            return Nk.nk_item_is_any_active(_ctx) != 0;
         }
 
         public bool WindowIsCollapsed(string name)
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_window_is_collapsed(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_collapsed(_ctx, name_ptr) != 0;
             }
         }
 
@@ -323,7 +323,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_window_is_closed(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_closed(_ctx, name_ptr) != 0;
             }
         }
 
@@ -331,7 +331,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_window_is_hidden(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_hidden(_ctx, name_ptr) != 0;
             }
         }
 
@@ -339,15 +339,15 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_window_is_active(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_active(_ctx, name_ptr) != 0;
             }
         }
 
-        public Nuklear.nk_window WindowFind(string name)
+        public Nk.NkWindow WindowFind(string name)
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_window_find(_ctx, name_ptr);
+                return Nk.nk_window_find(_ctx, name_ptr);
             }
         }
 
@@ -355,31 +355,31 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_close(_ctx, name_ptr);
+                Nk.nk_window_close(_ctx, name_ptr);
             }
         }
 
-        public void WindowSetBounds(string name, Nuklear.nk_rect bounds)
+        public void WindowSetBounds(string name, Nk.nk_rect bounds)
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_set_bounds(_ctx, name_ptr, bounds);
+                Nk.nk_window_set_bounds(_ctx, name_ptr, bounds);
             }
         }
 
-        public void WindowSetPosition(string name, Nuklear.nk_vec2 pos)
+        public void WindowSetPosition(string name, Nk.nk_vec2 pos)
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_set_position(_ctx, name_ptr, pos);
+                Nk.nk_window_set_position(_ctx, name_ptr, pos);
             }
         }
 
-        public void WindowSetSize(string name, Nuklear.nk_vec2 size)
+        public void WindowSetSize(string name, Nk.nk_vec2 size)
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_set_size(_ctx, name_ptr, size);
+                Nk.nk_window_set_size(_ctx, name_ptr, size);
             }
         }
 
@@ -387,7 +387,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_collapse(_ctx, name_ptr, c);
+                Nk.nk_window_collapse(_ctx, name_ptr, c);
             }
         }
 
@@ -395,7 +395,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_collapse_if(_ctx, name_ptr, c, cond);
+                Nk.nk_window_collapse_if(_ctx, name_ptr, c, cond);
             }
         }
 
@@ -403,7 +403,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_show(_ctx, name_ptr, s);
+                Nk.nk_window_show(_ctx, name_ptr, s);
             }
         }
 
@@ -411,7 +411,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_show_if(_ctx, name_ptr, s, cond);
+                Nk.nk_window_show_if(_ctx, name_ptr, s, cond);
             }
         }
 
@@ -419,167 +419,167 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_window_set_focus(_ctx, name_ptr);
+                Nk.nk_window_set_focus(_ctx, name_ptr);
             }
         }
 
         public void MenubarBegin()
         {
-            Nuklear.nk_menubar_begin(_ctx);
+            Nk.nk_menubar_begin(_ctx);
         }
 
         public void MenubarEnd()
         {
-            Nuklear.nk_menubar_end(_ctx);
+            Nk.nk_menubar_end(_ctx);
         }
 
         public void LayoutSetMinRowHeight(float height)
         {
-            Nuklear.nk_layout_set_min_row_height(_ctx, height);
+            Nk.nk_layout_set_min_row_height(_ctx, height);
         }
 
         public void LayoutResetMinRowHeight()
         {
-            Nuklear.nk_layout_reset_min_row_height(_ctx);
+            Nk.nk_layout_reset_min_row_height(_ctx);
         }
 
-        public void PanelLayout(Nuklear.nk_window win, float height, int cols)
+        public void PanelLayout(Nk.NkWindow win, float height, int cols)
         {
-            Nuklear.nk_panel_layout(_ctx, win, height, cols);
+            Nk.nk_panel_layout(_ctx, win, height, cols);
         }
 
         public void RowLayout(int fmt, float height, int cols, int width)
         {
-            Nuklear.nk_row_layout_(_ctx, fmt, height, cols, width);
+            Nk.nk_row_layout_(_ctx, fmt, height, cols, width);
         }
 
         public float LayoutRatioFromPixel(float pixel_width)
         {
-            return Nuklear.nk_layout_ratio_from_pixel(_ctx, pixel_width);
+            return Nk.nk_layout_ratio_from_pixel(_ctx, pixel_width);
         }
 
         public void LayoutRowDynamic(float height, int cols)
         {
-            Nuklear.nk_layout_row_dynamic(_ctx, height, cols);
+            Nk.nk_layout_row_dynamic(_ctx, height, cols);
         }
 
         public void LayoutRowStatic(float height, int item_width, int cols)
         {
-            Nuklear.nk_layout_row_static(_ctx, height, item_width, cols);
+            Nk.nk_layout_row_static(_ctx, height, item_width, cols);
         }
 
         public void LayoutRowBegin(int fmt, float row_height, int cols)
         {
-            Nuklear.nk_layout_row_begin(_ctx, fmt, row_height, cols);
+            Nk.nk_layout_row_begin(_ctx, fmt, row_height, cols);
         }
 
         public void LayoutRowPush(float ratio_or_width)
         {
-            Nuklear.nk_layout_row_push(_ctx, ratio_or_width);
+            Nk.nk_layout_row_push(_ctx, ratio_or_width);
         }
 
         public void LayoutRowEnd()
         {
-            Nuklear.nk_layout_row_end(_ctx);
+            Nk.nk_layout_row_end(_ctx);
         }
 
         public void LayoutRow(int fmt, float height, int cols, float[] ratio)
         {
             fixed (float* ptr = ratio)
             {
-                Nuklear.nk_layout_row(_ctx, fmt, height, cols, ptr);
+                Nk.nk_layout_row(_ctx, fmt, height, cols, ptr);
             }
         }
 
         public void LayoutRowTemplateBegin(float height)
         {
-            Nuklear.nk_layout_row_template_begin(_ctx, height);
+            Nk.nk_layout_row_template_begin(_ctx, height);
         }
 
         public void LayoutRowTemplatePushDynamic()
         {
-            Nuklear.nk_layout_row_template_push_dynamic(_ctx);
+            Nk.nk_layout_row_template_push_dynamic(_ctx);
         }
 
         public void LayoutRowTemplatePushVariable(float min_width)
         {
-            Nuklear.nk_layout_row_template_push_variable(_ctx, min_width);
+            Nk.nk_layout_row_template_push_variable(_ctx, min_width);
         }
 
         public void LayoutRowTemplatePushStatic(float width)
         {
-            Nuklear.nk_layout_row_template_push_static(_ctx, width);
+            Nk.nk_layout_row_template_push_static(_ctx, width);
         }
 
         public void LayoutRowTemplateEnd()
         {
-            Nuklear.nk_layout_row_template_end(_ctx);
+            Nk.nk_layout_row_template_end(_ctx);
         }
 
         public void LayoutSpaceBegin(int fmt, float height, int widget_count)
         {
-            Nuklear.nk_layout_space_begin(_ctx, fmt, height, widget_count);
+            Nk.nk_layout_space_begin(_ctx, fmt, height, widget_count);
         }
 
         public void LayoutSpaceEnd()
         {
-            Nuklear.nk_layout_space_end(_ctx);
+            Nk.nk_layout_space_end(_ctx);
         }
 
-        public void LayoutSpacePush(Nuklear.nk_rect rect)
+        public void LayoutSpacePush(Nk.nk_rect rect)
         {
-            Nuklear.nk_layout_space_push(_ctx, rect);
+            Nk.nk_layout_space_push(_ctx, rect);
         }
 
-        public Nuklear.nk_rect LayoutSpaceBounds()
+        public Nk.nk_rect LayoutSpaceBounds()
         {
-            return Nuklear.nk_layout_space_bounds(_ctx);
+            return Nk.nk_layout_space_bounds(_ctx);
         }
 
-        public Nuklear.nk_rect LayoutWidgetBounds()
+        public Nk.nk_rect LayoutWidgetBounds()
         {
-            return Nuklear.nk_layout_widget_bounds(_ctx);
+            return Nk.nk_layout_widget_bounds(_ctx);
         }
 
-        public Nuklear.nk_vec2 LayoutSpaceToScreen(Nuklear.nk_vec2 ret)
+        public Nk.nk_vec2 LayoutSpaceToScreen(Nk.nk_vec2 ret)
         {
-            return Nuklear.nk_layout_space_to_screen(_ctx, ret);
+            return Nk.nk_layout_space_to_screen(_ctx, ret);
         }
 
-        public Nuklear.nk_vec2 LayoutSpaceToLocal(Nuklear.nk_vec2 ret)
+        public Nk.nk_vec2 LayoutSpaceToLocal(Nk.nk_vec2 ret)
         {
-            return Nuklear.nk_layout_space_to_local(_ctx, ret);
+            return Nk.nk_layout_space_to_local(_ctx, ret);
         }
 
-        public Nuklear.nk_rect LayoutSpaceRectToScreen(Nuklear.nk_rect ret)
+        public Nk.nk_rect LayoutSpaceRectToScreen(Nk.nk_rect ret)
         {
-            return Nuklear.nk_layout_space_rect_to_screen(_ctx, ret);
+            return Nk.nk_layout_space_rect_to_screen(_ctx, ret);
         }
 
-        public Nuklear.nk_rect LayoutSpaceRectToLocal(Nuklear.nk_rect ret)
+        public Nk.nk_rect LayoutSpaceRectToLocal(Nk.nk_rect ret)
         {
-            return Nuklear.nk_layout_space_rect_to_local(_ctx, ret);
+            return Nk.nk_layout_space_rect_to_local(_ctx, ret);
         }
 
-        public void PanelAllocRow(Nuklear.nk_window win)
+        public void PanelAllocRow(Nk.NkWindow win)
         {
-            Nuklear.nk_panel_alloc_row(_ctx, win);
+            Nk.nk_panel_alloc_row(_ctx, win);
         }
 
-        public bool TreeBase(int type, Nuklear.nk_image img, string title, int initial_state, string hash, int line)
+        public bool TreeBase(int type, Nk.nk_image img, string title, int initial_state, string hash, int line)
         {
             fixed (char* title_ptr = title)
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nuklear.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
+                    return Nk.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
                 }
             }
         }
 
         public void TreeStatePop()
         {
-            Nuklear.nk_tree_state_pop(_ctx);
+            Nk.nk_tree_state_pop(_ctx);
         }
 
         public bool TreePushHashed(int type, string title, int initial_state, string hash, int line)
@@ -588,18 +588,18 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nuklear.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
+                    return Nk.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
                 }
             }
         }
 
-        public bool TreeImagePushHashed(int type, Nuklear.nk_image img, string title, int initial_state, string hash, int seed)
+        public bool TreeImagePushHashed(int type, Nk.nk_image img, string title, int initial_state, string hash, int seed)
         {
             fixed (char* title_ptr = title)
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nuklear.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed) !=
+                    return Nk.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed) !=
                            0;
                 }
             }
@@ -607,67 +607,67 @@ namespace NuklearSharp
 
         public void TreePop()
         {
-            Nuklear.nk_tree_pop(_ctx);
+            Nk.nk_tree_pop(_ctx);
         }
 
-        public Nuklear.nk_rect WidgetBounds()
+        public Nk.nk_rect WidgetBounds()
         {
-            return Nuklear.nk_widget_bounds(_ctx);
+            return Nk.nk_widget_bounds(_ctx);
         }
 
-        public Nuklear.nk_vec2 WidgetPosition()
+        public Nk.nk_vec2 WidgetPosition()
         {
-            return Nuklear.nk_widget_position(_ctx);
+            return Nk.nk_widget_position(_ctx);
         }
 
-        public Nuklear.nk_vec2 WidgetSize()
+        public Nk.nk_vec2 WidgetSize()
         {
-            return Nuklear.nk_widget_size(_ctx);
+            return Nk.nk_widget_size(_ctx);
         }
 
         public float WidgetWidth()
         {
-            return Nuklear.nk_widget_width(_ctx);
+            return Nk.nk_widget_width(_ctx);
         }
 
         public float WidgetHeight()
         {
-            return Nuklear.nk_widget_height(_ctx);
+            return Nk.nk_widget_height(_ctx);
         }
 
         public bool WidgetIsHovered()
         {
-            return Nuklear.nk_widget_is_hovered(_ctx) != 0;
+            return Nk.nk_widget_is_hovered(_ctx) != 0;
         }
 
         public bool WidgetIsMouseClicked(int btn)
         {
-            return Nuklear.nk_widget_is_mouse_clicked(_ctx, btn) != 0;
+            return Nk.nk_widget_is_mouse_clicked(_ctx, btn) != 0;
         }
 
         public bool WidgetHasMouseClickDown(int btn, int down)
         {
-            return Nuklear.nk_widget_has_mouse_click_down(_ctx, btn, down) != 0;
+            return Nk.nk_widget_has_mouse_click_down(_ctx, btn, down) != 0;
         }
 
         public void Spacing(int cols)
         {
-            Nuklear.nk_spacing(_ctx, cols);
+            Nk.nk_spacing(_ctx, cols);
         }
 
-        public void TextColored(string str, uint alignment, Nuklear.nk_color color)
+        public void TextColored(string str, uint alignment, Nk.nk_color color)
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_text_colored(_ctx, str_ptr, str.Length, alignment, color);
+                Nk.nk_text_colored(_ctx, str_ptr, str.Length, alignment, color);
             }
         }
 
-        public void TextWrapColored(string str, Nuklear.nk_color color)
+        public void TextWrapColored(string str, Nk.nk_color color)
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_text_wrap_colored(_ctx, str_ptr, str.Length, color);
+                Nk.nk_text_wrap_colored(_ctx, str_ptr, str.Length, color);
             }
         }
 
@@ -675,7 +675,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_text_(_ctx, str_ptr, str.Length, alignment);
+                Nk.nk_text_(_ctx, str_ptr, str.Length, alignment);
             }
         }
 
@@ -683,7 +683,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_text_wrap(_ctx, str_ptr, str.Length);
+                Nk.nk_text_wrap(_ctx, str_ptr, str.Length);
             }
         }
 
@@ -691,15 +691,15 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_label(_ctx, str_ptr, alignment);
+                Nk.nk_label(_ctx, str_ptr, alignment);
             }
         }
 
-        public void LabelColored(string str, uint align, Nuklear.nk_color color)
+        public void LabelColored(string str, uint align, Nk.nk_color color)
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_label_colored(_ctx, str_ptr, align, color);
+                Nk.nk_label_colored(_ctx, str_ptr, align, color);
             }
         }
 
@@ -707,43 +707,43 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_label_wrap(_ctx, str_ptr);
+                Nk.nk_label_wrap(_ctx, str_ptr);
             }
         }
 
-        public void LabelColoredWrap(string str, Nuklear.nk_color color)
+        public void LabelColoredWrap(string str, Nk.nk_color color)
         {
             fixed (char* str_ptr = str)
             {
-                Nuklear.nk_label_colored_wrap(_ctx, str_ptr, color);
+                Nk.nk_label_colored_wrap(_ctx, str_ptr, color);
             }
         }
 
-        public void Image(Nuklear.nk_image img)
+        public void Image(Nk.nk_image img)
         {
-            Nuklear.nk_image_(_ctx, img);
+            Nk.nk_image_(_ctx, img);
         }
 
         public void ButtonSetBehavior(int behavior)
         {
-            Nuklear.nk_button_set_behavior(_ctx, behavior);
+            Nk.nk_button_set_behavior(_ctx, behavior);
         }
 
         public bool ButtonPushBehavior(int behavior)
         {
-            return Nuklear.nk_button_push_behavior(_ctx, behavior) != 0;
+            return Nk.nk_button_push_behavior(_ctx, behavior) != 0;
         }
 
         public bool ButtonPopBehavior()
         {
-            return Nuklear.nk_button_pop_behavior(_ctx) != 0;
+            return Nk.nk_button_pop_behavior(_ctx) != 0;
         }
 
-        public bool ButtonTextStyled(Nuklear.nk_style_button style, string title)
+        public bool ButtonTextStyled(Nk.nk_style_button style, string title)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_button_text_styled(_ctx, style, title_ptr, title.Length) != 0;
+                return Nk.nk_button_text_styled(_ctx, style, title_ptr, title.Length) != 0;
             }
         }
 
@@ -751,15 +751,15 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_button_text(_ctx, title_ptr, title.Length) != 0;
+                return Nk.nk_button_text(_ctx, title_ptr, title.Length) != 0;
             }
         }
 
-        public bool ButtonLabelStyled(Nuklear.nk_style_button style, string title)
+        public bool ButtonLabelStyled(Nk.nk_style_button style, string title)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_button_label_styled(_ctx, style, title_ptr) != 0;
+                return Nk.nk_button_label_styled(_ctx, style, title_ptr) != 0;
             }
         }
 
@@ -767,40 +767,40 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_button_label(_ctx, title_ptr) != 0;
+                return Nk.nk_button_label(_ctx, title_ptr) != 0;
             }
         }
 
-        public bool ButtonColor(Nuklear.nk_color color)
+        public bool ButtonColor(Nk.nk_color color)
         {
-            return Nuklear.nk_button_color(_ctx, color) != 0;
+            return Nk.nk_button_color(_ctx, color) != 0;
         }
 
-        public bool ButtonSymbolStyled(Nuklear.nk_style_button style, int symbol)
+        public bool ButtonSymbolStyled(Nk.nk_style_button style, int symbol)
         {
-            return Nuklear.nk_button_symbol_styled(_ctx, style, symbol) != 0;
+            return Nk.nk_button_symbol_styled(_ctx, style, symbol) != 0;
         }
 
         public bool ButtonSymbol(int symbol)
         {
-            return Nuklear.nk_button_symbol(_ctx, symbol) != 0;
+            return Nk.nk_button_symbol(_ctx, symbol) != 0;
         }
 
-        public bool ButtonImageStyled(Nuklear.nk_style_button style, Nuklear.nk_image img)
+        public bool ButtonImageStyled(Nk.nk_style_button style, Nk.nk_image img)
         {
-            return Nuklear.nk_button_image_styled(_ctx, style, img) != 0;
+            return Nk.nk_button_image_styled(_ctx, style, img) != 0;
         }
 
-        public bool ButtonImage(Nuklear.nk_image img)
+        public bool ButtonImage(Nk.nk_image img)
         {
-            return Nuklear.nk_button_image(_ctx, img) != 0;
+            return Nk.nk_button_image(_ctx, img) != 0;
         }
 
-        public bool ButtonSymbolTextStyled(Nuklear.nk_style_button style, int symbol, string text, uint align)
+        public bool ButtonSymbolTextStyled(Nk.nk_style_button style, int symbol, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_button_symbol_text_styled(_ctx, style, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_symbol_text_styled(_ctx, style, symbol, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -808,7 +808,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_button_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -816,48 +816,48 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_button_symbol_label(_ctx, symbol, label_ptr, align) != 0;
+                return Nk.nk_button_symbol_label(_ctx, symbol, label_ptr, align) != 0;
             }
         }
 
-        public bool ButtonSymbolLabelStyled(Nuklear.nk_style_button style, int symbol, string title, uint align)
+        public bool ButtonSymbolLabelStyled(Nk.nk_style_button style, int symbol, string title, uint align)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_button_symbol_label_styled(_ctx, style, symbol, title_ptr, align) != 0;
+                return Nk.nk_button_symbol_label_styled(_ctx, style, symbol, title_ptr, align) != 0;
             }
         }
 
-        public bool ButtonImageTextStyled(Nuklear.nk_style_button style, Nuklear.nk_image img, string text, uint align)
+        public bool ButtonImageTextStyled(Nk.nk_style_button style, Nk.nk_image img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_button_image_text_styled(_ctx, style, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_image_text_styled(_ctx, style, img, text_ptr, text.Length, align) != 0;
             }
         }
 
-        public bool ButtonImageText(Nuklear.nk_image img, string text, uint align)
+        public bool ButtonImageText(Nk.nk_image img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_button_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
             }
         }
 
-        public bool ButtonImageLabel(Nuklear.nk_image img, string label, uint align)
+        public bool ButtonImageLabel(Nk.nk_image img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_button_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_button_image_label(_ctx, img, label_ptr, align) != 0;
             }
         }
 
-        public bool ButtonImageLabelStyled(Nuklear.nk_style_button style, Nuklear.nk_image img, string label,
+        public bool ButtonImageLabelStyled(Nk.nk_style_button style, Nk.nk_image img, string label,
             uint text_alignment)
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_button_image_label_styled(_ctx, style, img, label_ptr, text_alignment) != 0;
+                return Nk.nk_button_image_label_styled(_ctx, style, img, label_ptr, text_alignment) != 0;
             }
         }
 
@@ -865,15 +865,15 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_selectable_text(_ctx, str_ptr, str.Length, align, ref value) != 0;
+                return Nk.nk_selectable_text(_ctx, str_ptr, str.Length, align, ref value) != 0;
             }
         }
 
-        public bool SelectableImageText(Nuklear.nk_image img, string str, uint align, ref int value)
+        public bool SelectableImageText(Nk.nk_image img, string str, uint align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_selectable_image_text(_ctx, img, str_ptr, str.Length, align, ref value) != 0;
+                return Nk.nk_selectable_image_text(_ctx, img, str_ptr, str.Length, align, ref value) != 0;
             }
         }
 
@@ -881,7 +881,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_select_text(_ctx, str_ptr, str.Length, align, value) != 0;
+                return Nk.nk_select_text(_ctx, str_ptr, str.Length, align, value) != 0;
             }
         }
 
@@ -889,15 +889,15 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_selectable_label(_ctx, str_ptr, align, ref value) != 0;
+                return Nk.nk_selectable_label(_ctx, str_ptr, align, ref value) != 0;
             }
         }
 
-        public bool SelectableImageLabel(Nuklear.nk_image img, string str, uint align, ref int value)
+        public bool SelectableImageLabel(Nk.nk_image img, string str, uint align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_selectable_image_label(_ctx, img, str_ptr, align, ref value) != 0;
+                return Nk.nk_selectable_image_label(_ctx, img, str_ptr, align, ref value) != 0;
             }
         }
 
@@ -905,23 +905,23 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_select_label(_ctx, str_ptr, align, value) != 0;
+                return Nk.nk_select_label(_ctx, str_ptr, align, value) != 0;
             }
         }
 
-        public bool SelectImageLabel(Nuklear.nk_image img, string str, uint align, int value)
+        public bool SelectImageLabel(Nk.nk_image img, string str, uint align, int value)
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_select_image_label(_ctx, img, str_ptr, align, value) != 0;
+                return Nk.nk_select_image_label(_ctx, img, str_ptr, align, value) != 0;
             }
         }
 
-        public bool SelectImageText(Nuklear.nk_image img, string str, uint align, int value)
+        public bool SelectImageText(Nk.nk_image img, string str, uint align, int value)
         {
             fixed (char* str_ptr = str)
             {
-                return Nuklear.nk_select_image_text(_ctx, img, str_ptr, str.Length, align, value) != 0;
+                return Nk.nk_select_image_text(_ctx, img, str_ptr, str.Length, align, value) != 0;
             }
         }
 
@@ -929,7 +929,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_check_text(_ctx, text_ptr, text.Length, active ? 1 : 0) != 0;
+                return Nk.nk_check_text(_ctx, text_ptr, text.Length, active ? 1 : 0) != 0;
             }
         }
 
@@ -937,7 +937,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_check_flags_text(_ctx, text_ptr, text.Length, flags, value);
+                return Nk.nk_check_flags_text(_ctx, text_ptr, text.Length, flags, value);
             }
         }
 
@@ -946,7 +946,7 @@ namespace NuklearSharp
             fixed (char* text_ptr = text)
             {
                 int i = active ? 1 : 0;
-                var res = Nuklear.nk_checkbox_text(_ctx, text_ptr, text.Length, &i) != 0;
+                var res = Nk.nk_checkbox_text(_ctx, text_ptr, text.Length, &i) != 0;
                 active = i != 0;
                 return res;
             }
@@ -957,7 +957,7 @@ namespace NuklearSharp
             fixed (char* text_ptr = text)
             {
                 uint f = flags;
-                var res = Nuklear.nk_checkbox_flags_text(_ctx, text_ptr, text.Length, &f, value) != 0;
+                var res = Nk.nk_checkbox_flags_text(_ctx, text_ptr, text.Length, &f, value) != 0;
 
                 flags = f;
                 return res;
@@ -968,7 +968,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_check_label(_ctx, label_ptr, active ? 1 : 0) != 0;
+                return Nk.nk_check_label(_ctx, label_ptr, active ? 1 : 0) != 0;
             }
         }
 
@@ -976,7 +976,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_check_flags_label(_ctx, label_ptr, flags, value);
+                return Nk.nk_check_flags_label(_ctx, label_ptr, flags, value);
             }
         }
 
@@ -985,7 +985,7 @@ namespace NuklearSharp
             fixed (char* label_ptr = label)
             {
                 int i = active ? 1 : 0;
-                var res = Nuklear.nk_checkbox_label(_ctx, label_ptr, &i) != 0;
+                var res = Nk.nk_checkbox_label(_ctx, label_ptr, &i) != 0;
                 active = i != 0;
                 return res;
             }
@@ -996,7 +996,7 @@ namespace NuklearSharp
             fixed (char* label_ptr = label)
             {
                 uint f = flags;
-                var res = Nuklear.nk_checkbox_flags_label(_ctx, label_ptr, &f, value) != 0;
+                var res = Nk.nk_checkbox_flags_label(_ctx, label_ptr, &f, value) != 0;
                 flags = f;
                 return res;
             }
@@ -1006,7 +1006,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_option_text(_ctx, text_ptr, text.Length, is_active) != 0;
+                return Nk.nk_option_text(_ctx, text_ptr, text.Length, is_active) != 0;
             }
         }
 
@@ -1015,7 +1015,7 @@ namespace NuklearSharp
             fixed (char* text_ptr = text)
             {
                 int i = active ? 1 : 0;
-                var res = Nuklear.nk_radio_text(_ctx, text_ptr, text.Length, &i) != 0;
+                var res = Nk.nk_radio_text(_ctx, text_ptr, text.Length, &i) != 0;
                 active = i != 0;
                 return res;
             }
@@ -1025,7 +1025,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_option_label(_ctx, label_ptr, active ? 1 : 0) != 0;
+                return Nk.nk_option_label(_ctx, label_ptr, active ? 1 : 0) != 0;
             }
         }
 
@@ -1034,7 +1034,7 @@ namespace NuklearSharp
             fixed (char* label_ptr = label)
             {
                 int i = active ? 1 : 0;
-                var res = Nuklear.nk_radio_label(_ctx, label_ptr, &i) != 0;
+                var res = Nk.nk_radio_label(_ctx, label_ptr, &i) != 0;
                 active = i != 0;
                 return res;
             }
@@ -1042,28 +1042,28 @@ namespace NuklearSharp
 
         public bool SliderFloat(float min_value, ref float value, float max_value, float value_step)
         {
-            return Nuklear.nk_slider_float(_ctx, min_value, ref value, max_value, value_step) != 0;
+            return Nk.nk_slider_float(_ctx, min_value, ref value, max_value, value_step) != 0;
         }
 
         public float SlideFloat(float min, float val, float max, float step)
         {
-            return Nuklear.nk_slide_float(_ctx, min, val, max, step);
+            return Nk.nk_slide_float(_ctx, min, val, max, step);
         }
 
         public bool SlideInt(int min, int val, int max, int step)
         {
-            return Nuklear.nk_slide_int(_ctx, min, val, max, step) != 0;
+            return Nk.nk_slide_int(_ctx, min, val, max, step) != 0;
         }
 
         public bool SliderInt(int min, ref int val, int max, int step)
         {
-            return Nuklear.nk_slider_int(_ctx, min, ref val, max, step) != 0;
+            return Nk.nk_slider_int(_ctx, min, ref val, max, step) != 0;
         }
 
         public bool Progress(ref ulong cur, ulong max, int is_modifyable)
         {
             ulong temp = cur;
-            var res = Nuklear.nk_progress(_ctx, &temp, max, is_modifyable) != 0;
+            var res = Nk.nk_progress(_ctx, &temp, max, is_modifyable) != 0;
             cur = temp;
 
             return res;
@@ -1071,39 +1071,39 @@ namespace NuklearSharp
 
         public ulong Prog(ulong cur, ulong max, int modifyable)
         {
-            return Nuklear.nk_prog(_ctx, cur, max, modifyable);
+            return Nk.nk_prog(_ctx, cur, max, modifyable);
         }
 
         public void EditFocus(uint flags)
         {
-            Nuklear.nk_edit_focus(_ctx, flags);
+            Nk.nk_edit_focus(_ctx, flags);
         }
 
         public void EditUnfocus()
         {
-            Nuklear.nk_edit_unfocus(_ctx);
+            Nk.nk_edit_unfocus(_ctx);
         }
 
-        public uint EditString(uint flags, ref NkStr str, int max, Nuklear.NkPluginFilter filter)
+        public uint EditString(uint flags, ref NkStr str, int max, Nk.NkPluginFilter filter)
         {
             if (str == null)
             {
                 str = new NkStr();
             }
 
-            return Nuklear.nk_edit_string(_ctx, flags, str, max, filter);
+            return Nk.nk_edit_string(_ctx, flags, str, max, filter);
         }
 
-        public uint EditBuffer(uint flags, Nuklear.nk_text_edit edit, Nuklear.NkPluginFilter filter)
+        public uint EditBuffer(uint flags, Nk.nk_text_edit edit, Nk.NkPluginFilter filter)
         {
-            return Nuklear.nk_edit_buffer(_ctx, flags, edit, filter);
+            return Nk.nk_edit_buffer(_ctx, flags, edit, filter);
         }
 
         public void PropertyInt(string name, int min, ref int val, int max, int step, float inc_per_pixel)
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_property_int(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                Nk.nk_property_int(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1111,7 +1111,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_property_float(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                Nk.nk_property_float(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1119,7 +1119,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nuklear.nk_property_double(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                Nk.nk_property_double(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1127,7 +1127,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_propertyi(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return Nk.nk_propertyi(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 
@@ -1135,7 +1135,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_propertyf(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return Nk.nk_propertyf(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 
@@ -1143,90 +1143,90 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nuklear.nk_propertyd(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return Nk.nk_propertyd(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 
-        public bool ColorPick(Nuklear.nk_colorf color, int fmt)
+        public bool ColorPick(Nk.nk_colorf color, int fmt)
         {
-            return Nuklear.nk_color_pick(_ctx, &color, fmt) != 0;
+            return Nk.nk_color_pick(_ctx, &color, fmt) != 0;
         }
 
-        public Nuklear.nk_colorf ColorPicker(Nuklear.nk_colorf color, int fmt)
+        public Nk.nk_colorf ColorPicker(Nk.nk_colorf color, int fmt)
         {
-            return Nuklear.nk_color_picker(_ctx, color, fmt);
+            return Nk.nk_color_picker(_ctx, color, fmt);
         }
 
-        public bool ChartBeginColored(int type, Nuklear.nk_color color, Nuklear.nk_color highlight, int count, float min_value,
+        public bool ChartBeginColored(int type, Nk.nk_color color, Nk.nk_color highlight, int count, float min_value,
             float max_value)
         {
-            return Nuklear.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value) != 0;
+            return Nk.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value) != 0;
         }
 
         public bool ChartBegin(int type, int count, float min_value, float max_value)
         {
-            return Nuklear.nk_chart_begin(_ctx, type, count, min_value, max_value) != 0;
+            return Nk.nk_chart_begin(_ctx, type, count, min_value, max_value) != 0;
         }
 
-        public void ChartAddSlotColored(int type, Nuklear.nk_color color, Nuklear.nk_color highlight, int count,
+        public void ChartAddSlotColored(int type, Nk.nk_color color, Nk.nk_color highlight, int count,
             float min_value, float max_value)
         {
-            Nuklear.nk_chart_add_slot_colored(_ctx, type, color, highlight, count, min_value, max_value);
+            Nk.nk_chart_add_slot_colored(_ctx, type, color, highlight, count, min_value, max_value);
         }
 
         public void ChartAddSlot(int type, int count, float min_value, float max_value)
         {
-            Nuklear.nk_chart_add_slot(_ctx, type, count, min_value, max_value);
+            Nk.nk_chart_add_slot(_ctx, type, count, min_value, max_value);
         }
 
-        public uint ChartPushLine(Nuklear.nk_window win, Nuklear.nk_chart g, float value, int slot)
+        public uint ChartPushLine(Nk.NkWindow win, Nk.NkChart g, float value, int slot)
         {
-            return Nuklear.nk_chart_push_line(_ctx, win, g, value, slot);
+            return Nk.nk_chart_push_line(_ctx, win, g, value, slot);
         }
 
-        public uint ChartPushColumn(Nuklear.nk_window win, Nuklear.nk_chart chart, float value, int slot)
+        public uint ChartPushColumn(Nk.NkWindow win, Nk.NkChart chart, float value, int slot)
         {
-            return Nuklear.nk_chart_push_column(_ctx, win, chart, value, slot);
+            return Nk.nk_chart_push_column(_ctx, win, chart, value, slot);
         }
 
         public uint ChartPushSlot(float value, int slot)
         {
-            return Nuklear.nk_chart_push_slot(_ctx, value, slot);
+            return Nk.nk_chart_push_slot(_ctx, value, slot);
         }
 
         public uint ChartPush(float value)
         {
-            return Nuklear.nk_chart_push(_ctx, value);
+            return Nk.nk_chart_push(_ctx, value);
         }
 
         public void ChartEnd()
         {
-            Nuklear.nk_chart_end(_ctx);
+            Nk.nk_chart_end(_ctx);
         }
 
         public void Plot(int type, float[] values, int offset)
         {
             fixed (float* ptr = values)
             {
-                Nuklear.nk_plot(_ctx, type, ptr, values.Length, offset);
+                Nk.nk_plot(_ctx, type, ptr, values.Length, offset);
             }
         }
 
-        public void PlotFunction(int type, IntPtr userdata, Nuklear.NkFloatValueGetter value_getter, int count, int offset)
+        public void PlotFunction(int type, IntPtr userdata, Nk.NkFloatValueGetter value_getter, int count, int offset)
         {
-            Nuklear.nk_plot_function(_ctx, type, userdata.ToPointer(), value_getter, count, offset);
+            Nk.nk_plot_function(_ctx, type, userdata.ToPointer(), value_getter, count, offset);
         }
 
         public void GroupScrolledEnd()
         {
-            Nuklear.nk_group_scrolled_end(_ctx);
+            Nk.nk_group_scrolled_end(_ctx);
         }
 
-        public bool GroupScrolledBegin(Nuklear.nk_scroll scroll, string title, uint flags)
+        public bool GroupScrolledBegin(Nk.nk_scroll scroll, string title, uint flags)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_group_scrolled_begin(_ctx, scroll, title_ptr, flags) != 0;
+                return Nk.nk_group_scrolled_begin(_ctx, scroll, title_ptr, flags) != 0;
             }
         }
 
@@ -1236,7 +1236,7 @@ namespace NuklearSharp
             {
                 fixed (char* title_ptr = title)
                 {
-                    return Nuklear.nk_group_begin_titled(_ctx, id_ptr, title_ptr, flags) != 0;
+                    return Nk.nk_group_begin_titled(_ctx, id_ptr, title_ptr, flags) != 0;
                 }
             }
         }
@@ -1245,74 +1245,74 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_group_begin(_ctx, title_ptr, flags) != 0;
+                return Nk.nk_group_begin(_ctx, title_ptr, flags) != 0;
             }
         }
 
         public void GroupEnd()
         {
-            Nuklear.nk_group_end(_ctx);
+            Nk.nk_group_end(_ctx);
         }
 
-        public bool ListViewBegin(Nuklear.nk_list_view view, string title, uint flags, int row_height, int row_count)
+        public bool ListViewBegin(Nk.nk_list_view view, string title, uint flags, int row_height, int row_count)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_list_view_begin(_ctx, view, title_ptr, flags, row_height, row_count) != 0;
+                return Nk.nk_list_view_begin(_ctx, view, title_ptr, flags, row_height, row_count) != 0;
             }
         }
 
-        public bool PopupBegin(int type, string title, uint flags, Nuklear.nk_rect rect)
+        public bool PopupBegin(int type, string title, uint flags, Nk.nk_rect rect)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_popup_begin(_ctx, type, title_ptr, flags, rect) != 0;
+                return Nk.nk_popup_begin(_ctx, type, title_ptr, flags, rect) != 0;
             }
         }
 
-        public bool NonblockBegin(uint flags, Nuklear.nk_rect body, Nuklear.nk_rect header, int panel_type)
+        public bool NonblockBegin(uint flags, Nk.nk_rect body, Nk.nk_rect header, int panel_type)
         {
-            return Nuklear.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
+            return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
         }
 
         public void PopupClose()
         {
-            Nuklear.nk_popup_close(_ctx);
+            Nk.nk_popup_close(_ctx);
         }
 
         public void PopupEnd()
         {
-            Nuklear.nk_popup_end(_ctx);
+            Nk.nk_popup_end(_ctx);
         }
 
         public bool TooltipBegin(float width)
         {
-            return Nuklear.nk_tooltip_begin(_ctx, width) != 0;
+            return Nk.nk_tooltip_begin(_ctx, width) != 0;
         }
 
         public void TooltipEnd()
         {
-            Nuklear.nk_tooltip_end(_ctx);
+            Nk.nk_tooltip_end(_ctx);
         }
 
         public void Tooltip(string text)
         {
             fixed (char* text_ptr = text)
             {
-                Nuklear.nk_tooltip(_ctx, text_ptr);
+                Nk.nk_tooltip(_ctx, text_ptr);
             }
         }
 
-        public bool ContextualBegin(uint flags, Nuklear.nk_vec2 size, Nuklear.nk_rect trigger_bounds)
+        public bool ContextualBegin(uint flags, Nk.nk_vec2 size, Nk.nk_rect trigger_bounds)
         {
-            return Nuklear.nk_contextual_begin(_ctx, flags, size, trigger_bounds) != 0;
+            return Nk.nk_contextual_begin(_ctx, flags, size, trigger_bounds) != 0;
         }
 
         public bool ContextualItemText(string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_contextual_item_text(_ctx, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_contextual_item_text(_ctx, text_ptr, text.Length, alignment) != 0;
             }
         }
 
@@ -1320,23 +1320,23 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_contextual_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_contextual_item_label(_ctx, label_ptr, align) != 0;
             }
         }
 
-        public bool ContextualItemImageText(Nuklear.nk_image img, string text, uint align)
+        public bool ContextualItemImageText(Nk.nk_image img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_contextual_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_contextual_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
             }
         }
 
-        public bool ContextualItemImageLabel(Nuklear.nk_image img, string label, uint align)
+        public bool ContextualItemImageLabel(Nk.nk_image img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_contextual_item_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_contextual_item_image_label(_ctx, img, label_ptr, align) != 0;
             }
         }
 
@@ -1344,7 +1344,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_contextual_item_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_contextual_item_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -1352,85 +1352,85 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_contextual_item_symbol_label(_ctx, symbol, text_ptr, align) != 0;
+                return Nk.nk_contextual_item_symbol_label(_ctx, symbol, text_ptr, align) != 0;
             }
         }
 
         public void ContextualClose()
         {
-            Nuklear.nk_contextual_close(_ctx);
+            Nk.nk_contextual_close(_ctx);
         }
 
         public void ContextualEnd()
         {
-            Nuklear.nk_contextual_end(_ctx);
+            Nk.nk_contextual_end(_ctx);
         }
 
-        public bool ComboBegin(Nuklear.nk_window win, Nuklear.nk_vec2 size, int is_clicked, Nuklear.nk_rect header)
+        public bool ComboBegin(Nk.NkWindow win, Nk.nk_vec2 size, int is_clicked, Nk.nk_rect header)
         {
-            return Nuklear.nk_combo_begin(_ctx, win, size, is_clicked, header) != 0;
+            return Nk.nk_combo_begin(_ctx, win, size, is_clicked, header) != 0;
         }
 
-        public bool ComboBeginText(string selected, Nuklear.nk_vec2 size)
+        public bool ComboBeginText(string selected, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_text(_ctx, selected_ptr, selected.Length, size) != 0;
+                return Nk.nk_combo_begin_text(_ctx, selected_ptr, selected.Length, size) != 0;
             }
         }
 
-        public bool ComboBeginLabel(string selected, Nuklear.nk_vec2 size)
+        public bool ComboBeginLabel(string selected, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_label(_ctx, selected_ptr, size) != 0;
+                return Nk.nk_combo_begin_label(_ctx, selected_ptr, size) != 0;
             }
         }
 
-        public bool ComboBeginColor(Nuklear.nk_color color, Nuklear.nk_vec2 size)
+        public bool ComboBeginColor(Nk.nk_color color, Nk.nk_vec2 size)
         {
-            return Nuklear.nk_combo_begin_color(_ctx, color, size) != 0;
+            return Nk.nk_combo_begin_color(_ctx, color, size) != 0;
         }
 
-        public bool ComboBeginSymbol(int symbol, Nuklear.nk_vec2 size)
+        public bool ComboBeginSymbol(int symbol, Nk.nk_vec2 size)
         {
-            return Nuklear.nk_combo_begin_symbol(_ctx, symbol, size) != 0;
+            return Nk.nk_combo_begin_symbol(_ctx, symbol, size) != 0;
         }
 
-        public bool ComboBeginSymbolText(string selected, int symbol, Nuklear.nk_vec2 size)
+        public bool ComboBeginSymbolText(string selected, int symbol, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_symbol_text(_ctx, selected_ptr, selected.Length, symbol, size) != 0;
+                return Nk.nk_combo_begin_symbol_text(_ctx, selected_ptr, selected.Length, symbol, size) != 0;
             }
         }
 
-        public bool ComboBeginImage(Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool ComboBeginImage(Nk.nk_image img, Nk.nk_vec2 size)
         {
-            return Nuklear.nk_combo_begin_image(_ctx, img, size) != 0;
+            return Nk.nk_combo_begin_image(_ctx, img, size) != 0;
         }
 
-        public bool ComboBeginImageText(string selected, Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool ComboBeginImageText(string selected, Nk.nk_image img, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_image_text(_ctx, selected_ptr, selected.Length, img, size) != 0;
+                return Nk.nk_combo_begin_image_text(_ctx, selected_ptr, selected.Length, img, size) != 0;
             }
         }
 
-        public bool ComboBeginSymbolLabel(string selected, int type, Nuklear.nk_vec2 size)
+        public bool ComboBeginSymbolLabel(string selected, int type, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_symbol_label(_ctx, selected_ptr, type, size) != 0;
+                return Nk.nk_combo_begin_symbol_label(_ctx, selected_ptr, type, size) != 0;
             }
         }
 
-        public bool ComboBeginImageLabel(string selected, Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool ComboBeginImageLabel(string selected, Nk.nk_image img, Nk.nk_vec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nuklear.nk_combo_begin_image_label(_ctx, selected_ptr, img, size) != 0;
+                return Nk.nk_combo_begin_image_label(_ctx, selected_ptr, img, size) != 0;
             }
         }
 
@@ -1438,7 +1438,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_combo_item_text(_ctx, text_ptr, text.Length, align) != 0;
+                return Nk.nk_combo_item_text(_ctx, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -1446,23 +1446,23 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_combo_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_combo_item_label(_ctx, label_ptr, align) != 0;
             }
         }
 
-        public bool ComboItemImageText(Nuklear.nk_image img, string text, uint alignment)
+        public bool ComboItemImageText(Nk.nk_image img, string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_combo_item_image_text(_ctx, img, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_combo_item_image_text(_ctx, img, text_ptr, text.Length, alignment) != 0;
             }
         }
 
-        public bool ComboItemImageLabel(Nuklear.nk_image img, string text, uint alignment)
+        public bool ComboItemImageLabel(Nk.nk_image img, string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_combo_item_image_label(_ctx, img, text_ptr, alignment) != 0;
+                return Nk.nk_combo_item_image_label(_ctx, img, text_ptr, alignment) != 0;
             }
         }
 
@@ -1470,7 +1470,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_combo_item_symbol_text(_ctx, sym, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_combo_item_symbol_text(_ctx, sym, text_ptr, text.Length, alignment) != 0;
             }
         }
 
@@ -1478,145 +1478,145 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_combo_item_symbol_label(_ctx, sym, label_ptr, alignment) != 0;
+                return Nk.nk_combo_item_symbol_label(_ctx, sym, label_ptr, alignment) != 0;
             }
         }
 
         public void ComboEnd()
         {
-            Nuklear.nk_combo_end(_ctx);
+            Nk.nk_combo_end(_ctx);
         }
 
         public void ComboClose()
         {
-            Nuklear.nk_combo_close(_ctx);
+            Nk.nk_combo_close(_ctx);
         }
 
         public bool ComboSeparator(string items_separated_by_separator, int separator, int selected, int count,
-            int item_height, Nuklear.nk_vec2 size)
+            int item_height, Nk.nk_vec2 size)
         {
             fixed (char* items_separated_by_separator_ptr = items_separated_by_separator)
             {
                 return
-                    Nuklear.nk_combo_separator(_ctx, items_separated_by_separator_ptr, separator, selected, count, item_height, size) !=
+                    Nk.nk_combo_separator(_ctx, items_separated_by_separator_ptr, separator, selected, count, item_height, size) !=
                     0;
             }
         }
 
         public bool ComboString(string items_separated_by_zeros, int selected, int count, int item_height,
-            Nuklear.nk_vec2 size)
+            Nk.nk_vec2 size)
         {
             fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
             {
-                return Nuklear.nk_combo_string(_ctx, items_separated_by_zeros_ptr, selected, count, item_height, size) != 0;
+                return Nk.nk_combo_string(_ctx, items_separated_by_zeros_ptr, selected, count, item_height, size) != 0;
             }
         }
 
-        public bool ComboCallback(Nuklear.NkComboCallback item_getter, IntPtr userdata, int selected, int count,
-            int item_height, Nuklear.nk_vec2 size)
+        public bool ComboCallback(Nk.NkComboCallback item_getter, IntPtr userdata, int selected, int count,
+            int item_height, Nk.nk_vec2 size)
         {
-            return Nuklear.nk_combo_callback(_ctx, item_getter, userdata.ToPointer(), selected, count, item_height, size) != 0;
+            return Nk.nk_combo_callback(_ctx, item_getter, userdata.ToPointer(), selected, count, item_height, size) != 0;
         }
 
         public void ComboboxString(string items_separated_by_zeros, ref int selected, int count, int item_height,
-            Nuklear.nk_vec2 size)
+            Nk.nk_vec2 size)
         {
             fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
             {
                 int s = selected;
-                Nuklear.nk_combobox_string(_ctx, items_separated_by_zeros_ptr, &s, count, item_height, size);
+                Nk.nk_combobox_string(_ctx, items_separated_by_zeros_ptr, &s, count, item_height, size);
                 selected = s;
             }
         }
 
         public void ComboboxSeparator(string items_separated_by_separator, int separator, ref int selected, int count,
-            int item_height, Nuklear.nk_vec2 size)
+            int item_height, Nk.nk_vec2 size)
         {
             fixed (char* items_separated_by_separator_ptr = items_separated_by_separator)
             {
                 int s = selected;
-                Nuklear.nk_combobox_separator(_ctx, items_separated_by_separator_ptr, separator, &s, count, item_height, size);
+                Nk.nk_combobox_separator(_ctx, items_separated_by_separator_ptr, separator, &s, count, item_height, size);
                 selected = s;
             }
         }
 
-        public void ComboboxCallback(Nuklear.NkComboCallback item_getter, IntPtr userdata, ref int selected, int count,
-            int item_height, Nuklear.nk_vec2 size)
+        public void ComboboxCallback(Nk.NkComboCallback item_getter, IntPtr userdata, ref int selected, int count,
+            int item_height, Nk.nk_vec2 size)
         {
             int s = selected;
-            Nuklear.nk_combobox_callback(_ctx, item_getter, userdata.ToPointer(), &s, count, item_height, size);
+            Nk.nk_combobox_callback(_ctx, item_getter, userdata.ToPointer(), &s, count, item_height, size);
             selected = s;
         }
 
-        public bool MenuBegin(Nuklear.nk_window win, string id, int is_clicked, Nuklear.nk_rect header, Nuklear.nk_vec2 size)
+        public bool MenuBegin(Nk.NkWindow win, string id, int is_clicked, Nk.nk_rect header, Nk.nk_vec2 size)
         {
             fixed (char* id_ptr = id)
             {
-                return Nuklear.nk_menu_begin(_ctx, win, id_ptr, is_clicked, header, size) != 0;
+                return Nk.nk_menu_begin(_ctx, win, id_ptr, is_clicked, header, size) != 0;
             }
         }
 
-        public bool MenuBeginText(string title, uint align, Nuklear.nk_vec2 size)
+        public bool MenuBeginText(string title, uint align, Nk.nk_vec2 size)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_begin_text(_ctx, title_ptr, title.Length, align, size) != 0;
+                return Nk.nk_menu_begin_text(_ctx, title_ptr, title.Length, align, size) != 0;
             }
         }
 
-        public bool MenuBeginLabel(string text, uint align, Nuklear.nk_vec2 size)
+        public bool MenuBeginLabel(string text, uint align, Nk.nk_vec2 size)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_menu_begin_label(_ctx, text_ptr, align, size) != 0;
+                return Nk.nk_menu_begin_label(_ctx, text_ptr, align, size) != 0;
             }
         }
 
-        public bool MenuBeginImage(string id, Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool MenuBeginImage(string id, Nk.nk_image img, Nk.nk_vec2 size)
         {
             fixed (char* id_ptr = id)
             {
-                return Nuklear.nk_menu_begin_image(_ctx, id_ptr, img, size) != 0;
+                return Nk.nk_menu_begin_image(_ctx, id_ptr, img, size) != 0;
             }
         }
 
-        public bool MenuBeginSymbol(string id, int sym, Nuklear.nk_vec2 size)
+        public bool MenuBeginSymbol(string id, int sym, Nk.nk_vec2 size)
         {
             fixed (char* id_ptr = id)
             {
-                return Nuklear.nk_menu_begin_symbol(_ctx, id_ptr, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol(_ctx, id_ptr, sym, size) != 0;
             }
         }
 
-        public bool MenuBeginImageText(string title, uint align, Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool MenuBeginImageText(string title, uint align, Nk.nk_image img, Nk.nk_vec2 size)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_begin_image_text(_ctx, title_ptr, title.Length, align, img, size) != 0;
+                return Nk.nk_menu_begin_image_text(_ctx, title_ptr, title.Length, align, img, size) != 0;
             }
         }
 
-        public bool MenuBeginImageLabel(string title, uint align, Nuklear.nk_image img, Nuklear.nk_vec2 size)
+        public bool MenuBeginImageLabel(string title, uint align, Nk.nk_image img, Nk.nk_vec2 size)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_begin_image_label(_ctx, title_ptr, align, img, size) != 0;
+                return Nk.nk_menu_begin_image_label(_ctx, title_ptr, align, img, size) != 0;
             }
         }
 
-        public bool MenuBeginSymbolText(string title, uint align, int sym, Nuklear.nk_vec2 size)
+        public bool MenuBeginSymbolText(string title, uint align, int sym, Nk.nk_vec2 size)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_begin_symbol_text(_ctx, title_ptr, title.Length, align, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol_text(_ctx, title_ptr, title.Length, align, sym, size) != 0;
             }
         }
 
-        public bool MenuBeginSymbolLabel(string title, uint align, int sym, Nuklear.nk_vec2 size)
+        public bool MenuBeginSymbolLabel(string title, uint align, int sym, Nk.nk_vec2 size)
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_begin_symbol_label(_ctx, title_ptr, align, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol_label(_ctx, title_ptr, align, sym, size) != 0;
             }
         }
 
@@ -1624,7 +1624,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nuklear.nk_menu_item_text(_ctx, title_ptr, title.Length, align) != 0;
+                return Nk.nk_menu_item_text(_ctx, title_ptr, title.Length, align) != 0;
             }
         }
 
@@ -1632,23 +1632,23 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_menu_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_menu_item_label(_ctx, label_ptr, align) != 0;
             }
         }
 
-        public bool MenuItemImageLabel(Nuklear.nk_image img, string label, uint align)
+        public bool MenuItemImageLabel(Nk.nk_image img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_menu_item_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_menu_item_image_label(_ctx, img, label_ptr, align) != 0;
             }
         }
 
-        public bool MenuItemImageText(Nuklear.nk_image img, string text, uint align)
+        public bool MenuItemImageText(Nk.nk_image img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_menu_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_menu_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -1656,7 +1656,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nuklear.nk_menu_item_symbol_text(_ctx, sym, text_ptr, text.Length, align) != 0;
+                return Nk.nk_menu_item_symbol_text(_ctx, sym, text_ptr, text.Length, align) != 0;
             }
         }
 
@@ -1664,18 +1664,18 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nuklear.nk_menu_item_symbol_label(_ctx, sym, label_ptr, align) != 0;
+                return Nk.nk_menu_item_symbol_label(_ctx, sym, label_ptr, align) != 0;
             }
         }
 
         public void MenuClose()
         {
-            Nuklear.nk_menu_close(_ctx);
+            Nk.nk_menu_close(_ctx);
         }
 
         public void MenuEnd()
         {
-            Nuklear.nk_menu_end(_ctx);
+            Nk.nk_menu_end(_ctx);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_rp_rect
@@ -32,7 +32,7 @@ namespace NuklearSharp
             public nk_rp_node** prev_link;
         }
 
-        public static void nk_rp_setup_allow_out_of_mem(nk_rp_context* context, int allow_out_of_mem)
+        public static void nk_rp_setup_allow_out_of_mem(NkRpContext* context, int allow_out_of_mem)
         {
             if ((allow_out_of_mem) != 0) context->align = (int)(1);
             else
@@ -42,7 +42,7 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_rp_init_target(nk_rp_context* context, int width, int height, nk_rp_node* nodes, int num_nodes)
+        public static void nk_rp_init_target(NkRpContext* context, int width, int height, nk_rp_node* nodes, int num_nodes)
         {
             int i;
             for (i = (int)(0); (i) < (num_nodes - 1); ++i)
@@ -66,7 +66,7 @@ namespace NuklearSharp
             context->extra_1.next = null;
         }
 
-        public static int nk_rp__skyline_find_min_y(nk_rp_context* c, nk_rp_node* first, int x0, int width, int* pwaste)
+        public static int nk_rp__skyline_find_min_y(NkRpContext* c, nk_rp_node* first, int x0, int width, int* pwaste)
         {
             nk_rp_node* node = first;
             int x1 = (int)(x0 + width);
@@ -98,7 +98,7 @@ namespace NuklearSharp
             return (int)(min_y);
         }
 
-        public static nk_rp__findresult nk_rp__skyline_find_best_pos(nk_rp_context* c, int width, int height)
+        public static nk_rp__findresult nk_rp__skyline_find_best_pos(NkRpContext* c, int width, int height)
         {
             int best_waste = (int)(1 << 30);
             int best_x;
@@ -184,7 +184,7 @@ namespace NuklearSharp
             return (nk_rp__findresult)(fr);
         }
 
-        public static nk_rp__findresult nk_rp__skyline_pack_rectangle(nk_rp_context* context, int width, int height)
+        public static nk_rp__findresult nk_rp__skyline_pack_rectangle(NkRpContext* context, int width, int height)
         {
             nk_rp__findresult res = (nk_rp__findresult)(nk_rp__skyline_find_best_pos(context, (int)(width), (int)(height)));
             nk_rp_node* node;
@@ -260,7 +260,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_rp_pack_rects(nk_rp_context* context, nk_rp_rect* rects, int num_rects)
+        public static void nk_rp_pack_rects(NkRpContext* context, nk_rp_rect* rects, int num_rects)
         {
             int i;
             for (i = (int)(0); (i) < (num_rects); ++i)

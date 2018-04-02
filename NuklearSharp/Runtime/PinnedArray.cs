@@ -6,7 +6,7 @@ namespace NuklearSharp
     public abstract unsafe class Pointer : IDisposable
     {
         protected static long _allocatedTotal;
-        protected static object _lock = new object();
+        protected static object Lock = new object();
 
         public abstract long Size { get; }
         public abstract void* Ptr { get; }
@@ -105,7 +105,7 @@ namespace NuklearSharp
                 _size = 0;
             }
 
-            lock (_lock)
+            lock (Lock)
             {
                 _allocatedTotal += _size;
             }
@@ -135,7 +135,7 @@ namespace NuklearSharp
                 return;
             }
 
-            lock (_lock)
+            lock (Lock)
             {
                 _allocatedTotal -= Size;
             }

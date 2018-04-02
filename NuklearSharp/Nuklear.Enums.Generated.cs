@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    unsafe partial class Nuklear
+    unsafe partial class Nk
     {
         public const int nk_false = 0;
         public const int nk_true = 1;
@@ -13,14 +13,14 @@ namespace NuklearSharp
         public const int NK_LEFT = 3;
         public const int NK_BUTTON_DEFAULT = 0;
         public const int NK_BUTTON_REPEATER = 1;
-        public const int NK_FIXED = Nuklear.nk_false;
-        public const int NK_MODIFIABLE = Nuklear.nk_true;
+        public const int NK_FIXED = Nk.nk_false;
+        public const int NK_MODIFIABLE = Nk.nk_true;
         public const int NK_VERTICAL = 0;
         public const int NK_HORIZONTAL = 1;
-        public const int NK_MINIMIZED = Nuklear.nk_false;
-        public const int NK_MAXIMIZED = Nuklear.nk_true;
-        public const int NK_HIDDEN = Nuklear.nk_false;
-        public const int NK_SHOWN = Nuklear.nk_true;
+        public const int NK_MINIMIZED = Nk.nk_false;
+        public const int NK_MAXIMIZED = Nk.nk_true;
+        public const int NK_HIDDEN = Nk.nk_false;
+        public const int NK_SHOWN = Nk.nk_true;
         public const int NK_CHART_LINES = 0;
         public const int NK_CHART_COLUMN = 1;
         public const int NK_CHART_MAX = 2;
@@ -111,17 +111,17 @@ namespace NuklearSharp
         public const int NK_WIDGET_STATE_HOVER = (1 << (4));
         public const int NK_WIDGET_STATE_ACTIVED = (1 << (5));
         public const int NK_WIDGET_STATE_LEFT = (1 << (6));
-        public const int NK_WIDGET_STATE_HOVERED = Nuklear.NK_WIDGET_STATE_HOVER | Nuklear.NK_WIDGET_STATE_MODIFIED;
-        public const int NK_WIDGET_STATE_ACTIVE = Nuklear.NK_WIDGET_STATE_ACTIVED | Nuklear.NK_WIDGET_STATE_MODIFIED;
+        public const int NK_WIDGET_STATE_HOVERED = Nk.NK_WIDGET_STATE_HOVER | Nk.NK_WIDGET_STATE_MODIFIED;
+        public const int NK_WIDGET_STATE_ACTIVE = Nk.NK_WIDGET_STATE_ACTIVED | Nk.NK_WIDGET_STATE_MODIFIED;
         public const int NK_TEXT_ALIGN_LEFT = 0x01;
         public const int NK_TEXT_ALIGN_CENTERED = 0x02;
         public const int NK_TEXT_ALIGN_RIGHT = 0x04;
         public const int NK_TEXT_ALIGN_TOP = 0x08;
         public const int NK_TEXT_ALIGN_MIDDLE = 0x10;
         public const int NK_TEXT_ALIGN_BOTTOM = 0x20;
-        public const int NK_TEXT_LEFT = Nuklear.NK_TEXT_ALIGN_MIDDLE | Nuklear.NK_TEXT_ALIGN_LEFT;
-        public const int NK_TEXT_CENTERED = Nuklear.NK_TEXT_ALIGN_MIDDLE | Nuklear.NK_TEXT_ALIGN_CENTERED;
-        public const int NK_TEXT_RIGHT = Nuklear.NK_TEXT_ALIGN_MIDDLE | Nuklear.NK_TEXT_ALIGN_RIGHT;
+        public const int NK_TEXT_LEFT = Nk.NK_TEXT_ALIGN_MIDDLE | Nk.NK_TEXT_ALIGN_LEFT;
+        public const int NK_TEXT_CENTERED = Nk.NK_TEXT_ALIGN_MIDDLE | Nk.NK_TEXT_ALIGN_CENTERED;
+        public const int NK_TEXT_RIGHT = Nk.NK_TEXT_ALIGN_MIDDLE | Nk.NK_TEXT_ALIGN_RIGHT;
         public const int NK_EDIT_DEFAULT = 0;
         public const int NK_EDIT_READ_ONLY = (1 << (0));
         public const int NK_EDIT_AUTO_SELECT = (1 << (1));
@@ -135,15 +135,15 @@ namespace NuklearSharp
         public const int NK_EDIT_ALWAYS_INSERT_MODE = (1 << (9));
         public const int NK_EDIT_MULTILINE = (1 << (10));
         public const int NK_EDIT_GOTO_END_ON_ACTIVATE = (1 << (11));
-        public const int NK_EDIT_SIMPLE = Nuklear.NK_EDIT_ALWAYS_INSERT_MODE;
-        public const int NK_EDIT_FIELD = Nuklear.NK_EDIT_SIMPLE | Nuklear.NK_EDIT_SELECTABLE | Nuklear.NK_EDIT_CLIPBOARD;
+        public const int NK_EDIT_SIMPLE = Nk.NK_EDIT_ALWAYS_INSERT_MODE;
+        public const int NK_EDIT_FIELD = Nk.NK_EDIT_SIMPLE | Nk.NK_EDIT_SELECTABLE | Nk.NK_EDIT_CLIPBOARD;
 
         public const int NK_EDIT_BOX =
-            Nuklear.NK_EDIT_ALWAYS_INSERT_MODE | Nuklear.NK_EDIT_SELECTABLE | Nuklear.NK_EDIT_MULTILINE |
-            Nuklear.NK_EDIT_ALLOW_TAB | Nuklear.NK_EDIT_CLIPBOARD;
+            Nk.NK_EDIT_ALWAYS_INSERT_MODE | Nk.NK_EDIT_SELECTABLE | Nk.NK_EDIT_MULTILINE |
+            Nk.NK_EDIT_ALLOW_TAB | Nk.NK_EDIT_CLIPBOARD;
 
         public const int NK_EDIT_EDITOR =
-            Nuklear.NK_EDIT_SELECTABLE | Nuklear.NK_EDIT_MULTILINE | Nuklear.NK_EDIT_ALLOW_TAB | Nuklear.NK_EDIT_CLIPBOARD;
+            Nk.NK_EDIT_SELECTABLE | Nk.NK_EDIT_MULTILINE | Nk.NK_EDIT_ALLOW_TAB | Nk.NK_EDIT_CLIPBOARD;
 
         public const int NK_EDIT_ACTIVE = (1 << (0));
         public const int NK_EDIT_INACTIVE = (1 << (1));
@@ -220,10 +220,10 @@ namespace NuklearSharp
         public const int NK_COMMAND_TEXT = 16;
         public const int NK_COMMAND_IMAGE = 17;
         public const int NK_COMMAND_CUSTOM = 18;
-        public const int NK_CLIPPING_OFF = Nuklear.nk_false;
-        public const int NK_CLIPPING_ON = Nuklear.nk_true;
-        public const int NK_STROKE_OPEN = Nuklear.nk_false;
-        public const int NK_STROKE_CLOSED = Nuklear.nk_true;
+        public const int NK_CLIPPING_OFF = Nk.nk_false;
+        public const int NK_CLIPPING_ON = Nk.nk_true;
+        public const int NK_STROKE_OPEN = Nk.nk_false;
+        public const int NK_STROKE_CLOSED = Nk.nk_true;
         public const int NK_VERTEX_POSITION = 0;
         public const int NK_VERTEX_COLOR = 1;
         public const int NK_VERTEX_TEXCOORD = 2;
@@ -237,7 +237,7 @@ namespace NuklearSharp
         public const int NK_FORMAT_FLOAT = 6;
         public const int NK_FORMAT_DOUBLE = 7;
         public const int NK_FORMAT_COLOR_BEGIN = 8;
-        public const int NK_FORMAT_R8G8B8 = Nuklear.NK_FORMAT_COLOR_BEGIN;
+        public const int NK_FORMAT_R8G8B8 = Nk.NK_FORMAT_COLOR_BEGIN;
         public const int NK_FORMAT_R16G15B16 = 10;
         public const int NK_FORMAT_R32G32B32 = 11;
         public const int NK_FORMAT_R8G8B8A8 = 12;
@@ -248,7 +248,7 @@ namespace NuklearSharp
         public const int NK_FORMAT_R32G32B32A32_DOUBLE = 17;
         public const int NK_FORMAT_RGB32 = 18;
         public const int NK_FORMAT_RGBA32 = 19;
-        public const int NK_FORMAT_COLOR_END = Nuklear.NK_FORMAT_RGBA32;
+        public const int NK_FORMAT_COLOR_END = Nk.NK_FORMAT_RGBA32;
         public const int NK_FORMAT_COUNT = 21;
         public const int NK_STYLE_ITEM_COLOR = 0;
         public const int NK_STYLE_ITEM_IMAGE = 1;
@@ -263,10 +263,10 @@ namespace NuklearSharp
         public const int NK_PANEL_TOOLTIP = (1 << (7));
 
         public const int NK_PANEL_SET_NONBLOCK =
-            Nuklear.NK_PANEL_CONTEXTUAL | Nuklear.NK_PANEL_COMBO | Nuklear.NK_PANEL_MENU | Nuklear.NK_PANEL_TOOLTIP;
+            Nk.NK_PANEL_CONTEXTUAL | Nk.NK_PANEL_COMBO | Nk.NK_PANEL_MENU | Nk.NK_PANEL_TOOLTIP;
 
-        public const int NK_PANEL_SET_POPUP = Nuklear.NK_PANEL_SET_NONBLOCK | Nuklear.NK_PANEL_POPUP;
-        public const int NK_PANEL_SET_SUB = Nuklear.NK_PANEL_SET_POPUP | Nuklear.NK_PANEL_GROUP;
+        public const int NK_PANEL_SET_POPUP = Nk.NK_PANEL_SET_NONBLOCK | Nk.NK_PANEL_POPUP;
+        public const int NK_PANEL_SET_SUB = Nk.NK_PANEL_SET_POPUP | Nk.NK_PANEL_GROUP;
         public const int NK_LAYOUT_DYNAMIC_FIXED = 0;
         public const int NK_LAYOUT_DYNAMIC_ROW = 1;
         public const int NK_LAYOUT_DYNAMIC_FREE = 2;
@@ -278,9 +278,9 @@ namespace NuklearSharp
         public const int NK_LAYOUT_TEMPLATE = 8;
         public const int NK_LAYOUT_COUNT = 9;
         public const int NK_WINDOW_PRIVATE = (1 << (11));
-        public const int NK_WINDOW_DYNAMIC = Nuklear.NK_WINDOW_PRIVATE;
+        public const int NK_WINDOW_DYNAMIC = Nk.NK_WINDOW_PRIVATE;
         public const int NK_WINDOW_ROM = (1 << (12));
-        public const int NK_WINDOW_NOT_INTERACTIVE = Nuklear.NK_WINDOW_ROM | Nuklear.NK_WINDOW_NO_INPUT;
+        public const int NK_WINDOW_NOT_INTERACTIVE = Nk.NK_WINDOW_ROM | Nk.NK_WINDOW_NO_INPUT;
         public const int NK_WINDOW_HIDDEN = (1 << (13));
         public const int NK_WINDOW_CLOSED = (1 << (14));
         public const int NK_WINDOW_MINIMIZED = (1 << (15));
@@ -288,7 +288,7 @@ namespace NuklearSharp
         public const int NK_DO_NOT_STOP_ON_NEW_LINE = 0;
         public const int NK_STOP_ON_NEW_LINE = 1;
         public const int NK_RP_HEURISTIC_Skyline_default = 0;
-        public const int NK_RP_HEURISTIC_Skyline_BL_sortHeight = Nuklear.NK_RP_HEURISTIC_Skyline_default;
+        public const int NK_RP_HEURISTIC_Skyline_BL_sortHeight = Nk.NK_RP_HEURISTIC_Skyline_default;
         public const int NK_RP_HEURISTIC_Skyline_BF_sortHeight = 2;
         public const int NK_RP__INIT_skyline = 1;
         public const int NK_TT_vmove = 1;

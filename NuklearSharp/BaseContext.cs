@@ -2,47 +2,47 @@
 {
     public abstract unsafe partial class BaseContext
     {
-        private readonly Nuklear.nk_context _ctx;
-        private readonly NkBuffer<Nuklear.nk_draw_command> _cmds = new NkBuffer<Nuklear.nk_draw_command>();
+        private readonly Nk.NkContext _ctx;
+        private readonly NkBuffer<Nk.nk_draw_command> _cmds = new NkBuffer<Nk.nk_draw_command>();
         private readonly NkBuffer<byte> _vertices = new NkBuffer<byte>();
         private readonly NkBuffer<ushort> _indices = new NkBuffer<ushort>();
-        private readonly Nuklear.nk_convert_config _convertConfig;
+        private readonly Nk.NkConvertConfig _convertConfig;
 
-        public Nuklear.nk_context Ctx
+        public Nk.NkContext Ctx
         {
             get { return _ctx; }
         }
 
-        public NkBuffer<Nuklear.nk_draw_command> Cmds
+        public NkBuffer<Nk.nk_draw_command> Cmds
         {
             get { return _cmds; }
         }
 
-        public Nuklear.nk_convert_config ConvertConfig
+        public Nk.NkConvertConfig ConvertConfig
         {
             get { return _convertConfig; }
         }
 
         protected BaseContext()
         {
-            _ctx = new Nuklear.nk_context();
-            Nuklear.nk_setup(_ctx, null);
+            _ctx = new Nk.NkContext();
+            Nk.nk_setup(_ctx, null);
 
-            _convertConfig = new Nuklear.nk_convert_config
+            _convertConfig = new Nk.NkConvertConfig
             {
-                vertex_alignment = 4,
-                global_alpha = 1f,
-                shape_AA = Nuklear.NK_ANTI_ALIASING_ON,
-                line_AA = Nuklear.NK_ANTI_ALIASING_ON,
-                circle_segment_count = 22,
-                curve_segment_count = 22,
-                arc_segment_count = 22
+                VertexAlignment = 4,
+                GlobalAlpha = 1f,
+                ShapeAa = Nk.NK_ANTI_ALIASING_ON,
+                LineAa = Nk.NK_ANTI_ALIASING_ON,
+                CircleSegmentCount = 22,
+                CurveSegmentCount = 22,
+                ArcSegmentCount = 22
             };
         }
 
-        public void SetFont(Nuklear.nk_font font)
+        public void SetFont(Nk.NkFont font)
         {
-            Nuklear.nk_style_set_font(_ctx, font.handle);
+            Nk.nk_style_set_font(_ctx, font.Handle);
         }
 
         public void Draw()
@@ -51,17 +51,17 @@
 
             //  ushort* offset = null;
 
-            _cmds.reset();
-            _vertices.reset();
-            _indices.reset();
+            _cmds.Reset();
+            _vertices.Reset();
+            _indices.Reset();
             Convert(_cmds, _vertices, _indices, _convertConfig);
 
-            var vertex_count = (uint)((ulong)_vertices.Count / _convertConfig.vertex_size);
+            var vertexCount = (uint)((ulong)_vertices.Count / _convertConfig.VertexSize);
 
             /* iterate over and execute each draw command */
             uint offset = 0;
 
-            SetBuffers(_vertices.Data, _indices.Data, _indices.Count, (int)vertex_count);
+            SetBuffers(_vertices.Data, _indices.Data, _indices.Count, (int)vertexCount);
             for (var i = 0; i < _cmds.Count; ++i)
             {
                 var cmd = _cmds[i];
@@ -74,7 +74,7 @@
                     cmd.texture.id, (int)offset, (int)(cmd.elem_count / 3));
                 offset += cmd.elem_count;
             }
-            Nuklear.nk_clear(_ctx);
+            Nk.nk_clear(_ctx);
 
             EndDraw();
         }
@@ -101,7 +101,7 @@
         /// <param name="indices_count"></param>
         /// <param name="vertex_count"></param>
         /// <param name="vertex_stride"></param>
-        protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indices_count, int vertex_count);
+        protected internal abstract void SetBuffers(byte[] vertices, ushort[] indices, int indicesCount, int vertexCount);
 
         /// <summary>
         /// Draw

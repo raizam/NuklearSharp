@@ -40,12 +40,12 @@ namespace NuklearSharp
             _data = new T[1024];
         }
 
-        public void reset()
+        public void Reset()
         {
             _count = 0;
         }
 
-        private void ensureSize(int required)
+        private void EnsureSize(int required)
         {
             if (_data.Length >= required) return;
 
@@ -63,14 +63,14 @@ namespace NuklearSharp
             Array.Copy(oldData, _data, oldData.Length);
         }
 
-        public void addToEnd(int length)
+        public void AddToEnd(int length)
         {
-            ensureSize(_count + length);
+            EnsureSize(_count + length);
 
-            updateCount(length);
+            UpdateCount(length);
         }
 
-        private void updateCount(int delta)
+        private void UpdateCount(int delta)
         {
             _count += delta;
             if (_count < 0)

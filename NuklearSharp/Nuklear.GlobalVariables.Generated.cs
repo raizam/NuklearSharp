@@ -1,6 +1,6 @@
 namespace NuklearSharp
 {
-    unsafe partial class Nuklear
+    unsafe partial class Nk
     {
         public static nk_vec2[,] nk_cursor_data =
         {

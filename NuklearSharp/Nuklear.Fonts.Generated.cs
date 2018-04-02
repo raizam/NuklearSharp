@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         public unsafe partial class nk_font_config
         {
@@ -440,7 +440,7 @@ namespace NuklearSharp
                 points = data + g + 10 + numberOfContours * 2 + 2 + ins;
                 n = (int)(1 + nk_ttUSHORT(endPtsOfContours + numberOfContours * 2 - 2));
                 m = (int)(n + 2 * numberOfContours);
-                vertices = (nk_tt_vertex*)(CRuntime.malloc((ulong)((ulong)(m) * (ulong)sizeof(nk_tt_vertex))));
+                vertices = (nk_tt_vertex*)(CRuntime.Malloc((ulong)((ulong)(m) * (ulong)sizeof(nk_tt_vertex))));
                 if ((vertices) == (null)) return (int)(0);
                 next_move = (int)(0);
                 flagcount = (byte)(0);
@@ -653,19 +653,19 @@ namespace NuklearSharp
                         }
                         tmp =
                             (nk_tt_vertex*)
-                                (CRuntime.malloc((ulong)((ulong)(num_vertices + comp_num_verts) * (ulong)sizeof(nk_tt_vertex))));
+                                (CRuntime.Malloc((ulong)((ulong)(num_vertices + comp_num_verts) * (ulong)sizeof(nk_tt_vertex))));
                         if (tmp == null)
                         {
-                            if ((vertices) != null) CRuntime.free(vertices);
-                            if ((comp_verts) != null) CRuntime.free(comp_verts);
+                            if ((vertices) != null) CRuntime.Free(vertices);
+                            if ((comp_verts) != null) CRuntime.Free(comp_verts);
                             return (int)(0);
                         }
                         if ((num_vertices) > (0))
                             nk_memcopy(tmp, vertices, (ulong)((ulong)(num_vertices) * (ulong)sizeof(nk_tt_vertex)));
                         nk_memcopy(tmp + num_vertices, comp_verts, (ulong)((ulong)(comp_num_verts) * (ulong)sizeof(nk_tt_vertex)));
-                        if ((vertices) != null) CRuntime.free(vertices);
+                        if ((vertices) != null) CRuntime.Free(vertices);
                         vertices = tmp;
-                        CRuntime.free(comp_verts);
+                        CRuntime.Free(comp_verts);
                         num_vertices += (int)(comp_num_verts);
                     }
                     more = (int)(flags & (1 << 5));
@@ -766,7 +766,7 @@ namespace NuklearSharp
                 {
                     int count = (int)((size) < (32) ? 2000 : (size) < (128) ? 800 : 100);
                     nk_tt__hheap_chunk* c =
-                        (nk_tt__hheap_chunk*)(CRuntime.malloc((ulong)((ulong)sizeof(nk_tt__hheap_chunk) + size * (ulong)(count))));
+                        (nk_tt__hheap_chunk*)(CRuntime.Malloc((ulong)((ulong)sizeof(nk_tt__hheap_chunk) + size * (ulong)(count))));
                     if ((c) == (null)) return null;
                     c->next = hh->head;
                     hh->head = c;
@@ -790,7 +790,7 @@ namespace NuklearSharp
             while ((c) != null)
             {
                 nk_tt__hheap_chunk* n = c->next;
-                CRuntime.free(c);
+                CRuntime.Free(c);
                 c = n;
             }
         }
@@ -824,7 +824,7 @@ namespace NuklearSharp
             float* scanline2;
             nk_zero(&hh, (ulong)(sizeof(nk_tt__hheap)));
 
-            if ((result->w) > (64)) scanline = (float*)(CRuntime.malloc((ulong)((ulong)(result->w * 2 + 1) * sizeof(float))));
+            if ((result->w) > (64)) scanline = (float*)(CRuntime.Malloc((ulong)((ulong)(result->w * 2 + 1) * sizeof(float))));
             else scanline = scanline_data;
             scanline2 = scanline + result->w;
             y = (int)(off_y);
@@ -890,7 +890,7 @@ namespace NuklearSharp
                 ++j;
             }
             nk_tt__hheap_cleanup(&hh);
-            if (scanline != scanline_data) CRuntime.free(scanline);
+            if (scanline != scanline_data) CRuntime.Free(scanline);
         }
 
         public static void nk_tt__sort_edges_ins_sort(nk_tt__edge* p, int n)
@@ -995,7 +995,7 @@ namespace NuklearSharp
             {
                 n += (int)(wcount[i]);
             }
-            e = (nk_tt__edge*)(CRuntime.malloc((ulong)((ulong)sizeof(nk_tt__edge) * (ulong)(n + 1))));
+            e = (nk_tt__edge*)(CRuntime.Malloc((ulong)((ulong)sizeof(nk_tt__edge) * (ulong)(n + 1))));
             if ((e) == (null)) return;
             n = (int)(0);
             m = (int)(0);
@@ -1025,7 +1025,7 @@ namespace NuklearSharp
             }
             nk_tt__sort_edges(e, (int)(n));
             nk_tt__rasterize_sorted_edges(result, e, (int)(n), (int)(vsubsample), (int)(off_x), (int)(off_y));
-            CRuntime.free(e);
+            CRuntime.Free(e);
         }
 
         public static void nk_tt__add_point(nk_tt__point* points, int n, float x, float y)
@@ -1075,7 +1075,7 @@ namespace NuklearSharp
             }
             *num_contours = (int)(n);
             if ((n) == (0)) return null;
-            *contour_lengths = (int*)(CRuntime.malloc((ulong)((ulong)sizeof(int) * (ulong)(n))));
+            *contour_lengths = (int*)(CRuntime.Malloc((ulong)((ulong)sizeof(int) * (ulong)(n))));
             if ((*contour_lengths) == (null))
             {
                 *num_contours = (int)(0);
@@ -1088,7 +1088,7 @@ namespace NuklearSharp
                 float y = (float)(0);
                 if ((pass) == (1))
                 {
-                    points = (nk_tt__point*)(CRuntime.malloc((ulong)((ulong)(num_points) * (ulong)sizeof(nk_tt__point))));
+                    points = (nk_tt__point*)(CRuntime.Malloc((ulong)((ulong)(num_points) * (ulong)sizeof(nk_tt__point))));
                     if ((points) == (null)) goto error;
                 }
                 num_points = (int)(0);
@@ -1126,8 +1126,8 @@ namespace NuklearSharp
             return points;
             error:
             ;
-            CRuntime.free(points);
-            CRuntime.free(*contour_lengths);
+            CRuntime.Free(points);
+            CRuntime.Free(*contour_lengths);
             *contour_lengths = null;
             *num_contours = (int)(0);
             return null;
@@ -1145,8 +1145,8 @@ namespace NuklearSharp
             {
                 nk_tt__rasterize(result, windings, winding_lengths, (int)(winding_count), (float)(scale_x), (float)(scale_y),
                     (float)(shift_x), (float)(shift_y), (int)(x_off), (int)(y_off), (int)(invert));
-                CRuntime.free(winding_lengths);
-                CRuntime.free(windings);
+                CRuntime.Free(winding_lengths);
+                CRuntime.Free(windings);
             }
 
         }
@@ -1168,19 +1168,19 @@ namespace NuklearSharp
             if (((gbm.w) != 0) && ((gbm.h) != 0))
                 nk_tt_Rasterize(&gbm, (float)(0.35f), vertices, (int)(num_verts), (float)(scale_x), (float)(scale_y),
                     (float)(shift_x), (float)(shift_y), (int)(ix0), (int)(iy0), (int)(1));
-            CRuntime.free(vertices);
+            CRuntime.Free(vertices);
         }
 
         public static int nk_tt_PackBegin(nk_tt_pack_context* spc, byte* pixels, int pw, int ph, int stride_in_bytes,
             int padding)
         {
             int num_nodes = (int)(pw - padding);
-            nk_rp_context* context = (nk_rp_context*)(CRuntime.malloc((ulong)(sizeof(nk_rp_context))));
-            nk_rp_node* nodes = (nk_rp_node*)(CRuntime.malloc((ulong)((ulong)sizeof(nk_rp_node) * (ulong)(num_nodes))));
+            NkRpContext* context = (NkRpContext*)(CRuntime.Malloc((ulong)(sizeof(NkRpContext))));
+            nk_rp_node* nodes = (nk_rp_node*)(CRuntime.Malloc((ulong)((ulong)sizeof(nk_rp_node) * (ulong)(num_nodes))));
             if (((context) == (null)) || ((nodes) == (null)))
             {
-                if (context != null) CRuntime.free(context);
-                if (nodes != null) CRuntime.free(nodes);
+                if (context != null) CRuntime.Free(context);
+                if (nodes != null) CRuntime.Free(nodes);
                 return (int)(0);
             }
 
@@ -1200,8 +1200,8 @@ namespace NuklearSharp
 
         public static void nk_tt_PackEnd(nk_tt_pack_context* spc)
         {
-            CRuntime.free(spc->nodes);
-            CRuntime.free(spc->pack_info);
+            CRuntime.Free(spc->nodes);
+            CRuntime.Free(spc->pack_info);
         }
 
         public static void nk_tt_PackSetOversampling(nk_tt_pack_context* spc, uint h_oversample, uint v_oversample)
@@ -1409,7 +1409,7 @@ namespace NuklearSharp
                     custom_space.w = ((ushort)((custom.w * 2) + 1));
                     custom_space.h = ((ushort)(custom.h + 1));
                     nk_tt_PackSetOversampling(&baker->spc, (uint)(1), (uint)(1));
-                    nk_rp_pack_rects((nk_rp_context*)(baker->spc.pack_info), &custom_space, (int)(1));
+                    nk_rp_pack_rects((NkRpContext*)(baker->spc.pack_info), &custom_space, (int)(1));
                     height = (int)((height) < (custom_space.y + custom_space.h) ? (custom_space.y + custom_space.h) : (height));
                     custom.x = ((short)(custom_space.x));
                     custom.y = ((short)(custom_space.y));
@@ -1453,7 +1453,7 @@ namespace NuklearSharp
                         n =
                             (int)
                                 (nk_tt_PackFontRangesGatherRects(&baker->spc, &tmp->info, tmp->ranges, (int)(tmp->range_count), tmp->rects));
-                        nk_rp_pack_rects((nk_rp_context*)(baker->spc.pack_info), tmp->rects, (int)(n));
+                        nk_rp_pack_rects((NkRpContext*)(baker->spc.pack_info), tmp->rects, (int)(n));
                         for (i = (int)(0); (i) < (n); ++i)
                         {
                             if ((tmp->rects[i].was_packed) != 0)
@@ -1570,16 +1570,16 @@ namespace NuklearSharp
             }
         }
 
-        public static nk_font_glyph* nk_font_find_glyph(nk_font font, char unicode)
+        public static nk_font_glyph* nk_font_find_glyph(NkFont font, char unicode)
         {
             int i = (int)(0);
             int count;
             int total_glyphs = (int)(0);
             nk_font_glyph* glyph = null;
             nk_font_config iter = null;
-            if ((font == null) || (font.glyphs == null)) return null;
-            glyph = font.fallback;
-            iter = font.config;
+            if ((font == null) || (font.Glyphs == null)) return null;
+            glyph = font.Fallback;
+            iter = font.Config;
             do
             {
                 count = (int)(nk_range_count(iter.range));
@@ -1588,53 +1588,53 @@ namespace NuklearSharp
                     uint f = (uint)(iter.range[(i * 2) + 0]);
                     uint t = (uint)(iter.range[(i * 2) + 1]);
                     int diff = (int)((t - f) + 1);
-                    if (((unicode) >= (f)) && (unicode <= t)) return &font.glyphs[((uint)(total_glyphs) + (unicode - f))];
+                    if (((unicode) >= (f)) && (unicode <= t)) return &font.Glyphs[((uint)(total_glyphs) + (unicode - f))];
                     total_glyphs += (int)(diff);
                 }
-            } while ((iter = iter.n) != font.config);
+            } while ((iter = iter.n) != font.Config);
             return glyph;
         }
 
-        public static void nk_font_init(nk_font font, float pixel_height, char fallback_codepoint, nk_font_glyph* glyphs,
-            nk_baked_font baked_font, nk_handle atlas)
+        public static void nk_font_init(NkFont font, float pixel_height, char fallback_codepoint, nk_font_glyph* glyphs,
+            nk_baked_font baked_font, NkHandle atlas)
         {
             nk_baked_font baked = new nk_baked_font();
             if (((font == null) || (glyphs == null)) || (baked_font == null)) return;
             baked = (nk_baked_font)(baked_font);
-            font.fallback = null;
-            font.info = (nk_baked_font)(baked);
-            font.scale = (float)(pixel_height / font.info.height);
-            font.glyphs = &glyphs[baked_font.glyph_offset];
-            font.texture = (nk_handle)(atlas);
-            font.fallback_codepoint = fallback_codepoint;
-            font.fallback = nk_font_find_glyph(font, fallback_codepoint);
-            font.handle.height = (float)(font.info.height * font.scale);
-            font.handle.width = font.text_width;
+            font.Fallback = null;
+            font.Info = (nk_baked_font)(baked);
+            font.Scale = (float)(pixel_height / font.Info.height);
+            font.Glyphs = &glyphs[baked_font.glyph_offset];
+            font.Texture = (NkHandle)(atlas);
+            font.FallbackCodepoint = fallback_codepoint;
+            font.Fallback = nk_font_find_glyph(font, fallback_codepoint);
+            font.Handle.Height = (float)(font.Info.height * font.Scale);
+            font.Handle.Width = font.text_width;
 
-            font.handle.query = font.query_font_glyph;
-            font.handle.texture = (nk_handle)(font.texture);
+            font.Handle.Query = font.query_font_glyph;
+            font.Handle.Texture = (NkHandle)(font.Texture);
         }
 
-        public static void nk_font_atlas_begin(nk_font_atlas atlas)
+        public static void nk_font_atlas_begin(NkFontAtlas atlas)
         {
             if (((((atlas == null))))) return;
-            if ((atlas.glyphs) != null)
+            if ((atlas.Glyphs) != null)
             {
-                CRuntime.free(atlas.glyphs);
-                atlas.glyphs = null;
+                CRuntime.Free(atlas.Glyphs);
+                atlas.Glyphs = null;
             }
 
-            if ((atlas.pixel) != null)
+            if ((atlas.Pixel) != null)
             {
-                CRuntime.free(atlas.pixel);
-                atlas.pixel = null;
+                CRuntime.Free(atlas.Pixel);
+                atlas.Pixel = null;
             }
 
         }
 
-        public static nk_font nk_font_atlas_add(nk_font_atlas atlas, nk_font_config config)
+        public static NkFont nk_font_atlas_add(NkFontAtlas atlas, nk_font_config config)
         {
-            nk_font font = null;
+            NkFont font = null;
             nk_font_config cfg;
             if (((((((((atlas == null) || (config == null)) || (config.ttf_blob == null)) || (config.ttf_size == 0)) ||
                     (config.size <= 0.0f)))))) return null;
@@ -1644,14 +1644,14 @@ namespace NuklearSharp
             cfg.p = cfg;
             if (config.merge_mode == 0)
             {
-                if (atlas.config == null)
+                if (atlas.Config == null)
                 {
-                    atlas.config = cfg;
+                    atlas.Config = cfg;
                     cfg.next = null;
                 }
                 else
                 {
-                    nk_font_config i = atlas.config;
+                    nk_font_config i = atlas.Config;
                     while ((i.next) != null)
                     {
                         i = i.next;
@@ -1659,32 +1659,32 @@ namespace NuklearSharp
                     i.next = cfg;
                     cfg.next = null;
                 }
-                font = new nk_font();
-                font.config = cfg;
-                if (atlas.fonts == null)
+                font = new NkFont();
+                font.Config = cfg;
+                if (atlas.Fonts == null)
                 {
-                    atlas.fonts = font;
-                    font.next = null;
+                    atlas.Fonts = font;
+                    font.Next = null;
                 }
                 else
                 {
-                    nk_font i = atlas.fonts;
-                    while ((i.next) != null)
+                    NkFont i = atlas.Fonts;
+                    while ((i.Next) != null)
                     {
-                        i = i.next;
+                        i = i.Next;
                     }
-                    i.next = font;
-                    font.next = null;
+                    i.Next = font;
+                    font.Next = null;
                 }
-                cfg.font = font.info;
+                cfg.font = font.Info;
             }
             else
             {
-                nk_font f = null;
+                NkFont f = null;
                 nk_font_config c = null;
-                f = atlas.fonts;
-                c = f.config;
-                cfg.font = f.info;
+                f = atlas.Fonts;
+                c = f.Config;
+                cfg.font = f.Info;
                 cfg.n = c;
                 cfg.p = c.p;
                 c.p.n = cfg;
@@ -1693,21 +1693,21 @@ namespace NuklearSharp
 
             if (config.ttf_data_owned_by_atlas == 0)
             {
-                cfg.ttf_blob = CRuntime.malloc((ulong)(cfg.ttf_size));
+                cfg.ttf_blob = CRuntime.Malloc((ulong)(cfg.ttf_size));
                 if (cfg.ttf_blob == null)
                 {
-                    atlas.font_num++;
+                    atlas.FontNum++;
                     return null;
                 }
                 nk_memcopy(cfg.ttf_blob, config.ttf_blob, (ulong)(cfg.ttf_size));
                 cfg.ttf_data_owned_by_atlas = (byte)(1);
             }
 
-            atlas.font_num++;
+            atlas.FontNum++;
             return font;
         }
 
-        public static nk_font nk_font_atlas_add_from_memory(nk_font_atlas atlas, void* memory, ulong size, float height,
+        public static NkFont nk_font_atlas_add_from_memory(NkFontAtlas atlas, void* memory, ulong size, float height,
             nk_font_config config)
         {
             nk_font_config cfg = new nk_font_config();
@@ -1720,7 +1720,7 @@ namespace NuklearSharp
             return nk_font_atlas_add(atlas, cfg);
         }
 
-        public static nk_font nk_font_atlas_add_compressed(nk_font_atlas atlas, void* compressed_data, ulong compressed_size,
+        public static NkFont nk_font_atlas_add_compressed(NkFontAtlas atlas, void* compressed_data, ulong compressed_size,
             float height, nk_font_config config)
         {
             uint decompressed_size;
@@ -1728,7 +1728,7 @@ namespace NuklearSharp
             nk_font_config cfg = new nk_font_config();
             if ((((((atlas == null) || (compressed_data == null)))))) return null;
             decompressed_size = (uint)(nk_decompress_length((byte*)(compressed_data)));
-            decompressed_data = CRuntime.malloc((ulong)(decompressed_size));
+            decompressed_data = CRuntime.Malloc((ulong)(decompressed_size));
             if (decompressed_data == null) return null;
             nk_decompress((byte*)(decompressed_data), (byte*)(compressed_data), (uint)(compressed_size));
             cfg = (nk_font_config)((config != null) ? config : nk_font_config_((float)(height)));
@@ -1739,196 +1739,196 @@ namespace NuklearSharp
             return nk_font_atlas_add(atlas, cfg);
         }
 
-        public static nk_font nk_font_atlas_add_compressed_base85(nk_font_atlas atlas, byte* data_base85, float height,
+        public static NkFont nk_font_atlas_add_compressed_base85(NkFontAtlas atlas, byte* data_base85, float height,
             nk_font_config config)
         {
             int compressed_size;
             void* compressed_data;
             if ((((((atlas == null) || (data_base85 == null)))))) return null;
             compressed_size = (int)(((nk_strlen(data_base85) + 4) / 5) * 4);
-            compressed_data = CRuntime.malloc((ulong)(compressed_size));
+            compressed_data = CRuntime.Malloc((ulong)(compressed_size));
             if (compressed_data == null) return null;
             nk_decode_85((byte*)(compressed_data), (byte*)(data_base85));
-            nk_font font = nk_font_atlas_add_compressed(atlas, compressed_data, (ulong)(compressed_size), (float)(height),
+            NkFont font = nk_font_atlas_add_compressed(atlas, compressed_data, (ulong)(compressed_size), (float)(height),
                 config);
-            CRuntime.free(compressed_data);
+            CRuntime.Free(compressed_data);
             return font;
         }
 
-        public static void* nk_font_atlas_bake(nk_font_atlas atlas, ref int width, ref int height, int fmt)
+        public static void* nk_font_atlas_bake(NkFontAtlas atlas, ref int width, ref int height, int fmt)
         {
             int i = (int)(0);
             void* tmp = null;
             ulong tmp_size;
             ulong img_size;
-            nk_font font_iter;
+            NkFont font_iter;
             nk_font_baker* baker;
             if (atlas == null) return null;
-            if (atlas.font_num == 0) atlas.default_font = nk_font_atlas_add_default(atlas, (float)(13.0f), null);
-            if (atlas.font_num == 0) return null;
-            nk_font_baker_memory(&tmp_size, ref atlas.glyph_count, atlas.config, (int)(atlas.font_num));
-            tmp = CRuntime.malloc((ulong)(tmp_size));
+            if (atlas.FontNum == 0) atlas.DefaultFont = nk_font_atlas_add_default(atlas, (float)(13.0f), null);
+            if (atlas.FontNum == 0) return null;
+            nk_font_baker_memory(&tmp_size, ref atlas.GlyphCount, atlas.Config, (int)(atlas.FontNum));
+            tmp = CRuntime.Malloc((ulong)(tmp_size));
             if (tmp == null) goto failed;
-            baker = nk_font_baker_(tmp, (int)(atlas.glyph_count), (int)(atlas.font_num));
-            atlas.glyphs =
-                (nk_font_glyph*)(CRuntime.malloc((ulong)((ulong)sizeof(nk_font_glyph) * (ulong)(atlas.glyph_count))));
-            if (atlas.glyphs == null) goto failed;
-            atlas.custom.w = (short)((90 * 2) + 1);
-            atlas.custom.h = (short)(27 + 1);
+            baker = nk_font_baker_(tmp, (int)(atlas.GlyphCount), (int)(atlas.FontNum));
+            atlas.Glyphs =
+                (nk_font_glyph*)(CRuntime.Malloc((ulong)((ulong)sizeof(nk_font_glyph) * (ulong)(atlas.GlyphCount))));
+            if (atlas.Glyphs == null) goto failed;
+            atlas.Custom.w = (short)((90 * 2) + 1);
+            atlas.Custom.h = (short)(27 + 1);
             if (
-                nk_font_bake_pack(baker, &img_size, ref width, ref height, ref atlas.custom, atlas.config, (int)(atlas.font_num)) ==
+                nk_font_bake_pack(baker, &img_size, ref width, ref height, ref atlas.Custom, atlas.Config, (int)(atlas.FontNum)) ==
                 0) goto failed;
-            atlas.pixel = CRuntime.malloc((ulong)(img_size));
-            if (atlas.pixel == null) goto failed;
-            nk_font_bake(baker, atlas.pixel, (int)(width), (int)(height), atlas.glyphs, (int)(atlas.glyph_count), atlas.config,
-                (int)(atlas.font_num));
+            atlas.Pixel = CRuntime.Malloc((ulong)(img_size));
+            if (atlas.Pixel == null) goto failed;
+            nk_font_bake(baker, atlas.Pixel, (int)(width), (int)(height), atlas.Glyphs, (int)(atlas.GlyphCount), atlas.Config,
+                (int)(atlas.FontNum));
             fixed (byte* ptr = nk_custom_cursor_data)
             {
-                nk_font_bake_custom_data(atlas.pixel, (int)(width), (int)(height), (nk_recti)(atlas.custom), ptr, (int)(90),
+                nk_font_bake_custom_data(atlas.Pixel, (int)(width), (int)(height), (nk_recti)(atlas.Custom), ptr, (int)(90),
                     (int)(27), ('.'), ('X'));
             }
             if ((fmt) == (NK_FONT_ATLAS_RGBA32))
             {
-                void* img_rgba = CRuntime.malloc((ulong)(width * height * 4));
+                void* img_rgba = CRuntime.Malloc((ulong)(width * height * 4));
                 if (img_rgba == null) goto failed;
-                nk_font_bake_convert(img_rgba, (int)(width), (int)(height), atlas.pixel);
-                CRuntime.free(atlas.pixel);
-                atlas.pixel = img_rgba;
+                nk_font_bake_convert(img_rgba, (int)(width), (int)(height), atlas.Pixel);
+                CRuntime.Free(atlas.Pixel);
+                atlas.Pixel = img_rgba;
             }
 
-            atlas.tex_width = (int)(width);
-            atlas.tex_height = (int)(height);
-            for (font_iter = atlas.fonts; font_iter != null; font_iter = font_iter.next)
+            atlas.TexWidth = (int)(width);
+            atlas.TexHeight = (int)(height);
+            for (font_iter = atlas.Fonts; font_iter != null; font_iter = font_iter.Next)
             {
-                nk_font font = font_iter;
-                nk_font_config config = font.config;
-                nk_font_init(font, (float)(config.size), config.fallback_glyph, atlas.glyphs, config.font,
-                    (nk_handle)(nk_handle_ptr(null)));
+                NkFont font = font_iter;
+                nk_font_config config = font.Config;
+                nk_font_init(font, (float)(config.size), config.fallback_glyph, atlas.Glyphs, config.font,
+                    (NkHandle)(nk_handle_ptr(null)));
             }
             for (i = (int)(0); (i) < (NK_CURSOR_COUNT); ++i)
             {
-                nk_cursor cursor = atlas.cursors[i];
+                nk_cursor cursor = atlas.Cursors[i];
                 cursor.img.w = ((ushort)(width));
                 cursor.img.h = ((ushort)(height));
-                cursor.img.region[0] = ((ushort)(atlas.custom.x + nk_cursor_data[i, 0].x));
-                cursor.img.region[1] = ((ushort)(atlas.custom.y + nk_cursor_data[i, 0].y));
+                cursor.img.region[0] = ((ushort)(atlas.Custom.x + nk_cursor_data[i, 0].x));
+                cursor.img.region[1] = ((ushort)(atlas.Custom.y + nk_cursor_data[i, 0].y));
                 cursor.img.region[2] = ((ushort)(nk_cursor_data[i, 1].x));
                 cursor.img.region[3] = ((ushort)(nk_cursor_data[i, 1].y));
                 cursor.size = (nk_vec2)(nk_cursor_data[i, 1]);
                 cursor.offset = (nk_vec2)(nk_cursor_data[i, 2]);
             }
-            CRuntime.free(tmp);
-            return atlas.pixel;
+            CRuntime.Free(tmp);
+            return atlas.Pixel;
             failed:
             ;
-            if ((tmp) != null) CRuntime.free(tmp);
-            if ((atlas.glyphs) != null)
+            if ((tmp) != null) CRuntime.Free(tmp);
+            if ((atlas.Glyphs) != null)
             {
-                CRuntime.free(atlas.glyphs);
-                atlas.glyphs = null;
+                CRuntime.Free(atlas.Glyphs);
+                atlas.Glyphs = null;
             }
 
-            if ((atlas.pixel) != null)
+            if ((atlas.Pixel) != null)
             {
-                CRuntime.free(atlas.pixel);
-                atlas.pixel = null;
+                CRuntime.Free(atlas.Pixel);
+                atlas.Pixel = null;
             }
 
             return null;
         }
 
-        public static void nk_font_atlas_end(nk_font_atlas atlas, nk_handle texture, nk_draw_null_texture* _null_)
+        public static void nk_font_atlas_end(NkFontAtlas atlas, NkHandle texture, nk_draw_null_texture* _null_)
         {
             int i = (int)(0);
-            nk_font font_iter;
+            NkFont font_iter;
             if (atlas == null)
             {
                 if (_null_ == null) return;
-                _null_->texture = (nk_handle)(texture);
+                _null_->texture = (NkHandle)(texture);
                 _null_->uv = (nk_vec2)(nk_vec2_((float)(0.5f), (float)(0.5f)));
             }
 
             if ((_null_) != null)
             {
-                _null_->texture = (nk_handle)(texture);
-                _null_->uv.x = (float)((atlas.custom.x + 0.5f) / (float)(atlas.tex_width));
-                _null_->uv.y = (float)((atlas.custom.y + 0.5f) / (float)(atlas.tex_height));
+                _null_->texture = (NkHandle)(texture);
+                _null_->uv.x = (float)((atlas.Custom.x + 0.5f) / (float)(atlas.TexWidth));
+                _null_->uv.y = (float)((atlas.Custom.y + 0.5f) / (float)(atlas.TexHeight));
             }
 
-            for (font_iter = atlas.fonts; font_iter != null; font_iter = font_iter.next)
+            for (font_iter = atlas.Fonts; font_iter != null; font_iter = font_iter.Next)
             {
-                font_iter.texture = (nk_handle)(texture);
-                font_iter.handle.texture = (nk_handle)(texture);
+                font_iter.Texture = (NkHandle)(texture);
+                font_iter.Handle.Texture = (NkHandle)(texture);
             }
             for (i = (int)(0); (i) < (NK_CURSOR_COUNT); ++i)
             {
-                atlas.cursors[i].img.handle = (nk_handle)(texture);
+                atlas.Cursors[i].img.handle = (NkHandle)(texture);
             }
-            CRuntime.free(atlas.pixel);
-            atlas.pixel = null;
-            atlas.tex_width = (int)(0);
-            atlas.tex_height = (int)(0);
-            atlas.custom.x = (short)(0);
-            atlas.custom.y = (short)(0);
-            atlas.custom.w = (short)(0);
-            atlas.custom.h = (short)(0);
+            CRuntime.Free(atlas.Pixel);
+            atlas.Pixel = null;
+            atlas.TexWidth = (int)(0);
+            atlas.TexHeight = (int)(0);
+            atlas.Custom.x = (short)(0);
+            atlas.Custom.y = (short)(0);
+            atlas.Custom.w = (short)(0);
+            atlas.Custom.h = (short)(0);
         }
 
-        public static void nk_font_atlas_cleanup(nk_font_atlas atlas)
+        public static void nk_font_atlas_cleanup(NkFontAtlas atlas)
         {
             if (((atlas == null))) return;
-            if ((atlas.config) != null)
+            if ((atlas.Config) != null)
             {
                 nk_font_config iter;
-                for (iter = atlas.config; iter != null; iter = iter.next)
+                for (iter = atlas.Config; iter != null; iter = iter.next)
                 {
                     nk_font_config i;
                     for (i = iter.n; i != iter; i = i.n)
                     {
-                        CRuntime.free(i.ttf_blob);
+                        CRuntime.Free(i.ttf_blob);
                         i.ttf_blob = null;
                     }
-                    CRuntime.free(iter.ttf_blob);
+                    CRuntime.Free(iter.ttf_blob);
                     iter.ttf_blob = null;
                 }
             }
 
         }
 
-        public static void nk_font_atlas_clear(nk_font_atlas atlas)
+        public static void nk_font_atlas_clear(NkFontAtlas atlas)
         {
             if (((atlas == null))) return;
-            if ((atlas.config) != null)
+            if ((atlas.Config) != null)
             {
                 nk_font_config iter;
                 nk_font_config next;
-                for (iter = atlas.config; iter != null; iter = next)
+                for (iter = atlas.Config; iter != null; iter = next)
                 {
                     nk_font_config i;
                     nk_font_config n;
                     for (i = iter.n; i != iter; i = n)
                     {
                         n = i.n;
-                        if ((i.ttf_blob) != null) CRuntime.free(i.ttf_blob);
+                        if ((i.ttf_blob) != null) CRuntime.Free(i.ttf_blob);
                     }
                     next = iter.next;
-                    if ((i.ttf_blob) != null) CRuntime.free(iter.ttf_blob);
+                    if ((i.ttf_blob) != null) CRuntime.Free(iter.ttf_blob);
                 }
-                atlas.config = null;
+                atlas.Config = null;
             }
 
-            if ((atlas.fonts) != null)
+            if ((atlas.Fonts) != null)
             {
-                nk_font iter;
-                nk_font next;
-                for (iter = atlas.fonts; iter != null; iter = next)
+                NkFont iter;
+                NkFont next;
+                for (iter = atlas.Fonts; iter != null; iter = next)
                 {
-                    next = iter.next;
+                    next = iter.Next;
                 }
-                atlas.fonts = null;
+                atlas.Fonts = null;
             }
 
-            if ((atlas.glyphs) != null) CRuntime.free(atlas.glyphs);
+            if ((atlas.Glyphs) != null) CRuntime.Free(atlas.Glyphs);
 
         }
     }

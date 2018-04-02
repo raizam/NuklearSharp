@@ -3,12 +3,12 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-    public unsafe static partial class Nuklear
+    public unsafe static partial class Nk
     {
         public unsafe partial class nk_config_stack_style_item_element
         {
-            public nk_style_item address;
-            public nk_style_item old_value = new nk_style_item();
+            public NkStyleItem address;
+            public NkStyleItem old_value = new NkStyleItem();
         }
 
         public unsafe partial class nk_config_stack_float_element
@@ -37,8 +37,8 @@ namespace NuklearSharp
 
         public unsafe partial class nk_config_stack_user_font_element
         {
-            public nk_user_font address;
-            public nk_user_font old_value;
+            public NkUserFont address;
+            public NkUserFont old_value;
         }
 
         public unsafe partial class nk_config_stack_style_item
@@ -80,7 +80,7 @@ namespace NuklearSharp
         public unsafe partial class nk_config_stack_button_behavior
         {
             public int head;
-            public nk_config_stack_button_behavior_element[] elements = new nk_config_stack_button_behavior_element[8];
+            public NkConfigStackButtonBehaviorElement[] elements = new NkConfigStackButtonBehaviorElement[8];
         }
 
         public unsafe partial class nk_configuration_stacks

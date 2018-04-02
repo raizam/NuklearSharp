@@ -40,7 +40,7 @@ namespace RaizamTest
 
             _nuklearContext = new NuklearContext(GraphicsDevice);
 
-            Nuklear.nk_font font;
+            Nk.NkFont font;
             using (var stream = File.OpenRead(Path.Combine(Content.RootDirectory, "Fonts/Roboto-Regular.ttf")))
             {
                 var fontAtlas = new FontAtlasWrapper(_nuklearContext);
@@ -100,8 +100,8 @@ namespace RaizamTest
 
             // TODO: Add your drawing code here
             if (_nuklearContext.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
-                Nuklear.NK_WINDOW_BORDER | Nuklear.NK_WINDOW_MOVABLE | Nuklear.NK_WINDOW_SCALABLE |
-                Nuklear.NK_WINDOW_MINIMIZABLE | Nuklear.NK_WINDOW_TITLE))
+                Nk.NK_WINDOW_BORDER | Nk.NK_WINDOW_MOVABLE | Nk.NK_WINDOW_SCALABLE |
+                Nk.NK_WINDOW_MINIMIZABLE | Nk.NK_WINDOW_TITLE))
             {
                 _nuklearContext.LayoutRowStatic(30, 80, 1);
                 _nuklearContext.LayoutRowDynamic(30, 1);
@@ -116,7 +116,7 @@ namespace RaizamTest
                 _nuklearContext.ButtonColor(Color.Red);
                 _nuklearContext.LayoutRowDynamic(30, 1);
                 _nuklearContext.LayoutRowDynamic(30, 2);
-                _nuklearContext.LabelColored("background", Nuklear.NK_TEXT_LEFT, _background);
+                _nuklearContext.LabelColored("background", Nk.NK_TEXT_LEFT, _background);
 
                 if (_nuklearContext.ComboBeginColor(_background, new Vector2(_nuklearContext.WidgetWidth(), 400)))
                 {
@@ -131,7 +131,7 @@ namespace RaizamTest
                 }
 
                 _nuklearContext.LayoutRowDynamic(30, 1);
-                _nuklearContext.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nuklear.NK_TEXT_LEFT, _background);
+                _nuklearContext.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Nk.NK_TEXT_LEFT, _background);
 
             }
             _nuklearContext.End();
