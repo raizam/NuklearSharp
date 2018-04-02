@@ -114,20 +114,20 @@ namespace NuklearSharp
 
     //public enum NkSymbolType
     //{
-    //    NK_SYMBOL_NONE = 0,
-    //    NK_SYMBOL_X = 1,
-    //    NK_SYMBOL_UNDERSCORE = 2,
-    //    NK_SYMBOL_CIRCLE_SOLID = 3,
-    //    NK_SYMBOL_CIRCLE_OUTLINE = 4,
-    //    NK_SYMBOL_RECT_SOLID = 5,
-    //    NK_SYMBOL_RECT_OUTLINE = 6,
-    //    NK_SYMBOL_TRIANGLE_UP = 7,
-    //    NK_SYMBOL_TRIANGLE_DOWN = 8,
-    //    NK_SYMBOL_TRIANGLE_LEFT = 9,
-    //    NK_SYMBOL_TRIANGLE_RIGHT = 10,
-    //    NK_SYMBOL_PLUS = 11,
-    //    NK_SYMBOL_MINUS = 12,
-    //    NK_SYMBOL_MAX = 13
+    //    NkSymbolType.NONE = 0,
+    //    NkSymbolType.X = 1,
+    //    NkSymbolType.UNDERSCORE = 2,
+    //    NkSymbolType.CIRCLE_SOLID = 3,
+    //    NkSymbolType.CIRCLE_OUTLINE = 4,
+    //    NkSymbolType.RECT_SOLID = 5,
+    //    NkSymbolType.RECT_OUTLINE = 6,
+    //    NkSymbolType.TRIANGLE_UP = 7,
+    //    NkSymbolType.TRIANGLE_DOWN = 8,
+    //    NkSymbolType.TRIANGLE_LEFT = 9,
+    //    NkSymbolType.TRIANGLE_RIGHT = 10,
+    //    NkSymbolType.PLUS = 11,
+    //    NkSymbolType.MINUS = 12,
+    //    NkSymbolType.MAX = 13
     //}
 
     //public enum NkStyleHeaderAlign
@@ -196,40 +196,7 @@ namespace NuklearSharp
     //    NK_TREE_TAB = 1
     //}
 
-    //public enum NkKeys
-    //{
-    //    NK_KEY_NONE = 0,
-    //    NK_KEY_SHIFT = 1,
-    //    NK_KEY_CTRL = 2,
-    //    NK_KEY_DEL = 3,
-    //    NK_KEY_ENTER = 4,
-    //    NK_KEY_TAB = 5,
-    //    NK_KEY_BACKSPACE = 6,
-    //    NK_KEY_COPY = 7,
-    //    NK_KEY_CUT = 8,
-    //    NK_KEY_PASTE = 9,
-    //    NK_KEY_UP = 10,
-    //    NK_KEY_DOWN = 11,
-    //    NK_KEY_LEFT = 12,
-    //    NK_KEY_RIGHT = 13,
-    //    NK_KEY_TEXT_INSERT_MODE = 14,
-    //    NK_KEY_TEXT_REPLACE_MODE = 15,
-    //    NK_KEY_TEXT_RESET_MODE = 16,
-    //    NK_KEY_TEXT_LINE_START = 17,
-    //    NK_KEY_TEXT_LINE_END = 18,
-    //    NK_KEY_TEXT_START = 19,
-    //    NK_KEY_TEXT_END = 20,
-    //    NK_KEY_TEXT_UNDO = 21,
-    //    NK_KEY_TEXT_REDO = 22,
-    //    NK_KEY_TEXT_SELECT_ALL = 23,
-    //    NK_KEY_TEXT_WORD_LEFT = 24,
-    //    NK_KEY_TEXT_WORD_RIGHT = 25,
-    //    NK_KEY_SCROLL_START = 26,
-    //    NK_KEY_SCROLL_END = 27,
-    //    NK_KEY_SCROLL_DOWN = 28,
-    //    NK_KEY_SCROLL_UP = 29,
-    //    NK_KEY_MAX = 30
-    //}
+  
 
     //public enum NkButtons
     //{
@@ -347,47 +314,47 @@ namespace NuklearSharp
 
     //public enum NkStyleColors
     //{
-    //    NK_COLOR_TEXT = 0,
-    //    NK_COLOR_WINDOW = 1,
-    //    NK_COLOR_HEADER = 2,
-    //    NK_COLOR_BORDER = 3,
-    //    NK_COLOR_BUTTON = 4,
-    //    NK_COLOR_BUTTON_HOVER = 5,
-    //    NK_COLOR_BUTTON_ACTIVE = 6,
-    //    NK_COLOR_TOGGLE = 7,
-    //    NK_COLOR_TOGGLE_HOVER = 8,
-    //    NK_COLOR_TOGGLE_CURSOR = 9,
-    //    NK_COLOR_SELECT = 10,
-    //    NK_COLOR_SELECT_ACTIVE = 11,
-    //    NK_COLOR_SLIDER = 12,
-    //    NK_COLOR_SLIDER_CURSOR = 13,
-    //    NK_COLOR_SLIDER_CURSOR_HOVER = 14,
-    //    NK_COLOR_SLIDER_CURSOR_ACTIVE = 15,
-    //    NK_COLOR_PROPERTY = 16,
-    //    NK_COLOR_EDIT = 17,
-    //    NK_COLOR_EDIT_CURSOR = 18,
-    //    NK_COLOR_COMBO = 19,
-    //    NK_COLOR_CHART = 20,
-    //    NK_COLOR_CHART_COLOR = 21,
-    //    NK_COLOR_CHART_COLOR_HIGHLIGHT = 22,
-    //    NK_COLOR_SCROLLBAR = 23,
-    //    NK_COLOR_SCROLLBAR_CURSOR = 24,
-    //    NK_COLOR_SCROLLBAR_CURSOR_HOVER = 25,
-    //    NK_COLOR_SCROLLBAR_CURSOR_ACTIVE = 26,
-    //    NK_COLOR_TAB_HEADER = 27,
-    //    NK_COLOR_COUNT = 28
+    //    NkStyleColors.TEXT = 0,
+    //    NkStyleColors.WINDOW = 1,
+    //    NkStyleColors.HEADER = 2,
+    //    NkStyleColors.BORDER = 3,
+    //    NkStyleColors.BUTTON = 4,
+    //    NkStyleColors.BUTTON_HOVER = 5,
+    //    NkStyleColors.BUTTON_ACTIVE = 6,
+    //    NkStyleColors.TOGGLE = 7,
+    //    NkStyleColors.TOGGLE_HOVER = 8,
+    //    NkStyleColors.TOGGLE_CURSOR = 9,
+    //    NkStyleColors.SELECT = 10,
+    //    NkStyleColors.SELECT_ACTIVE = 11,
+    //    NkStyleColors.SLIDER = 12,
+    //    NkStyleColors.SLIDER_CURSOR = 13,
+    //    NkStyleColors.SLIDER_CURSOR_HOVER = 14,
+    //    NkStyleColors.SLIDER_CURSOR_ACTIVE = 15,
+    //    NkStyleColors.PROPERTY = 16,
+    //    NkStyleColors.EDIT = 17,
+    //    NkStyleColors.EDIT_CURSOR = 18,
+    //    NkStyleColors.COMBO = 19,
+    //    NkStyleColors.CHART = 20,
+    //    NkStyleColors.CHART_COLOR = 21,
+    //    NkStyleColors.CHART_COLOR_HIGHLIGHT = 22,
+    //    NkStyleColors.SCROLLBAR = 23,
+    //    NkStyleColors.SCROLLBAR_CURSOR = 24,
+    //    NkStyleColors.SCROLLBAR_CURSOR_HOVER = 25,
+    //    NkStyleColors.SCROLLBAR_CURSOR_ACTIVE = 26,
+    //    NkStyleColors.TAB_HEADER = 27,
+    //    NkStyleColors.COUNT = 28
     //}
 
     //public enum NkStyleCursor
     //{
-    //    NK_CURSOR_ARROW = 0,
-    //    NK_CURSOR_TEXT = 1,
-    //    NK_CURSOR_MOVE = 2,
-    //    NK_CURSOR_RESIZE_VERTICAL = 3,
-    //    NK_CURSOR_RESIZE_HORIZONTAL = 4,
-    //    NK_CURSOR_RESIZE_TOP_LEFT_DOWN_RIGHT = 5,
-    //    NK_CURSOR_RESIZE_TOP_RIGHT_DOWN_LEFT = 6,
-    //    NK_CURSOR_COUNT = 7
+    //    NkStyleCursor.ARROW = 0,
+    //    NkStyleCursor.TEXT = 1,
+    //    NkStyleCursor.MOVE = 2,
+    //    NkStyleCursor.RESIZE_VERTICAL = 3,
+    //    NkStyleCursor.RESIZE_HORIZONTAL = 4,
+    //    NkStyleCursor.RESIZE_TOP_LEFT_DOWN_RIGHT = 5,
+    //    NkStyleCursor.RESIZE_TOP_RIGHT_DOWN_LEFT = 6,
+    //    NkStyleCursor.COUNT = 7
     //}
 
     //public enum NkFontCoordType
@@ -530,6 +497,106 @@ namespace NuklearSharp
         ACTIVE = 34
     }
 
+
+    public enum NkStyleColors
+    {
+        TEXT = 0,
+        WINDOW = 1,
+        HEADER = 2,
+        BORDER = 3,
+        BUTTON = 4,
+        BUTTON_HOVER = 5,
+        BUTTON_ACTIVE = 6,
+        TOGGLE = 7,
+        TOGGLE_HOVER = 8,
+        TOGGLE_CURSOR = 9,
+        SELECT = 10,
+        SELECT_ACTIVE = 11,
+        SLIDER = 12,
+        SLIDER_CURSOR = 13,
+        SLIDER_CURSOR_HOVER = 14,
+        SLIDER_CURSOR_ACTIVE = 15,
+        PROPERTY = 16,
+        EDIT = 17,
+        EDIT_CURSOR = 18,
+        COMBO = 19,
+        CHART = 20,
+        CHART_COLOR = 21,
+        CHART_COLOR_HIGHLIGHT = 22,
+        SCROLLBAR = 23,
+        SCROLLBAR_CURSOR = 24,
+        SCROLLBAR_CURSOR_HOVER = 25,
+        SCROLLBAR_CURSOR_ACTIVE = 26,
+        TAB_HEADER = 27,
+        COUNT = 28
+    }
+
+
+    public enum NkStyleCursor
+    {
+        ARROW = 0,
+        TEXT = 1,
+        MOVE = 2,
+        RESIZE_VERTICAL = 3,
+        RESIZE_HORIZONTAL = 4,
+        RESIZE_TOP_LEFT_DOWN_RIGHT = 5,
+        RESIZE_TOP_RIGHT_DOWN_LEFT = 6,
+        COUNT = 7
+    }
+
+    public enum NkSymbolType
+    {
+        NONE = 0,
+        X = 1,
+        UNDERSCORE = 2,
+        CIRCLE_SOLID = 3,
+        CIRCLE_OUTLINE = 4,
+        RECT_SOLID = 5,
+        RECT_OUTLINE = 6,
+        TRIANGLE_UP = 7,
+        TRIANGLE_DOWN = 8,
+        TRIANGLE_LEFT = 9,
+        TRIANGLE_RIGHT = 10,
+        PLUS = 11,
+        MINUS = 12,
+        MAX = 13
+    }
+
+    public enum NkKeys
+    {
+        NONE = 0,
+        SHIFT = 1,
+        CTRL = 2,
+        DEL = 3,
+        ENTER = 4,
+        TAB = 5,
+        BACKSPACE = 6,
+        COPY = 7,
+        CUT = 8,
+        PASTE = 9,
+        UP = 10,
+        DOWN = 11,
+        LEFT = 12,
+        RIGHT = 13,
+        TEXT_INSERT_MODE = 14,
+        TEXT_REPLACE_MODE = 15,
+        TEXT_RESET_MODE = 16,
+        TEXT_LINE_START = 17,
+        TEXT_LINE_END = 18,
+        TEXT_START = 19,
+        TEXT_END = 20,
+        TEXT_UNDO = 21,
+        TEXT_REDO = 22,
+        TEXT_SELECT_ALL = 23,
+        TEXT_WORD_LEFT = 24,
+        TEXT_WORD_RIGHT = 25,
+        SCROLL_START = 26,
+        SCROLL_END = 27,
+        SCROLL_DOWN = 28,
+        SCROLL_UP = 29,
+        MAX = 30
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -561,51 +628,51 @@ namespace NuklearSharp
         public const int NK_STATIC = 1;
         public const int NK_TREE_NODE = 0;
         public const int NK_TREE_TAB = 1;
-        public const int NK_SYMBOL_NONE = 0;
-        public const int NK_SYMBOL_X = 1;
-        public const int NK_SYMBOL_UNDERSCORE = 2;
-        public const int NK_SYMBOL_CIRCLE_SOLID = 3;
-        public const int NK_SYMBOL_CIRCLE_OUTLINE = 4;
-        public const int NK_SYMBOL_RECT_SOLID = 5;
-        public const int NK_SYMBOL_RECT_OUTLINE = 6;
-        public const int NK_SYMBOL_TRIANGLE_UP = 7;
-        public const int NK_SYMBOL_TRIANGLE_DOWN = 8;
-        public const int NK_SYMBOL_TRIANGLE_LEFT = 9;
-        public const int NK_SYMBOL_TRIANGLE_RIGHT = 10;
-        public const int NK_SYMBOL_PLUS = 11;
-        public const int NK_SYMBOL_MINUS = 12;
-        public const int NK_SYMBOL_MAX = 13;
-        public const int NK_KEY_NONE = 0;
-        public const int NK_KEY_SHIFT = 1;
-        public const int NK_KEY_CTRL = 2;
-        public const int NK_KEY_DEL = 3;
-        public const int NK_KEY_ENTER = 4;
-        public const int NK_KEY_TAB = 5;
-        public const int NK_KEY_BACKSPACE = 6;
-        public const int NK_KEY_COPY = 7;
-        public const int NK_KEY_CUT = 8;
-        public const int NK_KEY_PASTE = 9;
-        public const int NK_KEY_UP = 10;
-        public const int NK_KEY_DOWN = 11;
-        public const int NK_KEY_LEFT = 12;
-        public const int NK_KEY_RIGHT = 13;
-        public const int NK_KEY_TEXT_INSERT_MODE = 14;
-        public const int NK_KEY_TEXT_REPLACE_MODE = 15;
-        public const int NK_KEY_TEXT_RESET_MODE = 16;
-        public const int NK_KEY_TEXT_LINE_START = 17;
-        public const int NK_KEY_TEXT_LINE_END = 18;
-        public const int NK_KEY_TEXT_START = 19;
-        public const int NK_KEY_TEXT_END = 20;
-        public const int NK_KEY_TEXT_UNDO = 21;
-        public const int NK_KEY_TEXT_REDO = 22;
-        public const int NK_KEY_TEXT_SELECT_ALL = 23;
-        public const int NK_KEY_TEXT_WORD_LEFT = 24;
-        public const int NK_KEY_TEXT_WORD_RIGHT = 25;
-        public const int NK_KEY_SCROLL_START = 26;
-        public const int NK_KEY_SCROLL_END = 27;
-        public const int NK_KEY_SCROLL_DOWN = 28;
-        public const int NK_KEY_SCROLL_UP = 29;
-        public const int NK_KEY_MAX = 30;
+        //public const int NkSymbolType.NONE = 0;
+        //public const int NkSymbolType.X = 1;
+        //public const int NkSymbolType.UNDERSCORE = 2;
+        //public const int NkSymbolType.CIRCLE_SOLID = 3;
+        //public const int NkSymbolType.CIRCLE_OUTLINE = 4;
+        //public const int NkSymbolType.RECT_SOLID = 5;
+        //public const int NkSymbolType.RECT_OUTLINE = 6;
+        //public const int NkSymbolType.TRIANGLE_UP = 7;
+        //public const int NkSymbolType.TRIANGLE_DOWN = 8;
+        //public const int NkSymbolType.TRIANGLE_LEFT = 9;
+        //public const int NkSymbolType.TRIANGLE_RIGHT = 10;
+        //public const int NkSymbolType.PLUS = 11;
+        //public const int NkSymbolType.MINUS = 12;
+        //public const int NkSymbolType.MAX = 13;
+        //public const int NkKeys.NONE = 0;
+        //public const int NkKeys.SHIFT = 1;
+        //public const int NkKeys.CTRL = 2;
+        //public const int NkKeys.DEL = 3;
+        //public const int NkKeys.ENTER = 4;
+        //public const int NkKeys.TAB = 5;
+        //public const int NkKeys.BACKSPACE = 6;
+        //public const int NkKeys.COPY = 7;
+        //public const int NkKeys.CUT = 8;
+        //public const int NkKeys.PASTE = 9;
+        //public const int NkKeys.UP = 10;
+        //public const int NkKeys.DOWN = 11;
+        //public const int NkKeys.LEFT = 12;
+        //public const int NkKeys.RIGHT = 13;
+        //public const int NkKeys.TEXT_INSERT_MODE = 14;
+        //public const int NkKeys.TEXT_REPLACE_MODE = 15;
+        //public const int NkKeys.TEXT_RESET_MODE = 16;
+        //public const int NkKeys.TEXT_LINE_START = 17;
+        //public const int NkKeys.TEXT_LINE_END = 18;
+        //public const int NkKeys.TEXT_START = 19;
+        //public const int NkKeys.TEXT_END = 20;
+        //public const int NkKeys.TEXT_UNDO = 21;
+        //public const int NkKeys.TEXT_REDO = 22;
+        //public const int NkKeys.TEXT_SELECT_ALL = 23;
+        //public const int NkKeys.TEXT_WORD_LEFT = 24;
+        //public const int NkKeys.TEXT_WORD_RIGHT = 25;
+        //public const int NkKeys.SCROLL_START = 26;
+        //public const int NkKeys.SCROLL_END = 27;
+        //public const int NkKeys.SCROLL_DOWN = 28;
+        //public const int NkKeys.SCROLL_UP = 29;
+        //public const int NkKeys.MAX = 30;
         public const int NK_BUTTON_LEFT = 0;
         public const int NK_BUTTON_MIDDLE = 1;
         public const int NK_BUTTON_RIGHT = 2;
@@ -632,14 +699,7 @@ namespace NuklearSharp
         public const int NK_WIDGET_INVALID = 0;
         public const int NK_WIDGET_VALID = 1;
         public const int NK_WIDGET_ROM = 2;
-        //public const int NkWidgetStates.MODIFIED = (1 << (1));
-        //public const int NkWidgetStates.INACTIVE = (1 << (2));
-        //public const int NkWidgetStates.ENTERED = (1 << (3));
-        //public const int NkWidgetStates.HOVER = (1 << (4));
-        //public const int NkWidgetStates.ACTIVED = (1 << (5));
-        //public const int NkWidgetStates.LEFT = (1 << (6));
-        //public const int NkWidgetStates.HOVERED = NkWidgetStates.HOVER | NkWidgetStates.MODIFIED;
-        //public const int NkWidgetStates.ACTIVE = NkWidgetStates.ACTIVED | NkWidgetStates.MODIFIED;
+
         public const int NK_TEXT_ALIGN_LEFT = 0x01;
         public const int NK_TEXT_ALIGN_CENTERED = 0x02;
         public const int NK_TEXT_ALIGN_RIGHT = 0x04;
@@ -677,43 +737,15 @@ namespace NuklearSharp
         public const int NK_EDIT_ACTIVATED = (1 << (2));
         public const int NK_EDIT_DEACTIVATED = (1 << (3));
         public const int NK_EDIT_COMMITED = (1 << (4));
-        public const int NK_COLOR_TEXT = 0;
-        public const int NK_COLOR_WINDOW = 1;
-        public const int NK_COLOR_HEADER = 2;
-        public const int NK_COLOR_BORDER = 3;
-        public const int NK_COLOR_BUTTON = 4;
-        public const int NK_COLOR_BUTTON_HOVER = 5;
-        public const int NK_COLOR_BUTTON_ACTIVE = 6;
-        public const int NK_COLOR_TOGGLE = 7;
-        public const int NK_COLOR_TOGGLE_HOVER = 8;
-        public const int NK_COLOR_TOGGLE_CURSOR = 9;
-        public const int NK_COLOR_SELECT = 10;
-        public const int NK_COLOR_SELECT_ACTIVE = 11;
-        public const int NK_COLOR_SLIDER = 12;
-        public const int NK_COLOR_SLIDER_CURSOR = 13;
-        public const int NK_COLOR_SLIDER_CURSOR_HOVER = 14;
-        public const int NK_COLOR_SLIDER_CURSOR_ACTIVE = 15;
-        public const int NK_COLOR_PROPERTY = 16;
-        public const int NK_COLOR_EDIT = 17;
-        public const int NK_COLOR_EDIT_CURSOR = 18;
-        public const int NK_COLOR_COMBO = 19;
-        public const int NK_COLOR_CHART = 20;
-        public const int NK_COLOR_CHART_COLOR = 21;
-        public const int NK_COLOR_CHART_COLOR_HIGHLIGHT = 22;
-        public const int NK_COLOR_SCROLLBAR = 23;
-        public const int NK_COLOR_SCROLLBAR_CURSOR = 24;
-        public const int NK_COLOR_SCROLLBAR_CURSOR_HOVER = 25;
-        public const int NK_COLOR_SCROLLBAR_CURSOR_ACTIVE = 26;
-        public const int NK_COLOR_TAB_HEADER = 27;
-        public const int NK_COLOR_COUNT = 28;
-        public const int NK_CURSOR_ARROW = 0;
-        public const int NK_CURSOR_TEXT = 1;
-        public const int NK_CURSOR_MOVE = 2;
-        public const int NK_CURSOR_RESIZE_VERTICAL = 3;
-        public const int NK_CURSOR_RESIZE_HORIZONTAL = 4;
-        public const int NK_CURSOR_RESIZE_TOP_LEFT_DOWN_RIGHT = 5;
-        public const int NK_CURSOR_RESIZE_TOP_RIGHT_DOWN_LEFT = 6;
-        public const int NK_CURSOR_COUNT = 7;
+
+        //public const int NkStyleCursor.ARROW = 0;
+        //public const int NkStyleCursor.TEXT = 1;
+        //public const int NkStyleCursor.MOVE = 2;
+        //public const int NkStyleCursor.RESIZE_VERTICAL = 3;
+        //public const int NkStyleCursor.RESIZE_HORIZONTAL = 4;
+        //public const int NkStyleCursor.RESIZE_TOP_LEFT_DOWN_RIGHT = 5;
+        //public const int NkStyleCursor.RESIZE_TOP_RIGHT_DOWN_LEFT = 6;
+        //public const int NkStyleCursor.COUNT = 7;
         public const int NK_COORD_UV = 0;
         public const int NK_COORD_PIXEL = 1;
         public const int NK_FONT_ATLAS_ALPHA8 = 0;

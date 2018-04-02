@@ -72,7 +72,7 @@ namespace NuklearSharp
 
         public class NkKeyboard
         {
-            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[Nk.NK_KEY_MAX]);
+            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[(int)NkKeys.MAX]);
             public PinnedArray<char> Text = new PinnedArray<char>(new char[16]);
             public int TextLen;
         }
@@ -217,7 +217,7 @@ namespace NuklearSharp
             public int TexWidth;
             public int TexHeight;
             public NkRectI Custom;
-            public NkCursor[] Cursors = new NkCursor[Nk.NK_CURSOR_COUNT];
+            public NkCursor[] Cursors = new NkCursor[(int)NkStyleCursor.COUNT];
             public int GlyphCount;
             public nk_font_glyph* Glyphs;
             public NkFont DefaultFont;
@@ -266,7 +266,7 @@ namespace NuklearSharp
         public class NkStyle
         {
             public NkUserFont Font;
-            public NkCursor[] Cursors = new NkCursor[Nk.NK_CURSOR_COUNT];
+            public NkCursor[] Cursors = new NkCursor[(int)NkStyleCursor.COUNT];
             public NkCursor CursorActive;
             public NkCursor CursorLast;
             public int CursorVisible;
@@ -644,7 +644,7 @@ namespace NuklearSharp
 
         public static void nk_build(NkContext ctx)
         {
-            if (ctx.Style.CursorActive == null) ctx.Style.CursorActive = ctx.Style.Cursors[NK_CURSOR_ARROW];
+            if (ctx.Style.CursorActive == null) ctx.Style.CursorActive = ctx.Style.Cursors[(int)NkStyleCursor.ARROW];
             if (ctx.Style.CursorActive != null && ctx.Input.mouse.Grabbed == 0 && ctx.Style.CursorVisible != 0)
             {
                 var mouseBounds = new NkRect();

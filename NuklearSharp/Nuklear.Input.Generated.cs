@@ -129,11 +129,11 @@ namespace NuklearSharp
             return ((i.mouse.Buttons[id].down == 0) && ((i.mouse.Buttons[id].clicked) != 0)) ? 1 : 0;
         }
 
-        public static int nk_input_is_key_pressed(nk_input i, int key)
+        public static int nk_input_is_key_pressed(nk_input i, NkKeys key)
         {
             nk_key* k;
             if (i == null) return (int)(nk_false);
-            k = (nk_key*)i.keyboard.Keys + key;
+            k = (nk_key*)i.keyboard.Keys + (int)key;
             if ((((k->down) != 0) && ((k->clicked) != 0)) || ((k->down == 0) && ((k->clicked) >= (2)))) return (int)(nk_true);
             return (int)(nk_false);
         }

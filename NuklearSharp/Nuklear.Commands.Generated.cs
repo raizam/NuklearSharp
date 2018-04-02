@@ -519,19 +519,19 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_draw_symbol(NkCommandBuffer _out_, int type, NkRect content, NkColor background,
+        public static void nk_draw_symbol(NkCommandBuffer _out_, NkSymbolType type, NkRect content, NkColor background,
             NkColor foreground, float border_width, NkUserFont font)
         {
             switch (type)
             {
-                case NK_SYMBOL_X:
-                case NK_SYMBOL_UNDERSCORE:
-                case NK_SYMBOL_PLUS:
-                case NK_SYMBOL_MINUS:
+                case NkSymbolType.X:
+                case NkSymbolType.UNDERSCORE:
+                case NkSymbolType.PLUS:
+                case NkSymbolType.MINUS:
                     {
-                        char X = ((type) == (NK_SYMBOL_X))
+                        char X = ((type) == (NkSymbolType.X))
                             ? 'x'
-                            : ((type) == (NK_SYMBOL_UNDERSCORE)) ? '_' : ((type) == (NK_SYMBOL_PLUS)) ? '+' : '-';
+                            : ((type) == (NkSymbolType.UNDERSCORE)) ? '_' : ((type) == (NkSymbolType.PLUS)) ? '+' : '-';
                         nk_text text = new nk_text();
                         text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                         text.background = (NkColor)(background);
@@ -539,49 +539,49 @@ namespace NuklearSharp
                         nk_widget_text(_out_, (NkRect)(content), &X, (int)(1), &text, (uint)(NK_TEXT_CENTERED), font);
                     }
                     break;
-                case NK_SYMBOL_CIRCLE_SOLID:
-                case NK_SYMBOL_CIRCLE_OUTLINE:
-                case NK_SYMBOL_RECT_SOLID:
-                case NK_SYMBOL_RECT_OUTLINE:
+                case NkSymbolType.CIRCLE_SOLID:
+                case NkSymbolType.CIRCLE_OUTLINE:
+                case NkSymbolType.RECT_SOLID:
+                case NkSymbolType.RECT_OUTLINE:
                     {
-                        if (((type) == (NK_SYMBOL_RECT_SOLID)) || ((type) == (NK_SYMBOL_RECT_OUTLINE)))
+                        if (((type) == (NkSymbolType.RECT_SOLID)) || ((type) == (NkSymbolType.RECT_OUTLINE)))
                         {
                             nk_fill_rect(_out_, (NkRect)(content), (float)(0), (NkColor)(foreground));
-                            if ((type) == (NK_SYMBOL_RECT_OUTLINE))
+                            if ((type) == (NkSymbolType.RECT_OUTLINE))
                                 nk_fill_rect(_out_, (NkRect)(nk_shrink_rect_((NkRect)(content), (float)(border_width))),
                                     (float)(0), (NkColor)(background));
                         }
                         else
                         {
                             nk_fill_circle(_out_, (NkRect)(content), (NkColor)(foreground));
-                            if ((type) == (NK_SYMBOL_CIRCLE_OUTLINE))
+                            if ((type) == (NkSymbolType.CIRCLE_OUTLINE))
                                 nk_fill_circle(_out_, (NkRect)(nk_shrink_rect_((NkRect)(content), (float)(1))),
                                     (NkColor)(background));
                         }
                     }
                     break;
-                case NK_SYMBOL_TRIANGLE_UP:
-                case NK_SYMBOL_TRIANGLE_DOWN:
-                case NK_SYMBOL_TRIANGLE_LEFT:
-                case NK_SYMBOL_TRIANGLE_RIGHT:
+                case NkSymbolType.TRIANGLE_UP:
+                case NkSymbolType.TRIANGLE_DOWN:
+                case NkSymbolType.TRIANGLE_LEFT:
+                case NkSymbolType.TRIANGLE_RIGHT:
                     {
                         NkHeading heading;
                         NkVec2* points = stackalloc NkVec2[3];
                         heading =
         
-                                (((type) == (NK_SYMBOL_TRIANGLE_RIGHT))
+                                (((type) == (NkSymbolType.TRIANGLE_RIGHT))
                                     ? NkHeading.NK_RIGHT
-                                    : ((type) == (NK_SYMBOL_TRIANGLE_LEFT))
+                                    : ((type) == (NkSymbolType.TRIANGLE_LEFT))
                                         ? NkHeading.NK_LEFT
-                                        : ((type) == (NK_SYMBOL_TRIANGLE_UP)) ? NkHeading.NK_UP : NkHeading.NK_DOWN);
+                                        : ((type) == (NkSymbolType.TRIANGLE_UP)) ? NkHeading.NK_UP : NkHeading.NK_DOWN);
                         nk_triangle_from_direction(points, (NkRect)(content), (float)(0), (float)(0), (heading));
                         nk_fill_triangle(_out_, (float)(points[0].x), (float)(points[0].y), (float)(points[1].x),
                             (float)(points[1].y), (float)(points[2].x), (float)(points[2].y), (NkColor)(foreground));
                     }
                     break;
                 default:
-                case NK_SYMBOL_NONE:
-                case NK_SYMBOL_MAX:
+                case NkSymbolType.NONE:
+                case NkSymbolType.MAX:
                     break;
             }
 
@@ -624,7 +624,7 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_button_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
-            nk_style_button style, int type, NkUserFont font)
+            nk_style_button style, NkSymbolType type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             NkColor bg = new NkColor();
@@ -635,7 +635,7 @@ namespace NuklearSharp
             if ((state & NkWidgetStates.HOVER) != 0) sym = (NkColor)(style.text_hover);
             else if ((state & NkWidgetStates.ACTIVED) != 0) sym = (NkColor)(style.text_active);
             else sym = (NkColor)(style.text_normal);
-            nk_draw_symbol(_out_, (int)(type), (NkRect)(*content), (NkColor)(bg), (NkColor)(sym), (float)(1),
+            nk_draw_symbol(_out_, (type), (NkRect)(*content), (NkColor)(bg), (NkColor)(sym), (float)(1),
                 font);
         }
 
@@ -647,7 +647,7 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_button_text_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* label,
-            NkRect* symbol, NkWidgetStates state, nk_style_button style, char* str, int len, int type, NkUserFont font)
+            NkRect* symbol, NkWidgetStates state, nk_style_button style, char* str, int len, NkSymbolType type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             nk_text text = new nk_text();
@@ -672,7 +672,7 @@ namespace NuklearSharp
             }
 
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
-            nk_draw_symbol(_out_, (int)(type), (NkRect)(*symbol), (NkColor)(style.text_background),
+            nk_draw_symbol(_out_, type, (NkRect)(*symbol), (NkColor)(style.text_background),
                 (NkColor)(sym), (float)(0), font);
             nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
         }

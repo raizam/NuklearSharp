@@ -28,7 +28,7 @@ namespace NuklearSharp
             Nk.nk_input_motion(_ctx, x, y);
         }
 
-        public void InputKey(int key, bool down)
+        public void InputKey(NkKeys key, bool down)
         {
             Nk.nk_input_key(_ctx, key, down ? 1 : 0);
         }
@@ -776,12 +776,12 @@ namespace NuklearSharp
             return Nk.nk_button_color(_ctx, color) != 0;
         }
 
-        public bool ButtonSymbolStyled(nk_style_button style, int symbol)
+        public bool ButtonSymbolStyled(nk_style_button style, NkSymbolType symbol)
         {
             return Nk.nk_button_symbol_styled(_ctx, style, symbol) != 0;
         }
 
-        public bool ButtonSymbol(int symbol)
+        public bool ButtonSymbol(NkSymbolType symbol)
         {
             return Nk.nk_button_symbol(_ctx, symbol) != 0;
         }
@@ -796,7 +796,7 @@ namespace NuklearSharp
             return Nk.nk_button_image(_ctx, img) != 0;
         }
 
-        public bool ButtonSymbolTextStyled(nk_style_button style, int symbol, string text, uint align)
+        public bool ButtonSymbolTextStyled(nk_style_button style, NkSymbolType symbol, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -804,7 +804,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolText(int symbol, string text, uint align)
+        public bool ButtonSymbolText(NkSymbolType symbol, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -812,7 +812,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolLabel(int symbol, string label, uint align)
+        public bool ButtonSymbolLabel(NkSymbolType symbol, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
@@ -820,7 +820,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolLabelStyled(nk_style_button style, int symbol, string title, uint align)
+        public bool ButtonSymbolLabelStyled(nk_style_button style, NkSymbolType symbol, string title, uint align)
         {
             fixed (char* title_ptr = title)
             {
@@ -1340,7 +1340,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemSymbolText(int symbol, string text, uint align)
+        public bool ContextualItemSymbolText(NkSymbolType symbol, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1348,7 +1348,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemSymbolLabel(int symbol, string text, uint align)
+        public bool ContextualItemSymbolLabel(NkSymbolType symbol, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1392,12 +1392,12 @@ namespace NuklearSharp
             return Nk.nk_combo_begin_color(_ctx, color, size) != 0;
         }
 
-        public bool ComboBeginSymbol(int symbol, NkVec2 size)
+        public bool ComboBeginSymbol(NkSymbolType symbol, NkVec2 size)
         {
             return Nk.nk_combo_begin_symbol(_ctx, symbol, size) != 0;
         }
 
-        public bool ComboBeginSymbolText(string selected, int symbol, NkVec2 size)
+        public bool ComboBeginSymbolText(string selected, NkSymbolType symbol, NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1418,7 +1418,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginSymbolLabel(string selected, int type, NkVec2 size)
+        public bool ComboBeginSymbolLabel(string selected, NkSymbolType type, NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1466,7 +1466,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemSymbolText(int sym, string text, uint alignment)
+        public bool ComboItemSymbolText(NkSymbolType sym, string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1474,7 +1474,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemSymbolLabel(int sym, string label, uint alignment)
+        public bool ComboItemSymbolLabel(NkSymbolType sym, string label, uint alignment)
         {
             fixed (char* label_ptr = label)
             {
@@ -1580,7 +1580,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbol(string id, int sym, NkVec2 size)
+        public bool MenuBeginSymbol(string id, NkSymbolType sym, NkVec2 size)
         {
             fixed (char* id_ptr = id)
             {
@@ -1652,7 +1652,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemSymbolText(int sym, string text, uint align)
+        public bool MenuItemSymbolText(NkSymbolType sym, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1660,7 +1660,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemSymbolLabel(int sym, string label, uint align)
+        public bool MenuItemSymbolLabel(NkSymbolType sym, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {

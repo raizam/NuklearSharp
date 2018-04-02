@@ -67,13 +67,13 @@ namespace NuklearSharp
 
         public static string[] nk_color_names =
         {
-            "NK_COLOR_TEXT", "NK_COLOR_WINDOW", "NK_COLOR_HEADER", "NK_COLOR_BORDER", "NK_COLOR_BUTTON", "NK_COLOR_BUTTON_HOVER",
-            "NK_COLOR_BUTTON_ACTIVE", "NK_COLOR_TOGGLE", "NK_COLOR_TOGGLE_HOVER", "NK_COLOR_TOGGLE_CURSOR", "NK_COLOR_SELECT",
-            "NK_COLOR_SELECT_ACTIVE", "NK_COLOR_SLIDER", "NK_COLOR_SLIDER_CURSOR", "NK_COLOR_SLIDER_CURSOR_HOVER",
-            "NK_COLOR_SLIDER_CURSOR_ACTIVE", "NK_COLOR_PROPERTY", "NK_COLOR_EDIT", "NK_COLOR_EDIT_CURSOR", "NK_COLOR_COMBO",
-            "NK_COLOR_CHART", "NK_COLOR_CHART_COLOR", "NK_COLOR_CHART_COLOR_HIGHLIGHT", "NK_COLOR_SCROLLBAR",
-            "NK_COLOR_SCROLLBAR_CURSOR", "NK_COLOR_SCROLLBAR_CURSOR_HOVER", "NK_COLOR_SCROLLBAR_CURSOR_ACTIVE",
-            "NK_COLOR_TAB_HEADER"
+            "NkStyleColors.TEXT", "NkStyleColors.WINDOW", "NkStyleColors.HEADER", "NkStyleColors.BORDER", "NkStyleColors.BUTTON", "NkStyleColors.BUTTON_HOVER",
+            "NkStyleColors.BUTTON_ACTIVE", "NkStyleColors.TOGGLE", "NkStyleColors.TOGGLE_HOVER", "NkStyleColors.TOGGLE_CURSOR", "NkStyleColors.SELECT",
+            "NkStyleColors.SELECT_ACTIVE", "NkStyleColors.SLIDER", "NkStyleColors.SLIDER_CURSOR", "NkStyleColors.SLIDER_CURSOR_HOVER",
+            "NkStyleColors.SLIDER_CURSOR_ACTIVE", "NkStyleColors.PROPERTY", "NkStyleColors.EDIT", "NkStyleColors.EDIT_CURSOR", "NkStyleColors.COMBO",
+            "NkStyleColors.CHART", "NkStyleColors.CHART_COLOR", "NkStyleColors.CHART_COLOR_HIGHLIGHT", "NkStyleColors.SCROLLBAR",
+            "NkStyleColors.SCROLLBAR_CURSOR", "NkStyleColors.SCROLLBAR_CURSOR_HOVER", "NkStyleColors.SCROLLBAR_CURSOR_ACTIVE",
+            "NkStyleColors.TAB_HEADER"
         };
 
         public static byte[] nk_utfbyte = { 0x80, 0, 0xC0, 0xE0, 0xF0 };

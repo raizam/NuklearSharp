@@ -192,29 +192,29 @@ namespace NuklearSharp.MonoGame
 
             InputBegin();
 
-            InputKey(Nk.NK_KEY_DEL, keyboardState.IsKeyDown(Keys.Delete));
-            InputKey(Nk.NK_KEY_ENTER, keyboardState.IsKeyDown(Keys.Enter));
-            InputKey(Nk.NK_KEY_TAB, keyboardState.IsKeyDown(Keys.Tab));
-            InputKey(Nk.NK_KEY_BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
-            InputKey(Nk.NK_KEY_LEFT, keyboardState.IsKeyDown(Keys.Left));
-            InputKey(Nk.NK_KEY_RIGHT, keyboardState.IsKeyDown(Keys.Right));
-            InputKey(Nk.NK_KEY_UP, keyboardState.IsKeyDown(Keys.Up));
-            InputKey(Nk.NK_KEY_DOWN, keyboardState.IsKeyDown(Keys.Down));
+            InputKey(NkKeys.DEL, keyboardState.IsKeyDown(Keys.Delete));
+            InputKey(NkKeys.ENTER, keyboardState.IsKeyDown(Keys.Enter));
+            InputKey(NkKeys.TAB, keyboardState.IsKeyDown(Keys.Tab));
+            InputKey(NkKeys.BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
+            InputKey(NkKeys.LEFT, keyboardState.IsKeyDown(Keys.Left));
+            InputKey(NkKeys.RIGHT, keyboardState.IsKeyDown(Keys.Right));
+            InputKey(NkKeys.UP, keyboardState.IsKeyDown(Keys.Up));
+            InputKey(NkKeys.DOWN, keyboardState.IsKeyDown(Keys.Down));
             if (keyboardState.IsKeyDown(Keys.LeftControl) ||
                 keyboardState.IsKeyDown(Keys.RightControl))
             {
-                InputKey(Nk.NK_KEY_COPY, keyboardState.IsKeyDown(Keys.C));
-                InputKey(Nk.NK_KEY_PASTE, keyboardState.IsKeyDown(Keys.P));
-                InputKey(Nk.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.X));
-                InputKey(Nk.NK_KEY_CUT, keyboardState.IsKeyDown(Keys.E));
-                InputKey(Nk.NK_KEY_SHIFT, true);
+                InputKey(NkKeys.COPY, keyboardState.IsKeyDown(Keys.C));
+                InputKey(NkKeys.PASTE, keyboardState.IsKeyDown(Keys.P));
+                InputKey(NkKeys.CUT, keyboardState.IsKeyDown(Keys.X));
+                InputKey(NkKeys.CUT, keyboardState.IsKeyDown(Keys.E));
+                InputKey(NkKeys.SHIFT, true);
             }
             else
             {
-                InputKey(Nk.NK_KEY_COPY, false);
-                InputKey(Nk.NK_KEY_PASTE, false);
-                InputKey(Nk.NK_KEY_CUT, false);
-                InputKey(Nk.NK_KEY_SHIFT, false);
+                InputKey(NkKeys.COPY, false);
+                InputKey(NkKeys.PASTE, false);
+                InputKey(NkKeys.CUT, false);
+                InputKey(NkKeys.SHIFT, false);
             }
 
             var isShiftDown = keyboardState.IsKeyDown(Keys.LeftShift) ||

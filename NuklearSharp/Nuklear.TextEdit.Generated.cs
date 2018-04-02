@@ -395,46 +395,46 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_textedit_key(nk_text_edit state, int key, int shift_mod, NkUserFont font, float row_height)
+        public static void nk_textedit_key(nk_text_edit state, NkKeys key, int shift_mod, NkUserFont font, float row_height)
         {
             retry:
             ;
             switch (key)
             {
-                case NK_KEY_NONE:
-                case NK_KEY_CTRL:
-                case NK_KEY_ENTER:
-                case NK_KEY_SHIFT:
-                case NK_KEY_TAB:
-                case NK_KEY_COPY:
-                case NK_KEY_CUT:
-                case NK_KEY_PASTE:
-                case NK_KEY_MAX:
+                case NkKeys.NONE:
+                case NkKeys.CTRL:
+                case NkKeys.ENTER:
+                case NkKeys.SHIFT:
+                case NkKeys.TAB:
+                case NkKeys.COPY:
+                case NkKeys.CUT:
+                case NkKeys.PASTE:
+                case NkKeys.MAX:
                 default:
                     break;
-                case NK_KEY_TEXT_UNDO:
+                case NkKeys.TEXT_UNDO:
                     nk_textedit_undo(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NK_KEY_TEXT_REDO:
+                case NkKeys.TEXT_REDO:
                     nk_textedit_redo(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NK_KEY_TEXT_SELECT_ALL:
+                case NkKeys.TEXT_SELECT_ALL:
                     nk_textedit_select_all(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NK_KEY_TEXT_INSERT_MODE:
+                case NkKeys.TEXT_INSERT_MODE:
                     if ((state.mode) == (NK_TEXT_EDIT_MODE_VIEW)) state.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
                     break;
-                case NK_KEY_TEXT_REPLACE_MODE:
+                case NkKeys.TEXT_REPLACE_MODE:
                     if ((state.mode) == (NK_TEXT_EDIT_MODE_VIEW)) state.mode = (byte)(NK_TEXT_EDIT_MODE_REPLACE);
                     break;
-                case NK_KEY_TEXT_RESET_MODE:
+                case NkKeys.TEXT_RESET_MODE:
                     if (((state.mode) == (NK_TEXT_EDIT_MODE_INSERT)) || ((state.mode) == (NK_TEXT_EDIT_MODE_REPLACE)))
                         state.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
                     break;
-                case NK_KEY_LEFT:
+                case NkKeys.LEFT:
                     if ((shift_mod) != 0)
                     {
                         nk_textedit_clamp(state);
@@ -450,7 +450,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NK_KEY_RIGHT:
+                case NkKeys.RIGHT:
                     if ((shift_mod) != 0)
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -467,7 +467,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NK_KEY_TEXT_WORD_LEFT:
+                case NkKeys.TEXT_WORD_LEFT:
                     if ((shift_mod) != 0)
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
@@ -485,7 +485,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_KEY_TEXT_WORD_RIGHT:
+                case NkKeys.TEXT_WORD_RIGHT:
                     if ((shift_mod) != 0)
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
@@ -503,7 +503,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_KEY_DOWN:
+                case NkKeys.DOWN:
                     {
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
@@ -511,7 +511,7 @@ namespace NuklearSharp
                         int sel = (int)(shift_mod);
                         if ((state.single_line) != 0)
                         {
-                            key = (int)(NK_KEY_RIGHT);
+                            key = (NkKeys.RIGHT);
                             goto retry;
                         }
                         if ((sel) != 0) nk_textedit_prep_selection_at_cursor(state);
@@ -540,7 +540,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_KEY_UP:
+                case NkKeys.UP:
                     {
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
@@ -548,7 +548,7 @@ namespace NuklearSharp
                         int sel = (int)(shift_mod);
                         if ((state.single_line) != 0)
                         {
-                            key = (int)(NK_KEY_LEFT);
+                            key = (NkKeys.LEFT);
                             goto retry;
                         }
                         if ((sel) != 0) nk_textedit_prep_selection_at_cursor(state);
@@ -576,7 +576,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_KEY_DEL:
+                case NkKeys.DEL:
                     if ((state.mode) == (NK_TEXT_EDIT_MODE_VIEW)) break;
                     if (((state).select_start != (state).select_end)) nk_textedit_delete_selection(state);
                     else
@@ -586,7 +586,7 @@ namespace NuklearSharp
                     }
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NK_KEY_BACKSPACE:
+                case NkKeys.BACKSPACE:
                     if ((state.mode) == (NK_TEXT_EDIT_MODE_VIEW)) break;
                     if (((state).select_start != (state).select_end)) nk_textedit_delete_selection(state);
                     else
@@ -600,7 +600,7 @@ namespace NuklearSharp
                     }
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NK_KEY_TEXT_START:
+                case NkKeys.TEXT_START:
                     if ((shift_mod) != 0)
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -613,7 +613,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NK_KEY_TEXT_END:
+                case NkKeys.TEXT_END:
                     if ((shift_mod) != 0)
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -627,7 +627,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NK_KEY_TEXT_LINE_START:
+                case NkKeys.TEXT_LINE_START:
                     {
                         if ((shift_mod) != 0)
                         {
@@ -651,7 +651,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_KEY_TEXT_LINE_END:
+                case NkKeys.TEXT_LINE_END:
                     {
                         if ((shift_mod) != 0)
                         {

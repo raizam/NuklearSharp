@@ -1914,7 +1914,7 @@ namespace NuklearSharp
                     (NkHandle) (nk_handle_ptr(null)));
             }
 
-            for (i = (int) (0); (i) < (NK_CURSOR_COUNT); ++i)
+            for (i = (int) (0); (i) < ((int)NkStyleCursor.COUNT); ++i)
             {
                 NkCursor cursor = atlas.Cursors[i];
                 cursor.img.w = ((ushort) (width));
@@ -1970,7 +1970,7 @@ namespace NuklearSharp
                 font_iter.Handle.Texture = (NkHandle) (texture);
             }
 
-            for (i = (int) (0); (i) < (NK_CURSOR_COUNT); ++i)
+            for (i = (int) (0); (i) < ((int)NkStyleCursor.COUNT); ++i)
             {
                 atlas.Cursors[i].img.handle = (NkHandle) (texture);
             }
