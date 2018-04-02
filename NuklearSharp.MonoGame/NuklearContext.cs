@@ -239,7 +239,7 @@ namespace NuklearSharp.MonoGame
             InputButton(Nk.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
 
             InputMotion(mouseState.X, mouseState.Y);
-            InputScroll(new Nk.nk_vec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
+            InputScroll(new Nk.NkVec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
             InputEnd();
 
             _previousWheel = mouseState.ScrollWheelValue;

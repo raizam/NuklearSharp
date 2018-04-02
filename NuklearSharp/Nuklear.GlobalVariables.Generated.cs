@@ -2,67 +2,67 @@ namespace NuklearSharp
 {
     unsafe partial class Nk
     {
-        public static nk_vec2[,] nk_cursor_data =
+        public static NkVec2[,] nk_cursor_data =
         {
-            {new nk_vec2 {x = 0, y = 3}, new nk_vec2 {x = 12, y = 19}, new nk_vec2 {x = 0, y = 0}},
-            {new nk_vec2 {x = 13, y = 0}, new nk_vec2 {x = 7, y = 16}, new nk_vec2 {x = 4, y = 8}},
-            {new nk_vec2 {x = 31, y = 0}, new nk_vec2 {x = 23, y = 23}, new nk_vec2 {x = 11, y = 11}},
-            {new nk_vec2 {x = 21, y = 0}, new nk_vec2 {x = 9, y = 23}, new nk_vec2 {x = 5, y = 11}},
-            {new nk_vec2 {x = 55, y = 18}, new nk_vec2 {x = 23, y = 9}, new nk_vec2 {x = 11, y = 5}},
-            {new nk_vec2 {x = 73, y = 0}, new nk_vec2 {x = 17, y = 17}, new nk_vec2 {x = 9, y = 9}},
-            {new nk_vec2 {x = 55, y = 0}, new nk_vec2 {x = 17, y = 17}, new nk_vec2 {x = 9, y = 9}}
+            {new NkVec2 {x = 0, y = 3}, new NkVec2 {x = 12, y = 19}, new NkVec2 {x = 0, y = 0}},
+            {new NkVec2 {x = 13, y = 0}, new NkVec2 {x = 7, y = 16}, new NkVec2 {x = 4, y = 8}},
+            {new NkVec2 {x = 31, y = 0}, new NkVec2 {x = 23, y = 23}, new NkVec2 {x = 11, y = 11}},
+            {new NkVec2 {x = 21, y = 0}, new NkVec2 {x = 9, y = 23}, new NkVec2 {x = 5, y = 11}},
+            {new NkVec2 {x = 55, y = 18}, new NkVec2 {x = 23, y = 9}, new NkVec2 {x = 11, y = 5}},
+            {new NkVec2 {x = 73, y = 0}, new NkVec2 {x = 17, y = 17}, new NkVec2 {x = 9, y = 9}},
+            {new NkVec2 {x = 55, y = 0}, new NkVec2 {x = 17, y = 17}, new NkVec2 {x = 9, y = 9}}
         };
 
-        public static nk_rect nk_null_rect = new nk_rect { x = -8192.0f, y = -8192.0f, w = 16384, h = 16384 };
-        public static nk_color nk_red = new nk_color { r = 255, g = 0, b = 0, a = 255 };
-        public static nk_color nk_green = new nk_color { r = 0, g = 255, b = 0, a = 255 };
-        public static nk_color nk_blue = new nk_color { r = 0, g = 0, b = 255, a = 255 };
-        public static nk_color nk_white = new nk_color { r = 255, g = 255, b = 255, a = 255 };
-        public static nk_color nk_black = new nk_color { r = 0, g = 0, b = 0, a = 255 };
-        public static nk_color nk_yellow = new nk_color { r = 255, g = 255, b = 0, a = 255 };
-        public static nk_color nk_black_trans = new nk_color { r = 0, g = 0, b = 0, a = 0 };
+        public static NkRect nk_null_rect = new NkRect { x = -8192.0f, y = -8192.0f, w = 16384, h = 16384 };
+        public static NkColor nk_red = new NkColor { r = 255, g = 0, b = 0, a = 255 };
+        public static NkColor nk_green = new NkColor { r = 0, g = 255, b = 0, a = 255 };
+        public static NkColor nk_blue = new NkColor { r = 0, g = 0, b = 255, a = 255 };
+        public static NkColor nk_white = new NkColor { r = 255, g = 255, b = 255, a = 255 };
+        public static NkColor nk_black = new NkColor { r = 0, g = 0, b = 0, a = 255 };
+        public static NkColor nk_yellow = new NkColor { r = 255, g = 255, b = 0, a = 255 };
+        public static NkColor nk_black_trans = new NkColor { r = 0, g = 0, b = 0, a = 0 };
 
-        public static nk_color[] hue_colors =
+        public static NkColor[] hue_colors =
         {
-            new nk_color {r = 255, g = 0, b = 0, a = 255},
-            new nk_color {r = 255, g = 255, b = 0, a = 255},
-            new nk_color {r = 0, g = 255, b = 0, a = 255},
-            new nk_color {r = 0, g = 255, b = 255, a = 255},
-            new nk_color {r = 0, g = 0, b = 255, a = 255},
-            new nk_color {r = 255, g = 0, b = 255, a = 255},
-            new nk_color {r = 255, g = 0, b = 0, a = 255}
+            new NkColor {r = 255, g = 0, b = 0, a = 255},
+            new NkColor {r = 255, g = 255, b = 0, a = 255},
+            new NkColor {r = 0, g = 255, b = 0, a = 255},
+            new NkColor {r = 0, g = 255, b = 255, a = 255},
+            new NkColor {r = 0, g = 0, b = 255, a = 255},
+            new NkColor {r = 255, g = 0, b = 255, a = 255},
+            new NkColor {r = 255, g = 0, b = 0, a = 255}
         };
 
-        public static nk_color[] nk_default_color_style =
+        public static NkColor[] nk_default_color_style =
         {
-            new nk_color {r = 175, g = 175, b = 175, a = 255},
-            new nk_color {r = 45, g = 45, b = 45, a = 255},
-            new nk_color {r = 40, g = 40, b = 40, a = 255},
-            new nk_color {r = 65, g = 65, b = 65, a = 255},
-            new nk_color {r = 50, g = 50, b = 50, a = 255},
-            new nk_color {r = 40, g = 40, b = 40, a = 255},
-            new nk_color {r = 35, g = 35, b = 35, a = 255},
-            new nk_color {r = 100, g = 100, b = 100, a = 255},
-            new nk_color {r = 120, g = 120, b = 120, a = 255},
-            new nk_color {r = 45, g = 45, b = 45, a = 255},
-            new nk_color {r = 45, g = 45, b = 45, a = 255},
-            new nk_color {r = 35, g = 35, b = 35, a = 255},
-            new nk_color {r = 38, g = 38, b = 38, a = 255},
-            new nk_color {r = 100, g = 100, b = 100, a = 255},
-            new nk_color {r = 120, g = 120, b = 120, a = 255},
-            new nk_color {r = 150, g = 150, b = 150, a = 255},
-            new nk_color {r = 38, g = 38, b = 38, a = 255},
-            new nk_color {r = 38, g = 38, b = 38, a = 255},
-            new nk_color {r = 175, g = 175, b = 175, a = 255},
-            new nk_color {r = 45, g = 45, b = 45, a = 255},
-            new nk_color {r = 120, g = 120, b = 120, a = 255},
-            new nk_color {r = 45, g = 45, b = 45, a = 255},
-            new nk_color {r = 255, g = 0, b = 0, a = 255},
-            new nk_color {r = 40, g = 40, b = 40, a = 255},
-            new nk_color {r = 100, g = 100, b = 100, a = 255},
-            new nk_color {r = 120, g = 120, b = 120, a = 255},
-            new nk_color {r = 150, g = 150, b = 150, a = 255},
-            new nk_color {r = 40, g = 40, b = 40, a = 255}
+            new NkColor {r = 175, g = 175, b = 175, a = 255},
+            new NkColor {r = 45, g = 45, b = 45, a = 255},
+            new NkColor {r = 40, g = 40, b = 40, a = 255},
+            new NkColor {r = 65, g = 65, b = 65, a = 255},
+            new NkColor {r = 50, g = 50, b = 50, a = 255},
+            new NkColor {r = 40, g = 40, b = 40, a = 255},
+            new NkColor {r = 35, g = 35, b = 35, a = 255},
+            new NkColor {r = 100, g = 100, b = 100, a = 255},
+            new NkColor {r = 120, g = 120, b = 120, a = 255},
+            new NkColor {r = 45, g = 45, b = 45, a = 255},
+            new NkColor {r = 45, g = 45, b = 45, a = 255},
+            new NkColor {r = 35, g = 35, b = 35, a = 255},
+            new NkColor {r = 38, g = 38, b = 38, a = 255},
+            new NkColor {r = 100, g = 100, b = 100, a = 255},
+            new NkColor {r = 120, g = 120, b = 120, a = 255},
+            new NkColor {r = 150, g = 150, b = 150, a = 255},
+            new NkColor {r = 38, g = 38, b = 38, a = 255},
+            new NkColor {r = 38, g = 38, b = 38, a = 255},
+            new NkColor {r = 175, g = 175, b = 175, a = 255},
+            new NkColor {r = 45, g = 45, b = 45, a = 255},
+            new NkColor {r = 120, g = 120, b = 120, a = 255},
+            new NkColor {r = 45, g = 45, b = 45, a = 255},
+            new NkColor {r = 255, g = 0, b = 0, a = 255},
+            new NkColor {r = 40, g = 40, b = 40, a = 255},
+            new NkColor {r = 100, g = 100, b = 100, a = 255},
+            new NkColor {r = 120, g = 120, b = 120, a = 255},
+            new NkColor {r = 150, g = 150, b = 150, a = 255},
+            new NkColor {r = 40, g = 40, b = 40, a = 255}
         };
 
         public static string[] nk_color_names =

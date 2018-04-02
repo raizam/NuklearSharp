@@ -19,7 +19,7 @@ namespace NuklearSharp
             public NkClipboard clip = new NkClipboard();
             public NkStr _string_ = new NkStr();
             public NkPluginFilter filter;
-            public nk_vec2 scrollbar = new nk_vec2();
+            public NkVec2 scrollbar = new NkVec2();
             public int cursor;
             public int select_start;
             public int select_end;
@@ -76,8 +76,8 @@ namespace NuklearSharp
                 char* end = str2 + len;
 
                 char* text = str2 + line_start_id;
-                nk_vec2 size =
-                    (nk_vec2)
+                NkVec2 size =
+                    (NkVec2)
                         (nk_text_calculate_text_bounds(font, text, (int)(end - text), (float)(row_height), &remaining, null, &glyphs,
                             (int)(NK_STOP_ON_NEW_LINE)));
                 r->x0 = (float)(0.0f);
@@ -923,7 +923,7 @@ namespace NuklearSharp
             state.single_line = ((byte)((type) == (NK_TEXT_EDIT_SINGLE_LINE) ? 1 : 0));
             state.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
             state.filter = filter;
-            state.scrollbar = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            state.scrollbar = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
         }
 
         public static void nk_textedit_init_fixed(nk_text_edit state, void* memory, ulong size)

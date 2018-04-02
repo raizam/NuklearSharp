@@ -10,24 +10,24 @@ namespace Extended
         public Nk.NkFont Font20;
         public Nk.NkFont Font22;
 
-        public Nk.nk_image Uncheckd;
-        public Nk.nk_image Checkd;
-        public Nk.nk_image Rocket;
-        public Nk.nk_image Cloud;
-        public Nk.nk_image Pen;
-        public Nk.nk_image Play;
-        public Nk.nk_image Pause;
-        public Nk.nk_image Stop;
-        public Nk.nk_image Prev;
-        public Nk.nk_image Next;
-        public Nk.nk_image Tools;
-        public Nk.nk_image Dir;
-        public Nk.nk_image Copy;
-        public Nk.nk_image Convert;
-        public Nk.nk_image Del;
-        public Nk.nk_image Edit;
-        public Nk.nk_image[] Images = new Nk.nk_image[9];
-        public Nk.nk_image[] Menu = new Nk.nk_image[6];
+        public Nk.NkImage Uncheckd;
+        public Nk.NkImage Checkd;
+        public Nk.NkImage Rocket;
+        public Nk.NkImage Cloud;
+        public Nk.NkImage Pen;
+        public Nk.NkImage Play;
+        public Nk.NkImage Pause;
+        public Nk.NkImage Stop;
+        public Nk.NkImage Prev;
+        public Nk.NkImage Next;
+        public Nk.NkImage Tools;
+        public Nk.NkImage Dir;
+        public Nk.NkImage Copy;
+        public Nk.NkImage Convert;
+        public Nk.NkImage Del;
+        public Nk.NkImage Edit;
+        public Nk.NkImage[] Images = new Nk.NkImage[9];
+        public Nk.NkImage[] Menu = new Nk.NkImage[6];
 
         public Media()
         {

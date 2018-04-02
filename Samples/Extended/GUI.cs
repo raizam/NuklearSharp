@@ -21,13 +21,13 @@ namespace Extended
         private static bool _check0 = true;
         private static bool _check1;
         private static ulong _prog = 80;
-        private static int _selectedItem;
+        private static int _selectedItem1;
         private static int _selectedImage = 3;
         private static int _selectedIcon;
         private static bool _piemenuActive;
-        private static Nk.nk_vec2 _piemenuPos;
+        private static Nk.NkVec2 _piemenuPos;
         private static bool _gridCheck = true;
-        private static int selectedItem;
+        private static int _selectedItem2;
 
         /// <summary>
         ///     User interfaces the piemenu.
@@ -38,8 +38,8 @@ namespace Extended
         /// <param name="radius">Radius.</param>
         /// <param name="icons">Icons.</param>
         /// <param name="item_count">Item count.</param>
-        public static int ui_piemenu(NuklearContext ctx, Nk.nk_vec2 pos, float radius,
-            Nk.nk_image[] icons, int itemCount)
+        public static int ui_piemenu(NuklearContext ctx, Nk.NkVec2 pos, float radius,
+            Nk.NkImage[] icons, int itemCount)
         {
             var ret = -1;
 
@@ -65,7 +65,7 @@ namespace Extended
                 ctx.Ctx.Style.Window.spacing = Nk.nk_vec2_(4, 4);
                 ctx.Ctx.Style.Window.padding = Nk.nk_vec2_(8, 8);
                 ctx.LayoutRowDynamic(totalSpace.h, 1);
-                Nk.nk_rect bounds;
+                Nk.NkRect bounds;
                 Nk.nk_widget(&bounds, ctx.Ctx);
 
                 /* outer circle */
@@ -87,7 +87,7 @@ namespace Extended
                     int i;
                     for (i = 0; i < itemCount; ++i)
                     {
-                        Nk.nk_rect content;
+                        Nk.NkRect content;
                         Nk.nk_fill_arc(o, center.x, center.y, bounds.w / 2.0f,
                             aMin, aMax, activeItem == i ? Nk.nk_rgb(45, 100, 255) : Nk.nk_rgb(60, 60, 60));
 
@@ -114,7 +114,7 @@ namespace Extended
                 }
                 {
                     /* inner circle */
-                    Nk.nk_rect inner;
+                    Nk.NkRect inner;
                     inner.x = bounds.x + bounds.w / 2 - bounds.w / 4;
                     inner.y = bounds.y + bounds.h / 2 - bounds.h / 4;
                     inner.w = bounds.w / 2;
@@ -172,12 +172,12 @@ namespace Extended
                 ctx.Label("Checkbox:", Nk.NK_TEXT_RIGHT);
                 ctx.CheckboxLabel("Check me", ref _gridCheck);
                 ctx.Label("Combobox:", Nk.NK_TEXT_RIGHT);
-                if (ctx.ComboBeginLabel(Items[selectedItem], Nk.nk_vec2_(ctx.WidgetWidth(), 200)))
+                if (ctx.ComboBeginLabel(Items[_selectedItem2], Nk.nk_vec2_(ctx.WidgetWidth(), 200)))
                 {
                     ctx.LayoutRowDynamic(25, 1);
                     for (i = 0; i < 3; ++i)
                         if (ctx.ComboItemLabel(Items[i], Nk.NK_TEXT_LEFT))
-                            selectedItem = i;
+                            _selectedItem2 = i;
                     ctx.ComboEnd();
                 }
             }
@@ -345,12 +345,12 @@ namespace Extended
 
             ui_header(ctx, media, "Combo box");
             ui_widget(ctx, media, 40);
-            if (ctx.ComboBeginLabel(Items2[_selectedItem], Nk.nk_vec2_(ctx.WidgetWidth(), 200)))
+            if (ctx.ComboBeginLabel(Items2[_selectedItem1], Nk.nk_vec2_(ctx.WidgetWidth(), 200)))
             {
                 ctx.LayoutRowDynamic(35, 1);
                 for (i = 0; i < 3; ++i)
                     if (ctx.ComboItemLabel(Items2[i], Nk.NK_TEXT_LEFT))
-                        _selectedItem = i;
+                        _selectedItem1 = i;
                 ctx.ComboEnd();
             }
 

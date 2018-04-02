@@ -26,23 +26,23 @@ namespace NuklearSharp
                         {
                             NkCommandScissor s = (NkCommandScissor)(cmd);
                             nk_draw_list_add_clip(ctx.DrawList,
-                                (nk_rect)(nk_rect_((float)(s.X), (float)(s.Y), (float)(s.W), (float)(s.H))));
+                                (NkRect)(nk_rect_((float)(s.X), (float)(s.Y), (float)(s.W), (float)(s.H))));
                         }
                         break;
                     case NK_COMMAND_LINE:
                         {
                             NkCommandLine l = (NkCommandLine)(cmd);
-                            nk_draw_list_stroke_line(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(l.Begin.x), (float)(l.Begin.y))),
-                                (nk_vec2)(nk_vec2_((float)(l.End.x), (float)(l.End.y))), (nk_color)(l.Color), (float)(l.LineThickness));
+                            nk_draw_list_stroke_line(ctx.DrawList, (NkVec2)(nk_vec2_((float)(l.Begin.x), (float)(l.Begin.y))),
+                                (NkVec2)(nk_vec2_((float)(l.End.x), (float)(l.End.y))), (NkColor)(l.Color), (float)(l.LineThickness));
                         }
                         break;
                     case NK_COMMAND_CURVE:
                         {
                             NkCommandCurve q = (NkCommandCurve)(cmd);
-                            nk_draw_list_stroke_curve(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(q.Begin.x), (float)(q.Begin.y))),
-                                (nk_vec2)(nk_vec2_((float)(q.Ctrl0.x), (float)(q.Ctrl0.y))),
-                                (nk_vec2)(nk_vec2_((float)(q.Ctrl1.x), (float)(q.Ctrl1.y))),
-                                (nk_vec2)(nk_vec2_((float)(q.End.x), (float)(q.End.y))), (nk_color)(q.Color),
+                            nk_draw_list_stroke_curve(ctx.DrawList, (NkVec2)(nk_vec2_((float)(q.Begin.x), (float)(q.Begin.y))),
+                                (NkVec2)(nk_vec2_((float)(q.Ctrl0.x), (float)(q.Ctrl0.y))),
+                                (NkVec2)(nk_vec2_((float)(q.Ctrl1.x), (float)(q.Ctrl1.y))),
+                                (NkVec2)(nk_vec2_((float)(q.End.x), (float)(q.End.y))), (NkColor)(q.Color),
                                 (uint)(config.CurveSegmentCount), (float)(q.LineThickness));
                         }
                         break;
@@ -50,7 +50,7 @@ namespace NuklearSharp
                         {
                             NkCommandRect r = (NkCommandRect)(cmd);
                             nk_draw_list_stroke_rect(ctx.DrawList,
-                                (nk_rect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (nk_color)(r.Color),
+                                (NkRect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (NkColor)(r.Color),
                                 (float)(r.Rounding), (float)(r.LineThickness));
                         }
                         break;
@@ -58,7 +58,7 @@ namespace NuklearSharp
                         {
                             NkCommandRectFilled r = (NkCommandRectFilled)(cmd);
                             nk_draw_list_fill_rect(ctx.DrawList,
-                                (nk_rect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (nk_color)(r.Color),
+                                (NkRect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (NkColor)(r.Color),
                                 (float)(r.Rounding));
                         }
                         break;
@@ -66,58 +66,58 @@ namespace NuklearSharp
                         {
                             NkCommandRectMultiColor r = (NkCommandRectMultiColor)(cmd);
                             nk_draw_list_fill_rect_multi_color(ctx.DrawList,
-                                (nk_rect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (nk_color)(r.Left),
-                                (nk_color)(r.Top), (nk_color)(r.Right), (nk_color)(r.Bottom));
+                                (NkRect)(nk_rect_((float)(r.X), (float)(r.Y), (float)(r.W), (float)(r.H))), (NkColor)(r.Left),
+                                (NkColor)(r.Top), (NkColor)(r.Right), (NkColor)(r.Bottom));
                         }
                         break;
                     case NK_COMMAND_CIRCLE:
                         {
                             NkCommandCircle c = (NkCommandCircle)(cmd);
                             nk_draw_list_stroke_circle(ctx.DrawList,
-                                (nk_vec2)(nk_vec2_((float)((float)(c.X) + (float)(c.W) / 2), (float)((float)(c.Y) + (float)(c.H) / 2))),
-                                (float)((float)(c.W) / 2), (nk_color)(c.Color), (uint)(config.CircleSegmentCount), (float)(c.LineThickness));
+                                (NkVec2)(nk_vec2_((float)((float)(c.X) + (float)(c.W) / 2), (float)((float)(c.Y) + (float)(c.H) / 2))),
+                                (float)((float)(c.W) / 2), (NkColor)(c.Color), (uint)(config.CircleSegmentCount), (float)(c.LineThickness));
                         }
                         break;
                     case NK_COMMAND_CIRCLE_FILLED:
                         {
                             NkCommandCircleFilled c = (NkCommandCircleFilled)(cmd);
                             nk_draw_list_fill_circle(ctx.DrawList,
-                                (nk_vec2)(nk_vec2_((float)((float)(c.X) + (float)(c.W) / 2), (float)((float)(c.Y) + (float)(c.H) / 2))),
-                                (float)((float)(c.W) / 2), (nk_color)(c.Color), (uint)(config.CircleSegmentCount));
+                                (NkVec2)(nk_vec2_((float)((float)(c.X) + (float)(c.W) / 2), (float)((float)(c.Y) + (float)(c.H) / 2))),
+                                (float)((float)(c.W) / 2), (NkColor)(c.Color), (uint)(config.CircleSegmentCount));
                         }
                         break;
                     case NK_COMMAND_ARC:
                         {
                             NkCommandArc c = (NkCommandArc)(cmd);
-                            nk_draw_list_path_line_to(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))));
-                            nk_draw_list_path_arc_to(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))), (float)(c.R),
+                            nk_draw_list_path_line_to(ctx.DrawList, (NkVec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))));
+                            nk_draw_list_path_arc_to(ctx.DrawList, (NkVec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))), (float)(c.R),
                                 (float)(c.A[0]), (float)(c.A[1]), (uint)(config.ArcSegmentCount));
-                            nk_draw_list_path_stroke(ctx.DrawList, (nk_color)(c.Color), (int)(NK_STROKE_CLOSED), (float)(c.LineThickness));
+                            nk_draw_list_path_stroke(ctx.DrawList, (NkColor)(c.Color), (int)(NK_STROKE_CLOSED), (float)(c.LineThickness));
                         }
                         break;
                     case NK_COMMAND_ARC_FILLED:
                         {
                             NkCommandArcFilled c = (NkCommandArcFilled)(cmd);
-                            nk_draw_list_path_line_to(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))));
-                            nk_draw_list_path_arc_to(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))), (float)(c.R),
+                            nk_draw_list_path_line_to(ctx.DrawList, (NkVec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))));
+                            nk_draw_list_path_arc_to(ctx.DrawList, (NkVec2)(nk_vec2_((float)(c.Cx), (float)(c.Cy))), (float)(c.R),
                                 (float)(c.A[0]), (float)(c.A[1]), (uint)(config.ArcSegmentCount));
-                            nk_draw_list_path_fill(ctx.DrawList, (nk_color)(c.Color));
+                            nk_draw_list_path_fill(ctx.DrawList, (NkColor)(c.Color));
                         }
                         break;
                     case NK_COMMAND_TRIANGLE:
                         {
                             NkCommandTriangle t = (NkCommandTriangle)(cmd);
-                            nk_draw_list_stroke_triangle(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(t.A.x), (float)(t.A.y))),
-                                (nk_vec2)(nk_vec2_((float)(t.B.x), (float)(t.B.y))), (nk_vec2)(nk_vec2_((float)(t.C.x), (float)(t.C.y))),
-                                (nk_color)(t.Color), (float)(t.LineThickness));
+                            nk_draw_list_stroke_triangle(ctx.DrawList, (NkVec2)(nk_vec2_((float)(t.A.x), (float)(t.A.y))),
+                                (NkVec2)(nk_vec2_((float)(t.B.x), (float)(t.B.y))), (NkVec2)(nk_vec2_((float)(t.C.x), (float)(t.C.y))),
+                                (NkColor)(t.Color), (float)(t.LineThickness));
                         }
                         break;
                     case NK_COMMAND_TRIANGLE_FILLED:
                         {
                             NkCommandTriangleFilled t = (NkCommandTriangleFilled)(cmd);
-                            nk_draw_list_fill_triangle(ctx.DrawList, (nk_vec2)(nk_vec2_((float)(t.A.x), (float)(t.A.y))),
-                                (nk_vec2)(nk_vec2_((float)(t.B.x), (float)(t.B.y))), (nk_vec2)(nk_vec2_((float)(t.C.x), (float)(t.C.y))),
-                                (nk_color)(t.Color));
+                            nk_draw_list_fill_triangle(ctx.DrawList, (NkVec2)(nk_vec2_((float)(t.A.x), (float)(t.A.y))),
+                                (NkVec2)(nk_vec2_((float)(t.B.x), (float)(t.B.y))), (NkVec2)(nk_vec2_((float)(t.C.x), (float)(t.C.y))),
+                                (NkColor)(t.Color));
                         }
                         break;
                     case NK_COMMAND_POLYGON:
@@ -126,10 +126,10 @@ namespace NuklearSharp
                             NkCommandPolygon p = (NkCommandPolygon)(cmd);
                             for (i = (int)(0); (i) < (p.PointCount); ++i)
                             {
-                                nk_vec2 pnt = (nk_vec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
-                                nk_draw_list_path_line_to(ctx.DrawList, (nk_vec2)(pnt));
+                                NkVec2 pnt = (NkVec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
+                                nk_draw_list_path_line_to(ctx.DrawList, (NkVec2)(pnt));
                             }
-                            nk_draw_list_path_stroke(ctx.DrawList, (nk_color)(p.Color), (int)(NK_STROKE_CLOSED), (float)(p.LineThickness));
+                            nk_draw_list_path_stroke(ctx.DrawList, (NkColor)(p.Color), (int)(NK_STROKE_CLOSED), (float)(p.LineThickness));
                         }
                         break;
                     case NK_COMMAND_POLYGON_FILLED:
@@ -138,10 +138,10 @@ namespace NuklearSharp
                             NkCommandPolygonFilled p = (NkCommandPolygonFilled)(cmd);
                             for (i = (int)(0); (i) < (p.PointCount); ++i)
                             {
-                                nk_vec2 pnt = (nk_vec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
-                                nk_draw_list_path_line_to(ctx.DrawList, (nk_vec2)(pnt));
+                                NkVec2 pnt = (NkVec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
+                                nk_draw_list_path_line_to(ctx.DrawList, (NkVec2)(pnt));
                             }
-                            nk_draw_list_path_fill(ctx.DrawList, (nk_color)(p.Color));
+                            nk_draw_list_path_fill(ctx.DrawList, (NkColor)(p.Color));
                         }
                         break;
                     case NK_COMMAND_POLYLINE:
@@ -150,25 +150,25 @@ namespace NuklearSharp
                             NkCommandPolyline p = (NkCommandPolyline)(cmd);
                             for (i = (int)(0); (i) < (p.PointCount); ++i)
                             {
-                                nk_vec2 pnt = (nk_vec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
-                                nk_draw_list_path_line_to(ctx.DrawList, (nk_vec2)(pnt));
+                                NkVec2 pnt = (NkVec2)(nk_vec2_((float)(p.Points[i].x), (float)(p.Points[i].y)));
+                                nk_draw_list_path_line_to(ctx.DrawList, (NkVec2)(pnt));
                             }
-                            nk_draw_list_path_stroke(ctx.DrawList, (nk_color)(p.Color), (int)(NK_STROKE_OPEN), (float)(p.LineThickness));
+                            nk_draw_list_path_stroke(ctx.DrawList, (NkColor)(p.Color), (int)(NK_STROKE_OPEN), (float)(p.LineThickness));
                         }
                         break;
                     case NK_COMMAND_TEXT:
                         {
                             NkCommandText t = (NkCommandText)(cmd);
                             nk_draw_list_add_text(ctx.DrawList, t.Font,
-                                (nk_rect)(nk_rect_((float)(t.X), (float)(t.Y), (float)(t.W), (float)(t.H))), t.String, (int)(t.Length),
-                                (float)(t.Height), (nk_color)(t.Foreground));
+                                (NkRect)(nk_rect_((float)(t.X), (float)(t.Y), (float)(t.W), (float)(t.H))), t.String, (int)(t.Length),
+                                (float)(t.Height), (NkColor)(t.Foreground));
                         }
                         break;
                     case NK_COMMAND_IMAGE:
                         {
                             NkCommandImage i = (NkCommandImage)(cmd);
-                            nk_draw_list_add_image(ctx.DrawList, (nk_image)(i.Img),
-                                (nk_rect)(nk_rect_((float)(i.X), (float)(i.Y), (float)(i.W), (float)(i.H))), (nk_color)(i.Col));
+                            nk_draw_list_add_image(ctx.DrawList, (NkImage)(i.Img),
+                                (NkRect)(nk_rect_((float)(i.X), (float)(i.Y), (float)(i.W), (float)(i.H))), (NkColor)(i.Col));
                         }
                         break;
                     case NK_COMMAND_CUSTOM:
@@ -198,7 +198,7 @@ namespace NuklearSharp
                 ((nk_mouse_button*)_in_.mouse.Buttons + i)->clicked = (uint)(0);
             }
             _in_.keyboard.TextLen = (int)(0);
-            _in_.mouse.ScrollDelta = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            _in_.mouse.ScrollDelta = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             _in_.mouse.Prev.x = (float)(_in_.mouse.Pos.x);
             _in_.mouse.Prev.y = (float)(_in_.mouse.Pos.y);
             _in_.mouse.Delta.x = (float)(0);
@@ -258,7 +258,7 @@ namespace NuklearSharp
             btn->clicked++;
         }
 
-        public static void nk_input_scroll(NkContext ctx, nk_vec2 val)
+        public static void nk_input_scroll(NkContext ctx, NkVec2 val)
         {
             if (ctx == null) return;
             ctx.Input.mouse.ScrollDelta.x += (float)(val.x);
@@ -302,7 +302,7 @@ namespace NuklearSharp
             nk_style_from_table(ctx, null);
         }
 
-        public static void nk_style_from_table(NkContext ctx, nk_color[] table)
+        public static void nk_style_from_table(NkContext ctx, NkColor[] table)
         {
             NkStyle style;
             nk_style_text text;
@@ -322,21 +322,21 @@ namespace NuklearSharp
             style = ctx.Style;
             table = (table == null) ? nk_default_color_style : table;
             text = style.Text;
-            text.color = (nk_color)(table[NK_COLOR_TEXT]);
-            text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            text.color = (NkColor)(table[NK_COLOR_TEXT]);
+            text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             button = style.Button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_BUTTON])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_BUTTON_HOVER])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_BUTTON_ACTIVE])));
-            button.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            button.text_background = (nk_color)(table[NK_COLOR_BUTTON]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.image_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_BUTTON])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_BUTTON_HOVER])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_BUTTON_ACTIVE])));
+            button.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            button.text_background = (NkColor)(table[NK_COLOR_BUTTON]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.image_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(1.0f);
@@ -345,16 +345,16 @@ namespace NuklearSharp
             button.draw_end = null;
             button = style.ContextualButton;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_BUTTON_HOVER])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_BUTTON_ACTIVE])));
-            button.border_color = (nk_color)(table[NK_COLOR_WINDOW]);
-            button.text_background = (nk_color)(table[NK_COLOR_WINDOW]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_BUTTON_HOVER])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_BUTTON_ACTIVE])));
+            button.border_color = (NkColor)(table[NK_COLOR_WINDOW]);
+            button.text_background = (NkColor)(table[NK_COLOR_WINDOW]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -363,16 +363,16 @@ namespace NuklearSharp
             button.draw_end = null;
             button = style.MenuButton;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.border_color = (nk_color)(table[NK_COLOR_WINDOW]);
-            button.text_background = (nk_color)(table[NK_COLOR_WINDOW]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.border_color = (NkColor)(table[NK_COLOR_WINDOW]);
+            button.text_background = (NkColor)(table[NK_COLOR_WINDOW]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -381,54 +381,54 @@ namespace NuklearSharp
             button.draw_end = null;
             toggle = style.Checkbox;
 
-            toggle.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE])));
-            toggle.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_HOVER])));
-            toggle.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_HOVER])));
-            toggle.cursor_normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_CURSOR])));
-            toggle.cursor_hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_CURSOR])));
+            toggle.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE])));
+            toggle.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_HOVER])));
+            toggle.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_HOVER])));
+            toggle.cursor_normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_CURSOR])));
+            toggle.cursor_hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_CURSOR])));
             toggle.userdata = (NkHandle)(nk_handle_ptr(null));
-            toggle.text_background = (nk_color)(table[NK_COLOR_WINDOW]);
-            toggle.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            toggle.touch_padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            toggle.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            toggle.text_background = (NkColor)(table[NK_COLOR_WINDOW]);
+            toggle.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            toggle.touch_padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            toggle.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             toggle.border = (float)(0.0f);
             toggle.spacing = (float)(4);
             toggle = style.Option;
 
-            toggle.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE])));
-            toggle.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_HOVER])));
-            toggle.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_HOVER])));
-            toggle.cursor_normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_CURSOR])));
-            toggle.cursor_hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TOGGLE_CURSOR])));
+            toggle.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE])));
+            toggle.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_HOVER])));
+            toggle.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_HOVER])));
+            toggle.cursor_normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_CURSOR])));
+            toggle.cursor_hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TOGGLE_CURSOR])));
             toggle.userdata = (NkHandle)(nk_handle_ptr(null));
-            toggle.text_background = (nk_color)(table[NK_COLOR_WINDOW]);
-            toggle.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            toggle.padding = (nk_vec2)(nk_vec2_((float)(3.0f), (float)(3.0f)));
-            toggle.touch_padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            toggle.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            toggle.text_background = (NkColor)(table[NK_COLOR_WINDOW]);
+            toggle.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            toggle.padding = (NkVec2)(nk_vec2_((float)(3.0f), (float)(3.0f)));
+            toggle.touch_padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            toggle.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             toggle.border = (float)(0.0f);
             toggle.spacing = (float)(4);
             select = style.Selectable;
 
-            select.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT])));
-            select.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT])));
-            select.pressed = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT])));
-            select.normal_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT_ACTIVE])));
-            select.hover_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT_ACTIVE])));
-            select.pressed_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SELECT_ACTIVE])));
-            select.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            select.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            select.text_pressed = (nk_color)(table[NK_COLOR_TEXT]);
-            select.text_normal_active = (nk_color)(table[NK_COLOR_TEXT]);
-            select.text_hover_active = (nk_color)(table[NK_COLOR_TEXT]);
-            select.text_pressed_active = (nk_color)(table[NK_COLOR_TEXT]);
-            select.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            select.touch_padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            select.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT])));
+            select.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT])));
+            select.pressed = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT])));
+            select.normal_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT_ACTIVE])));
+            select.hover_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT_ACTIVE])));
+            select.pressed_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SELECT_ACTIVE])));
+            select.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            select.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            select.text_pressed = (NkColor)(table[NK_COLOR_TEXT]);
+            select.text_normal_active = (NkColor)(table[NK_COLOR_TEXT]);
+            select.text_hover_active = (NkColor)(table[NK_COLOR_TEXT]);
+            select.text_pressed_active = (NkColor)(table[NK_COLOR_TEXT]);
+            select.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            select.touch_padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             select.userdata = (NkHandle)(nk_handle_ptr(null));
             select.rounding = (float)(0.0f);
             select.draw_begin = null;
@@ -438,18 +438,18 @@ namespace NuklearSharp
             slider.normal = (NkStyleItem)(nk_style_item_hide());
             slider.hover = (NkStyleItem)(nk_style_item_hide());
             slider.active = (NkStyleItem)(nk_style_item_hide());
-            slider.bar_normal = (nk_color)(table[NK_COLOR_SLIDER]);
-            slider.bar_hover = (nk_color)(table[NK_COLOR_SLIDER]);
-            slider.bar_active = (nk_color)(table[NK_COLOR_SLIDER]);
-            slider.bar_filled = (nk_color)(table[NK_COLOR_SLIDER_CURSOR]);
-            slider.cursor_normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR])));
-            slider.cursor_hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR_HOVER])));
-            slider.cursor_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR_ACTIVE])));
+            slider.bar_normal = (NkColor)(table[NK_COLOR_SLIDER]);
+            slider.bar_hover = (NkColor)(table[NK_COLOR_SLIDER]);
+            slider.bar_active = (NkColor)(table[NK_COLOR_SLIDER]);
+            slider.bar_filled = (NkColor)(table[NK_COLOR_SLIDER_CURSOR]);
+            slider.cursor_normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR])));
+            slider.cursor_hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR_HOVER])));
+            slider.cursor_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR_ACTIVE])));
             slider.inc_symbol = (int)(NK_SYMBOL_TRIANGLE_RIGHT);
             slider.dec_symbol = (int)(NK_SYMBOL_TRIANGLE_LEFT);
-            slider.cursor_size = (nk_vec2)(nk_vec2_((float)(16), (float)(16)));
-            slider.padding = (nk_vec2)(nk_vec2_((float)(2), (float)(2)));
-            slider.spacing = (nk_vec2)(nk_vec2_((float)(2), (float)(2)));
+            slider.cursor_size = (NkVec2)(nk_vec2_((float)(16), (float)(16)));
+            slider.padding = (NkVec2)(nk_vec2_((float)(2), (float)(2)));
+            slider.spacing = (NkVec2)(nk_vec2_((float)(2), (float)(2)));
             slider.userdata = (NkHandle)(nk_handle_ptr(null));
             slider.show_buttons = (int)(nk_false);
             slider.bar_height = (float)(8);
@@ -457,16 +457,16 @@ namespace NuklearSharp
             slider.draw_begin = null;
             slider.draw_end = null;
             button = style.Slider.inc_button;
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(40), (int)(40), (int)(40)))));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(42), (int)(42), (int)(42)))));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(44), (int)(44), (int)(44)))));
-            button.border_color = (nk_color)(nk_rgb((int)(65), (int)(65), (int)(65)));
-            button.text_background = (nk_color)(nk_rgb((int)(40), (int)(40), (int)(40)));
-            button.text_normal = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.text_hover = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.text_active = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.padding = (nk_vec2)(nk_vec2_((float)(8.0f), (float)(8.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(40), (int)(40), (int)(40)))));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(42), (int)(42), (int)(42)))));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(44), (int)(44), (int)(44)))));
+            button.border_color = (NkColor)(nk_rgb((int)(65), (int)(65), (int)(65)));
+            button.text_background = (NkColor)(nk_rgb((int)(40), (int)(40), (int)(40)));
+            button.text_normal = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.text_hover = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.text_active = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.padding = (NkVec2)(nk_vec2_((float)(8.0f), (float)(8.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(1.0f);
@@ -476,16 +476,16 @@ namespace NuklearSharp
             style.Slider.dec_button = (nk_style_button)(style.Slider.inc_button);
             prog = style.Progress;
 
-            prog.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER])));
-            prog.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER])));
-            prog.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER])));
-            prog.cursor_normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR])));
-            prog.cursor_hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR_HOVER])));
-            prog.cursor_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SLIDER_CURSOR_ACTIVE])));
-            prog.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            prog.cursor_border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            prog.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER])));
+            prog.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER])));
+            prog.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER])));
+            prog.cursor_normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR])));
+            prog.cursor_hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR_HOVER])));
+            prog.cursor_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SLIDER_CURSOR_ACTIVE])));
+            prog.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            prog.cursor_border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             prog.userdata = (NkHandle)(nk_handle_ptr(null));
-            prog.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            prog.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
             prog.rounding = (float)(0);
             prog.border = (float)(0);
             prog.cursor_rounding = (float)(0);
@@ -494,18 +494,18 @@ namespace NuklearSharp
             prog.draw_end = null;
             scroll = style.Scrollh;
 
-            scroll.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR])));
-            scroll.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR])));
-            scroll.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR])));
-            scroll.cursor_normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR_CURSOR])));
-            scroll.cursor_hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR_CURSOR_HOVER])));
-            scroll.cursor_active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_SCROLLBAR_CURSOR_ACTIVE])));
+            scroll.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR])));
+            scroll.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR])));
+            scroll.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR])));
+            scroll.cursor_normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR_CURSOR])));
+            scroll.cursor_hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR_CURSOR_HOVER])));
+            scroll.cursor_active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_SCROLLBAR_CURSOR_ACTIVE])));
             scroll.dec_symbol = (int)(NK_SYMBOL_CIRCLE_SOLID);
             scroll.inc_symbol = (int)(NK_SYMBOL_CIRCLE_SOLID);
             scroll.userdata = (NkHandle)(nk_handle_ptr(null));
-            scroll.border_color = (nk_color)(table[NK_COLOR_SCROLLBAR]);
-            scroll.cursor_border_color = (nk_color)(table[NK_COLOR_SCROLLBAR]);
-            scroll.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            scroll.border_color = (NkColor)(table[NK_COLOR_SCROLLBAR]);
+            scroll.cursor_border_color = (NkColor)(table[NK_COLOR_SCROLLBAR]);
+            scroll.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             scroll.show_buttons = (int)(nk_false);
             scroll.border = (float)(0);
             scroll.rounding = (float)(0);
@@ -515,16 +515,16 @@ namespace NuklearSharp
             scroll.draw_end = null;
             style.Scrollv = (nk_style_scrollbar)(style.Scrollh);
             button = style.Scrollh.inc_button;
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(40), (int)(40), (int)(40)))));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(42), (int)(42), (int)(42)))));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(nk_rgb((int)(44), (int)(44), (int)(44)))));
-            button.border_color = (nk_color)(nk_rgb((int)(65), (int)(65), (int)(65)));
-            button.text_background = (nk_color)(nk_rgb((int)(40), (int)(40), (int)(40)));
-            button.text_normal = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.text_hover = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.text_active = (nk_color)(nk_rgb((int)(175), (int)(175), (int)(175)));
-            button.padding = (nk_vec2)(nk_vec2_((float)(4.0f), (float)(4.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(40), (int)(40), (int)(40)))));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(42), (int)(42), (int)(42)))));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(nk_rgb((int)(44), (int)(44), (int)(44)))));
+            button.border_color = (NkColor)(nk_rgb((int)(65), (int)(65), (int)(65)));
+            button.text_background = (NkColor)(nk_rgb((int)(40), (int)(40), (int)(40)));
+            button.text_normal = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.text_hover = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.text_active = (NkColor)(nk_rgb((int)(175), (int)(175), (int)(175)));
+            button.padding = (NkVec2)(nk_vec2_((float)(4.0f), (float)(4.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(1.0f);
@@ -536,57 +536,57 @@ namespace NuklearSharp
             style.Scrollv.dec_button = (nk_style_button)(style.Scrollh.inc_button);
             edit = style.Edit;
 
-            edit.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_EDIT])));
-            edit.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_EDIT])));
-            edit.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_EDIT])));
-            edit.cursor_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.cursor_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.cursor_text_normal = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.cursor_text_hover = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            edit.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_text_normal = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.selected_text_hover = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.scrollbar_size = (nk_vec2)(nk_vec2_((float)(10), (float)(10)));
+            edit.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_EDIT])));
+            edit.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_EDIT])));
+            edit.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_EDIT])));
+            edit.cursor_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.cursor_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.cursor_text_normal = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.cursor_text_hover = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            edit.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_text_normal = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.selected_text_hover = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.scrollbar_size = (NkVec2)(nk_vec2_((float)(10), (float)(10)));
             edit.scrollbar = (nk_style_scrollbar)(style.Scrollv);
-            edit.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            edit.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
             edit.row_padding = (float)(2);
             edit.cursor_size = (float)(4);
             edit.border = (float)(1);
             edit.rounding = (float)(0);
             property = style.Property;
 
-            property.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            property.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            property.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            property.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            property.label_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            property.label_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            property.label_active = (nk_color)(table[NK_COLOR_TEXT]);
+            property.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            property.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            property.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            property.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            property.label_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            property.label_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            property.label_active = (NkColor)(table[NK_COLOR_TEXT]);
             property.sym_left = (int)(NK_SYMBOL_TRIANGLE_LEFT);
             property.sym_right = (int)(NK_SYMBOL_TRIANGLE_RIGHT);
             property.userdata = (NkHandle)(nk_handle_ptr(null));
-            property.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            property.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
             property.border = (float)(1);
             property.rounding = (float)(10);
             property.draw_begin = null;
             property.draw_end = null;
             button = style.Property.dec_button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_PROPERTY]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_PROPERTY]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -596,62 +596,62 @@ namespace NuklearSharp
             style.Property.inc_button = (nk_style_button)(style.Property.dec_button);
             edit = style.Property.edit;
 
-            edit.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            edit.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            edit.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_PROPERTY])));
-            edit.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            edit.cursor_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.cursor_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.cursor_text_normal = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.cursor_text_hover = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            edit.selected_text_normal = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.selected_text_hover = (nk_color)(table[NK_COLOR_EDIT]);
-            edit.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            edit.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            edit.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            edit.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_PROPERTY])));
+            edit.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            edit.cursor_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.cursor_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.cursor_text_normal = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.cursor_text_hover = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            edit.selected_text_normal = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.selected_text_hover = (NkColor)(table[NK_COLOR_EDIT]);
+            edit.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             edit.cursor_size = (float)(8);
             edit.border = (float)(0);
             edit.rounding = (float)(0);
             chart = style.Chart;
 
-            chart.background = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_CHART])));
-            chart.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            chart.selected_color = (nk_color)(table[NK_COLOR_CHART_COLOR_HIGHLIGHT]);
-            chart.color = (nk_color)(table[NK_COLOR_CHART_COLOR]);
-            chart.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            chart.background = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_CHART])));
+            chart.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            chart.selected_color = (NkColor)(table[NK_COLOR_CHART_COLOR_HIGHLIGHT]);
+            chart.color = (NkColor)(table[NK_COLOR_CHART_COLOR]);
+            chart.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
             chart.border = (float)(0);
             chart.rounding = (float)(0);
             combo = style.Combo;
-            combo.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            combo.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            combo.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            combo.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            combo.label_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            combo.label_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            combo.label_active = (nk_color)(table[NK_COLOR_TEXT]);
+            combo.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            combo.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            combo.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            combo.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            combo.label_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            combo.label_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            combo.label_active = (NkColor)(table[NK_COLOR_TEXT]);
             combo.sym_normal = (int)(NK_SYMBOL_TRIANGLE_DOWN);
             combo.sym_hover = (int)(NK_SYMBOL_TRIANGLE_DOWN);
             combo.sym_active = (int)(NK_SYMBOL_TRIANGLE_DOWN);
-            combo.content_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            combo.button_padding = (nk_vec2)(nk_vec2_((float)(0), (float)(4)));
-            combo.spacing = (nk_vec2)(nk_vec2_((float)(4), (float)(0)));
+            combo.content_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            combo.button_padding = (NkVec2)(nk_vec2_((float)(0), (float)(4)));
+            combo.spacing = (NkVec2)(nk_vec2_((float)(4), (float)(0)));
             combo.border = (float)(1);
             combo.rounding = (float)(0);
             button = style.Combo.button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_COMBO])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_COMBO]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_COMBO])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_COMBO]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -659,28 +659,28 @@ namespace NuklearSharp
             button.draw_begin = null;
             button.draw_end = null;
             tab = style.Tab;
-            tab.background = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TAB_HEADER])));
-            tab.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            tab.text = (nk_color)(table[NK_COLOR_TEXT]);
+            tab.background = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TAB_HEADER])));
+            tab.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            tab.text = (NkColor)(table[NK_COLOR_TEXT]);
             tab.sym_minimize = (int)(NK_SYMBOL_TRIANGLE_RIGHT);
             tab.sym_maximize = (int)(NK_SYMBOL_TRIANGLE_DOWN);
-            tab.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            tab.spacing = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            tab.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            tab.spacing = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
             tab.indent = (float)(10.0f);
             tab.border = (float)(1);
             tab.rounding = (float)(0);
             button = style.Tab.tab_minimize_button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TAB_HEADER])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TAB_HEADER])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TAB_HEADER])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_TAB_HEADER]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TAB_HEADER])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TAB_HEADER])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TAB_HEADER])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_TAB_HEADER]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -690,16 +690,16 @@ namespace NuklearSharp
             style.Tab.tab_maximize_button = (nk_style_button)(button);
             button = style.Tab.node_minimize_button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_TAB_HEADER]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_TAB_HEADER]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(2.0f), (float)(2.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -712,27 +712,27 @@ namespace NuklearSharp
             win.header.close_symbol = (int)(NK_SYMBOL_X);
             win.header.minimize_symbol = (int)(NK_SYMBOL_MINUS);
             win.header.maximize_symbol = (int)(NK_SYMBOL_PLUS);
-            win.header.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            win.header.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            win.header.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            win.header.label_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            win.header.label_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            win.header.label_active = (nk_color)(table[NK_COLOR_TEXT]);
-            win.header.label_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.header.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.header.spacing = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            win.header.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            win.header.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            win.header.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            win.header.label_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            win.header.label_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            win.header.label_active = (NkColor)(table[NK_COLOR_TEXT]);
+            win.header.label_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.header.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.header.spacing = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             button = style.Window.header.close_button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_HEADER]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_HEADER]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
@@ -741,36 +741,36 @@ namespace NuklearSharp
             button.draw_end = null;
             button = style.Window.header.minimize_button;
 
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_HEADER])));
-            button.border_color = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-            button.text_background = (nk_color)(table[NK_COLOR_HEADER]);
-            button.text_normal = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_hover = (nk_color)(table[NK_COLOR_TEXT]);
-            button.text_active = (nk_color)(table[NK_COLOR_TEXT]);
-            button.padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
-            button.touch_padding = (nk_vec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_HEADER])));
+            button.border_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            button.text_background = (NkColor)(table[NK_COLOR_HEADER]);
+            button.text_normal = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_hover = (NkColor)(table[NK_COLOR_TEXT]);
+            button.text_active = (NkColor)(table[NK_COLOR_TEXT]);
+            button.padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
+            button.touch_padding = (NkVec2)(nk_vec2_((float)(0.0f), (float)(0.0f)));
             button.userdata = (NkHandle)(nk_handle_ptr(null));
             button.text_alignment = (uint)(NK_TEXT_CENTERED);
             button.border = (float)(0.0f);
             button.rounding = (float)(0.0f);
             button.draw_begin = null;
             button.draw_end = null;
-            win.background = (nk_color)(table[NK_COLOR_WINDOW]);
-            win.fixed_background = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_WINDOW])));
-            win.border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.popup_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.combo_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.contextual_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.menu_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.group_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.tooltip_border_color = (nk_color)(table[NK_COLOR_BORDER]);
-            win.scaler = (NkStyleItem)(nk_style_item_color((nk_color)(table[NK_COLOR_TEXT])));
+            win.background = (NkColor)(table[NK_COLOR_WINDOW]);
+            win.fixed_background = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_WINDOW])));
+            win.border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.popup_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.combo_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.contextual_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.menu_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.group_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.tooltip_border_color = (NkColor)(table[NK_COLOR_BORDER]);
+            win.scaler = (NkStyleItem)(nk_style_item_color((NkColor)(table[NK_COLOR_TEXT])));
             win.rounding = (float)(0.0f);
-            win.spacing = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.scrollbar_size = (nk_vec2)(nk_vec2_((float)(10), (float)(10)));
-            win.min_size = (nk_vec2)(nk_vec2_((float)(64), (float)(64)));
+            win.spacing = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.scrollbar_size = (NkVec2)(nk_vec2_((float)(10), (float)(10)));
+            win.min_size = (NkVec2)(nk_vec2_((float)(64), (float)(64)));
             win.combo_border = (float)(1.0f);
             win.contextual_border = (float)(1.0f);
             win.menu_border = (float)(1.0f);
@@ -779,13 +779,13 @@ namespace NuklearSharp
             win.popup_border = (float)(1.0f);
             win.border = (float)(2.0f);
             win.min_row_height_padding = (float)(8);
-            win.padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.group_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.popup_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.combo_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.contextual_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.menu_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
-            win.tooltip_padding = (nk_vec2)(nk_vec2_((float)(4), (float)(4)));
+            win.padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.group_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.popup_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.combo_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.contextual_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.menu_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
+            win.tooltip_padding = (NkVec2)(nk_vec2_((float)(4), (float)(4)));
         }
 
         public static void nk_style_set_font(NkContext ctx, NkUserFont font)
@@ -852,7 +852,7 @@ namespace NuklearSharp
             return (int)(1);
         }
 
-        public static int nk_style_push_vec2(NkContext ctx, nk_vec2* address, nk_vec2 value)
+        public static int nk_style_push_vec2(NkContext ctx, NkVec2* address, NkVec2 value)
         {
             nk_config_stack_vec2 type_stack;
             nk_config_stack_vec2_element element;
@@ -861,8 +861,8 @@ namespace NuklearSharp
             if ((type_stack.head) >= (int)type_stack.elements.Length) return (int)(0);
             element = type_stack.elements[(type_stack.head++)];
             element.address = address;
-            element.old_value = (nk_vec2)(*address);
-            *address = (nk_vec2)(value);
+            element.old_value = (NkVec2)(*address);
+            *address = (NkVec2)(value);
             return (int)(1);
         }
 
@@ -880,7 +880,7 @@ namespace NuklearSharp
             return (int)(1);
         }
 
-        public static int nk_style_push_color(NkContext ctx, nk_color* address, nk_color value)
+        public static int nk_style_push_color(NkContext ctx, NkColor* address, NkColor value)
         {
             nk_config_stack_color type_stack;
             nk_config_stack_color_element element;
@@ -889,8 +889,8 @@ namespace NuklearSharp
             if ((type_stack.head) >= (int)type_stack.elements.Length) return (int)(0);
             element = type_stack.elements[(type_stack.head++)];
             element.address = address;
-            element.old_value = (nk_color)(*address);
-            *address = (nk_color)(value);
+            element.old_value = (NkColor)(*address);
+            *address = (NkColor)(value);
             return (int)(1);
         }
 
@@ -926,7 +926,7 @@ namespace NuklearSharp
             type_stack = ctx.Stacks.vectors;
             if ((type_stack.head) < (1)) return (int)(0);
             element = type_stack.elements[(--type_stack.head)];
-            *element.address = (nk_vec2)(element.old_value);
+            *element.address = (NkVec2)(element.old_value);
             return (int)(1);
         }
 
@@ -950,7 +950,7 @@ namespace NuklearSharp
             type_stack = ctx.Stacks.colors;
             if ((type_stack.head) < (1)) return (int)(0);
             element = type_stack.elements[(--type_stack.head)];
-            *element.address = (nk_color)(element.old_value);
+            *element.address = (NkColor)(element.old_value);
             return (int)(1);
         }
 
@@ -978,7 +978,7 @@ namespace NuklearSharp
             ctx.Style.CursorVisible = (int)(nk_false);
         }
 
-        public static void nk_style_load_cursor(NkContext ctx, int cursor, nk_cursor c)
+        public static void nk_style_load_cursor(NkContext ctx, int cursor, NkCursor c)
         {
             NkStyle style;
             if (ctx == null) return;
@@ -986,7 +986,7 @@ namespace NuklearSharp
             style.Cursors[cursor] = c;
         }
 
-        public static void nk_style_load_all_cursors(NkContext ctx, nk_cursor[] cursors)
+        public static void nk_style_load_all_cursors(NkContext ctx, NkCursor[] cursors)
         {
             int i = (int)(0);
             NkStyle style;
@@ -1071,7 +1071,7 @@ namespace NuklearSharp
 
             buffer.First = buffer.Last = null;
             buffer.Count = 0;
-            buffer.Clip = (nk_rect)(nk_null_rect);
+            buffer.Clip = (NkRect)(nk_null_rect);
         }
 
         public static void nk_start(NkContext ctx, NkWindow win)
@@ -1114,8 +1114,8 @@ namespace NuklearSharp
             NkCommandBuffer _out_;
             NkStyle style;
             NkUserFont font;
-            nk_vec2 scrollbar_size = new nk_vec2();
-            nk_vec2 panel_padding = new nk_vec2();
+            NkVec2 scrollbar_size = new NkVec2();
+            NkVec2 panel_padding = new NkVec2();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
 
             if (((ctx.Current.Flags & NK_WINDOW_HIDDEN) != 0) || ((ctx.Current.Flags & NK_WINDOW_CLOSED) != 0))
@@ -1130,13 +1130,13 @@ namespace NuklearSharp
             layout = win.Layout;
             _out_ = win.Buffer;
             _in_ = (win.Flags & NK_WINDOW_NO_INPUT) != 0 ? null : ctx.Input;
-            scrollbar_size = (nk_vec2)(style.Window.scrollbar_size);
-            panel_padding = (nk_vec2)(nk_panel_get_padding(style, (int)(panel_type)));
+            scrollbar_size = (NkVec2)(style.Window.scrollbar_size);
+            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(panel_type)));
             if (((win.Flags & NK_WINDOW_MOVABLE) != 0) && ((win.Flags & NK_WINDOW_ROM) == 0))
             {
                 int left_mouse_down;
                 int left_mouse_click_in_cursor;
-                nk_rect header = new nk_rect();
+                NkRect header = new NkRect();
                 header.x = (float)(win.Bounds.x);
                 header.y = (float)(win.Bounds.y);
                 header.w = (float)(win.Bounds.w);
@@ -1148,7 +1148,7 @@ namespace NuklearSharp
                 else header.h = (float)(panel_padding.y);
                 left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down);
                 left_mouse_click_in_cursor =
-                    (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (nk_rect)(header), (int)(nk_true)));
+                    (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (NkRect)(header), (int)(nk_true)));
                 if (((left_mouse_down) != 0) && ((left_mouse_click_in_cursor) != 0))
                 {
                     win.Bounds.x = (float)(win.Bounds.x + _in_.mouse.Delta.x);
@@ -1161,13 +1161,13 @@ namespace NuklearSharp
 
             layout.Type = (int)(panel_type);
             layout.Flags = (uint)(win.Flags);
-            layout.Bounds = (nk_rect)(win.Bounds);
+            layout.Bounds = (NkRect)(win.Bounds);
             layout.Bounds.x += (float)(panel_padding.x);
             layout.Bounds.w -= (float)(2 * panel_padding.x);
             if ((win.Flags & NK_WINDOW_BORDER) != 0)
             {
                 layout.Border = (float)(nk_panel_get_border(style, (uint)(win.Flags), (int)(panel_type)));
-                layout.Bounds = (nk_rect)(nk_shrink_rect_((nk_rect)(layout.Bounds), (float)(layout.Border)));
+                layout.Bounds = (NkRect)(nk_shrink_rect_((NkRect)(layout.Bounds), (float)(layout.Border)));
             }
             else layout.Border = (float)(0);
             layout.AtY = (float)(layout.Bounds.y);
@@ -1195,7 +1195,7 @@ namespace NuklearSharp
             if ((nk_panel_has_header((uint)(win.Flags), title)) != 0)
             {
                 nk_text text = new nk_text();
-                nk_rect header = new nk_rect();
+                NkRect header = new NkRect();
                 NkStyleItem background = null;
                 header.x = (float)(win.Bounds.x);
                 header.y = (float)(win.Bounds.y);
@@ -1209,31 +1209,31 @@ namespace NuklearSharp
                 if ((ctx.Active) == (win))
                 {
                     background = style.Window.header.active;
-                    text.text = (nk_color)(style.Window.header.label_active);
+                    text.text = (NkColor)(style.Window.header.label_active);
                 }
-                else if ((nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(header))) != 0)
+                else if ((nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(header))) != 0)
                 {
                     background = style.Window.header.hover;
-                    text.text = (nk_color)(style.Window.header.label_hover);
+                    text.text = (NkColor)(style.Window.header.label_hover);
                 }
                 else
                 {
                     background = style.Window.header.normal;
-                    text.text = (nk_color)(style.Window.header.label_normal);
+                    text.text = (NkColor)(style.Window.header.label_normal);
                 }
                 header.h += (float)(1.0f);
                 if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
                 {
-                    text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-                    nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                    text.background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                    nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
                 }
                 else
                 {
-                    text.background = (nk_color)(background.Data.Color);
-                    nk_fill_rect(_out_, (nk_rect)(header), (float)(0), (nk_color)(background.Data.Color));
+                    text.background = (NkColor)(background.Data.Color);
+                    nk_fill_rect(_out_, (NkRect)(header), (float)(0), (NkColor)(background.Data.Color));
                 }
                 {
-                    nk_rect button = new nk_rect();
+                    NkRect button = new NkRect();
                     button.y = (float)(header.y + style.Window.header.padding.y);
                     button.h = (float)(header.h - 2 * style.Window.header.padding.y);
                     button.w = (float)(button.h);
@@ -1251,7 +1251,7 @@ namespace NuklearSharp
                             header.x += (float)(button.w + style.Window.header.spacing.x + style.Window.header.padding.x);
                         }
                         if (
-                            ((nk_do_button_symbol(ref ws, win.Buffer, (nk_rect)(button), (int)(style.Window.header.close_symbol),
+                            ((nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(button), (int)(style.Window.header.close_symbol),
                                 (int)(NK_BUTTON_DEFAULT), style.Window.header.close_button, _in_, style.Font)) != 0) &&
                             ((win.Flags & NK_WINDOW_ROM) == 0))
                         {
@@ -1278,7 +1278,7 @@ namespace NuklearSharp
                             header.x += (float)(button.w + style.Window.header.spacing.x + style.Window.header.padding.x);
                         }
                         if (
-                            ((nk_do_button_symbol(ref ws, win.Buffer, (nk_rect)(button),
+                            ((nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(button),
                                 (int)
                                     ((layout.Flags & NK_WINDOW_MINIMIZED) != 0
                                         ? style.Window.header.maximize_symbol
@@ -1293,9 +1293,9 @@ namespace NuklearSharp
                 }
                 {
                     int text_len = (int)(nk_strlen(title));
-                    nk_rect label = new nk_rect();
+                    NkRect label = new NkRect();
                     float t = (float)(font.Width((NkHandle)(font.Userdata), (float)(font.Height), title, (int)(text_len)));
-                    text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+                    text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                     label.x = (float)(header.x + style.Window.header.padding.x);
                     label.x += (float)(style.Window.header.label_padding.x);
                     label.y = (float)(header.y + style.Window.header.label_padding.y);
@@ -1306,29 +1306,29 @@ namespace NuklearSharp
                             (((label.w) < (header.x + header.w - label.x) ? (label.w) : (header.x + header.w - label.x)) < (0)
                                 ? (0)
                                 : ((label.w) < (header.x + header.w - label.x) ? (label.w) : (header.x + header.w - label.x)));
-                    nk_widget_text(_out_, (nk_rect)(label), title, (int)(text_len), &text, (uint)(NK_TEXT_LEFT), font);
+                    nk_widget_text(_out_, (NkRect)(label), title, (int)(text_len), &text, (uint)(NK_TEXT_LEFT), font);
                 }
             }
 
             if (((layout.Flags & NK_WINDOW_MINIMIZED) == 0) && ((layout.Flags & NK_WINDOW_DYNAMIC) == 0))
             {
-                nk_rect body = new nk_rect();
+                NkRect body = new NkRect();
                 body.x = (float)(win.Bounds.x);
                 body.w = (float)(win.Bounds.w);
                 body.y = (float)(win.Bounds.y + layout.HeaderHeight);
                 body.h = (float)(win.Bounds.h - layout.HeaderHeight);
                 if ((style.Window.fixed_background.Type) == (NK_STYLE_ITEM_IMAGE))
-                    nk_draw_image(_out_, (nk_rect)(body), style.Window.fixed_background.Data.Image, (nk_color)(nk_white));
-                else nk_fill_rect(_out_, (nk_rect)(body), (float)(0), (nk_color)(style.Window.fixed_background.Data.Color));
+                    nk_draw_image(_out_, (NkRect)(body), style.Window.fixed_background.Data.Image, (NkColor)(nk_white));
+                else nk_fill_rect(_out_, (NkRect)(body), (float)(0), (NkColor)(style.Window.fixed_background.Data.Color));
             }
 
             {
-                nk_rect clip = new nk_rect();
-                layout.Clip = (nk_rect)(layout.Bounds);
+                NkRect clip = new NkRect();
+                layout.Clip = (NkRect)(layout.Bounds);
                 nk_unify(ref clip, ref win.Buffer.Clip, (float)(layout.Clip.x), (float)(layout.Clip.y),
                     (float)(layout.Clip.x + layout.Clip.w), (float)(layout.Clip.y + layout.Clip.h));
-                nk_push_scissor(_out_, (nk_rect)(clip));
-                layout.Clip = (nk_rect)(clip);
+                nk_push_scissor(_out_, (NkRect)(clip));
+                layout.Clip = (NkRect)(clip);
             }
 
             return (int)(((layout.Flags & NK_WINDOW_HIDDEN) == 0) && ((layout.Flags & NK_WINDOW_MINIMIZED) == 0) ? 1 : 0);
@@ -1341,53 +1341,53 @@ namespace NuklearSharp
             NkPanel layout;
             NkStyle style;
             NkCommandBuffer _out_;
-            nk_vec2 scrollbar_size = new nk_vec2();
-            nk_vec2 panel_padding = new nk_vec2();
+            NkVec2 scrollbar_size = new NkVec2();
+            NkVec2 panel_padding = new NkVec2();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             window = ctx.Current;
             layout = window.Layout;
             style = ctx.Style;
             _out_ = window.Buffer;
             _in_ = (((layout.Flags & NK_WINDOW_ROM) != 0) || ((layout.Flags & NK_WINDOW_NO_INPUT) != 0)) ? null : ctx.Input;
-            if (nk_panel_is_sub((int)(layout.Type)) == 0) nk_push_scissor(_out_, (nk_rect)(nk_null_rect));
-            scrollbar_size = (nk_vec2)(style.Window.scrollbar_size);
-            panel_padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            if (nk_panel_is_sub((int)(layout.Type)) == 0) nk_push_scissor(_out_, (NkRect)(nk_null_rect));
+            scrollbar_size = (NkVec2)(style.Window.scrollbar_size);
+            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
             layout.AtY += (float)(layout.Row.height);
             if (((layout.Flags & NK_WINDOW_DYNAMIC) != 0) && ((layout.Flags & NK_WINDOW_MINIMIZED) == 0))
             {
-                nk_rect empty_space = new nk_rect();
+                NkRect empty_space = new NkRect();
                 if ((layout.AtY) < (layout.Bounds.y + layout.Bounds.h)) layout.Bounds.h = (float)(layout.AtY - layout.Bounds.y);
                 empty_space.x = (float)(window.Bounds.x);
                 empty_space.y = (float)(layout.Bounds.y);
                 empty_space.h = (float)(panel_padding.y);
                 empty_space.w = (float)(window.Bounds.w);
-                nk_fill_rect(_out_, (nk_rect)(empty_space), (float)(0), (nk_color)(style.Window.background));
+                nk_fill_rect(_out_, (NkRect)(empty_space), (float)(0), (NkColor)(style.Window.background));
                 empty_space.x = (float)(window.Bounds.x);
                 empty_space.y = (float)(layout.Bounds.y);
                 empty_space.w = (float)(panel_padding.x + layout.Border);
                 empty_space.h = (float)(layout.Bounds.h);
-                nk_fill_rect(_out_, (nk_rect)(empty_space), (float)(0), (nk_color)(style.Window.background));
+                nk_fill_rect(_out_, (NkRect)(empty_space), (float)(0), (NkColor)(style.Window.background));
                 empty_space.x = (float)(layout.Bounds.x + layout.Bounds.w - layout.Border);
                 empty_space.y = (float)(layout.Bounds.y);
                 empty_space.w = (float)(panel_padding.x + layout.Border);
                 empty_space.h = (float)(layout.Bounds.h);
                 if (((layout.Offset.y) == (0)) && ((layout.Flags & NK_WINDOW_NO_SCROLLBAR) == 0))
                     empty_space.w += (float)(scrollbar_size.x);
-                nk_fill_rect(_out_, (nk_rect)(empty_space), (float)(0), (nk_color)(style.Window.background));
+                nk_fill_rect(_out_, (NkRect)(empty_space), (float)(0), (NkColor)(style.Window.background));
                 if ((layout.Offset.x != 0) && ((layout.Flags & NK_WINDOW_NO_SCROLLBAR) == 0))
                 {
                     empty_space.x = (float)(window.Bounds.x);
                     empty_space.y = (float)(layout.Bounds.y + layout.Bounds.h);
                     empty_space.w = (float)(window.Bounds.w);
                     empty_space.h = (float)(scrollbar_size.y);
-                    nk_fill_rect(_out_, (nk_rect)(empty_space), (float)(0), (nk_color)(style.Window.background));
+                    nk_fill_rect(_out_, (NkRect)(empty_space), (float)(0), (NkColor)(style.Window.background));
                 }
             }
 
             if ((((layout.Flags & NK_WINDOW_NO_SCROLLBAR) == 0) && ((layout.Flags & NK_WINDOW_MINIMIZED) == 0)) &&
                 ((window.ScrollbarHidingTimer) < (4.0f)))
             {
-                nk_rect scroll = new nk_rect();
+                NkRect scroll = new NkRect();
                 int scroll_has_scrolling;
                 float scroll_target;
                 float scroll_offset;
@@ -1408,7 +1408,7 @@ namespace NuklearSharp
                     scroll_has_scrolling = (int)(0);
                     if (((root_window) == (ctx.Active)) && ((layout.HasScrolling) != 0))
                     {
-                        if (((nk_input_is_mouse_hovering_rect(_in_, (nk_rect)(layout.Bounds))) != 0) &&
+                        if (((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(layout.Bounds))) != 0) &&
                             (!(((((root_panel.Clip.x) > (layout.Bounds.x + layout.Bounds.w)) ||
                                  ((root_panel.Clip.x + root_panel.Clip.w) < (layout.Bounds.x))) ||
                                 ((root_panel.Clip.y) > (layout.Bounds.y + layout.Bounds.h))) ||
@@ -1445,7 +1445,7 @@ namespace NuklearSharp
                     scroll_target = ((float)((int)(layout.AtY - scroll.y)));
                     scroll_offset =
                         (float)
-                            (nk_do_scrollbarv(ref state, _out_, (nk_rect)(scroll), (int)(scroll_has_scrolling), (float)(scroll_offset),
+                            (nk_do_scrollbarv(ref state, _out_, (NkRect)(scroll), (int)(scroll_has_scrolling), (float)(scroll_offset),
                                 (float)(scroll_target), (float)(scroll_step), (float)(scroll_inc), ctx.Style.Scrollv, _in_, style.Font));
                     layout.Offset.y = ((uint)(scroll_offset));
                     if (((_in_) != null) && ((scroll_has_scrolling) != 0)) _in_.mouse.ScrollDelta.y = (float)(0);
@@ -1462,7 +1462,7 @@ namespace NuklearSharp
                     scroll_inc = (float)(layout.MaxX * 0.005f);
                     scroll_offset =
                         (float)
-                            (nk_do_scrollbarh(ref state, _out_, (nk_rect)(scroll), (int)(scroll_has_scrolling), (float)(scroll_offset),
+                            (nk_do_scrollbarh(ref state, _out_, (NkRect)(scroll), (int)(scroll_has_scrolling), (float)(scroll_offset),
                                 (float)(scroll_target), (float)(scroll_step), (float)(scroll_inc), ctx.Style.Scrollh, _in_, style.Font));
                     layout.Offset.x = ((uint)(scroll_offset));
                 }
@@ -1484,7 +1484,7 @@ namespace NuklearSharp
             else window.ScrollbarHidingTimer = (float)(0);
             if ((layout.Flags & NK_WINDOW_BORDER) != 0)
             {
-                nk_color border_color = (nk_color)(nk_panel_get_border_color(style, (int)(layout.Type)));
+                NkColor border_color = (NkColor)(nk_panel_get_border_color(style, (int)(layout.Type)));
                 float padding_y =
                     (float)
                         ((layout.Flags & NK_WINDOW_MINIMIZED) != 0
@@ -1492,14 +1492,14 @@ namespace NuklearSharp
                             : (layout.Flags & NK_WINDOW_DYNAMIC) != 0
                                 ? layout.Bounds.y + layout.Bounds.h + layout.FooterHeight
                                 : window.Bounds.y + window.Bounds.h);
-                nk_rect b = window.Bounds;
+                NkRect b = window.Bounds;
                 b.h = padding_y - window.Bounds.y;
                 nk_stroke_rect(_out_, b, 0, layout.Border, border_color);
             }
 
             if ((((layout.Flags & NK_WINDOW_SCALABLE) != 0) && ((_in_) != null)) && ((layout.Flags & NK_WINDOW_MINIMIZED) == 0))
             {
-                nk_rect scaler = new nk_rect();
+                NkRect scaler = new NkRect();
                 scaler.w = (float)(scrollbar_size.x);
                 scaler.h = (float)(scrollbar_size.y);
                 scaler.y = (float)(layout.Bounds.y + layout.Bounds.h);
@@ -1509,27 +1509,27 @@ namespace NuklearSharp
                 {
                     NkStyleItem item = style.Window.scaler;
                     if ((item.Type) == (NK_STYLE_ITEM_IMAGE))
-                        nk_draw_image(_out_, (nk_rect)(scaler), item.Data.Image, (nk_color)(nk_white));
+                        nk_draw_image(_out_, (NkRect)(scaler), item.Data.Image, (NkColor)(nk_white));
                     else
                     {
                         if ((layout.Flags & NK_WINDOW_SCALE_LEFT) != 0)
                         {
                             nk_fill_triangle(_out_, (float)(scaler.x), (float)(scaler.y), (float)(scaler.x), (float)(scaler.y + scaler.h),
-                                (float)(scaler.x + scaler.w), (float)(scaler.y + scaler.h), (nk_color)(item.Data.Color));
+                                (float)(scaler.x + scaler.w), (float)(scaler.y + scaler.h), (NkColor)(item.Data.Color));
                         }
                         else
                         {
                             nk_fill_triangle(_out_, (float)(scaler.x + scaler.w), (float)(scaler.y), (float)(scaler.x + scaler.w),
-                                (float)(scaler.y + scaler.h), (float)(scaler.x), (float)(scaler.y + scaler.h), (nk_color)(item.Data.Color));
+                                (float)(scaler.y + scaler.h), (float)(scaler.x), (float)(scaler.y + scaler.h), (NkColor)(item.Data.Color));
                         }
                     }
                 }
                 if ((window.Flags & NK_WINDOW_ROM) == 0)
                 {
-                    nk_vec2 window_size = (nk_vec2)(style.Window.min_size);
+                    NkVec2 window_size = (NkVec2)(style.Window.min_size);
                     int left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down);
                     int left_mouse_click_in_scaler =
-                        (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (nk_rect)(scaler), (int)(nk_true)));
+                        (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (NkRect)(scaler), (int)(nk_true)));
                     if (((left_mouse_down) != 0) && ((left_mouse_click_in_scaler) != 0))
                     {
                         float delta_x = (float)(_in_.mouse.Delta.x);
@@ -1722,12 +1722,12 @@ namespace NuklearSharp
             ctx.Count--;
         }
 
-        public static int nk_begin(NkContext ctx, char* title, nk_rect bounds, uint flags)
+        public static int nk_begin(NkContext ctx, char* title, NkRect bounds, uint flags)
         {
-            return (int)(nk_begin_titled(ctx, title, title, (nk_rect)(bounds), (uint)(flags)));
+            return (int)(nk_begin_titled(ctx, title, title, (NkRect)(bounds), (uint)(flags)));
         }
 
-        public static int nk_begin_titled(NkContext ctx, char* name, char* title, nk_rect bounds, uint flags)
+        public static int nk_begin_titled(NkContext ctx, char* name, char* title, NkRect bounds, uint flags)
         {
             NkWindow win;
             NkStyle style;
@@ -1748,7 +1748,7 @@ namespace NuklearSharp
                 else nk_insert_window(ctx, win, (int)(NK_INSERT_BACK));
                 nk_command_buffer_init(win.Buffer, (int)(NK_CLIPPING_ON));
                 win.Flags = (uint)(flags);
-                win.Bounds = (nk_rect)(bounds);
+                win.Bounds = (NkRect)(bounds);
                 win.Name = (uint)(title_hash);
                 name_length = (ulong)((name_length) < (64 - 1) ? (name_length) : (64 - 1));
                 nk_memcopy(win.NameString, name, (ulong)(name_length));
@@ -1760,7 +1760,7 @@ namespace NuklearSharp
             {
                 win.Flags &= (uint)(~(uint)(NK_WINDOW_PRIVATE - 1));
                 win.Flags |= (uint)(flags);
-                if ((win.Flags & (NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE)) == 0) win.Bounds = (nk_rect)(bounds);
+                if ((win.Flags & (NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE)) == 0) win.Bounds = (NkRect)(bounds);
                 win.Seq = (uint)(ctx.Seq);
                 if ((ctx.Active == null) && ((win.Flags & NK_WINDOW_HIDDEN) == 0))
                 {
@@ -1783,23 +1783,23 @@ namespace NuklearSharp
                 NkWindow iter = win;
                 float h =
                     (float)(ctx.Style.Font.Height + 2.0f * style.Window.header.padding.y + (2.0f * style.Window.header.label_padding.y));
-                nk_rect win_bounds =
-                    (nk_rect)
+                NkRect win_bounds =
+                    (NkRect)
                         (((win.Flags & NK_WINDOW_MINIMIZED) == 0)
                             ? win.Bounds
                             : nk_rect_((float)(win.Bounds.x), (float)(win.Bounds.y), (float)(win.Bounds.w), (float)(h)));
                 inpanel =
                     (int)
-                        (nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(NK_BUTTON_LEFT), (nk_rect)(win_bounds), (int)(nk_true)));
+                        (nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(NK_BUTTON_LEFT), (NkRect)(win_bounds), (int)(nk_true)));
                 inpanel = (int)(((inpanel) != 0) && ((ctx.Input.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0) ? 1 : 0);
-                ishovered = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(win_bounds)));
+                ishovered = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(win_bounds)));
                 if (((win != ctx.Active) && ((ishovered) != 0)) && (ctx.Input.mouse.Buttons[NK_BUTTON_LEFT].down == 0))
                 {
                     iter = win.Next;
                     while ((iter) != null)
                     {
-                        nk_rect iter_bounds =
-                            (nk_rect)
+                        NkRect iter_bounds =
+                            (NkRect)
                                 (((iter.Flags & NK_WINDOW_MINIMIZED) == 0)
                                     ? iter.Bounds
                                     : nk_rect_((float)(iter.Bounds.x), (float)(iter.Bounds.y), (float)(iter.Bounds.w), (float)(h)));
@@ -1820,8 +1820,8 @@ namespace NuklearSharp
                     iter = win.Next;
                     while ((iter) != null)
                     {
-                        nk_rect iter_bounds =
-                            (nk_rect)
+                        NkRect iter_bounds =
+                            (NkRect)
                                 (((iter.Flags & NK_WINDOW_MINIMIZED) == 0)
                                     ? iter.Bounds
                                     : nk_rect_((float)(iter.Bounds.x), (float)(iter.Bounds.y), (float)(iter.Bounds.w), (float)(h)));
@@ -1887,23 +1887,23 @@ namespace NuklearSharp
             ctx.Current = null;
         }
 
-        public static nk_rect nk_window_get_bounds(NkContext ctx)
+        public static NkRect nk_window_get_bounds(NkContext ctx)
         {
             if ((ctx == null) || (ctx.Current == null))
-                return (nk_rect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
-            return (nk_rect)(ctx.Current.Bounds);
+                return (NkRect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
+            return (NkRect)(ctx.Current.Bounds);
         }
 
-        public static nk_vec2 nk_window_get_position(NkContext ctx)
+        public static NkVec2 nk_window_get_position(NkContext ctx)
         {
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            return (nk_vec2)(nk_vec2_((float)(ctx.Current.Bounds.x), (float)(ctx.Current.Bounds.y)));
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            return (NkVec2)(nk_vec2_((float)(ctx.Current.Bounds.x), (float)(ctx.Current.Bounds.y)));
         }
 
-        public static nk_vec2 nk_window_get_size(NkContext ctx)
+        public static NkVec2 nk_window_get_size(NkContext ctx)
         {
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            return (nk_vec2)(nk_vec2_((float)(ctx.Current.Bounds.w), (float)(ctx.Current.Bounds.h)));
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            return (NkVec2)(nk_vec2_((float)(ctx.Current.Bounds.w), (float)(ctx.Current.Bounds.h)));
         }
 
         public static float nk_window_get_width(NkContext ctx)
@@ -1918,32 +1918,32 @@ namespace NuklearSharp
             return (float)(ctx.Current.Bounds.h);
         }
 
-        public static nk_rect nk_window_get_content_region(NkContext ctx)
+        public static NkRect nk_window_get_content_region(NkContext ctx)
         {
             if ((ctx == null) || (ctx.Current == null))
-                return (nk_rect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
-            return (nk_rect)(ctx.Current.Layout.Clip);
+                return (NkRect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
+            return (NkRect)(ctx.Current.Layout.Clip);
         }
 
-        public static nk_vec2 nk_window_get_content_region_min(NkContext ctx)
+        public static NkVec2 nk_window_get_content_region_min(NkContext ctx)
         {
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            return (nk_vec2)(nk_vec2_((float)(ctx.Current.Layout.Clip.x), (float)(ctx.Current.Layout.Clip.y)));
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            return (NkVec2)(nk_vec2_((float)(ctx.Current.Layout.Clip.x), (float)(ctx.Current.Layout.Clip.y)));
         }
 
-        public static nk_vec2 nk_window_get_content_region_max(NkContext ctx)
+        public static NkVec2 nk_window_get_content_region_max(NkContext ctx)
         {
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             return
-                (nk_vec2)
+                (NkVec2)
                     (nk_vec2_((float)(ctx.Current.Layout.Clip.x + ctx.Current.Layout.Clip.w),
                         (float)(ctx.Current.Layout.Clip.y + ctx.Current.Layout.Clip.h)));
         }
 
-        public static nk_vec2 nk_window_get_content_region_size(NkContext ctx)
+        public static NkVec2 nk_window_get_content_region_size(NkContext ctx)
         {
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-            return (nk_vec2)(nk_vec2_((float)(ctx.Current.Layout.Clip.w), (float)(ctx.Current.Layout.Clip.h)));
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+            return (NkVec2)(nk_vec2_((float)(ctx.Current.Layout.Clip.w), (float)(ctx.Current.Layout.Clip.h)));
         }
 
         public static NkCommandBuffer nk_window_get_canvas(NkContext ctx)
@@ -1968,7 +1968,7 @@ namespace NuklearSharp
         {
             if ((ctx == null) || (ctx.Current == null)) return (int)(0);
             if ((ctx.Current.Flags & NK_WINDOW_HIDDEN) != 0) return (int)(0);
-            return (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(ctx.Current.Bounds)));
+            return (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(ctx.Current.Bounds)));
         }
 
         public static int nk_window_is_any_hovered(NkContext ctx)
@@ -1981,14 +1981,14 @@ namespace NuklearSharp
                 if ((iter.Flags & NK_WINDOW_HIDDEN) == 0)
                 {
                     if ((((iter.Popup.active) != 0) && ((iter.Popup.win) != null)) &&
-                        ((nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(iter.Popup.win.Bounds))) != 0)) return (int)(1);
+                        ((nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(iter.Popup.win.Bounds))) != 0)) return (int)(1);
                     if ((iter.Flags & NK_WINDOW_MINIMIZED) != 0)
                     {
-                        nk_rect header = (nk_rect)(iter.Bounds);
+                        NkRect header = (NkRect)(iter.Bounds);
                         header.h = (float)(ctx.Style.Font.Height + 2 * ctx.Style.Window.header.padding.y);
-                        if ((nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(header))) != 0) return (int)(1);
+                        if ((nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(header))) != 0) return (int)(1);
                     }
-                    else if ((nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(iter.Bounds))) != 0)
+                    else if ((nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(iter.Bounds))) != 0)
                     {
                         return (int)(1);
                     }
@@ -2077,16 +2077,16 @@ namespace NuklearSharp
             win.Flags |= (uint)(NK_WINDOW_CLOSED);
         }
 
-        public static void nk_window_set_bounds(NkContext ctx, char* name, nk_rect bounds)
+        public static void nk_window_set_bounds(NkContext ctx, char* name, NkRect bounds)
         {
             NkWindow win;
             if (ctx == null) return;
             win = nk_window_find(ctx, name);
             if (win == null) return;
-            win.Bounds = (nk_rect)(bounds);
+            win.Bounds = (NkRect)(bounds);
         }
 
-        public static void nk_window_set_position(NkContext ctx, char* name, nk_vec2 pos)
+        public static void nk_window_set_position(NkContext ctx, char* name, NkVec2 pos)
         {
             NkWindow win = nk_window_find(ctx, name);
             if (win == null) return;
@@ -2094,7 +2094,7 @@ namespace NuklearSharp
             win.Bounds.y = (float)(pos.y);
         }
 
-        public static void nk_window_set_size(NkContext ctx, char* name, nk_vec2 size)
+        public static void nk_window_set_size(NkContext ctx, char* name, NkVec2 size)
         {
             NkWindow win = nk_window_find(ctx, name);
             if (win == null) return;
@@ -2195,7 +2195,7 @@ namespace NuklearSharp
             layout.AtY = (float)(layout.Bounds.y - layout.Row.height);
             layout.Clip.y = (float)(layout.Bounds.y);
             layout.Clip.h = (float)(layout.Bounds.h);
-            nk_push_scissor(_out_, (nk_rect)(layout.Clip));
+            nk_push_scissor(_out_, (NkRect)(layout.Clip));
         }
 
         public static void nk_layout_set_min_row_height(NkContext ctx, float height)
@@ -2225,14 +2225,14 @@ namespace NuklearSharp
             NkPanel layout;
             NkStyle style;
             NkCommandBuffer _out_;
-            nk_vec2 item_spacing = new nk_vec2();
-            nk_color color = new nk_color();
+            NkVec2 item_spacing = new NkVec2();
+            NkColor color = new NkColor();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             layout = win.Layout;
             style = ctx.Style;
             _out_ = win.Buffer;
-            color = (nk_color)(style.Window.background);
-            item_spacing = (nk_vec2)(style.Window.spacing);
+            color = (NkColor)(style.Window.background);
+            item_spacing = (NkVec2)(style.Window.spacing);
             layout.Row.index = (int)(0);
             layout.AtY += (float)(layout.Row.height);
             layout.Row.columns = (int)(cols);
@@ -2243,12 +2243,12 @@ namespace NuklearSharp
             layout.Row.item_offset = (float)(0);
             if ((layout.Flags & NK_WINDOW_DYNAMIC) != 0)
             {
-                nk_rect background = new nk_rect();
+                NkRect background = new NkRect();
                 background.x = (float)(win.Bounds.x);
                 background.w = (float)(win.Bounds.w);
                 background.y = (float)(layout.AtY - 1.0f);
                 background.h = (float)(layout.Row.height + 1.0f);
-                nk_fill_rect(_out_, (nk_rect)(background), (float)(0), (nk_color)(color));
+                nk_fill_rect(_out_, (NkRect)(background), (float)(0), (NkColor)(color));
             }
 
         }
@@ -2515,23 +2515,23 @@ namespace NuklearSharp
             layout.Row.item_offset = (float)(0);
             fixed (void* ptr = &layout.Row.item)
             {
-                nk_zero(ptr, (ulong)(sizeof(nk_rect)));
+                nk_zero(ptr, (ulong)(sizeof(NkRect)));
             }
         }
 
-        public static void nk_layout_space_push(NkContext ctx, nk_rect rect)
+        public static void nk_layout_space_push(NkContext ctx, NkRect rect)
         {
             NkWindow win;
             NkPanel layout;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            layout.Row.item = (nk_rect)(rect);
+            layout.Row.item = (NkRect)(rect);
         }
 
-        public static nk_rect nk_layout_space_bounds(NkContext ctx)
+        public static NkRect nk_layout_space_bounds(NkContext ctx)
         {
-            nk_rect ret = new nk_rect();
+            NkRect ret = new NkRect();
             NkWindow win;
             NkPanel layout;
             win = ctx.Current;
@@ -2540,12 +2540,12 @@ namespace NuklearSharp
             ret.y = (float)(layout.Clip.y);
             ret.w = (float)(layout.Clip.w);
             ret.h = (float)(layout.Row.height);
-            return (nk_rect)(ret);
+            return (NkRect)(ret);
         }
 
-        public static nk_rect nk_layout_widget_bounds(NkContext ctx)
+        public static NkRect nk_layout_widget_bounds(NkContext ctx)
         {
-            nk_rect ret = new nk_rect();
+            NkRect ret = new NkRect();
             NkWindow win;
             NkPanel layout;
             win = ctx.Current;
@@ -2554,10 +2554,10 @@ namespace NuklearSharp
             ret.y = (float)(layout.AtY);
             ret.w = (float)(layout.Bounds.w - ((layout.AtX - layout.Bounds.x) < (0) ? (0) : (layout.AtX - layout.Bounds.x)));
             ret.h = (float)(layout.Row.height);
-            return (nk_rect)(ret);
+            return (NkRect)(ret);
         }
 
-        public static nk_vec2 nk_layout_space_to_screen(NkContext ctx, nk_vec2 ret)
+        public static NkVec2 nk_layout_space_to_screen(NkContext ctx, NkVec2 ret)
         {
             NkWindow win;
             NkPanel layout;
@@ -2565,10 +2565,10 @@ namespace NuklearSharp
             layout = win.Layout;
             ret.x += (float)(layout.AtX - (float)(layout.Offset.x));
             ret.y += (float)(layout.AtY - (float)(layout.Offset.y));
-            return (nk_vec2)(ret);
+            return (NkVec2)(ret);
         }
 
-        public static nk_vec2 nk_layout_space_to_local(NkContext ctx, nk_vec2 ret)
+        public static NkVec2 nk_layout_space_to_local(NkContext ctx, NkVec2 ret)
         {
             NkWindow win;
             NkPanel layout;
@@ -2576,10 +2576,10 @@ namespace NuklearSharp
             layout = win.Layout;
             ret.x += (float)(-layout.AtX + (float)(layout.Offset.x));
             ret.y += (float)(-layout.AtY + (float)(layout.Offset.y));
-            return (nk_vec2)(ret);
+            return (NkVec2)(ret);
         }
 
-        public static nk_rect nk_layout_space_rect_to_screen(NkContext ctx, nk_rect ret)
+        public static NkRect nk_layout_space_rect_to_screen(NkContext ctx, NkRect ret)
         {
             NkWindow win;
             NkPanel layout;
@@ -2587,10 +2587,10 @@ namespace NuklearSharp
             layout = win.Layout;
             ret.x += (float)(layout.AtX - (float)(layout.Offset.x));
             ret.y += (float)(layout.AtY - (float)(layout.Offset.y));
-            return (nk_rect)(ret);
+            return (NkRect)(ret);
         }
 
-        public static nk_rect nk_layout_space_rect_to_local(NkContext ctx, nk_rect ret)
+        public static NkRect nk_layout_space_rect_to_local(NkContext ctx, NkRect ret)
         {
             NkWindow win;
             NkPanel layout;
@@ -2598,18 +2598,18 @@ namespace NuklearSharp
             layout = win.Layout;
             ret.x += (float)(-layout.AtX + (float)(layout.Offset.x));
             ret.y += (float)(-layout.AtY + (float)(layout.Offset.y));
-            return (nk_rect)(ret);
+            return (NkRect)(ret);
         }
 
         public static void nk_panel_alloc_row(NkContext ctx, NkWindow win)
         {
             NkPanel layout = win.Layout;
-            nk_vec2 spacing = (nk_vec2)(ctx.Style.Window.spacing);
+            NkVec2 spacing = (NkVec2)(ctx.Style.Window.spacing);
             float row_height = (float)(layout.Row.height - spacing.y);
             nk_panel_layout(ctx, win, (float)(row_height), (int)(layout.Row.columns));
         }
 
-        public static int nk_tree_state_base(NkContext ctx, int type, nk_image img, char* title, ref int state)
+        public static int nk_tree_state_base(NkContext ctx, int type, NkImage img, char* title, ref int state)
         {
             NkWindow win;
             NkPanel layout;
@@ -2619,9 +2619,9 @@ namespace NuklearSharp
             nk_style_button button;
             int symbol;
             float row_height;
-            nk_vec2 item_spacing = new nk_vec2();
-            nk_rect header = new nk_rect();
-            nk_rect sym = new nk_rect();
+            NkVec2 item_spacing = new NkVec2();
+            NkRect header = new NkRect();
+            NkRect sym = new NkRect();
             nk_text text = new nk_text();
             uint ws = (uint)(0);
             int widget_state;
@@ -2630,7 +2630,7 @@ namespace NuklearSharp
             layout = win.Layout;
             _out_ = win.Buffer;
             style = ctx.Style;
-            item_spacing = (nk_vec2)(style.Window.spacing);
+            item_spacing = (NkVec2)(style.Window.spacing);
             row_height = (float)(style.Font.Height + 2 * style.Tab.padding.y);
             nk_layout_set_min_row_height(ctx, (float)(row_height));
             nk_layout_row_dynamic(ctx, (float)(row_height), (int)(1));
@@ -2641,21 +2641,21 @@ namespace NuklearSharp
                 NkStyleItem background = style.Tab.background;
                 if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
                 {
-                    nk_draw_image(_out_, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
-                    text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                    nk_draw_image(_out_, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
+                    text.background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
                 }
                 else
                 {
-                    text.background = (nk_color)(background.Data.Color);
-                    nk_fill_rect(_out_, (nk_rect)(header), (float)(0), (nk_color)(style.Tab.border_color));
-                    nk_fill_rect(_out_, (nk_rect)(nk_shrink_rect_((nk_rect)(header), (float)(style.Tab.border))),
-                        (float)(style.Tab.rounding), (nk_color)(background.Data.Color));
+                    text.background = (NkColor)(background.Data.Color);
+                    nk_fill_rect(_out_, (NkRect)(header), (float)(0), (NkColor)(style.Tab.border_color));
+                    nk_fill_rect(_out_, (NkRect)(nk_shrink_rect_((NkRect)(header), (float)(style.Tab.border))),
+                        (float)(style.Tab.rounding), (NkColor)(background.Data.Color));
                 }
             }
-            else text.background = (nk_color)(style.Window.background);
+            else text.background = (NkColor)(style.Window.background);
             _in_ = ((layout.Flags & NK_WINDOW_ROM) == 0) ? ctx.Input : null;
             _in_ = (((_in_) != null) && ((widget_state) == (NK_WIDGET_VALID))) ? ctx.Input : null;
-            if ((nk_button_behavior(ref ws, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ws, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 state = (int)(((state) == (NK_MAXIMIZED)) ? NK_MINIMIZED : NK_MAXIMIZED);
             if ((state) == (NK_MAXIMIZED))
             {
@@ -2674,26 +2674,26 @@ namespace NuklearSharp
                 sym.w = (float)(sym.h = (float)(style.Font.Height));
                 sym.y = (float)(header.y + style.Tab.padding.y);
                 sym.x = (float)(header.x + style.Tab.padding.x);
-                nk_do_button_symbol(ref ws, win.Buffer, (nk_rect)(sym), (int)(symbol), (int)(NK_BUTTON_DEFAULT), button, null,
+                nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(sym), (int)(symbol), (int)(NK_BUTTON_DEFAULT), button, null,
                     style.Font);
                 if ((img) != null)
                 {
                     sym.x = (float)(sym.x + sym.w + 4 * item_spacing.x);
-                    nk_draw_image(win.Buffer, (nk_rect)(sym), img, (nk_color)(nk_white));
+                    nk_draw_image(win.Buffer, (NkRect)(sym), img, (NkColor)(nk_white));
                     sym.w = (float)(style.Font.Height + style.Tab.spacing.x);
                 }
             }
 
             {
-                nk_rect label = new nk_rect();
+                NkRect label = new NkRect();
                 header.w = (float)((header.w) < (sym.w + item_spacing.x) ? (sym.w + item_spacing.x) : (header.w));
                 label.x = (float)(sym.x + sym.w + item_spacing.x);
                 label.y = (float)(sym.y);
                 label.w = (float)(header.w - (sym.w + item_spacing.y + style.Tab.indent));
                 label.h = (float)(style.Font.Height);
-                text.text = (nk_color)(style.Tab.text);
-                text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
-                nk_widget_text(_out_, (nk_rect)(label), title, (int)(nk_strlen(title)), &text, (uint)(NK_TEXT_LEFT), style.Font);
+                text.text = (NkColor)(style.Tab.text);
+                text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
+                nk_widget_text(_out_, (NkRect)(label), title, (int)(nk_strlen(title)), &text, (uint)(NK_TEXT_LEFT), style.Font);
             }
 
             if ((state) == (NK_MAXIMIZED))
@@ -2707,7 +2707,7 @@ namespace NuklearSharp
             else return (int)(nk_false);
         }
 
-        public static int nk_tree_base(NkContext ctx, int type, nk_image img, char* title, int initial_state, char* hash,
+        public static int nk_tree_base(NkContext ctx, int type, NkImage img, char* title, int initial_state, char* hash,
             int len, int line)
         {
             NkWindow win = ctx.Current;
@@ -2738,7 +2738,7 @@ namespace NuklearSharp
             return (int)(nk_tree_state_base(ctx, (int)(type), null, title, ref state));
         }
 
-        public static int nk_tree_state_image_push(NkContext ctx, int type, nk_image img, char* title, ref int state)
+        public static int nk_tree_state_image_push(NkContext ctx, int type, NkImage img, char* title, ref int state)
         {
             return (int)(nk_tree_state_base(ctx, (int)(type), img, title, ref state));
         }
@@ -2761,7 +2761,7 @@ namespace NuklearSharp
             return (int)(nk_tree_base(ctx, (int)(type), null, title, (int)(initial_state), hash, (int)(len), (int)(line)));
         }
 
-        public static int nk_tree_image_push_hashed(NkContext ctx, int type, nk_image img, char* title, int initial_state,
+        public static int nk_tree_image_push_hashed(NkContext ctx, int type, NkImage img, char* title, int initial_state,
             char* hash, int len, int seed)
         {
             return (int)(nk_tree_base(ctx, (int)(type), img, title, (int)(initial_state), hash, (int)(len), (int)(seed)));
@@ -2772,34 +2772,34 @@ namespace NuklearSharp
             nk_tree_state_pop(ctx);
         }
 
-        public static nk_rect nk_widget_bounds(NkContext ctx)
+        public static NkRect nk_widget_bounds(NkContext ctx)
         {
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((ctx == null) || (ctx.Current == null))
-                return (nk_rect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
+                return (NkRect)(nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)));
             nk_layout_peek(&bounds, ctx);
-            return (nk_rect)(bounds);
+            return (NkRect)(bounds);
         }
 
-        public static nk_vec2 nk_widget_position(NkContext ctx)
+        public static NkVec2 nk_widget_position(NkContext ctx)
         {
-            nk_rect bounds = new nk_rect();
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            NkRect bounds = new NkRect();
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             nk_layout_peek(&bounds, ctx);
-            return (nk_vec2)(nk_vec2_((float)(bounds.x), (float)(bounds.y)));
+            return (NkVec2)(nk_vec2_((float)(bounds.x), (float)(bounds.y)));
         }
 
-        public static nk_vec2 nk_widget_size(NkContext ctx)
+        public static NkVec2 nk_widget_size(NkContext ctx)
         {
-            nk_rect bounds = new nk_rect();
-            if ((ctx == null) || (ctx.Current == null)) return (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+            NkRect bounds = new NkRect();
+            if ((ctx == null) || (ctx.Current == null)) return (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             nk_layout_peek(&bounds, ctx);
-            return (nk_vec2)(nk_vec2_((float)(bounds.w), (float)(bounds.h)));
+            return (NkVec2)(nk_vec2_((float)(bounds.w), (float)(bounds.h)));
         }
 
         public static float nk_widget_width(NkContext ctx)
         {
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((ctx == null) || (ctx.Current == null)) return (float)(0);
             nk_layout_peek(&bounds, ctx);
             return (float)(bounds.w);
@@ -2807,7 +2807,7 @@ namespace NuklearSharp
 
         public static float nk_widget_height(NkContext ctx)
         {
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((ctx == null) || (ctx.Current == null)) return (float)(0);
             nk_layout_peek(&bounds, ctx);
             return (float)(bounds.h);
@@ -2815,11 +2815,11 @@ namespace NuklearSharp
 
         public static int nk_widget_is_hovered(NkContext ctx)
         {
-            nk_rect c = new nk_rect();
-            nk_rect v = new nk_rect();
-            nk_rect bounds = new nk_rect();
+            NkRect c = new NkRect();
+            NkRect v = new NkRect();
+            NkRect bounds = new NkRect();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Active != ctx.Current)) return (int)(0);
-            c = (nk_rect)(ctx.Current.Layout.Clip);
+            c = (NkRect)(ctx.Current.Layout.Clip);
             c.x = ((float)((int)(c.x)));
             c.y = ((float)((int)(c.y)));
             c.w = ((float)((int)(c.w)));
@@ -2830,16 +2830,16 @@ namespace NuklearSharp
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return (int)(0);
-            return (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(bounds)));
+            return (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(bounds)));
         }
 
         public static int nk_widget_is_mouse_clicked(NkContext ctx, int btn)
         {
-            nk_rect c = new nk_rect();
-            nk_rect v = new nk_rect();
-            nk_rect bounds = new nk_rect();
+            NkRect c = new NkRect();
+            NkRect v = new NkRect();
+            NkRect bounds = new NkRect();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Active != ctx.Current)) return (int)(0);
-            c = (nk_rect)(ctx.Current.Layout.Clip);
+            c = (NkRect)(ctx.Current.Layout.Clip);
             c.x = ((float)((int)(c.x)));
             c.y = ((float)((int)(c.y)));
             c.w = ((float)((int)(c.w)));
@@ -2850,16 +2850,16 @@ namespace NuklearSharp
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return (int)(0);
-            return (int)(nk_input_mouse_clicked(ctx.Input, (int)(btn), (nk_rect)(bounds)));
+            return (int)(nk_input_mouse_clicked(ctx.Input, (int)(btn), (NkRect)(bounds)));
         }
 
         public static int nk_widget_has_mouse_click_down(NkContext ctx, int btn, int down)
         {
-            nk_rect c = new nk_rect();
-            nk_rect v = new nk_rect();
-            nk_rect bounds = new nk_rect();
+            NkRect c = new NkRect();
+            NkRect v = new NkRect();
+            NkRect bounds = new NkRect();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Active != ctx.Current)) return (int)(0);
-            c = (nk_rect)(ctx.Current.Layout.Clip);
+            c = (NkRect)(ctx.Current.Layout.Clip);
             c.x = ((float)((int)(c.x)));
             c.y = ((float)((int)(c.y)));
             c.w = ((float)((int)(c.w)));
@@ -2870,14 +2870,14 @@ namespace NuklearSharp
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return (int)(0);
-            return (int)(nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(btn), (nk_rect)(bounds), (int)(down)));
+            return (int)(nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(btn), (NkRect)(bounds), (int)(down)));
         }
 
         public static void nk_spacing(NkContext ctx, int cols)
         {
             NkWindow win;
             NkPanel layout;
-            nk_rect none = new nk_rect();
+            NkRect none = new NkRect();
             int i;
             int index;
             int rows;
@@ -2906,54 +2906,54 @@ namespace NuklearSharp
             layout.Row.index = (int)(index);
         }
 
-        public static void nk_text_colored(NkContext ctx, char* str, int len, uint alignment, nk_color color)
+        public static void nk_text_colored(NkContext ctx, char* str, int len, uint alignment, NkColor color)
         {
             NkWindow win;
             NkStyle style;
-            nk_vec2 item_padding = new nk_vec2();
-            nk_rect bounds = new nk_rect();
+            NkVec2 item_padding = new NkVec2();
+            NkRect bounds = new NkRect();
             nk_text text = new nk_text();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             style = ctx.Style;
             nk_panel_alloc_space(&bounds, ctx);
-            item_padding = (nk_vec2)(style.Text.padding);
+            item_padding = (NkVec2)(style.Text.padding);
             text.padding.x = (float)(item_padding.x);
             text.padding.y = (float)(item_padding.y);
-            text.background = (nk_color)(style.Window.background);
-            text.text = (nk_color)(color);
-            nk_widget_text(win.Buffer, (nk_rect)(bounds), str, (int)(len), &text, (uint)(alignment), style.Font);
+            text.background = (NkColor)(style.Window.background);
+            text.text = (NkColor)(color);
+            nk_widget_text(win.Buffer, (NkRect)(bounds), str, (int)(len), &text, (uint)(alignment), style.Font);
         }
 
-        public static void nk_text_wrap_colored(NkContext ctx, char* str, int len, nk_color color)
+        public static void nk_text_wrap_colored(NkContext ctx, char* str, int len, NkColor color)
         {
             NkWindow win;
             NkStyle style;
-            nk_vec2 item_padding = new nk_vec2();
-            nk_rect bounds = new nk_rect();
+            NkVec2 item_padding = new NkVec2();
+            NkRect bounds = new NkRect();
             nk_text text = new nk_text();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             style = ctx.Style;
             nk_panel_alloc_space(&bounds, ctx);
-            item_padding = (nk_vec2)(style.Text.padding);
+            item_padding = (NkVec2)(style.Text.padding);
             text.padding.x = (float)(item_padding.x);
             text.padding.y = (float)(item_padding.y);
-            text.background = (nk_color)(style.Window.background);
-            text.text = (nk_color)(color);
-            nk_widget_text_wrap(win.Buffer, (nk_rect)(bounds), str, (int)(len), &text, style.Font);
+            text.background = (NkColor)(style.Window.background);
+            text.text = (NkColor)(color);
+            nk_widget_text_wrap(win.Buffer, (NkRect)(bounds), str, (int)(len), &text, style.Font);
         }
 
         public static void nk_text_(NkContext ctx, char* str, int len, uint alignment)
         {
             if (ctx == null) return;
-            nk_text_colored(ctx, str, (int)(len), (uint)(alignment), (nk_color)(ctx.Style.Text.color));
+            nk_text_colored(ctx, str, (int)(len), (uint)(alignment), (NkColor)(ctx.Style.Text.color));
         }
 
         public static void nk_text_wrap(NkContext ctx, char* str, int len)
         {
             if (ctx == null) return;
-            nk_text_wrap_colored(ctx, str, (int)(len), (nk_color)(ctx.Style.Text.color));
+            nk_text_wrap_colored(ctx, str, (int)(len), (NkColor)(ctx.Style.Text.color));
         }
 
         public static void nk_label(NkContext ctx, char* str, uint alignment)
@@ -2961,9 +2961,9 @@ namespace NuklearSharp
             nk_text_(ctx, str, (int)(nk_strlen(str)), (uint)(alignment));
         }
 
-        public static void nk_label_colored(NkContext ctx, char* str, uint align, nk_color color)
+        public static void nk_label_colored(NkContext ctx, char* str, uint align, NkColor color)
         {
-            nk_text_colored(ctx, str, (int)(nk_strlen(str)), (uint)(align), (nk_color)(color));
+            nk_text_colored(ctx, str, (int)(nk_strlen(str)), (uint)(align), (NkColor)(color));
         }
 
         public static void nk_label_wrap(NkContext ctx, char* str)
@@ -2971,19 +2971,19 @@ namespace NuklearSharp
             nk_text_wrap(ctx, str, (int)(nk_strlen(str)));
         }
 
-        public static void nk_label_colored_wrap(NkContext ctx, char* str, nk_color color)
+        public static void nk_label_colored_wrap(NkContext ctx, char* str, NkColor color)
         {
-            nk_text_wrap_colored(ctx, str, (int)(nk_strlen(str)), (nk_color)(color));
+            nk_text_wrap_colored(ctx, str, (int)(nk_strlen(str)), (NkColor)(color));
         }
 
-        public static void nk_image_(NkContext ctx, nk_image img)
+        public static void nk_image_(NkContext ctx, NkImage img)
         {
             NkWindow win;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             if (nk_widget(&bounds, ctx) == 0) return;
-            nk_draw_image(win.Buffer, (nk_rect)(bounds), img, (nk_color)(nk_white));
+            nk_draw_image(win.Buffer, (NkRect)(bounds), img, (NkColor)(nk_white));
         }
 
         public static void nk_button_set_behavior(NkContext ctx, int behavior)
@@ -3022,7 +3022,7 @@ namespace NuklearSharp
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if ((((style == null) || (ctx == null)) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3032,7 +3032,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), title, (int)(len),
+                    (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), title, (int)(len),
                         (uint)(style.text_alignment), (int)(ctx.ButtonBehavior), style, _in_, ctx.Style.Font));
         }
 
@@ -3052,15 +3052,15 @@ namespace NuklearSharp
             return (int)(nk_button_text(ctx, title, (int)(nk_strlen(title))));
         }
 
-        public static int nk_button_color(NkContext ctx, nk_color color)
+        public static int nk_button_color(NkContext ctx, NkColor color)
         {
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
             nk_style_button button = new nk_style_button();
             int ret = (int)(0);
-            nk_rect bounds = new nk_rect();
-            nk_rect content = new nk_rect();
+            NkRect bounds = new NkRect();
+            NkRect content = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3069,12 +3069,12 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             button = (nk_style_button)(ctx.Style.Button);
-            button.normal = (NkStyleItem)(nk_style_item_color((nk_color)(color)));
-            button.hover = (NkStyleItem)(nk_style_item_color((nk_color)(color)));
-            button.active = (NkStyleItem)(nk_style_item_color((nk_color)(color)));
+            button.normal = (NkStyleItem)(nk_style_item_color((NkColor)(color)));
+            button.hover = (NkStyleItem)(nk_style_item_color((NkColor)(color)));
+            button.active = (NkStyleItem)(nk_style_item_color((NkColor)(color)));
             ret =
                 (int)
-                    (nk_do_button(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), button, _in_, (int)(ctx.ButtonBehavior),
+                    (nk_do_button(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), button, _in_, (int)(ctx.ButtonBehavior),
                         &content));
             nk_draw_button(win.Buffer, &bounds, (uint)(ctx.LastWidgetState), button);
             return (int)(ret);
@@ -3085,7 +3085,7 @@ namespace NuklearSharp
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3095,7 +3095,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (int)(symbol),
+                    (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol),
                         (int)(ctx.ButtonBehavior), style, _in_, ctx.Style.Font));
         }
 
@@ -3105,12 +3105,12 @@ namespace NuklearSharp
             return (int)(nk_button_symbol_styled(ctx, ctx.Style.Button, (int)(symbol)));
         }
 
-        public static int nk_button_image_styled(NkContext ctx, nk_style_button style, nk_image img)
+        public static int nk_button_image_styled(NkContext ctx, nk_style_button style, NkImage img)
         {
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3120,14 +3120,14 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (nk_image)(img),
+                    (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img),
                         (int)(ctx.ButtonBehavior), style, _in_));
         }
 
-        public static int nk_button_image(NkContext ctx, nk_image img)
+        public static int nk_button_image(NkContext ctx, NkImage img)
         {
             if (ctx == null) return (int)(0);
-            return (int)(nk_button_image_styled(ctx, ctx.Style.Button, (nk_image)(img)));
+            return (int)(nk_button_image_styled(ctx, ctx.Style.Button, (NkImage)(img)));
         }
 
         public static int nk_button_symbol_text_styled(NkContext ctx, nk_style_button style, int symbol, char* text, int len,
@@ -3136,7 +3136,7 @@ namespace NuklearSharp
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3146,7 +3146,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (int)(symbol), text,
+                    (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol), text,
                         (int)(len), (uint)(align), (int)(ctx.ButtonBehavior), style, ctx.Style.Font, _in_));
         }
 
@@ -3168,13 +3168,13 @@ namespace NuklearSharp
                 (int)(nk_button_symbol_text_styled(ctx, style, (int)(symbol), title, (int)(nk_strlen(title)), (uint)(align)));
         }
 
-        public static int nk_button_image_text_styled(NkContext ctx, nk_style_button style, nk_image img, char* text, int len,
+        public static int nk_button_image_text_styled(NkContext ctx, nk_style_button style, NkImage img, char* text, int len,
             uint align)
         {
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -3184,27 +3184,27 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (nk_image)(img), text,
+                    (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img), text,
                         (int)(len), (uint)(align), (int)(ctx.ButtonBehavior), style, ctx.Style.Font, _in_));
         }
 
-        public static int nk_button_image_text(NkContext ctx, nk_image img, char* text, int len, uint align)
+        public static int nk_button_image_text(NkContext ctx, NkImage img, char* text, int len, uint align)
         {
             return
-                (int)(nk_button_image_text_styled(ctx, ctx.Style.Button, (nk_image)(img), text, (int)(len), (uint)(align)));
+                (int)(nk_button_image_text_styled(ctx, ctx.Style.Button, (NkImage)(img), text, (int)(len), (uint)(align)));
         }
 
-        public static int nk_button_image_label(NkContext ctx, nk_image img, char* label, uint align)
+        public static int nk_button_image_label(NkContext ctx, NkImage img, char* label, uint align)
         {
-            return (int)(nk_button_image_text(ctx, (nk_image)(img), label, (int)(nk_strlen(label)), (uint)(align)));
+            return (int)(nk_button_image_text(ctx, (NkImage)(img), label, (int)(nk_strlen(label)), (uint)(align)));
         }
 
-        public static int nk_button_image_label_styled(NkContext ctx, nk_style_button style, nk_image img, char* label,
+        public static int nk_button_image_label_styled(NkContext ctx, nk_style_button style, NkImage img, char* label,
             uint text_alignment)
         {
             return
                 (int)
-                    (nk_button_image_text_styled(ctx, style, (nk_image)(img), label, (int)(nk_strlen(label)), (uint)(text_alignment)));
+                    (nk_button_image_text_styled(ctx, style, (NkImage)(img), label, (int)(nk_strlen(label)), (uint)(text_alignment)));
         }
 
         public static int nk_selectable_text(NkContext ctx, char* str, int len, uint align, ref int value)
@@ -3214,7 +3214,7 @@ namespace NuklearSharp
             nk_input _in_;
             NkStyle style;
             int state;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null))) return (int)(0);
             win = ctx.Current;
             layout = win.Layout;
@@ -3224,18 +3224,18 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_selectable(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), str, (int)(len), (uint)(align),
+                    (nk_do_selectable(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), str, (int)(len), (uint)(align),
                         ref value, style.Selectable, _in_, style.Font));
         }
 
-        public static int nk_selectable_image_text(NkContext ctx, nk_image img, char* str, int len, uint align, ref int value)
+        public static int nk_selectable_image_text(NkContext ctx, NkImage img, char* str, int len, uint align, ref int value)
         {
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
             NkStyle style;
             int state;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null))) return (int)(0);
             win = ctx.Current;
             layout = win.Layout;
@@ -3245,7 +3245,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_selectable_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), str, (int)(len), (uint)(align),
+                    (nk_do_selectable_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), str, (int)(len), (uint)(align),
                         ref value, img, style.Selectable, _in_, style.Font));
         }
 
@@ -3260,10 +3260,10 @@ namespace NuklearSharp
             return (int)(nk_selectable_text(ctx, str, (int)(nk_strlen(str)), (uint)(align), ref value));
         }
 
-        public static int nk_selectable_image_label(NkContext ctx, nk_image img, char* str, uint align, ref int value)
+        public static int nk_selectable_image_label(NkContext ctx, NkImage img, char* str, uint align, ref int value)
         {
             return
-                (int)(nk_selectable_image_text(ctx, (nk_image)(img), str, (int)(nk_strlen(str)), (uint)(align), ref value));
+                (int)(nk_selectable_image_text(ctx, (NkImage)(img), str, (int)(nk_strlen(str)), (uint)(align), ref value));
         }
 
         public static int nk_select_label(NkContext ctx, char* str, uint align, int value)
@@ -3272,15 +3272,15 @@ namespace NuklearSharp
             return (int)(value);
         }
 
-        public static int nk_select_image_label(NkContext ctx, nk_image img, char* str, uint align, int value)
+        public static int nk_select_image_label(NkContext ctx, NkImage img, char* str, uint align, int value)
         {
-            nk_selectable_image_text(ctx, (nk_image)(img), str, (int)(nk_strlen(str)), (uint)(align), ref value);
+            nk_selectable_image_text(ctx, (NkImage)(img), str, (int)(nk_strlen(str)), (uint)(align), ref value);
             return (int)(value);
         }
 
-        public static int nk_select_image_text(NkContext ctx, nk_image img, char* str, int len, uint align, int value)
+        public static int nk_select_image_text(NkContext ctx, NkImage img, char* str, int len, uint align, int value)
         {
-            nk_selectable_image_text(ctx, (nk_image)(img), str, (int)(len), (uint)(align), ref value);
+            nk_selectable_image_text(ctx, (NkImage)(img), str, (int)(len), (uint)(align), ref value);
             return (int)(value);
         }
 
@@ -3290,7 +3290,7 @@ namespace NuklearSharp
             NkPanel layout;
             nk_input _in_;
             NkStyle style;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(active);
             win = ctx.Current;
@@ -3299,7 +3299,7 @@ namespace NuklearSharp
             state = (int)(nk_widget(&bounds, ctx));
             if (state == 0) return (int)(active);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
-            nk_do_toggle(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), &active, text, (int)(len),
+            nk_do_toggle(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), &active, text, (int)(len),
                 (int)(NK_TOGGLE_CHECK), style.Checkbox, _in_, style.Font);
             return (int)(active);
         }
@@ -3364,7 +3364,7 @@ namespace NuklearSharp
             NkPanel layout;
             nk_input _in_;
             NkStyle style;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(is_active);
             win = ctx.Current;
@@ -3373,7 +3373,7 @@ namespace NuklearSharp
             state = (int)(nk_widget(&bounds, ctx));
             if (state == 0) return (int)(state);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
-            nk_do_toggle(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), &is_active, text, (int)(len),
+            nk_do_toggle(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), &is_active, text, (int)(len),
                 (int)(NK_TOGGLE_OPTION), style.Option, _in_, style.Font);
             return (int)(is_active);
         }
@@ -3405,7 +3405,7 @@ namespace NuklearSharp
             NkStyle style;
             int ret = (int)(0);
             float old_value;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)))
                 return (int)(ret);
@@ -3418,7 +3418,7 @@ namespace NuklearSharp
             old_value = (float)(value);
             value =
                 (float)
-                    (nk_do_slider(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (float)(min_value), (float)(old_value),
+                    (nk_do_slider(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (float)(min_value), (float)(old_value),
                         (float)(max_value), (float)(value_step), style.Slider, _in_, style.Font));
             return (((old_value) > (value)) || ((old_value) < (value))) ? 1 : 0;
         }
@@ -3451,7 +3451,7 @@ namespace NuklearSharp
             NkPanel layout;
             NkStyle style;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             ulong old_value;
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) || (cur == null)) return (int)(0);
@@ -3464,7 +3464,7 @@ namespace NuklearSharp
             old_value = (ulong)(*cur);
             *cur =
                 (ulong)
-                    (nk_do_progress(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (ulong)(*cur), (ulong)(max),
+                    (nk_do_progress(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (ulong)(*cur), (ulong)(max),
                         (int)(is_modifyable), style.Progress, _in_));
             return (*cur != old_value) ? 1 : 0;
         }
@@ -3558,7 +3558,7 @@ namespace NuklearSharp
             NkStyle style;
             nk_input _in_;
             int state;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             uint ret_flags = (uint)(0);
             byte prev_state;
             uint hash;
@@ -3587,7 +3587,7 @@ namespace NuklearSharp
             _in_ = (flags & NK_EDIT_READ_ONLY) != 0 ? null : _in_;
             ret_flags =
                 (uint)
-                    (nk_do_edit(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (uint)(flags), filter, edit, style.Edit,
+                    (nk_do_edit(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (uint)(flags), filter, edit, style.Edit,
                         _in_, style.Font));
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0)
                 ctx.Style.CursorActive = ctx.Style.Cursors[NK_CURSOR_TEXT];
@@ -3670,14 +3670,14 @@ namespace NuklearSharp
             return (double)(val);
         }
 
-        public static int nk_color_pick(NkContext ctx, nk_colorf* color, int fmt)
+        public static int nk_color_pick(NkContext ctx, NkColorF* color, int fmt)
         {
             NkWindow win;
             NkPanel layout;
             NkStyle config;
             nk_input _in_;
             int state;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) || (color == null)) return (int)(0);
             win = ctx.Current;
             config = ctx.Style;
@@ -3687,17 +3687,17 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_color_picker(ref ctx.LastWidgetState, win.Buffer, color, (int)(fmt), (nk_rect)(bounds),
-                        (nk_vec2)(nk_vec2_((float)(0), (float)(0))), _in_, config.Font));
+                    (nk_do_color_picker(ref ctx.LastWidgetState, win.Buffer, color, (int)(fmt), (NkRect)(bounds),
+                        (NkVec2)(nk_vec2_((float)(0), (float)(0))), _in_, config.Font));
         }
 
-        public static nk_colorf nk_color_picker(NkContext ctx, nk_colorf color, int fmt)
+        public static NkColorF nk_color_picker(NkContext ctx, NkColorF color, int fmt)
         {
             nk_color_pick(ctx, &color, (int)(fmt));
-            return (nk_colorf)(color);
+            return (NkColorF)(color);
         }
 
-        public static int nk_chart_begin_colored(NkContext ctx, int type, nk_color color, nk_color highlight, int count,
+        public static int nk_chart_begin_colored(NkContext ctx, int type, NkColor color, NkColor highlight, int count,
             float min_value, float max_value)
         {
             NkWindow win;
@@ -3705,7 +3705,7 @@ namespace NuklearSharp
             NkStyle config;
             nk_style_chart style;
             NkStyleItem background;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             if (nk_widget(&bounds, ctx) == 0)
             {
@@ -3728,8 +3728,8 @@ namespace NuklearSharp
                 nk_chart_slot slot = chart.Slots[chart.Slot++];
                 slot.type = (int)(type);
                 slot.count = (int)(count);
-                slot.color = (nk_color)(color);
-                slot.highlight = (nk_color)(highlight);
+                slot.color = (NkColor)(color);
+                slot.highlight = (NkColor)(highlight);
                 slot.min = (float)((min_value) < (max_value) ? (min_value) : (max_value));
                 slot.max = (float)((min_value) < (max_value) ? (max_value) : (min_value));
                 slot.range = (float)(slot.max - slot.min);
@@ -3738,13 +3738,13 @@ namespace NuklearSharp
             background = style.background;
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(win.Buffer, (nk_rect)(bounds), background.Data.Image, (nk_color)(nk_white));
+                nk_draw_image(win.Buffer, (NkRect)(bounds), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                nk_fill_rect(win.Buffer, (nk_rect)(bounds), (float)(style.rounding), (nk_color)(style.border_color));
-                nk_fill_rect(win.Buffer, (nk_rect)(nk_shrink_rect_((nk_rect)(bounds), (float)(style.border))),
-                    (float)(style.rounding), (nk_color)(style.background.Data.Color));
+                nk_fill_rect(win.Buffer, (NkRect)(bounds), (float)(style.rounding), (NkColor)(style.border_color));
+                nk_fill_rect(win.Buffer, (NkRect)(nk_shrink_rect_((NkRect)(bounds), (float)(style.border))),
+                    (float)(style.rounding), (NkColor)(style.background.Data.Color));
             }
 
             return (int)(1);
@@ -3754,11 +3754,11 @@ namespace NuklearSharp
         {
             return
                 (int)
-                    (nk_chart_begin_colored(ctx, (int)(type), (nk_color)(ctx.Style.Chart.color),
-                        (nk_color)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value)));
+                    (nk_chart_begin_colored(ctx, (int)(type), (NkColor)(ctx.Style.Chart.color),
+                        (NkColor)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value)));
         }
 
-        public static void nk_chart_add_slot_colored(NkContext ctx, int type, nk_color color, nk_color highlight, int count,
+        public static void nk_chart_add_slot_colored(NkContext ctx, int type, NkColor color, NkColor highlight, int count,
             float min_value, float max_value)
         {
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
@@ -3768,8 +3768,8 @@ namespace NuklearSharp
                 nk_chart_slot slot = chart.Slots[chart.Slot++];
                 slot.type = (int)(type);
                 slot.count = (int)(count);
-                slot.color = (nk_color)(color);
-                slot.highlight = (nk_color)(highlight);
+                slot.color = (NkColor)(color);
+                slot.highlight = (NkColor)(highlight);
                 slot.min = (float)((min_value) < (max_value) ? (min_value) : (max_value));
                 slot.max = (float)((min_value) < (max_value) ? (max_value) : (min_value));
                 slot.range = (float)(slot.max - slot.min);
@@ -3779,8 +3779,8 @@ namespace NuklearSharp
 
         public static void nk_chart_add_slot(NkContext ctx, int type, int count, float min_value, float max_value)
         {
-            nk_chart_add_slot_colored(ctx, (int)(type), (nk_color)(ctx.Style.Chart.color),
-                (nk_color)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value));
+            nk_chart_add_slot_colored(ctx, (int)(type), (NkColor)(ctx.Style.Chart.color),
+                (NkColor)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value));
         }
 
         public static uint nk_chart_push_line(NkContext ctx, NkWindow win, NkChart g, float value, int slot)
@@ -3789,9 +3789,9 @@ namespace NuklearSharp
             nk_input i = ctx.Input;
             NkCommandBuffer _out_ = win.Buffer;
             uint ret = (uint)(0);
-            nk_vec2 cur = new nk_vec2();
-            nk_rect bounds = new nk_rect();
-            nk_color color = new nk_color();
+            NkVec2 cur = new NkVec2();
+            NkRect bounds = new NkRect();
+            NkColor color = new NkColor();
             float step;
             float range;
             float ratio;
@@ -3805,35 +3805,35 @@ namespace NuklearSharp
                 bounds.x = (float)(g.Slots[slot].last.x - 2);
                 bounds.y = (float)(g.Slots[slot].last.y - 2);
                 bounds.w = (float)(bounds.h = (float)(4));
-                color = (nk_color)(g.Slots[slot].color);
+                color = (NkColor)(g.Slots[slot].color);
                 if (((layout.Flags & NK_WINDOW_ROM) == 0) &&
                     ((((g.Slots[slot].last.x - 3) <= (i.mouse.Pos.x)) && ((i.mouse.Pos.x) < (g.Slots[slot].last.x - 3 + 6))) &&
                      (((g.Slots[slot].last.y - 3) <= (i.mouse.Pos.y)) && ((i.mouse.Pos.y) < (g.Slots[slot].last.y - 3 + 6)))))
                 {
-                    ret = (uint)((nk_input_is_mouse_hovering_rect(i, (nk_rect)(bounds))) != 0 ? NK_CHART_HOVERING : 0);
+                    ret = (uint)((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0 ? NK_CHART_HOVERING : 0);
                     ret |=
                         (uint)
                             ((((i.mouse.Buttons[NK_BUTTON_LEFT].down) != 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
                                 ? NK_CHART_CLICKED
                                 : 0);
-                    color = (nk_color)(g.Slots[slot].highlight);
+                    color = (NkColor)(g.Slots[slot].highlight);
                 }
-                nk_fill_rect(_out_, (nk_rect)(bounds), (float)(0), (nk_color)(color));
+                nk_fill_rect(_out_, (NkRect)(bounds), (float)(0), (NkColor)(color));
                 g.Slots[slot].index += (int)(1);
                 return (uint)(ret);
             }
 
-            color = (nk_color)(g.Slots[slot].color);
+            color = (NkColor)(g.Slots[slot].color);
             cur.x = (float)(g.X + (step * (float)(g.Slots[slot].index)));
             cur.y = (float)((g.Y + g.H) - (ratio * g.H));
             nk_stroke_line(_out_, (float)(g.Slots[slot].last.x), (float)(g.Slots[slot].last.y), (float)(cur.x),
-                (float)(cur.y), (float)(1.0f), (nk_color)(color));
+                (float)(cur.y), (float)(1.0f), (NkColor)(color));
             bounds.x = (float)(cur.x - 3);
             bounds.y = (float)(cur.y - 3);
             bounds.w = (float)(bounds.h = (float)(6));
             if ((layout.Flags & NK_WINDOW_ROM) == 0)
             {
-                if ((nk_input_is_mouse_hovering_rect(i, (nk_rect)(bounds))) != 0)
+                if ((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0)
                 {
                     ret = (uint)(NK_CHART_HOVERING);
                     ret |=
@@ -3841,12 +3841,12 @@ namespace NuklearSharp
                             (((i.mouse.Buttons[NK_BUTTON_LEFT].down == 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
                                 ? NK_CHART_CLICKED
                                 : 0);
-                    color = (nk_color)(g.Slots[slot].highlight);
+                    color = (NkColor)(g.Slots[slot].highlight);
                 }
             }
 
-            nk_fill_rect(_out_, (nk_rect)(nk_rect_((float)(cur.x - 2), (float)(cur.y - 2), (float)(4), (float)(4))),
-                (float)(0), (nk_color)(color));
+            nk_fill_rect(_out_, (NkRect)(nk_rect_((float)(cur.x - 2), (float)(cur.y - 2), (float)(4), (float)(4))),
+                (float)(0), (NkColor)(color));
             g.Slots[slot].last.x = (float)(cur.x);
             g.Slots[slot].last.y = (float)(cur.y);
             g.Slots[slot].index += (int)(1);
@@ -3860,8 +3860,8 @@ namespace NuklearSharp
             NkPanel layout = win.Layout;
             float ratio;
             uint ret = (uint)(0);
-            nk_color color = new nk_color();
-            nk_rect item = new nk_rect();
+            NkColor color = new NkColor();
+            NkRect item = new NkRect();
             if ((chart.Slots[slot].index) >= (chart.Slots[slot].count)) return (uint)(nk_false);
             if ((chart.Slots[slot].count) != 0)
             {
@@ -3869,7 +3869,7 @@ namespace NuklearSharp
                 item.w = (float)((chart.W - padding) / (float)(chart.Slots[slot].count));
             }
 
-            color = (nk_color)(chart.Slots[slot].color);
+            color = (NkColor)(chart.Slots[slot].color);
             item.h =
                 (float)
                     (chart.H *
@@ -3901,10 +3901,10 @@ namespace NuklearSharp
                           ((((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked) != 0))
                             ? NK_CHART_CLICKED
                             : 0);
-                color = (nk_color)(chart.Slots[slot].highlight);
+                color = (NkColor)(chart.Slots[slot].highlight);
             }
 
-            nk_fill_rect(_out_, (nk_rect)(item), (float)(0), (nk_color)(color));
+            nk_fill_rect(_out_, (NkRect)(item), (float)(0), (NkColor)(color));
             chart.Slots[slot].index += (int)(1);
             return (uint)(ret);
         }
@@ -4001,7 +4001,7 @@ namespace NuklearSharp
 
         public static int nk_group_scrolled_offset_begin(NkContext ctx, nk_scroll offset, char* title, uint flags)
         {
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             NkWindow panel = new NkWindow();
             NkWindow win;
             win = ctx.Current;
@@ -4018,7 +4018,7 @@ namespace NuklearSharp
 
             if ((win.Flags & NK_WINDOW_ROM) != 0) flags |= (uint)(NK_WINDOW_ROM);
 
-            panel.Bounds = (nk_rect)(bounds);
+            panel.Bounds = (NkRect)(bounds);
             panel.Flags = (uint)(flags);
             panel.Scrollbar.x = offset.x;
             panel.Scrollbar.y = offset.y;
@@ -4027,7 +4027,7 @@ namespace NuklearSharp
             ctx.Current = panel;
             nk_panel_begin(ctx, (flags & NK_WINDOW_TITLE) != 0 ? title : null, (int)(NK_PANEL_GROUP));
             win.Buffer = (NkCommandBuffer)(panel.Buffer);
-            win.Buffer.Clip = (nk_rect)(panel.Layout.Clip);
+            win.Buffer.Clip = (NkRect)(panel.Layout.Clip);
             panel.Layout.Offset = offset;
 
             panel.Layout.Parent = win.Layout;
@@ -4049,15 +4049,15 @@ namespace NuklearSharp
             NkWindow win;
             NkPanel parent;
             NkPanel g;
-            nk_rect clip = new nk_rect();
+            NkRect clip = new NkRect();
             NkWindow pan = new NkWindow();
-            nk_vec2 panel_padding = new nk_vec2();
+            NkVec2 panel_padding = new NkVec2();
             if ((ctx == null) || (ctx.Current == null)) return;
             win = ctx.Current;
             g = win.Layout;
             parent = g.Parent;
 
-            panel_padding = (nk_vec2)(nk_panel_get_padding(ctx.Style, (int)(NK_PANEL_GROUP)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(NK_PANEL_GROUP)));
             pan.Bounds.y = (float)(g.Bounds.y - (g.HeaderHeight + g.Menu.h));
             pan.Bounds.x = (float)(g.Bounds.x - panel_padding.x);
             pan.Bounds.w = (float)(g.Bounds.w + 2 * panel_padding.x);
@@ -4085,13 +4085,13 @@ namespace NuklearSharp
             ctx.Current = pan;
             nk_unify(ref clip, ref parent.Clip, (float)(pan.Bounds.x), (float)(pan.Bounds.y),
                 (float)(pan.Bounds.x + pan.Bounds.w), (float)(pan.Bounds.y + pan.Bounds.h + panel_padding.x));
-            nk_push_scissor(pan.Buffer, (nk_rect)(clip));
+            nk_push_scissor(pan.Buffer, (NkRect)(clip));
             nk_end(ctx);
             win.Buffer = (NkCommandBuffer)(pan.Buffer);
-            nk_push_scissor(win.Buffer, (nk_rect)(parent.Clip));
+            nk_push_scissor(win.Buffer, (NkRect)(parent.Clip));
             ctx.Current = win;
             win.Layout = parent;
-            g.Bounds = (nk_rect)(pan.Bounds);
+            g.Bounds = (NkRect)(pan.Bounds);
             return;
         }
 
@@ -4145,11 +4145,11 @@ namespace NuklearSharp
             NkWindow win;
             NkPanel layout;
             NkStyle style;
-            nk_vec2 item_spacing = new nk_vec2();
+            NkVec2 item_spacing = new NkVec2();
             if (((ctx == null) || (view == null)) || (title == null)) return (int)(0);
             win = ctx.Current;
             style = ctx.Style;
-            item_spacing = (nk_vec2)(style.Window.spacing);
+            item_spacing = (NkVec2)(style.Window.spacing);
             row_height += (int)((0) < ((int)(item_spacing.y)) ? ((int)(item_spacing.y)) : (0));
             title_len = (int)(nk_strlen(title));
             title_hash = (uint)(nk_murmur_hash(title, (int)(title_len), (uint)(NK_PANEL_GROUP)));
@@ -4185,7 +4185,7 @@ namespace NuklearSharp
             return (int)(result);
         }
 
-        public static int nk_popup_begin(NkContext ctx, int type, char* title, uint flags, nk_rect rect)
+        public static int nk_popup_begin(NkContext ctx, int type, char* title, uint flags, NkRect rect)
         {
             NkWindow popup;
             NkWindow win;
@@ -4222,7 +4222,7 @@ namespace NuklearSharp
             rect.x += (float)(win.Layout.Clip.x);
             rect.y += (float)(win.Layout.Clip.y);
             popup.Parent = win;
-            popup.Bounds = (nk_rect)(rect);
+            popup.Bounds = (NkRect)(rect);
             popup.Seq = (uint)(ctx.Seq);
             popup.Layout = (NkPanel)(nk_create_panel(ctx));
             popup.Flags = (uint)(flags);
@@ -4230,7 +4230,7 @@ namespace NuklearSharp
             if ((type) == (NK_POPUP_DYNAMIC)) popup.Flags |= (uint)(NK_WINDOW_DYNAMIC);
             nk_start_popup(ctx, win);
             popup.Buffer = (NkCommandBuffer)(win.Buffer);
-            nk_push_scissor(popup.Buffer, (nk_rect)(nk_null_rect));
+            nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
             if ((nk_panel_begin(ctx, title, (int)(NK_PANEL_POPUP))) != 0)
             {
                 NkPanel root;
@@ -4264,7 +4264,7 @@ namespace NuklearSharp
 
         }
 
-        public static int nk_nonblock_begin(NkContext ctx, uint flags, nk_rect body, nk_rect header, int panel_type)
+        public static int nk_nonblock_begin(NkContext ctx, uint flags, NkRect body, NkRect header, int panel_type)
         {
             NkWindow popup;
             NkWindow win;
@@ -4288,12 +4288,12 @@ namespace NuklearSharp
                 int in_body;
                 int in_header;
                 pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NK_BUTTON_LEFT)));
-                in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(body)));
-                in_header = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(header)));
+                in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(body)));
+                in_header = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(header)));
                 if (((pressed) != 0) && ((in_body == 0) || ((in_header) != 0))) is_active = (int)(nk_false);
             }
 
-            win.Popup.header = (nk_rect)(header);
+            win.Popup.header = (NkRect)(header);
             if (is_active == 0)
             {
                 NkPanel root = win.Layout;
@@ -4305,7 +4305,7 @@ namespace NuklearSharp
                 return (int)(is_active);
             }
 
-            popup.Bounds = (nk_rect)(body);
+            popup.Bounds = (NkRect)(body);
             popup.Parent = win;
             popup.Layout = (NkPanel)(nk_create_panel(ctx));
             popup.Flags = (uint)(flags);
@@ -4315,7 +4315,7 @@ namespace NuklearSharp
             win.Popup.active = (int)(1);
             nk_start_popup(ctx, win);
             popup.Buffer = (NkCommandBuffer)(win.Buffer);
-            nk_push_scissor(popup.Buffer, (nk_rect)(nk_null_rect));
+            nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
             ctx.Current = popup;
             nk_panel_begin(ctx, null, (int)(panel_type));
             win.Buffer = (NkCommandBuffer)(popup.Buffer);
@@ -4363,12 +4363,12 @@ namespace NuklearSharp
                 win.Popup.active = (int)(0);
             }
 
-            nk_push_scissor(popup.Buffer, (nk_rect)(nk_null_rect));
+            nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
             nk_end(ctx);
             win.Buffer = (NkCommandBuffer)(popup.Buffer);
             nk_finish_popup(ctx, win);
             ctx.Current = win;
-            nk_push_scissor(win.Buffer, (nk_rect)(win.Layout.Clip));
+            nk_push_scissor(win.Buffer, (NkRect)(win.Layout.Clip));
         }
 
         public static int nk_tooltip_begin(NkContext ctx, float width)
@@ -4379,7 +4379,7 @@ namespace NuklearSharp
             int h;
             NkWindow win;
             nk_input _in_;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int ret;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -4396,7 +4396,7 @@ namespace NuklearSharp
             ret =
                 (int)
                     (nk_popup_begin(ctx, (int)(NK_POPUP_DYNAMIC), "__##Tooltip##__",
-                        (uint)(NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_BORDER), (nk_rect)(bounds)));
+                        (uint)(NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_BORDER), (NkRect)(bounds)));
             if ((ret) != 0) win.Layout.Flags &= (uint)(~(uint)(NK_WINDOW_ROM));
             win.Popup.type = (int)(NK_PANEL_TOOLTIP);
             ctx.Current.Layout.Type = (int)(NK_PANEL_TOOLTIP);
@@ -4414,13 +4414,13 @@ namespace NuklearSharp
         public static void nk_tooltip(NkContext ctx, char* text)
         {
             NkStyle style;
-            nk_vec2 padding = new nk_vec2();
+            NkVec2 padding = new NkVec2();
             int text_len;
             float text_width;
             float text_height;
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) || (text == null)) return;
             style = ctx.Style;
-            padding = (nk_vec2)(style.Window.padding);
+            padding = (NkVec2)(style.Window.padding);
             text_len = (int)(nk_strlen(text));
             text_width =
                 (float)(style.Font.Width((NkHandle)(style.Font.Userdata), (float)(style.Font.Height), text, (int)(text_len)));
@@ -4435,12 +4435,12 @@ namespace NuklearSharp
 
         }
 
-        public static int nk_contextual_begin(NkContext ctx, uint flags, nk_vec2 size, nk_rect trigger_bounds)
+        public static int nk_contextual_begin(NkContext ctx, uint flags, NkVec2 size, NkRect trigger_bounds)
         {
             NkWindow win;
             NkWindow popup;
-            nk_rect body = new nk_rect();
-            nk_rect null_rect = new nk_rect();
+            NkRect body = new NkRect();
+            NkRect null_rect = new NkRect();
             int is_clicked = (int)(0);
             int is_active = (int)(0);
             int is_open = (int)(0);
@@ -4450,7 +4450,7 @@ namespace NuklearSharp
             ++win.Popup.con_count;
             popup = win.Popup.win;
             is_open = (int)(((popup) != null) && ((win.Popup.type) == (NK_PANEL_CONTEXTUAL)) ? 1 : 0);
-            is_clicked = (int)(nk_input_mouse_clicked(ctx.Input, (int)(NK_BUTTON_RIGHT), (nk_rect)(trigger_bounds)));
+            is_clicked = (int)(nk_input_mouse_clicked(ctx.Input, (int)(NK_BUTTON_RIGHT), (NkRect)(trigger_bounds)));
             if (((win.Popup.active_con) != 0) && (win.Popup.con_count != win.Popup.active_con)) return (int)(0);
             if (((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
@@ -4470,7 +4470,7 @@ namespace NuklearSharp
             body.h = (float)(size.y);
             ret =
                 (int)
-                    (nk_nonblock_begin(ctx, (uint)(flags | NK_WINDOW_NO_SCROLLBAR), (nk_rect)(body), (nk_rect)(null_rect),
+                    (nk_nonblock_begin(ctx, (uint)(flags | NK_WINDOW_NO_SCROLLBAR), (NkRect)(body), (NkRect)(null_rect),
                         (int)(NK_PANEL_CONTEXTUAL)));
             if ((ret) != 0) win.Popup.type = (int)(NK_PANEL_CONTEXTUAL);
             else
@@ -4487,16 +4487,16 @@ namespace NuklearSharp
             NkWindow win;
             nk_input _in_;
             NkStyle style;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
             style = ctx.Style;
-            state = (int)(nk_widget_fitting(&bounds, ctx, (nk_vec2)(style.ContextualButton.padding)));
+            state = (int)(nk_widget_fitting(&bounds, ctx, (NkVec2)(style.ContextualButton.padding)));
             if (state == 0) return (int)(nk_false);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), text, (int)(len), (uint)(alignment),
+                (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), text, (int)(len), (uint)(alignment),
                     (int)(NK_BUTTON_DEFAULT), style.ContextualButton, _in_, style.Font)) != 0)
             {
                 nk_contextual_close(ctx);
@@ -4511,21 +4511,21 @@ namespace NuklearSharp
             return (int)(nk_contextual_item_text(ctx, label, (int)(nk_strlen(label)), (uint)(align)));
         }
 
-        public static int nk_contextual_item_image_text(NkContext ctx, nk_image img, char* text, int len, uint align)
+        public static int nk_contextual_item_image_text(NkContext ctx, NkImage img, char* text, int len, uint align)
         {
             NkWindow win;
             nk_input _in_;
             NkStyle style;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
             style = ctx.Style;
-            state = (int)(nk_widget_fitting(&bounds, ctx, (nk_vec2)(style.ContextualButton.padding)));
+            state = (int)(nk_widget_fitting(&bounds, ctx, (NkVec2)(style.ContextualButton.padding)));
             if (state == 0) return (int)(nk_false);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (nk_image)(img), text,
+                (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img), text,
                     (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), style.ContextualButton, style.Font, _in_)) != 0)
             {
                 nk_contextual_close(ctx);
@@ -4535,9 +4535,9 @@ namespace NuklearSharp
             return (int)(nk_false);
         }
 
-        public static int nk_contextual_item_image_label(NkContext ctx, nk_image img, char* label, uint align)
+        public static int nk_contextual_item_image_label(NkContext ctx, NkImage img, char* label, uint align)
         {
-            return (int)(nk_contextual_item_image_text(ctx, (nk_image)(img), label, (int)(nk_strlen(label)), (uint)(align)));
+            return (int)(nk_contextual_item_image_text(ctx, (NkImage)(img), label, (int)(nk_strlen(label)), (uint)(align)));
         }
 
         public static int nk_contextual_item_symbol_text(NkContext ctx, int symbol, char* text, int len, uint align)
@@ -4545,16 +4545,16 @@ namespace NuklearSharp
             NkWindow win;
             nk_input _in_;
             NkStyle style;
-            nk_rect bounds = new nk_rect();
+            NkRect bounds = new NkRect();
             int state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
             style = ctx.Style;
-            state = (int)(nk_widget_fitting(&bounds, ctx, (nk_vec2)(style.ContextualButton.padding)));
+            state = (int)(nk_widget_fitting(&bounds, ctx, (NkVec2)(style.ContextualButton.padding)));
             if (state == 0) return (int)(nk_false);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(bounds), (int)(symbol), text,
+                (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol), text,
                     (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), style.ContextualButton, style.Font, _in_)) != 0)
             {
                 nk_contextual_close(ctx);
@@ -4584,17 +4584,17 @@ namespace NuklearSharp
             panel = popup.Layout;
             if ((panel.Flags & NK_WINDOW_DYNAMIC) != 0)
             {
-                nk_rect body = new nk_rect();
+                NkRect body = new NkRect();
                 if ((panel.AtY) < (panel.Bounds.y + panel.Bounds.h))
                 {
-                    nk_vec2 padding = (nk_vec2)(nk_panel_get_padding(ctx.Style, (int)(panel.Type)));
-                    body = (nk_rect)(panel.Bounds);
+                    NkVec2 padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(panel.Type)));
+                    body = (NkRect)(panel.Bounds);
                     body.y = (float)(panel.AtY + panel.FooterHeight + panel.Border + padding.y + panel.Row.height);
                     body.h = (float)((panel.Bounds.y + panel.Bounds.h) - body.y);
                 }
                 {
                     int pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NK_BUTTON_LEFT)));
-                    int in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (nk_rect)(body)));
+                    int in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(body)));
                     if (((pressed) != 0) && ((in_body) != 0)) popup.Flags |= (uint)(NK_WINDOW_HIDDEN);
                 }
             }
@@ -4604,12 +4604,12 @@ namespace NuklearSharp
             return;
         }
 
-        public static int nk_combo_begin(NkContext ctx, NkWindow win, nk_vec2 size, int is_clicked, nk_rect header)
+        public static int nk_combo_begin(NkContext ctx, NkWindow win, NkVec2 size, int is_clicked, NkRect header)
         {
             NkWindow popup;
             int is_open = (int)(0);
             int is_active = (int)(0);
-            nk_rect body = new nk_rect();
+            NkRect body = new NkRect();
             uint hash;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             popup = win.Popup.win;
@@ -4624,8 +4624,8 @@ namespace NuklearSharp
             if ((((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) || (((is_open) != 0) && (is_active == 0))) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
             if (
-                nk_nonblock_begin(ctx, (uint)(0), (nk_rect)(body),
-                    (nk_rect)
+                nk_nonblock_begin(ctx, (uint)(0), (NkRect)(body),
+                    (NkRect)
                         ((((is_clicked) != 0) && ((is_open) != 0)) ? nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)) : header),
                     (int)(NK_PANEL_COMBO)) == 0) return (int)(0);
             win.Popup.type = (int)(NK_PANEL_COMBO);
@@ -4633,14 +4633,14 @@ namespace NuklearSharp
             return (int)(1);
         }
 
-        public static int nk_combo_begin_text(NkContext ctx, char* selected, int len, nk_vec2 size)
+        public static int nk_combo_begin_text(NkContext ctx, char* selected, int len, NkVec2 size)
         {
             nk_input _in_;
             NkWindow win;
             NkStyle style;
             int s;
             int is_clicked = (int)(nk_false);
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             NkStyleItem background;
             nk_text text = new nk_text();
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) || (selected == null))
@@ -4650,41 +4650,41 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.Combo.active;
-                text.text = (nk_color)(style.Combo.label_active);
+                text.text = (NkColor)(style.Combo.label_active);
             }
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0)
             {
                 background = style.Combo.hover;
-                text.text = (nk_color)(style.Combo.label_hover);
+                text.text = (NkColor)(style.Combo.label_hover);
             }
             else
             {
                 background = style.Combo.normal;
-                text.text = (nk_color)(style.Combo.label_normal);
+                text.text = (NkColor)(style.Combo.label_normal);
             }
 
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                text.background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                text.background = (nk_color)(background.Data.Color);
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                text.background = (NkColor)(background.Data.Color);
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect label = new nk_rect();
-                nk_rect button = new nk_rect();
-                nk_rect content = new nk_rect();
+                NkRect label = new NkRect();
+                NkRect button = new NkRect();
+                NkRect content = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -4697,30 +4697,30 @@ namespace NuklearSharp
                 content.y = (float)(button.y + style.Combo.button.padding.y);
                 content.w = (float)(button.w - 2 * style.Combo.button.padding.x);
                 content.h = (float)(button.h - 2 * style.Combo.button.padding.y);
-                text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+                text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                 label.x = (float)(header.x + style.Combo.content_padding.x);
                 label.y = (float)(header.y + style.Combo.content_padding.y);
                 label.w = (float)(button.x - (style.Combo.content_padding.x + style.Combo.spacing.x) - label.x);
                 label.h = (float)(header.h - 2 * style.Combo.content_padding.y);
-                nk_widget_text(win.Buffer, (nk_rect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), ctx.Style.Font);
+                nk_widget_text(win.Buffer, (NkRect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), ctx.Style.Font);
                 nk_draw_button_symbol(win.Buffer, &button, &content, (uint)(ctx.LastWidgetState), ctx.Style.Combo.button,
                     (int)(sym), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_label(NkContext ctx, char* selected, nk_vec2 size)
+        public static int nk_combo_begin_label(NkContext ctx, char* selected, NkVec2 size)
         {
-            return (int)(nk_combo_begin_text(ctx, selected, (int)(nk_strlen(selected)), (nk_vec2)(size)));
+            return (int)(nk_combo_begin_text(ctx, selected, (int)(nk_strlen(selected)), (NkVec2)(size)));
         }
 
-        public static int nk_combo_begin_color(NkContext ctx, nk_color color, nk_vec2 size)
+        public static int nk_combo_begin_color(NkContext ctx, NkColor color, NkVec2 size)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             int s;
             NkStyleItem background;
@@ -4730,26 +4730,26 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0) background = style.Combo.active;
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) background = style.Combo.hover;
             else background = style.Combo.normal;
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect content = new nk_rect();
-                nk_rect button = new nk_rect();
-                nk_rect bounds = new nk_rect();
+                NkRect content = new NkRect();
+                NkRect button = new NkRect();
+                NkRect bounds = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -4766,66 +4766,66 @@ namespace NuklearSharp
                 bounds.y = (float)(header.y + 2 * style.Combo.content_padding.y);
                 bounds.x = (float)(header.x + 2 * style.Combo.content_padding.x);
                 bounds.w = (float)((button.x - (style.Combo.content_padding.x + style.Combo.spacing.x)) - bounds.x);
-                nk_fill_rect(win.Buffer, (nk_rect)(bounds), (float)(0), (nk_color)(color));
+                nk_fill_rect(win.Buffer, (NkRect)(bounds), (float)(0), (NkColor)(color));
                 nk_draw_button_symbol(win.Buffer, &button, &content, (uint)(ctx.LastWidgetState), ctx.Style.Combo.button,
                     (int)(sym), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_symbol(NkContext ctx, int symbol, nk_vec2 size)
+        public static int nk_combo_begin_symbol(NkContext ctx, int symbol, NkVec2 size)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             int s;
             NkStyleItem background;
-            nk_color sym_background = new nk_color();
-            nk_color symbol_color = new nk_color();
+            NkColor sym_background = new NkColor();
+            NkColor symbol_color = new NkColor();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
             style = ctx.Style;
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.Combo.active;
-                symbol_color = (nk_color)(style.Combo.symbol_active);
+                symbol_color = (NkColor)(style.Combo.symbol_active);
             }
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0)
             {
                 background = style.Combo.hover;
-                symbol_color = (nk_color)(style.Combo.symbol_hover);
+                symbol_color = (NkColor)(style.Combo.symbol_hover);
             }
             else
             {
                 background = style.Combo.normal;
-                symbol_color = (nk_color)(style.Combo.symbol_hover);
+                symbol_color = (NkColor)(style.Combo.symbol_hover);
             }
 
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                sym_background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                sym_background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                sym_background = (nk_color)(background.Data.Color);
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                sym_background = (NkColor)(background.Data.Color);
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect bounds = new nk_rect();
-                nk_rect content = new nk_rect();
-                nk_rect button = new nk_rect();
+                NkRect bounds = new NkRect();
+                NkRect content = new NkRect();
+                NkRect button = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -4842,25 +4842,25 @@ namespace NuklearSharp
                 bounds.y = (float)(header.y + style.Combo.content_padding.y);
                 bounds.x = (float)(header.x + style.Combo.content_padding.x);
                 bounds.w = (float)((button.x - style.Combo.content_padding.y) - bounds.x);
-                nk_draw_symbol(win.Buffer, (int)(symbol), (nk_rect)(bounds), (nk_color)(sym_background),
-                    (nk_color)(symbol_color), (float)(1.0f), style.Font);
+                nk_draw_symbol(win.Buffer, (int)(symbol), (NkRect)(bounds), (NkColor)(sym_background),
+                    (NkColor)(symbol_color), (float)(1.0f), style.Font);
                 nk_draw_button_symbol(win.Buffer, &bounds, &content, (uint)(ctx.LastWidgetState), ctx.Style.Combo.button,
                     (int)(sym), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_symbol_text(NkContext ctx, char* selected, int len, int symbol, nk_vec2 size)
+        public static int nk_combo_begin_symbol_text(NkContext ctx, char* selected, int len, int symbol, NkVec2 size)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             int s;
             NkStyleItem background;
-            nk_color symbol_color = new nk_color();
+            NkColor symbol_color = new NkColor();
             nk_text text = new nk_text();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
@@ -4868,45 +4868,45 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if (s == 0) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.Combo.active;
-                symbol_color = (nk_color)(style.Combo.symbol_active);
-                text.text = (nk_color)(style.Combo.label_active);
+                symbol_color = (NkColor)(style.Combo.symbol_active);
+                text.text = (NkColor)(style.Combo.label_active);
             }
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0)
             {
                 background = style.Combo.hover;
-                symbol_color = (nk_color)(style.Combo.symbol_hover);
-                text.text = (nk_color)(style.Combo.label_hover);
+                symbol_color = (NkColor)(style.Combo.symbol_hover);
+                text.text = (NkColor)(style.Combo.label_hover);
             }
             else
             {
                 background = style.Combo.normal;
-                symbol_color = (nk_color)(style.Combo.symbol_normal);
-                text.text = (nk_color)(style.Combo.label_normal);
+                symbol_color = (NkColor)(style.Combo.symbol_normal);
+                text.text = (NkColor)(style.Combo.label_normal);
             }
 
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                text.background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                text.background = (nk_color)(background.Data.Color);
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                text.background = (NkColor)(background.Data.Color);
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect content = new nk_rect();
-                nk_rect button = new nk_rect();
-                nk_rect label = new nk_rect();
-                nk_rect image = new nk_rect();
+                NkRect content = new NkRect();
+                NkRect button = new NkRect();
+                NkRect label = new NkRect();
+                NkRect image = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -4925,25 +4925,25 @@ namespace NuklearSharp
                 image.y = (float)(header.y + style.Combo.content_padding.y);
                 image.h = (float)(header.h - 2 * style.Combo.content_padding.y);
                 image.w = (float)(image.h);
-                nk_draw_symbol(win.Buffer, (int)(symbol), (nk_rect)(image), (nk_color)(text.background),
-                    (nk_color)(symbol_color), (float)(1.0f), style.Font);
-                text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+                nk_draw_symbol(win.Buffer, (int)(symbol), (NkRect)(image), (NkColor)(text.background),
+                    (NkColor)(symbol_color), (float)(1.0f), style.Font);
+                text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                 label.x = (float)(image.x + image.w + style.Combo.spacing.x + style.Combo.content_padding.x);
                 label.y = (float)(header.y + style.Combo.content_padding.y);
                 label.w = (float)((button.x - style.Combo.content_padding.x) - label.x);
                 label.h = (float)(header.h - 2 * style.Combo.content_padding.y);
-                nk_widget_text(win.Buffer, (nk_rect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), style.Font);
+                nk_widget_text(win.Buffer, (NkRect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_image(NkContext ctx, nk_image img, nk_vec2 size)
+        public static int nk_combo_begin_image(NkContext ctx, NkImage img, NkVec2 size)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             int s;
             NkStyleItem background;
@@ -4953,26 +4953,26 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0) background = style.Combo.active;
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) background = style.Combo.hover;
             else background = style.Combo.normal;
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect bounds = new nk_rect();
-                nk_rect content = new nk_rect();
-                nk_rect button = new nk_rect();
+                NkRect bounds = new NkRect();
+                NkRect content = new NkRect();
+                NkRect button = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -4989,20 +4989,20 @@ namespace NuklearSharp
                 bounds.y = (float)(header.y + style.Combo.content_padding.y);
                 bounds.x = (float)(header.x + style.Combo.content_padding.x);
                 bounds.w = (float)((button.x - style.Combo.content_padding.y) - bounds.x);
-                nk_draw_image(win.Buffer, (nk_rect)(bounds), img, (nk_color)(nk_white));
+                nk_draw_image(win.Buffer, (NkRect)(bounds), img, (NkColor)(nk_white));
                 nk_draw_button_symbol(win.Buffer, &bounds, &content, (uint)(ctx.LastWidgetState), ctx.Style.Combo.button,
                     (int)(sym), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_image_text(NkContext ctx, char* selected, int len, nk_image img, nk_vec2 size)
+        public static int nk_combo_begin_image_text(NkContext ctx, char* selected, int len, NkImage img, NkVec2 size)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             int s;
             NkStyleItem background;
@@ -5013,42 +5013,42 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if (s == 0) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (nk_rect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
                 background = style.Combo.active;
-                text.text = (nk_color)(style.Combo.label_active);
+                text.text = (NkColor)(style.Combo.label_active);
             }
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0)
             {
                 background = style.Combo.hover;
-                text.text = (nk_color)(style.Combo.label_hover);
+                text.text = (NkColor)(style.Combo.label_hover);
             }
             else
             {
                 background = style.Combo.normal;
-                text.text = (nk_color)(style.Combo.label_normal);
+                text.text = (NkColor)(style.Combo.label_normal);
             }
 
             if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
             {
-                text.background = (nk_color)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
-                nk_draw_image(win.Buffer, (nk_rect)(header), background.Data.Image, (nk_color)(nk_white));
+                text.background = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                nk_draw_image(win.Buffer, (NkRect)(header), background.Data.Image, (NkColor)(nk_white));
             }
             else
             {
-                text.background = (nk_color)(background.Data.Color);
-                nk_fill_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (nk_color)(background.Data.Color));
-                nk_stroke_rect(win.Buffer, (nk_rect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
-                    (nk_color)(style.Combo.border_color));
+                text.background = (NkColor)(background.Data.Color);
+                nk_fill_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (NkColor)(background.Data.Color));
+                nk_stroke_rect(win.Buffer, (NkRect)(header), (float)(style.Combo.rounding), (float)(style.Combo.border),
+                    (NkColor)(style.Combo.border_color));
             }
 
             {
-                nk_rect content = new nk_rect();
-                nk_rect button = new nk_rect();
-                nk_rect label = new nk_rect();
-                nk_rect image = new nk_rect();
+                NkRect content = new NkRect();
+                NkRect button = new NkRect();
+                NkRect label = new NkRect();
+                NkRect image = new NkRect();
                 int sym;
                 if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) sym = (int)(style.Combo.sym_hover);
                 else if ((is_clicked) != 0) sym = (int)(style.Combo.sym_active);
@@ -5067,27 +5067,27 @@ namespace NuklearSharp
                 image.y = (float)(header.y + style.Combo.content_padding.y);
                 image.h = (float)(header.h - 2 * style.Combo.content_padding.y);
                 image.w = (float)(image.h);
-                nk_draw_image(win.Buffer, (nk_rect)(image), img, (nk_color)(nk_white));
-                text.padding = (nk_vec2)(nk_vec2_((float)(0), (float)(0)));
+                nk_draw_image(win.Buffer, (NkRect)(image), img, (NkColor)(nk_white));
+                text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                 label.x = (float)(image.x + image.w + style.Combo.spacing.x + style.Combo.content_padding.x);
                 label.y = (float)(header.y + style.Combo.content_padding.y);
                 label.w = (float)((button.x - style.Combo.content_padding.x) - label.x);
                 label.h = (float)(header.h - 2 * style.Combo.content_padding.y);
-                nk_widget_text(win.Buffer, (nk_rect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), style.Font);
+                nk_widget_text(win.Buffer, (NkRect)(label), selected, (int)(len), &text, (uint)(NK_TEXT_LEFT), style.Font);
             }
 
-            return (int)(nk_combo_begin(ctx, win, (nk_vec2)(size), (int)(is_clicked), (nk_rect)(header)));
+            return (int)(nk_combo_begin(ctx, win, (NkVec2)(size), (int)(is_clicked), (NkRect)(header)));
         }
 
-        public static int nk_combo_begin_symbol_label(NkContext ctx, char* selected, int type, nk_vec2 size)
+        public static int nk_combo_begin_symbol_label(NkContext ctx, char* selected, int type, NkVec2 size)
         {
-            return (int)(nk_combo_begin_symbol_text(ctx, selected, (int)(nk_strlen(selected)), (int)(type), (nk_vec2)(size)));
+            return (int)(nk_combo_begin_symbol_text(ctx, selected, (int)(nk_strlen(selected)), (int)(type), (NkVec2)(size)));
         }
 
-        public static int nk_combo_begin_image_label(NkContext ctx, char* selected, nk_image img, nk_vec2 size)
+        public static int nk_combo_begin_image_label(NkContext ctx, char* selected, NkImage img, NkVec2 size)
         {
             return
-                (int)(nk_combo_begin_image_text(ctx, selected, (int)(nk_strlen(selected)), (nk_image)(img), (nk_vec2)(size)));
+                (int)(nk_combo_begin_image_text(ctx, selected, (int)(nk_strlen(selected)), (NkImage)(img), (NkVec2)(size)));
         }
 
         public static int nk_combo_item_text(NkContext ctx, char* text, int len, uint align)
@@ -5100,14 +5100,14 @@ namespace NuklearSharp
             return (int)(nk_contextual_item_label(ctx, label, (uint)(align)));
         }
 
-        public static int nk_combo_item_image_text(NkContext ctx, nk_image img, char* text, int len, uint alignment)
+        public static int nk_combo_item_image_text(NkContext ctx, NkImage img, char* text, int len, uint alignment)
         {
-            return (int)(nk_contextual_item_image_text(ctx, (nk_image)(img), text, (int)(len), (uint)(alignment)));
+            return (int)(nk_contextual_item_image_text(ctx, (NkImage)(img), text, (int)(len), (uint)(alignment)));
         }
 
-        public static int nk_combo_item_image_label(NkContext ctx, nk_image img, char* text, uint alignment)
+        public static int nk_combo_item_image_label(NkContext ctx, NkImage img, char* text, uint alignment)
         {
-            return (int)(nk_contextual_item_image_label(ctx, (nk_image)(img), text, (uint)(alignment)));
+            return (int)(nk_contextual_item_image_label(ctx, (NkImage)(img), text, (uint)(alignment)));
         }
 
         public static int nk_combo_item_symbol_text(NkContext ctx, int sym, char* text, int len, uint alignment)
@@ -5130,19 +5130,19 @@ namespace NuklearSharp
             nk_contextual_close(ctx);
         }
 
-        public static int nk_combo(NkContext ctx, char** items, int count, int selected, int item_height, nk_vec2 size)
+        public static int nk_combo(NkContext ctx, char** items, int count, int selected, int item_height, NkVec2 size)
         {
             int i = (int)(0);
             int max_height;
-            nk_vec2 item_spacing = new nk_vec2();
-            nk_vec2 window_padding = new nk_vec2();
+            NkVec2 item_spacing = new NkVec2();
+            NkVec2 window_padding = new NkVec2();
             if (((ctx == null) || (items == null)) || (count == 0)) return (int)(selected);
-            item_spacing = (nk_vec2)(ctx.Style.Window.spacing);
-            window_padding = (nk_vec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            item_spacing = (NkVec2)(ctx.Style.Window.spacing);
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
-            if ((nk_combo_begin_label(ctx, items[selected], (nk_vec2)(size))) != 0)
+            if ((nk_combo_begin_label(ctx, items[selected], (NkVec2)(size))) != 0)
             {
                 nk_layout_row_dynamic(ctx, (float)(item_height), (int)(1));
                 for (i = (int)(0); (i) < (count); ++i)
@@ -5156,19 +5156,19 @@ namespace NuklearSharp
         }
 
         public static int nk_combo_separator(NkContext ctx, char* items_separated_by_separator, int separator, int selected,
-            int count, int item_height, nk_vec2 size)
+            int count, int item_height, NkVec2 size)
         {
             int i;
             int max_height;
-            nk_vec2 item_spacing = new nk_vec2();
-            nk_vec2 window_padding = new nk_vec2();
+            NkVec2 item_spacing = new NkVec2();
+            NkVec2 window_padding = new NkVec2();
             char* current_item;
             char* iter;
             ;
             int length = (int)(0);
             if ((ctx == null) || (items_separated_by_separator == null)) return (int)(selected);
-            item_spacing = (nk_vec2)(ctx.Style.Window.spacing);
-            window_padding = (nk_vec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            item_spacing = (NkVec2)(ctx.Style.Window.spacing);
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
@@ -5184,7 +5184,7 @@ namespace NuklearSharp
                 if ((i) == (selected)) break;
                 current_item = iter + 1;
             }
-            if ((nk_combo_begin_text(ctx, current_item, (int)(length), (nk_vec2)(size))) != 0)
+            if ((nk_combo_begin_text(ctx, current_item, (int)(length), (NkVec2)(size))) != 0)
             {
                 current_item = items_separated_by_separator;
                 nk_layout_row_dynamic(ctx, (float)(item_height), (int)(1));
@@ -5206,30 +5206,30 @@ namespace NuklearSharp
         }
 
         public static int nk_combo_string(NkContext ctx, char* items_separated_by_zeros, int selected, int count,
-            int item_height, nk_vec2 size)
+            int item_height, NkVec2 size)
         {
             return
                 (int)
                     (nk_combo_separator(ctx, items_separated_by_zeros, (int)('\0'), (int)(selected), (int)(count),
-                        (int)(item_height), (nk_vec2)(size)));
+                        (int)(item_height), (NkVec2)(size)));
         }
 
         public static int nk_combo_callback(NkContext ctx, NkComboCallback item_getter, void* userdata, int selected,
-            int count, int item_height, nk_vec2 size)
+            int count, int item_height, NkVec2 size)
         {
             int i;
             int max_height;
-            nk_vec2 item_spacing = new nk_vec2();
-            nk_vec2 window_padding = new nk_vec2();
+            NkVec2 item_spacing = new NkVec2();
+            NkVec2 window_padding = new NkVec2();
             char* item;
             if ((ctx == null) || (item_getter == null)) return (int)(selected);
-            item_spacing = (nk_vec2)(ctx.Style.Window.spacing);
-            window_padding = (nk_vec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            item_spacing = (NkVec2)(ctx.Style.Window.spacing);
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
             item_getter(userdata, (int)(selected), &item);
-            if ((nk_combo_begin_label(ctx, item, (nk_vec2)(size))) != 0)
+            if ((nk_combo_begin_label(ctx, item, (NkVec2)(size))) != 0)
             {
                 nk_layout_row_dynamic(ctx, (float)(item_height), (int)(1));
                 for (i = (int)(0); (i) < (count); ++i)
@@ -5243,43 +5243,43 @@ namespace NuklearSharp
             return (int)(selected);
         }
 
-        public static void nk_combobox(NkContext ctx, char** items, int count, int* selected, int item_height, nk_vec2 size)
+        public static void nk_combobox(NkContext ctx, char** items, int count, int* selected, int item_height, NkVec2 size)
         {
-            *selected = (int)(nk_combo(ctx, items, (int)(count), (int)(*selected), (int)(item_height), (nk_vec2)(size)));
+            *selected = (int)(nk_combo(ctx, items, (int)(count), (int)(*selected), (int)(item_height), (NkVec2)(size)));
         }
 
         public static void nk_combobox_string(NkContext ctx, char* items_separated_by_zeros, int* selected, int count,
-            int item_height, nk_vec2 size)
+            int item_height, NkVec2 size)
         {
             *selected =
                 (int)
                     (nk_combo_string(ctx, items_separated_by_zeros, (int)(*selected), (int)(count), (int)(item_height),
-                        (nk_vec2)(size)));
+                        (NkVec2)(size)));
         }
 
         public static void nk_combobox_separator(NkContext ctx, char* items_separated_by_separator, int separator,
-            int* selected, int count, int item_height, nk_vec2 size)
+            int* selected, int count, int item_height, NkVec2 size)
         {
             *selected =
                 (int)
                     (nk_combo_separator(ctx, items_separated_by_separator, (int)(separator), (int)(*selected), (int)(count),
-                        (int)(item_height), (nk_vec2)(size)));
+                        (int)(item_height), (NkVec2)(size)));
         }
 
         public static void nk_combobox_callback(NkContext ctx, NkComboCallback item_getter, void* userdata, int* selected,
-            int count, int item_height, nk_vec2 size)
+            int count, int item_height, NkVec2 size)
         {
             *selected =
                 (int)
                     (nk_combo_callback(ctx, item_getter, userdata, (int)(*selected), (int)(count), (int)(item_height),
-                        (nk_vec2)(size)));
+                        (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin(NkContext ctx, NkWindow win, char* id, int is_clicked, nk_rect header, nk_vec2 size)
+        public static int nk_menu_begin(NkContext ctx, NkWindow win, char* id, int is_clicked, NkRect header, NkVec2 size)
         {
             int is_open = (int)(0);
             int is_active = (int)(0);
-            nk_rect body = new nk_rect();
+            NkRect body = new NkRect();
             NkWindow popup;
             uint hash = (uint)(nk_murmur_hash(id, (int)(nk_strlen(id)), (uint)(NK_PANEL_MENU)));
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
@@ -5294,18 +5294,18 @@ namespace NuklearSharp
             if ((((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) || (((is_open) != 0) && (is_active == 0))) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
             if (
-                nk_nonblock_begin(ctx, (uint)(NK_WINDOW_NO_SCROLLBAR), (nk_rect)(body), (nk_rect)(header), (int)(NK_PANEL_MENU)) ==
+                nk_nonblock_begin(ctx, (uint)(NK_WINDOW_NO_SCROLLBAR), (NkRect)(body), (NkRect)(header), (int)(NK_PANEL_MENU)) ==
                 0) return (int)(0);
             win.Popup.type = (int)(NK_PANEL_MENU);
             win.Popup.name = (uint)(hash);
             return (int)(1);
         }
 
-        public static int nk_menu_begin_text(NkContext ctx, char* title, int len, uint align, nk_vec2 size)
+        public static int nk_menu_begin_text(NkContext ctx, char* title, int len, uint align, NkVec2 size)
         {
             NkWindow win;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             uint state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
@@ -5314,20 +5314,20 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(header), title, (int)(len), (uint)(align),
+                (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), title, (int)(len), (uint)(align),
                     (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
-            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (nk_rect)(header), (nk_vec2)(size)));
+            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_label(NkContext ctx, char* text, uint align, nk_vec2 size)
+        public static int nk_menu_begin_label(NkContext ctx, char* text, uint align, NkVec2 size)
         {
-            return (int)(nk_menu_begin_text(ctx, text, (int)(nk_strlen(text)), (uint)(align), (nk_vec2)(size)));
+            return (int)(nk_menu_begin_text(ctx, text, (int)(nk_strlen(text)), (uint)(align), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_image(NkContext ctx, char* id, nk_image img, nk_vec2 size)
+        public static int nk_menu_begin_image(NkContext ctx, char* id, NkImage img, NkVec2 size)
         {
             NkWindow win;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             nk_input _in_;
             int is_clicked = (int)(nk_false);
             uint state;
@@ -5337,16 +5337,16 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(header), (nk_image)(img),
+                (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (NkImage)(img),
                     (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_)) != 0) is_clicked = (int)(nk_true);
-            return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (nk_rect)(header), (nk_vec2)(size)));
+            return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_symbol(NkContext ctx, char* id, int sym, nk_vec2 size)
+        public static int nk_menu_begin_symbol(NkContext ctx, char* id, int sym, NkVec2 size)
         {
             NkWindow win;
             nk_input _in_;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             int is_clicked = (int)(nk_false);
             uint state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
@@ -5355,16 +5355,16 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(header), (int)(sym),
+                (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (int)(sym),
                     (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
-            return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (nk_rect)(header), (nk_vec2)(size)));
+            return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_image_text(NkContext ctx, char* title, int len, uint align, nk_image img,
-            nk_vec2 size)
+        public static int nk_menu_begin_image_text(NkContext ctx, char* title, int len, uint align, NkImage img,
+            NkVec2 size)
         {
             NkWindow win;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             nk_input _in_;
             int is_clicked = (int)(nk_false);
             uint state;
@@ -5374,23 +5374,23 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(header), (nk_image)(img), title,
+                (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (NkImage)(img), title,
                     (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
                 is_clicked = (int)(nk_true);
-            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (nk_rect)(header), (nk_vec2)(size)));
+            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_image_label(NkContext ctx, char* title, uint align, nk_image img, nk_vec2 size)
+        public static int nk_menu_begin_image_label(NkContext ctx, char* title, uint align, NkImage img, NkVec2 size)
         {
             return
                 (int)
-                    (nk_menu_begin_image_text(ctx, title, (int)(nk_strlen(title)), (uint)(align), (nk_image)(img), (nk_vec2)(size)));
+                    (nk_menu_begin_image_text(ctx, title, (int)(nk_strlen(title)), (uint)(align), (NkImage)(img), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_symbol_text(NkContext ctx, char* title, int len, uint align, int sym, nk_vec2 size)
+        public static int nk_menu_begin_symbol_text(NkContext ctx, char* title, int len, uint align, int sym, NkVec2 size)
         {
             NkWindow win;
-            nk_rect header = new nk_rect();
+            NkRect header = new NkRect();
             nk_input _in_;
             int is_clicked = (int)(nk_false);
             uint state;
@@ -5400,17 +5400,17 @@ namespace NuklearSharp
             if (state == 0) return (int)(0);
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
-                (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (nk_rect)(header), (int)(sym), title, (int)(len),
+                (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (int)(sym), title, (int)(len),
                     (uint)(align), (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
                 is_clicked = (int)(nk_true);
-            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (nk_rect)(header), (nk_vec2)(size)));
+            return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
-        public static int nk_menu_begin_symbol_label(NkContext ctx, char* title, uint align, int sym, nk_vec2 size)
+        public static int nk_menu_begin_symbol_label(NkContext ctx, char* title, uint align, int sym, NkVec2 size)
         {
             return
                 (int)
-                    (nk_menu_begin_symbol_text(ctx, title, (int)(nk_strlen(title)), (uint)(align), (int)(sym), (nk_vec2)(size)));
+                    (nk_menu_begin_symbol_text(ctx, title, (int)(nk_strlen(title)), (uint)(align), (int)(sym), (NkVec2)(size)));
         }
 
         public static int nk_menu_item_text(NkContext ctx, char* title, int len, uint align)
@@ -5423,14 +5423,14 @@ namespace NuklearSharp
             return (int)(nk_contextual_item_label(ctx, label, (uint)(align)));
         }
 
-        public static int nk_menu_item_image_label(NkContext ctx, nk_image img, char* label, uint align)
+        public static int nk_menu_item_image_label(NkContext ctx, NkImage img, char* label, uint align)
         {
-            return (int)(nk_contextual_item_image_label(ctx, (nk_image)(img), label, (uint)(align)));
+            return (int)(nk_contextual_item_image_label(ctx, (NkImage)(img), label, (uint)(align)));
         }
 
-        public static int nk_menu_item_image_text(NkContext ctx, nk_image img, char* text, int len, uint align)
+        public static int nk_menu_item_image_text(NkContext ctx, NkImage img, char* text, int len, uint align)
         {
-            return (int)(nk_contextual_item_image_text(ctx, (nk_image)(img), text, (int)(len), (uint)(align)));
+            return (int)(nk_contextual_item_image_text(ctx, (NkImage)(img), text, (int)(len), (uint)(align)));
         }
 
         public static int nk_menu_item_symbol_text(NkContext ctx, int sym, char* text, int len, uint align)

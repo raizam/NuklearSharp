@@ -6,7 +6,7 @@ namespace NuklearSharp
     public unsafe static partial class Nk
     {
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_color
+        public unsafe partial struct NkColor
         {
             public byte r;
             public byte g;
@@ -15,7 +15,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_colorf
+        public unsafe partial struct NkColorF
         {
             public float r;
             public float g;
@@ -24,21 +24,21 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_vec2
+        public unsafe partial struct NkVec2
         {
             public float x;
             public float y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_vec2i
+        public unsafe partial struct NkPoint
         {
             public short x;
             public short y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_rect
+        public unsafe partial struct NkRect
         {
             public float x;
             public float y;
@@ -47,7 +47,7 @@ namespace NuklearSharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_recti
+        public unsafe partial struct NkRectI
         {
             public short x;
             public short y;
@@ -55,7 +55,7 @@ namespace NuklearSharp
             public short h;
         }
 
-        public unsafe partial class nk_image
+        public unsafe partial class NkImage
         {
             public NkHandle handle = new NkHandle();
             public ushort w;
@@ -63,11 +63,11 @@ namespace NuklearSharp
             public PinnedArray<ushort> region = new PinnedArray<ushort>(4);
         }
 
-        public unsafe partial class nk_cursor
+        public unsafe partial class NkCursor
         {
-            public nk_image img = new nk_image();
-            public nk_vec2 size = new nk_vec2();
-            public nk_vec2 offset = new nk_vec2();
+            public NkImage img = new NkImage();
+            public NkVec2 size = new NkVec2();
+            public NkVec2 offset = new NkVec2();
         }
 
         public unsafe partial class nk_list_view
@@ -84,58 +84,50 @@ namespace NuklearSharp
         public unsafe partial class nk_chart_slot
         {
             public int type;
-            public nk_color color = new nk_color();
-            public nk_color highlight = new nk_color();
+            public NkColor color = new NkColor();
+            public NkColor highlight = new NkColor();
             public float min;
             public float max;
             public float range;
             public int count;
-            public nk_vec2 last = new nk_vec2();
+            public NkVec2 last = new NkVec2();
             public int index;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_text
         {
-            public nk_vec2 padding;
-            public nk_color background;
-            public nk_color text;
+            public NkVec2 padding;
+            public NkColor background;
+            public NkColor text;
         }
 
-        public static nk_rect nk_recta(nk_vec2 pos, nk_vec2 size)
+        public static NkRect nk_recta(NkVec2 pos, NkVec2 size)
         {
-            return (nk_rect)(nk_rect_((float)(pos.x), (float)(pos.y), (float)(size.x), (float)(size.y)));
+            return (NkRect)(nk_rect_((float)(pos.x), (float)(pos.y), (float)(size.x), (float)(size.y)));
         }
 
-        public static nk_vec2 nk_rect_pos(nk_rect r)
+        public static NkVec2 nk_rect_size(NkRect r)
         {
-            nk_vec2 ret = new nk_vec2();
-            ret.x = (float)(r.x);
-            ret.y = (float)(r.y);
-            return (nk_vec2)(ret);
-        }
-
-        public static nk_vec2 nk_rect_size(nk_rect r)
-        {
-            nk_vec2 ret = new nk_vec2();
+            NkVec2 ret = new NkVec2();
             ret.x = (float)(r.w);
             ret.y = (float)(r.h);
-            return (nk_vec2)(ret);
+            return (NkVec2)(ret);
         }
 
-        public static nk_rect nk_shrink_rect_(nk_rect r, float amount)
+        public static NkRect nk_shrink_rect_(NkRect r, float amount)
         {
-            nk_rect res = new nk_rect();
+            NkRect res = new NkRect();
             r.w = (float)((r.w) < (2 * amount) ? (2 * amount) : (r.w));
             r.h = (float)((r.h) < (2 * amount) ? (2 * amount) : (r.h));
             res.x = (float)(r.x + amount);
             res.y = (float)(r.y + amount);
             res.w = (float)(r.w - 2 * amount);
             res.h = (float)(r.h - 2 * amount);
-            return (nk_rect)(res);
+            return (NkRect)(res);
         }
 
-        public static nk_rect nk_pad_rect(nk_rect r, nk_vec2 pad)
+        public static NkRect nk_pad_rect(NkRect r, NkVec2 pad)
         {
             r.w = (float)((r.w) < (2 * pad.x) ? (2 * pad.x) : (r.w));
             r.h = (float)((r.h) < (2 * pad.y) ? (2 * pad.y) : (r.h));
@@ -143,20 +135,20 @@ namespace NuklearSharp
             r.y += (float)(pad.y);
             r.w -= (float)(2 * pad.x);
             r.h -= (float)(2 * pad.y);
-            return (nk_rect)(r);
+            return (NkRect)(r);
         }
 
-        public static nk_color nk_rgba_cf(nk_colorf c)
+        public static NkColor nk_rgba_cf(NkColorF c)
         {
-            return (nk_color)(nk_rgba_f((float)(c.r), (float)(c.g), (float)(c.b), (float)(c.a)));
+            return (NkColor)(nk_rgba_f((float)(c.r), (float)(c.g), (float)(c.b), (float)(c.a)));
         }
 
-        public static nk_color nk_rgb_cf(nk_colorf c)
+        public static NkColor nk_rgb_cf(NkColorF c)
         {
-            return (nk_color)(nk_rgb_f((float)(c.r), (float)(c.g), (float)(c.b)));
+            return (NkColor)(nk_rgb_f((float)(c.r), (float)(c.g), (float)(c.b)));
         }
 
-        public static uint nk_color_u32(nk_color _in_)
+        public static uint nk_color_u32(NkColor _in_)
         {
             uint _out_ = (uint)(_in_.r);
             _out_ |= (uint)((uint)(_in_.g) << 8);
@@ -165,16 +157,16 @@ namespace NuklearSharp
             return (uint)(_out_);
         }
 
-        public static nk_colorf nk_color_cf(nk_color _in_)
+        public static NkColorF nk_color_cf(NkColor _in_)
         {
-            nk_colorf o = new nk_colorf();
-            nk_color_f(&o.r, &o.g, &o.b, &o.a, (nk_color)(_in_));
-            return (nk_colorf)(o);
+            NkColorF o = new NkColorF();
+            nk_color_f(&o.r, &o.g, &o.b, &o.a, (NkColor)(_in_));
+            return (NkColorF)(o);
         }
 
-        public static nk_image nk_subimage_handle(NkHandle handle, ushort w, ushort h, nk_rect r)
+        public static NkImage nk_subimage_handle(NkHandle handle, ushort w, ushort h, NkRect r)
         {
-            nk_image s = new nk_image();
+            NkImage s = new NkImage();
 
             s.handle = (NkHandle)(handle);
             s.w = (ushort)(w);
@@ -183,12 +175,12 @@ namespace NuklearSharp
             s.region[1] = ((ushort)(r.y));
             s.region[2] = ((ushort)(r.w));
             s.region[3] = ((ushort)(r.h));
-            return (nk_image)(s);
+            return (NkImage)(s);
         }
 
-        public static nk_image nk_image_handle(NkHandle handle)
+        public static NkImage nk_image_handle(NkHandle handle)
         {
-            nk_image s = new nk_image();
+            NkImage s = new NkImage();
 
             s.handle = (NkHandle)(handle);
             s.w = (ushort)(0);
@@ -197,15 +189,15 @@ namespace NuklearSharp
             s.region[1] = (ushort)(0);
             s.region[2] = (ushort)(0);
             s.region[3] = (ushort)(0);
-            return (nk_image)(s);
+            return (NkImage)(s);
         }
 
-        public static int nk_image_is_subimage(nk_image img)
+        public static int nk_image_is_subimage(NkImage img)
         {
             return (int)((((img.w) == (0)) && ((img.h) == (0))) ? 1 : 0);
         }
 
-        public static void nk_unify(ref nk_rect clip, ref nk_rect a, float x0, float y0, float x1, float y1)
+        public static void nk_unify(ref NkRect clip, ref NkRect a, float x0, float y0, float x1, float y1)
         {
             clip.x = (float)((a.x) < (x0) ? (x0) : (a.x));
             clip.y = (float)((a.y) < (y0) ? (y0) : (a.y));
@@ -215,7 +207,7 @@ namespace NuklearSharp
             clip.h = (float)((0) < (clip.h) ? (clip.h) : (0));
         }
 
-        public static void nk_triangle_from_direction(nk_vec2* result, nk_rect r, float pad_x, float pad_y, int direction)
+        public static void nk_triangle_from_direction(NkVec2* result, NkRect r, float pad_x, float pad_y, int direction)
         {
             float w_half;
             float h_half;
@@ -229,27 +221,27 @@ namespace NuklearSharp
             h_half = (float)(r.h / 2.0f);
             if ((direction) == (NK_UP))
             {
-                result[0] = (nk_vec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y)));
-                result[1] = (nk_vec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
-                result[2] = (nk_vec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
+                result[0] = (NkVec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y)));
+                result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
+                result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
             else if ((direction) == (NK_RIGHT))
             {
-                result[0] = (nk_vec2)(nk_vec2_((float)(r.x), (float)(r.y)));
-                result[1] = (nk_vec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + h_half)));
-                result[2] = (nk_vec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
+                result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
+                result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + h_half)));
+                result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
             else if ((direction) == (NK_DOWN))
             {
-                result[0] = (nk_vec2)(nk_vec2_((float)(r.x), (float)(r.y)));
-                result[1] = (nk_vec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));
-                result[2] = (nk_vec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y + r.h)));
+                result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
+                result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));
+                result[2] = (NkVec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y + r.h)));
             }
             else
             {
-                result[0] = (nk_vec2)(nk_vec2_((float)(r.x), (float)(r.y + h_half)));
-                result[1] = (nk_vec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));
-                result[2] = (nk_vec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
+                result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + h_half)));
+                result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));
+                result[2] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
             }
 
         }
@@ -264,30 +256,6 @@ namespace NuklearSharp
             CRuntime.Free(ptr);
         }
 
-        public static float nk_font_text_width(NkFont font, float height, char* text, int len)
-        {
-            char unicode;
-            int text_len = (int)(0);
-            float text_width = (float)(0);
-            int glyph_len = (int)(0);
-            float scale = (float)(0);
-
-            if (((font == null) || (text == null)) || (len == 0)) return (float)(0);
-            scale = (float)(height / font.Info.height);
-            glyph_len = (int)(text_len = (int)(nk_utf_decode(text, &unicode, (int)(len))));
-            if (glyph_len == 0) return (float)(0);
-            while ((text_len <= len) && ((glyph_len) != 0))
-            {
-                nk_font_glyph* g;
-                if ((unicode) == (0xFFFD)) break;
-                g = nk_font_find_glyph(font, unicode);
-                text_width += (float)(g->xadvance * scale);
-                glyph_len = (int)(nk_utf_decode(text + text_len, &unicode, (int)(len - text_len)));
-                text_len += (int)(glyph_len);
-            }
-            return (float)(text_width);
-        }
-
         public static void nk_font_query_font_glyph(NkFont font, float height, NkUserFontGlyph* glyph, char codepoint,
             char next_codepoint)
         {
@@ -300,7 +268,7 @@ namespace NuklearSharp
             g = nk_font_find_glyph(font, codepoint);
             glyph->width = (float)((g->x1 - g->x0) * scale);
             glyph->height = (float)((g->y1 - g->y0) * scale);
-            glyph->offset = (nk_vec2)(nk_vec2_((float)(g->x0 * scale), (float)(g->y0 * scale)));
+            glyph->offset = (NkVec2)(nk_vec2_((float)(g->x0 * scale), (float)(g->y0 * scale)));
             glyph->xadvance = (float)(g->xadvance * scale);
             glyph->uv_x[0] = g->u0;
             glyph->uv_y[0] = g->v0;
@@ -308,28 +276,28 @@ namespace NuklearSharp
             glyph->uv_y[1] = g->v1;
         }
 
-        public static NkStyleItem nk_style_item_image(nk_image img)
+        public static NkStyleItem nk_style_item_image(NkImage img)
         {
             NkStyleItem i = new NkStyleItem();
             i.Type = (int)(NK_STYLE_ITEM_IMAGE);
-            i.Data.Image = (nk_image)(img);
+            i.Data.Image = (NkImage)(img);
             return (NkStyleItem)(i);
         }
 
-        public static NkStyleItem nk_style_item_color(nk_color col)
+        public static NkStyleItem nk_style_item_color(NkColor col)
         {
             NkStyleItem i = new NkStyleItem();
             i.Type = (int)(NK_STYLE_ITEM_COLOR);
-            i.Data.Color = (nk_color)(col);
+            i.Data.Color = (NkColor)(col);
             return (NkStyleItem)(i);
         }
 
-        public static void nk_layout_widget_space(nk_rect* bounds, NkContext ctx, NkWindow win, int modify)
+        public static void nk_layout_widget_space(NkRect* bounds, NkContext ctx, NkWindow win, int modify)
         {
             NkPanel layout;
             NkStyle style;
-            nk_vec2 spacing = new nk_vec2();
-            nk_vec2 padding = new nk_vec2();
+            NkVec2 spacing = new NkVec2();
+            NkVec2 padding = new NkVec2();
             float item_offset = (float)(0);
             float item_width = (float)(0);
             float item_spacing = (float)(0);
@@ -338,8 +306,8 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             style = ctx.Style;
-            spacing = (nk_vec2)(style.Window.spacing);
-            padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            spacing = (NkVec2)(style.Window.spacing);
+            padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
             panel_space =
                 (float)
                     (nk_layout_row_calculate_usable_space(ctx.Style, (int)(layout.Type), (float)(layout.Bounds.w),
@@ -447,7 +415,7 @@ namespace NuklearSharp
             bounds->x -= ((float)(layout.Offset.x));
         }
 
-        public static void nk_panel_alloc_space(nk_rect* bounds, NkContext ctx)
+        public static void nk_panel_alloc_space(NkRect* bounds, NkContext ctx)
         {
             NkWindow win;
             NkPanel layout;
@@ -459,7 +427,7 @@ namespace NuklearSharp
             layout.Row.index++;
         }
 
-        public static void nk_layout_peek(nk_rect* bounds, NkContext ctx)
+        public static void nk_layout_peek(NkRect* bounds, NkContext ctx)
         {
             float y;
             int index;
@@ -486,10 +454,10 @@ namespace NuklearSharp
             layout.Row.index = (int)(index);
         }
 
-        public static int nk_widget(nk_rect* bounds, NkContext ctx)
+        public static int nk_widget(NkRect* bounds, NkContext ctx)
         {
-            nk_rect c = new nk_rect();
-            nk_rect v = new nk_rect();
+            NkRect c = new NkRect();
+            NkRect v = new NkRect();
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
@@ -498,7 +466,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             _in_ = ctx.Input;
-            c = (nk_rect)(layout.Clip);
+            c = (NkRect)(layout.Clip);
             bounds->x = ((float)((int)(bounds->x)));
             bounds->y = ((float)((int)(bounds->y)));
             bounds->w = ((float)((int)(bounds->w)));
@@ -518,19 +486,19 @@ namespace NuklearSharp
             return (int)(NK_WIDGET_VALID);
         }
 
-        public static int nk_widget_fitting(nk_rect* bounds, NkContext ctx, nk_vec2 item_padding)
+        public static int nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
         {
             NkWindow win;
             NkStyle style;
             NkPanel layout;
             int state;
-            nk_vec2 panel_padding = new nk_vec2();
+            NkVec2 panel_padding = new NkVec2();
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(NK_WIDGET_INVALID);
             win = ctx.Current;
             style = ctx.Style;
             layout = win.Layout;
             state = (int)(nk_widget(bounds, ctx));
-            panel_padding = (nk_vec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
             if ((layout.Row.index) == (1))
             {
                 bounds->w += (float)(panel_padding.x);

@@ -38,7 +38,7 @@ namespace NuklearSharp
             Nk.nk_input_button(_ctx, id, x, y, down ? 1 : 0);
         }
 
-        public void InputScroll(Nk.nk_vec2 val)
+        public void InputScroll(Nk.NkVec2 val)
         {
             Nk.nk_input_scroll(_ctx, val);
         }
@@ -61,7 +61,7 @@ namespace NuklearSharp
             Nk.nk_style_default(_ctx);
         }
 
-        public void StyleFromTable(Nk.nk_color[] table)
+        public void StyleFromTable(Nk.NkColor[] table)
         {
             Nk.nk_style_from_table(_ctx, table);
         }
@@ -91,7 +91,7 @@ namespace NuklearSharp
             return Nk.nk_style_push_float(_ctx, address, value) != 0;
         }
 
-        public bool StylePushVec2(Nk.nk_vec2* address, Nk.nk_vec2 value)
+        public bool StylePushVec2(Nk.NkVec2* address, Nk.NkVec2 value)
         {
             return Nk.nk_style_push_vec2(_ctx, address, value) != 0;
         }
@@ -101,7 +101,7 @@ namespace NuklearSharp
             return Nk.nk_style_push_flags(_ctx, address, value) != 0;
         }
 
-        public bool StylePushColor(Nk.nk_color* address, Nk.nk_color value)
+        public bool StylePushColor(Nk.NkColor* address, Nk.NkColor value)
         {
             return Nk.nk_style_push_color(_ctx, address, value) != 0;
         }
@@ -146,12 +146,12 @@ namespace NuklearSharp
             Nk.nk_style_hide_cursor(_ctx);
         }
 
-        public void StyleLoadCursor(int cursor, Nk.nk_cursor c)
+        public void StyleLoadCursor(int cursor, Nk.NkCursor c)
         {
             Nk.nk_style_load_cursor(_ctx, cursor, c);
         }
 
-        public void StyleLoadAllCursors(Nk.nk_cursor[] cursors)
+        public void StyleLoadAllCursors(Nk.NkCursor[] cursors)
         {
             Nk.nk_style_load_all_cursors(_ctx, cursors);
         }
@@ -212,7 +212,7 @@ namespace NuklearSharp
             Nk.nk_remove_window(_ctx, win);
         }
 
-        public bool Begin(string title, Nk.nk_rect bounds, uint flags)
+        public bool Begin(string title, Nk.NkRect bounds, uint flags)
         {
             fixed (char* title_ptr = title)
             {
@@ -220,7 +220,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool BeginTitled(string name, string title, Nk.nk_rect bounds, uint flags)
+        public bool BeginTitled(string name, string title, Nk.NkRect bounds, uint flags)
         {
             fixed (char* name_ptr = name)
             {
@@ -236,17 +236,17 @@ namespace NuklearSharp
             Nk.nk_end(_ctx);
         }
 
-        public Nk.nk_rect WindowGetBounds()
+        public Nk.NkRect WindowGetBounds()
         {
             return Nk.nk_window_get_bounds(_ctx);
         }
 
-        public Nk.nk_vec2 WindowGetPosition()
+        public Nk.NkVec2 WindowGetPosition()
         {
             return Nk.nk_window_get_position(_ctx);
         }
 
-        public Nk.nk_vec2 WindowGetSize()
+        public Nk.NkVec2 WindowGetSize()
         {
             return Nk.nk_window_get_size(_ctx);
         }
@@ -261,22 +261,22 @@ namespace NuklearSharp
             return Nk.nk_window_get_height(_ctx);
         }
 
-        public Nk.nk_rect WindowGetContentRegion()
+        public Nk.NkRect WindowGetContentRegion()
         {
             return Nk.nk_window_get_content_region(_ctx);
         }
 
-        public Nk.nk_vec2 WindowGetContentRegionMin()
+        public Nk.NkVec2 WindowGetContentRegionMin()
         {
             return Nk.nk_window_get_content_region_min(_ctx);
         }
 
-        public Nk.nk_vec2 WindowGetContentRegionMax()
+        public Nk.NkVec2 WindowGetContentRegionMax()
         {
             return Nk.nk_window_get_content_region_max(_ctx);
         }
 
-        public Nk.nk_vec2 WindowGetContentRegionSize()
+        public Nk.NkVec2 WindowGetContentRegionSize()
         {
             return Nk.nk_window_get_content_region_size(_ctx);
         }
@@ -359,7 +359,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowSetBounds(string name, Nk.nk_rect bounds)
+        public void WindowSetBounds(string name, Nk.NkRect bounds)
         {
             fixed (char* name_ptr = name)
             {
@@ -367,7 +367,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowSetPosition(string name, Nk.nk_vec2 pos)
+        public void WindowSetPosition(string name, Nk.NkVec2 pos)
         {
             fixed (char* name_ptr = name)
             {
@@ -375,7 +375,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowSetSize(string name, Nk.nk_vec2 size)
+        public void WindowSetSize(string name, Nk.NkVec2 size)
         {
             fixed (char* name_ptr = name)
             {
@@ -526,37 +526,37 @@ namespace NuklearSharp
             Nk.nk_layout_space_end(_ctx);
         }
 
-        public void LayoutSpacePush(Nk.nk_rect rect)
+        public void LayoutSpacePush(Nk.NkRect rect)
         {
             Nk.nk_layout_space_push(_ctx, rect);
         }
 
-        public Nk.nk_rect LayoutSpaceBounds()
+        public Nk.NkRect LayoutSpaceBounds()
         {
             return Nk.nk_layout_space_bounds(_ctx);
         }
 
-        public Nk.nk_rect LayoutWidgetBounds()
+        public Nk.NkRect LayoutWidgetBounds()
         {
             return Nk.nk_layout_widget_bounds(_ctx);
         }
 
-        public Nk.nk_vec2 LayoutSpaceToScreen(Nk.nk_vec2 ret)
+        public Nk.NkVec2 LayoutSpaceToScreen(Nk.NkVec2 ret)
         {
             return Nk.nk_layout_space_to_screen(_ctx, ret);
         }
 
-        public Nk.nk_vec2 LayoutSpaceToLocal(Nk.nk_vec2 ret)
+        public Nk.NkVec2 LayoutSpaceToLocal(Nk.NkVec2 ret)
         {
             return Nk.nk_layout_space_to_local(_ctx, ret);
         }
 
-        public Nk.nk_rect LayoutSpaceRectToScreen(Nk.nk_rect ret)
+        public Nk.NkRect LayoutSpaceRectToScreen(Nk.NkRect ret)
         {
             return Nk.nk_layout_space_rect_to_screen(_ctx, ret);
         }
 
-        public Nk.nk_rect LayoutSpaceRectToLocal(Nk.nk_rect ret)
+        public Nk.NkRect LayoutSpaceRectToLocal(Nk.NkRect ret)
         {
             return Nk.nk_layout_space_rect_to_local(_ctx, ret);
         }
@@ -566,7 +566,7 @@ namespace NuklearSharp
             Nk.nk_panel_alloc_row(_ctx, win);
         }
 
-        public bool TreeBase(int type, Nk.nk_image img, string title, int initial_state, string hash, int line)
+        public bool TreeBase(int type, Nk.NkImage img, string title, int initial_state, string hash, int line)
         {
             fixed (char* title_ptr = title)
             {
@@ -593,7 +593,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool TreeImagePushHashed(int type, Nk.nk_image img, string title, int initial_state, string hash, int seed)
+        public bool TreeImagePushHashed(int type, Nk.NkImage img, string title, int initial_state, string hash, int seed)
         {
             fixed (char* title_ptr = title)
             {
@@ -610,17 +610,17 @@ namespace NuklearSharp
             Nk.nk_tree_pop(_ctx);
         }
 
-        public Nk.nk_rect WidgetBounds()
+        public Nk.NkRect WidgetBounds()
         {
             return Nk.nk_widget_bounds(_ctx);
         }
 
-        public Nk.nk_vec2 WidgetPosition()
+        public Nk.NkVec2 WidgetPosition()
         {
             return Nk.nk_widget_position(_ctx);
         }
 
-        public Nk.nk_vec2 WidgetSize()
+        public Nk.NkVec2 WidgetSize()
         {
             return Nk.nk_widget_size(_ctx);
         }
@@ -655,7 +655,7 @@ namespace NuklearSharp
             Nk.nk_spacing(_ctx, cols);
         }
 
-        public void TextColored(string str, uint alignment, Nk.nk_color color)
+        public void TextColored(string str, uint alignment, Nk.NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -663,7 +663,7 @@ namespace NuklearSharp
             }
         }
 
-        public void TextWrapColored(string str, Nk.nk_color color)
+        public void TextWrapColored(string str, Nk.NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -695,7 +695,7 @@ namespace NuklearSharp
             }
         }
 
-        public void LabelColored(string str, uint align, Nk.nk_color color)
+        public void LabelColored(string str, uint align, Nk.NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -711,7 +711,7 @@ namespace NuklearSharp
             }
         }
 
-        public void LabelColoredWrap(string str, Nk.nk_color color)
+        public void LabelColoredWrap(string str, Nk.NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -719,7 +719,7 @@ namespace NuklearSharp
             }
         }
 
-        public void Image(Nk.nk_image img)
+        public void Image(Nk.NkImage img)
         {
             Nk.nk_image_(_ctx, img);
         }
@@ -771,7 +771,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonColor(Nk.nk_color color)
+        public bool ButtonColor(Nk.NkColor color)
         {
             return Nk.nk_button_color(_ctx, color) != 0;
         }
@@ -786,12 +786,12 @@ namespace NuklearSharp
             return Nk.nk_button_symbol(_ctx, symbol) != 0;
         }
 
-        public bool ButtonImageStyled(Nk.nk_style_button style, Nk.nk_image img)
+        public bool ButtonImageStyled(Nk.nk_style_button style, Nk.NkImage img)
         {
             return Nk.nk_button_image_styled(_ctx, style, img) != 0;
         }
 
-        public bool ButtonImage(Nk.nk_image img)
+        public bool ButtonImage(Nk.NkImage img)
         {
             return Nk.nk_button_image(_ctx, img) != 0;
         }
@@ -828,7 +828,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageTextStyled(Nk.nk_style_button style, Nk.nk_image img, string text, uint align)
+        public bool ButtonImageTextStyled(Nk.nk_style_button style, Nk.NkImage img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -836,7 +836,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageText(Nk.nk_image img, string text, uint align)
+        public bool ButtonImageText(Nk.NkImage img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -844,7 +844,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageLabel(Nk.nk_image img, string label, uint align)
+        public bool ButtonImageLabel(Nk.NkImage img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
@@ -852,7 +852,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageLabelStyled(Nk.nk_style_button style, Nk.nk_image img, string label,
+        public bool ButtonImageLabelStyled(Nk.nk_style_button style, Nk.NkImage img, string label,
             uint text_alignment)
         {
             fixed (char* label_ptr = label)
@@ -869,7 +869,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableImageText(Nk.nk_image img, string str, uint align, ref int value)
+        public bool SelectableImageText(Nk.NkImage img, string str, uint align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -893,7 +893,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableImageLabel(Nk.nk_image img, string str, uint align, ref int value)
+        public bool SelectableImageLabel(Nk.NkImage img, string str, uint align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -909,7 +909,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectImageLabel(Nk.nk_image img, string str, uint align, int value)
+        public bool SelectImageLabel(Nk.NkImage img, string str, uint align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -917,7 +917,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectImageText(Nk.nk_image img, string str, uint align, int value)
+        public bool SelectImageText(Nk.NkImage img, string str, uint align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -1147,17 +1147,17 @@ namespace NuklearSharp
             }
         }
 
-        public bool ColorPick(Nk.nk_colorf color, int fmt)
+        public bool ColorPick(Nk.NkColorF color, int fmt)
         {
             return Nk.nk_color_pick(_ctx, &color, fmt) != 0;
         }
 
-        public Nk.nk_colorf ColorPicker(Nk.nk_colorf color, int fmt)
+        public Nk.NkColorF ColorPicker(Nk.NkColorF color, int fmt)
         {
             return Nk.nk_color_picker(_ctx, color, fmt);
         }
 
-        public bool ChartBeginColored(int type, Nk.nk_color color, Nk.nk_color highlight, int count, float min_value,
+        public bool ChartBeginColored(int type, Nk.NkColor color, Nk.NkColor highlight, int count, float min_value,
             float max_value)
         {
             return Nk.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value) != 0;
@@ -1168,7 +1168,7 @@ namespace NuklearSharp
             return Nk.nk_chart_begin(_ctx, type, count, min_value, max_value) != 0;
         }
 
-        public void ChartAddSlotColored(int type, Nk.nk_color color, Nk.nk_color highlight, int count,
+        public void ChartAddSlotColored(int type, Nk.NkColor color, Nk.NkColor highlight, int count,
             float min_value, float max_value)
         {
             Nk.nk_chart_add_slot_colored(_ctx, type, color, highlight, count, min_value, max_value);
@@ -1262,7 +1262,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool PopupBegin(int type, string title, uint flags, Nk.nk_rect rect)
+        public bool PopupBegin(int type, string title, uint flags, Nk.NkRect rect)
         {
             fixed (char* title_ptr = title)
             {
@@ -1270,7 +1270,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool NonblockBegin(uint flags, Nk.nk_rect body, Nk.nk_rect header, int panel_type)
+        public bool NonblockBegin(uint flags, Nk.NkRect body, Nk.NkRect header, int panel_type)
         {
             return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
         }
@@ -1303,7 +1303,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualBegin(uint flags, Nk.nk_vec2 size, Nk.nk_rect trigger_bounds)
+        public bool ContextualBegin(uint flags, Nk.NkVec2 size, Nk.NkRect trigger_bounds)
         {
             return Nk.nk_contextual_begin(_ctx, flags, size, trigger_bounds) != 0;
         }
@@ -1324,7 +1324,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemImageText(Nk.nk_image img, string text, uint align)
+        public bool ContextualItemImageText(Nk.NkImage img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1332,7 +1332,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemImageLabel(Nk.nk_image img, string label, uint align)
+        public bool ContextualItemImageLabel(Nk.NkImage img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1366,12 +1366,12 @@ namespace NuklearSharp
             Nk.nk_contextual_end(_ctx);
         }
 
-        public bool ComboBegin(Nk.NkWindow win, Nk.nk_vec2 size, int is_clicked, Nk.nk_rect header)
+        public bool ComboBegin(Nk.NkWindow win, Nk.NkVec2 size, int is_clicked, Nk.NkRect header)
         {
             return Nk.nk_combo_begin(_ctx, win, size, is_clicked, header) != 0;
         }
 
-        public bool ComboBeginText(string selected, Nk.nk_vec2 size)
+        public bool ComboBeginText(string selected, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1379,7 +1379,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginLabel(string selected, Nk.nk_vec2 size)
+        public bool ComboBeginLabel(string selected, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1387,17 +1387,17 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginColor(Nk.nk_color color, Nk.nk_vec2 size)
+        public bool ComboBeginColor(Nk.NkColor color, Nk.NkVec2 size)
         {
             return Nk.nk_combo_begin_color(_ctx, color, size) != 0;
         }
 
-        public bool ComboBeginSymbol(int symbol, Nk.nk_vec2 size)
+        public bool ComboBeginSymbol(int symbol, Nk.NkVec2 size)
         {
             return Nk.nk_combo_begin_symbol(_ctx, symbol, size) != 0;
         }
 
-        public bool ComboBeginSymbolText(string selected, int symbol, Nk.nk_vec2 size)
+        public bool ComboBeginSymbolText(string selected, int symbol, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1405,12 +1405,12 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginImage(Nk.nk_image img, Nk.nk_vec2 size)
+        public bool ComboBeginImage(Nk.NkImage img, Nk.NkVec2 size)
         {
             return Nk.nk_combo_begin_image(_ctx, img, size) != 0;
         }
 
-        public bool ComboBeginImageText(string selected, Nk.nk_image img, Nk.nk_vec2 size)
+        public bool ComboBeginImageText(string selected, Nk.NkImage img, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1418,7 +1418,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginSymbolLabel(string selected, int type, Nk.nk_vec2 size)
+        public bool ComboBeginSymbolLabel(string selected, int type, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1426,7 +1426,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboBeginImageLabel(string selected, Nk.nk_image img, Nk.nk_vec2 size)
+        public bool ComboBeginImageLabel(string selected, Nk.NkImage img, Nk.NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
@@ -1450,7 +1450,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemImageText(Nk.nk_image img, string text, uint alignment)
+        public bool ComboItemImageText(Nk.NkImage img, string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1458,7 +1458,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemImageLabel(Nk.nk_image img, string text, uint alignment)
+        public bool ComboItemImageLabel(Nk.NkImage img, string text, uint alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1493,7 +1493,7 @@ namespace NuklearSharp
         }
 
         public bool ComboSeparator(string items_separated_by_separator, int separator, int selected, int count,
-            int item_height, Nk.nk_vec2 size)
+            int item_height, Nk.NkVec2 size)
         {
             fixed (char* items_separated_by_separator_ptr = items_separated_by_separator)
             {
@@ -1504,7 +1504,7 @@ namespace NuklearSharp
         }
 
         public bool ComboString(string items_separated_by_zeros, int selected, int count, int item_height,
-            Nk.nk_vec2 size)
+            Nk.NkVec2 size)
         {
             fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
             {
@@ -1513,13 +1513,13 @@ namespace NuklearSharp
         }
 
         public bool ComboCallback(Nk.NkComboCallback item_getter, IntPtr userdata, int selected, int count,
-            int item_height, Nk.nk_vec2 size)
+            int item_height, Nk.NkVec2 size)
         {
             return Nk.nk_combo_callback(_ctx, item_getter, userdata.ToPointer(), selected, count, item_height, size) != 0;
         }
 
         public void ComboboxString(string items_separated_by_zeros, ref int selected, int count, int item_height,
-            Nk.nk_vec2 size)
+            Nk.NkVec2 size)
         {
             fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
             {
@@ -1530,7 +1530,7 @@ namespace NuklearSharp
         }
 
         public void ComboboxSeparator(string items_separated_by_separator, int separator, ref int selected, int count,
-            int item_height, Nk.nk_vec2 size)
+            int item_height, Nk.NkVec2 size)
         {
             fixed (char* items_separated_by_separator_ptr = items_separated_by_separator)
             {
@@ -1541,14 +1541,14 @@ namespace NuklearSharp
         }
 
         public void ComboboxCallback(Nk.NkComboCallback item_getter, IntPtr userdata, ref int selected, int count,
-            int item_height, Nk.nk_vec2 size)
+            int item_height, Nk.NkVec2 size)
         {
             int s = selected;
             Nk.nk_combobox_callback(_ctx, item_getter, userdata.ToPointer(), &s, count, item_height, size);
             selected = s;
         }
 
-        public bool MenuBegin(Nk.NkWindow win, string id, int is_clicked, Nk.nk_rect header, Nk.nk_vec2 size)
+        public bool MenuBegin(Nk.NkWindow win, string id, int is_clicked, Nk.NkRect header, Nk.NkVec2 size)
         {
             fixed (char* id_ptr = id)
             {
@@ -1556,7 +1556,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginText(string title, uint align, Nk.nk_vec2 size)
+        public bool MenuBeginText(string title, uint align, Nk.NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1564,7 +1564,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginLabel(string text, uint align, Nk.nk_vec2 size)
+        public bool MenuBeginLabel(string text, uint align, Nk.NkVec2 size)
         {
             fixed (char* text_ptr = text)
             {
@@ -1572,7 +1572,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginImage(string id, Nk.nk_image img, Nk.nk_vec2 size)
+        public bool MenuBeginImage(string id, Nk.NkImage img, Nk.NkVec2 size)
         {
             fixed (char* id_ptr = id)
             {
@@ -1580,7 +1580,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbol(string id, int sym, Nk.nk_vec2 size)
+        public bool MenuBeginSymbol(string id, int sym, Nk.NkVec2 size)
         {
             fixed (char* id_ptr = id)
             {
@@ -1588,7 +1588,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginImageText(string title, uint align, Nk.nk_image img, Nk.nk_vec2 size)
+        public bool MenuBeginImageText(string title, uint align, Nk.NkImage img, Nk.NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1596,7 +1596,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginImageLabel(string title, uint align, Nk.nk_image img, Nk.nk_vec2 size)
+        public bool MenuBeginImageLabel(string title, uint align, Nk.NkImage img, Nk.NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1604,7 +1604,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbolText(string title, uint align, int sym, Nk.nk_vec2 size)
+        public bool MenuBeginSymbolText(string title, uint align, int sym, Nk.NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1612,7 +1612,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbolLabel(string title, uint align, int sym, Nk.nk_vec2 size)
+        public bool MenuBeginSymbolLabel(string title, uint align, int sym, Nk.NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1636,7 +1636,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemImageLabel(Nk.nk_image img, string label, uint align)
+        public bool MenuItemImageLabel(Nk.NkImage img, string label, uint align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1644,7 +1644,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemImageText(Nk.nk_image img, string text, uint align)
+        public bool MenuItemImageText(Nk.NkImage img, string text, uint align)
         {
             fixed (char* text_ptr = text)
             {

@@ -18,7 +18,7 @@ namespace NuklearSharp
             public PinnedArray<byte> padding = new PinnedArray<byte>(3);
             public float size;
             public int coord_type;
-            public nk_vec2 spacing = new nk_vec2();
+            public NkVec2 spacing = new NkVec2();
             public uint* range;
             public nk_baked_font font;
             public char fallback_glyph;
@@ -1366,7 +1366,7 @@ namespace NuklearSharp
         }
 
         public static int nk_font_bake_pack(nk_font_baker* baker, ulong* image_memory, ref int width, ref int height,
-            ref nk_recti custom, nk_font_config config_list, int count)
+            ref NkRectI custom, nk_font_config config_list, int count)
         {
             ulong max_height = (ulong)(1024 * 32);
             nk_font_config config_iter;
@@ -1784,7 +1784,7 @@ namespace NuklearSharp
                 (int)(atlas.FontNum));
             fixed (byte* ptr = nk_custom_cursor_data)
             {
-                nk_font_bake_custom_data(atlas.Pixel, (int)(width), (int)(height), (nk_recti)(atlas.Custom), ptr, (int)(90),
+                nk_font_bake_custom_data(atlas.Pixel, (int)(width), (int)(height), (NkRectI)(atlas.Custom), ptr, (int)(90),
                     (int)(27), ('.'), ('X'));
             }
             if ((fmt) == (NK_FONT_ATLAS_RGBA32))
@@ -1807,15 +1807,15 @@ namespace NuklearSharp
             }
             for (i = (int)(0); (i) < (NK_CURSOR_COUNT); ++i)
             {
-                nk_cursor cursor = atlas.Cursors[i];
+                NkCursor cursor = atlas.Cursors[i];
                 cursor.img.w = ((ushort)(width));
                 cursor.img.h = ((ushort)(height));
                 cursor.img.region[0] = ((ushort)(atlas.Custom.x + nk_cursor_data[i, 0].x));
                 cursor.img.region[1] = ((ushort)(atlas.Custom.y + nk_cursor_data[i, 0].y));
                 cursor.img.region[2] = ((ushort)(nk_cursor_data[i, 1].x));
                 cursor.img.region[3] = ((ushort)(nk_cursor_data[i, 1].y));
-                cursor.size = (nk_vec2)(nk_cursor_data[i, 1]);
-                cursor.offset = (nk_vec2)(nk_cursor_data[i, 2]);
+                cursor.size = (NkVec2)(nk_cursor_data[i, 1]);
+                cursor.offset = (NkVec2)(nk_cursor_data[i, 2]);
             }
             CRuntime.Free(tmp);
             return atlas.Pixel;
@@ -1845,7 +1845,7 @@ namespace NuklearSharp
             {
                 if (_null_ == null) return;
                 _null_->texture = (NkHandle)(texture);
-                _null_->uv = (nk_vec2)(nk_vec2_((float)(0.5f), (float)(0.5f)));
+                _null_->uv = (NkVec2)(nk_vec2_((float)(0.5f), (float)(0.5f)));
             }
 
             if ((_null_) != null)

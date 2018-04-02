@@ -59,7 +59,26 @@ namespace NuklearSharp
 
             public float text_width(NkHandle h, float height, char* s, int length)
             {
-                return nk_font_text_width(this, height, s, length);
+                char unicode;
+                int textLen = (int)(0);
+                float textWidth = (float)(0);
+                int glyphLen = (int)(0);
+                float scale = (float)(0);
+
+                if (((this == null) || (s == null)) || (length == 0)) return (float)(0);
+                scale = (float)(height / this.Info.height);
+                glyphLen = (int)(textLen = (int)(nk_utf_decode(s, &unicode, (int)length)));
+                if (glyphLen == 0) return (float)(0);
+                while ((textLen <= length) && ((glyphLen) != 0))
+                {
+                    nk_font_glyph* g;
+                    if ((unicode) == (0xFFFD)) break;
+                    g = nk_font_find_glyph(this, unicode);
+                    textWidth += (float)(g->xadvance * scale);
+                    glyphLen = (int)(nk_utf_decode(s + textLen, &unicode, (int)(length - textLen)));
+                    textLen += (int)(glyphLen);
+                }
+                return (float)(textWidth);
             }
 
             public void query_font_glyph(NkHandle h, float height, NkUserFontGlyph* glyph, char codepoint,
@@ -86,10 +105,10 @@ namespace NuklearSharp
         public class NkMouse
         {
             public PinnedArray<nk_mouse_button> Buttons = new PinnedArray<nk_mouse_button>(new nk_mouse_button[NK_BUTTON_MAX]);
-            public nk_vec2 Pos;
-            public nk_vec2 Prev;
-            public nk_vec2 Delta;
-            public nk_vec2 ScrollDelta;
+            public NkVec2 Pos;
+            public NkVec2 Prev;
+            public NkVec2 Delta;
+            public NkVec2 ScrollDelta;
             public byte Grab;
             public byte Grabbed;
             public byte Ungrab;
@@ -121,7 +140,7 @@ namespace NuklearSharp
         {
             public int Type;
             public uint Flags;
-            public nk_rect Bounds = new nk_rect();
+            public NkRect Bounds = new NkRect();
             public nk_scroll Offset;
             public float AtX;
             public float AtY;
@@ -130,7 +149,7 @@ namespace NuklearSharp
             public float HeaderHeight;
             public float Border;
             public uint HasScrolling;
-            public nk_rect Clip = new nk_rect();
+            public NkRect Clip = new NkRect();
             public nk_menu_state Menu = new nk_menu_state();
             public nk_row_layout Row = new nk_row_layout();
             public NkChart Chart = new NkChart();
@@ -144,7 +163,7 @@ namespace NuklearSharp
             public uint Name;
             public PinnedArray<char> NameString = new PinnedArray<char>(64);
             public uint Flags;
-            public nk_rect Bounds = new nk_rect();
+            public NkRect Bounds = new NkRect();
             public nk_scroll Scrollbar = new nk_scroll();
             public NkCommandBuffer Buffer = new NkCommandBuffer();
             public NkPanel Layout;
@@ -162,13 +181,13 @@ namespace NuklearSharp
 
         public class NkDrawList
         {
-            public nk_rect ClipRect;
-            public readonly nk_vec2[] CircleVtx = new nk_vec2[12];
+            public NkRect ClipRect;
+            public readonly NkVec2[] CircleVtx = new NkVec2[12];
             public NkConvertConfig Config;
-            public readonly NkBuffer<nk_vec2> Points = new NkBuffer<nk_vec2>();
+            public readonly NkBuffer<NkVec2> Points = new NkBuffer<NkVec2>();
             public NkBuffer<nk_draw_command> Buffer;
             public NkBuffer<byte> Vertices;
-            public readonly NkBuffer<nk_vec2> Normals = new NkBuffer<nk_vec2>();
+            public readonly NkBuffer<NkVec2> Normals = new NkBuffer<NkVec2>();
             public NkBuffer<ushort> Elements;
             public int LineAa;
             public int ShapeAa;
@@ -193,8 +212,8 @@ namespace NuklearSharp
 
         public class NkStyleItemData
         {
-            public nk_image Image;
-            public nk_color Color;
+            public NkImage Image;
+            public NkColor Color;
         }
 
         public class NkStyleItem
@@ -222,8 +241,8 @@ namespace NuklearSharp
             public void* Pixel;
             public int TexWidth;
             public int TexHeight;
-            public nk_recti Custom;
-            public nk_cursor[] Cursors = new nk_cursor[NK_CURSOR_COUNT];
+            public NkRectI Custom;
+            public NkCursor[] Cursors = new NkCursor[NK_CURSOR_COUNT];
             public int GlyphCount;
             public nk_font_glyph* Glyphs;
             public NkFont DefaultFont;
@@ -235,7 +254,7 @@ namespace NuklearSharp
             {
                 for (var i = 0; i < Cursors.Length; ++i)
                 {
-                    Cursors[i] = new nk_cursor();
+                    Cursors[i] = new NkCursor();
                 }
             }
         }
@@ -273,9 +292,9 @@ namespace NuklearSharp
         public class NkStyle
         {
             public NkUserFont Font;
-            public nk_cursor[] Cursors = new nk_cursor[NK_CURSOR_COUNT];
-            public nk_cursor CursorActive;
-            public nk_cursor CursorLast;
+            public NkCursor[] Cursors = new NkCursor[NK_CURSOR_COUNT];
+            public NkCursor CursorActive;
+            public NkCursor CursorLast;
             public int CursorVisible;
             public nk_style_text Text = new nk_style_text();
             public nk_style_button Button = new nk_style_button();
@@ -346,19 +365,19 @@ namespace NuklearSharp
         public class NkCommandLine : NkCommandBase
         {
             public ushort LineThickness;
-            public nk_vec2i Begin = new nk_vec2i();
-            public nk_vec2i End = new nk_vec2i();
-            public nk_color Color = new nk_color();
+            public NkPoint Begin = new NkPoint();
+            public NkPoint End = new NkPoint();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandCurve : NkCommandBase
         {
             public ushort LineThickness;
-            public nk_vec2i Begin = new nk_vec2i();
-            public nk_vec2i End = new nk_vec2i();
-            public nk_vec2i Ctrl0 = new nk_vec2i();
-            public nk_vec2i Ctrl1 = new nk_vec2i();
-            public nk_color Color = new nk_color();
+            public NkPoint Begin = new NkPoint();
+            public NkPoint End = new NkPoint();
+            public NkPoint Ctrl0 = new NkPoint();
+            public NkPoint Ctrl1 = new NkPoint();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandRect : NkCommandBase
@@ -369,7 +388,7 @@ namespace NuklearSharp
             public short Y;
             public ushort W;
             public ushort H;
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandRectFilled : NkCommandBase
@@ -379,7 +398,7 @@ namespace NuklearSharp
             public short Y;
             public ushort W;
             public ushort H;
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandRectMultiColor : NkCommandBase
@@ -388,27 +407,27 @@ namespace NuklearSharp
             public short Y;
             public ushort W;
             public ushort H;
-            public nk_color Left = new nk_color();
-            public nk_color Top = new nk_color();
-            public nk_color Bottom = new nk_color();
-            public nk_color Right = new nk_color();
+            public NkColor Left = new NkColor();
+            public NkColor Top = new NkColor();
+            public NkColor Bottom = new NkColor();
+            public NkColor Right = new NkColor();
         }
 
         public class NkCommandTriangle : NkCommandBase
         {
             public ushort LineThickness;
-            public nk_vec2i A = new nk_vec2i();
-            public nk_vec2i B = new nk_vec2i();
-            public nk_vec2i C = new nk_vec2i();
-            public nk_color Color = new nk_color();
+            public NkPoint A = new NkPoint();
+            public NkPoint B = new NkPoint();
+            public NkPoint C = new NkPoint();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandTriangleFilled : NkCommandBase
         {
-            public nk_vec2i A = new nk_vec2i();
-            public nk_vec2i B = new nk_vec2i();
-            public nk_vec2i C = new nk_vec2i();
-            public nk_color Color = new nk_color();
+            public NkPoint A = new NkPoint();
+            public NkPoint B = new NkPoint();
+            public NkPoint C = new NkPoint();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandCircle : NkCommandBase
@@ -418,7 +437,7 @@ namespace NuklearSharp
             public ushort LineThickness;
             public ushort W;
             public ushort H;
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandCircleFilled : NkCommandBase
@@ -427,7 +446,7 @@ namespace NuklearSharp
             public short Y;
             public ushort W;
             public ushort H;
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandArc : NkCommandBase
@@ -437,7 +456,7 @@ namespace NuklearSharp
             public ushort R;
             public ushort LineThickness;
             public PinnedArray<float> A = new PinnedArray<float>(2);
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandArcFilled : NkCommandBase
@@ -446,30 +465,30 @@ namespace NuklearSharp
             public short Cy;
             public ushort R;
             public PinnedArray<float> A = new PinnedArray<float>(2);
-            public nk_color Color = new nk_color();
+            public NkColor Color = new NkColor();
         }
 
         public class NkCommandPolygon : NkCommandBase
         {
-            public nk_color Color;
+            public NkColor Color;
             public ushort LineThickness;
             public ushort PointCount;
-            public nk_vec2i[] Points;
+            public NkPoint[] Points;
         }
 
         public class NkCommandPolygonFilled : NkCommandBase
         {
-            public nk_color Color;
+            public NkColor Color;
             public ushort PointCount;
-            public nk_vec2i[] Points;
+            public NkPoint[] Points;
         }
 
         public class NkCommandPolyline : NkCommandBase
         {
-            public nk_color Color;
+            public NkColor Color;
             public ushort LineThickness;
             public ushort PointCount;
-            public nk_vec2i[] Points;
+            public NkPoint[] Points;
         }
 
         public class NkCommandImage : NkCommandBase
@@ -478,15 +497,15 @@ namespace NuklearSharp
             public short Y;
             public ushort W;
             public ushort H;
-            public nk_image Img = new nk_image();
-            public nk_color Col = new nk_color();
+            public NkImage Img = new NkImage();
+            public NkColor Col = new NkColor();
         }
 
         public class NkCommandText : NkCommandBase
         {
             public NkUserFont Font;
-            public nk_color Background;
-            public nk_color Foreground;
+            public NkColor Background;
+            public NkColor Foreground;
             public short X;
             public short Y;
             public ushort W;
@@ -512,7 +531,7 @@ namespace NuklearSharp
             public NkCommandBase Last;
             public int Count;
 
-            public nk_rect Clip;
+            public NkRect Clip;
             public int UseClipping;
             public NkHandle Userdata = new NkHandle();
         }
@@ -548,7 +567,7 @@ namespace NuklearSharp
         {
             public fixed float uv_x[2];
             public fixed float uv_y[2];
-            public nk_vec2 offset;
+            public NkVec2 offset;
             public float width;
             public float height;
             public float xadvance;
@@ -652,7 +671,7 @@ namespace NuklearSharp
             if (ctx.Style.CursorActive == null) ctx.Style.CursorActive = ctx.Style.Cursors[NK_CURSOR_ARROW];
             if ((ctx.Style.CursorActive != null) && (ctx.Input.mouse.Grabbed == 0) && ((ctx.Style.CursorVisible) != 0))
             {
-                var mouseBounds = new nk_rect();
+                var mouseBounds = new NkRect();
                 var cursor = ctx.Style.CursorActive;
                 nk_command_buffer_init(ctx.Overlay, NK_CLIPPING_OFF);
                 nk_start_buffer(ctx, ctx.Overlay);
@@ -816,7 +835,7 @@ namespace NuklearSharp
         {
         }
 
-        public static int nk_popup_begin(NkContext ctx, int type, string title, uint flags, nk_rect rect)
+        public static int nk_popup_begin(NkContext ctx, int type, string title, uint flags, NkRect rect)
         {
             fixed (char* ptr = title)
             {
@@ -836,7 +855,7 @@ namespace NuklearSharp
         public static void nk_property_(NkContext ctx, char* name, NkPropertyVariant* variant, float incPerPixel,
             int filter)
         {
-            var bounds = new nk_rect();
+            var bounds = new NkRect();
             uint hash;
             string dummyBuffer = null;
             var dummyState = NK_PROPERTY_DEFAULT;
@@ -922,7 +941,7 @@ namespace NuklearSharp
         }
 
         public static void nk_stroke_polygon(NkCommandBuffer b, float* points, int pointCount, float lineThickness,
-            nk_color col)
+            NkColor col)
         {
             if ((b == null) || (col.a == 0) || (lineThickness <= 0)) return;
             var cmd = (NkCommandPolygon)nk_command_buffer_push(b, NK_COMMAND_POLYGON);
@@ -930,7 +949,7 @@ namespace NuklearSharp
             cmd.Color = col;
             cmd.LineThickness = (ushort)lineThickness;
             cmd.PointCount = (ushort)pointCount;
-            cmd.Points = new nk_vec2i[pointCount];
+            cmd.Points = new NkPoint[pointCount];
             for (var i = 0; i < pointCount; ++i)
             {
                 cmd.Points[i].x = (short)points[i * 2];
@@ -938,7 +957,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_fill_polygon(NkCommandBuffer b, float* points, int pointCount, nk_color col)
+        public static void nk_fill_polygon(NkCommandBuffer b, float* points, int pointCount, NkColor col)
         {
             NkCommandPolygonFilled cmd;
             if ((b == null) || (col.a == 0)) return;
@@ -946,7 +965,7 @@ namespace NuklearSharp
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;
-            cmd.Points = new nk_vec2i[pointCount];
+            cmd.Points = new NkPoint[pointCount];
             for (var i = 0; i < pointCount; ++i)
             {
                 cmd.Points[i].x = (short)points[i * 2 + 0];
@@ -955,7 +974,7 @@ namespace NuklearSharp
         }
 
         public static void nk_stroke_polyline(NkCommandBuffer b, float* points, int pointCount, float lineThickness,
-            nk_color col)
+            NkColor col)
         {
             if ((b == null) || (col.a == 0) || (lineThickness <= 0)) return;
             var cmd = (NkCommandPolyline)nk_command_buffer_push(b, NK_COMMAND_POLYLINE);
@@ -963,7 +982,7 @@ namespace NuklearSharp
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;
             cmd.LineThickness = (ushort)lineThickness;
-            cmd.Points = new nk_vec2i[pointCount];
+            cmd.Points = new NkPoint[pointCount];
             for (var i = 0; i < pointCount; ++i)
             {
                 cmd.Points[i].x = (short)points[i * 2];
@@ -1024,6 +1043,14 @@ namespace NuklearSharp
         public static uint* nk_font_korean_glyph_ranges()
         {
             return korean_ranges;
+        }
+
+        public static NkVec2 nk_rect_pos(NkRect r)
+        {
+            NkVec2 ret = new NkVec2();
+            ret.x = (float)(r.x);
+            ret.y = (float)(r.y);
+            return (NkVec2)(ret);
         }
     }
 }
