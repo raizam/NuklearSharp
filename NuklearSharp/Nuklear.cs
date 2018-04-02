@@ -95,7 +95,7 @@ namespace NuklearSharp
             public NkStyle Style = new NkStyle();
             public NkClipboard Clip = new NkClipboard();
             public uint LastWidgetState;
-            public int ButtonBehavior;
+            public NkButtonBehavior ButtonBehavior;
             public nk_configuration_stacks Stacks = new nk_configuration_stacks();
             public float DeltaTimeSeconds;
             public NkDrawList DrawList = new NkDrawList();
@@ -519,7 +519,7 @@ namespace NuklearSharp
         [StructLayout(LayoutKind.Sequential)]
         public struct NkConfigStackButtonBehaviorElement
         {
-            public int old_value;
+            public NkButtonBehavior old_value;
         }
 
         public class NkConvertConfig

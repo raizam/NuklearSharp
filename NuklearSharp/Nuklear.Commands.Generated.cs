@@ -565,16 +565,16 @@ namespace NuklearSharp
                 case NK_SYMBOL_TRIANGLE_LEFT:
                 case NK_SYMBOL_TRIANGLE_RIGHT:
                     {
-                        int heading;
+                        NkHeading heading;
                         NkVec2* points = stackalloc NkVec2[3];
                         heading =
-                            (int)
+        
                                 (((type) == (NK_SYMBOL_TRIANGLE_RIGHT))
-                                    ? NK_RIGHT
+                                    ? NkHeading.NK_RIGHT
                                     : ((type) == (NK_SYMBOL_TRIANGLE_LEFT))
-                                        ? NK_LEFT
-                                        : ((type) == (NK_SYMBOL_TRIANGLE_UP)) ? NK_UP : NK_DOWN);
-                        nk_triangle_from_direction(points, (NkRect)(content), (float)(0), (float)(0), (int)(heading));
+                                        ? NkHeading.NK_LEFT
+                                        : ((type) == (NK_SYMBOL_TRIANGLE_UP)) ? NkHeading.NK_UP : NkHeading.NK_DOWN);
+                        nk_triangle_from_direction(points, (NkRect)(content), (float)(0), (float)(0), (heading));
                         nk_fill_triangle(_out_, (float)(points[0].x), (float)(points[0].y), (float)(points[1].x),
                             (float)(points[1].y), (float)(points[2].x), (float)(points[2].y), (NkColor)(foreground));
                     }

@@ -161,7 +161,7 @@ namespace NuklearSharp
             if (((state) & NK_WIDGET_STATE_MODIFIED) != 0)
                 (state) = (uint)(NK_WIDGET_STATE_INACTIVE | NK_WIDGET_STATE_MODIFIED);
             else (state) = (uint)(NK_WIDGET_STATE_INACTIVE);
-            if ((nk_button_behavior(ref state, (NkRect)(select), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref state, select, _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
             {
                 state = (uint)(NK_WIDGET_STATE_ACTIVE);
                 active = active != 0 ? 0 : 1;

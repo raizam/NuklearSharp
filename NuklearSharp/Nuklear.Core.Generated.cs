@@ -206,7 +206,7 @@ namespace NuklearSharp
             clip.h = (float)((0) < (clip.h) ? (clip.h) : (0));
         }
 
-        public static void nk_triangle_from_direction(NkVec2* result, NkRect r, float pad_x, float pad_y, int direction)
+        public static void nk_triangle_from_direction(NkVec2* result, NkRect r, float pad_x, float pad_y, NkHeading direction)
         {
             float w_half;
             float h_half;
@@ -218,19 +218,19 @@ namespace NuklearSharp
             r.y = (float)(r.y + pad_y);
             w_half = (float)(r.w / 2.0f);
             h_half = (float)(r.h / 2.0f);
-            if ((direction) == (NK_UP))
+            if ((direction) == (NkHeading.NK_UP))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
                 result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
-            else if ((direction) == (NK_RIGHT))
+            else if ((direction) == (NkHeading.NK_RIGHT))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + h_half)));
                 result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
-            else if ((direction) == (NK_DOWN))
+            else if ((direction) == (NkHeading.NK_DOWN))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));

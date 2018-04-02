@@ -1249,7 +1249,7 @@ namespace NuklearSharp
                         }
                         if (
                             ((nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(button), (int)(style.Window.header.close_symbol),
-                                (int)(NK_BUTTON_DEFAULT), style.Window.header.close_button, _in_, style.Font)) != 0) &&
+                                NkButtonBehavior.NK_BUTTON_DEFAULT, style.Window.header.close_button, _in_, style.Font)) != 0) &&
                             ((win.Flags & NK_WINDOW_ROM) == 0))
                         {
                             layout.Flags |= (uint)(NK_WINDOW_HIDDEN);
@@ -1279,7 +1279,7 @@ namespace NuklearSharp
                                 (int)
                                     ((layout.Flags & NK_WINDOW_MINIMIZED) != 0
                                         ? style.Window.header.maximize_symbol
-                                        : style.Window.header.minimize_symbol), (int)(NK_BUTTON_DEFAULT), style.Window.header.minimize_button, _in_,
+                                        : style.Window.header.minimize_symbol), NkButtonBehavior.NK_BUTTON_DEFAULT, style.Window.header.minimize_button, _in_,
                                 style.Font)) != 0) && ((win.Flags & NK_WINDOW_ROM) == 0))
                             layout.Flags =
                                 (uint)
@@ -2652,7 +2652,7 @@ namespace NuklearSharp
             else text.background = (NkColor)(style.Window.background);
             _in_ = ((layout.Flags & NK_WINDOW_ROM) == 0) ? ctx.Input : null;
             _in_ = (((_in_) != null) && ((widget_state) == (NK_WIDGET_VALID))) ? ctx.Input : null;
-            if ((nk_button_behavior(ref ws, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ws, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 state = (int)(((state) == (NK_MAXIMIZED)) ? NK_MINIMIZED : NK_MAXIMIZED);
             if ((state) == (NK_MAXIMIZED))
             {
@@ -2671,7 +2671,7 @@ namespace NuklearSharp
                 sym.w = (float)(sym.h = (float)(style.Font.Height));
                 sym.y = (float)(header.y + style.Tab.padding.y);
                 sym.x = (float)(header.x + style.Tab.padding.x);
-                nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(sym), (int)(symbol), (int)(NK_BUTTON_DEFAULT), button, null,
+                nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(sym), (int)(symbol), NkButtonBehavior.NK_BUTTON_DEFAULT, button, null,
                     style.Font);
                 if ((img) != null)
                 {
@@ -2983,13 +2983,13 @@ namespace NuklearSharp
             nk_draw_image(win.Buffer, (NkRect)(bounds), img, (NkColor)(nk_white));
         }
 
-        public static void nk_button_set_behavior(NkContext ctx, int behavior)
+        public static void nk_button_set_behavior(NkContext ctx, NkButtonBehavior behavior)
         {
             if (ctx == null) return;
-            ctx.ButtonBehavior = (int)(behavior);
+            ctx.ButtonBehavior = behavior;
         }
 
-        public static int nk_button_push_behavior(NkContext ctx, int behavior)
+        public static int nk_button_push_behavior(NkContext ctx, NkButtonBehavior behavior)
         {
             nk_config_stack_button_behavior button_stack;
             NkConfigStackButtonBehaviorElement element;
@@ -2997,8 +2997,8 @@ namespace NuklearSharp
             button_stack = ctx.Stacks.button_behaviors;
             if ((button_stack.head) >= ((int)((int)button_stack.elements.Length))) return (int)(0);
             element = button_stack.elements[button_stack.head++];
-            element.old_value = (int)(ctx.ButtonBehavior);
-            ctx.ButtonBehavior = (int)(behavior);
+            element.old_value =ctx.ButtonBehavior;
+            ctx.ButtonBehavior = behavior;
             return (int)(1);
         }
 
@@ -3030,7 +3030,7 @@ namespace NuklearSharp
             return
                 (int)
                     (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), title, (int)(len),
-                        (uint)(style.text_alignment), (int)(ctx.ButtonBehavior), style, _in_, ctx.Style.Font));
+                        (uint)(style.text_alignment), ctx.ButtonBehavior, style, _in_, ctx.Style.Font));
         }
 
         public static int nk_button_text(NkContext ctx, char* title, int len)
@@ -3071,7 +3071,7 @@ namespace NuklearSharp
             button.active = (NkStyleItem)(nk_style_item_color((NkColor)(color)));
             ret =
                 (int)
-                    (nk_do_button(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), button, _in_, (int)(ctx.ButtonBehavior),
+                    (nk_do_button(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), button, _in_, ctx.ButtonBehavior,
                         &content));
             nk_draw_button(win.Buffer, &bounds, (uint)(ctx.LastWidgetState), button);
             return (int)(ret);
@@ -3093,7 +3093,7 @@ namespace NuklearSharp
             return
                 (int)
                     (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol),
-                        (int)(ctx.ButtonBehavior), style, _in_, ctx.Style.Font));
+                       ctx.ButtonBehavior, style, _in_, ctx.Style.Font));
         }
 
         public static int nk_button_symbol(NkContext ctx, int symbol)
@@ -3118,7 +3118,7 @@ namespace NuklearSharp
             return
                 (int)
                     (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img),
-                        (int)(ctx.ButtonBehavior), style, _in_));
+                        ctx.ButtonBehavior, style, _in_));
         }
 
         public static int nk_button_image(NkContext ctx, NkImage img)
@@ -3144,7 +3144,7 @@ namespace NuklearSharp
             return
                 (int)
                     (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol), text,
-                        (int)(len), (uint)(align), (int)(ctx.ButtonBehavior), style, ctx.Style.Font, _in_));
+                        (int)(len), (uint)(align), ctx.ButtonBehavior, style, ctx.Style.Font, _in_));
         }
 
         public static int nk_button_symbol_text(NkContext ctx, int symbol, char* text, int len, uint align)
@@ -3182,7 +3182,7 @@ namespace NuklearSharp
             return
                 (int)
                     (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img), text,
-                        (int)(len), (uint)(align), (int)(ctx.ButtonBehavior), style, ctx.Style.Font, _in_));
+                        (int)(len), (uint)(align), ctx.ButtonBehavior, style, ctx.Style.Font, _in_));
         }
 
         public static int nk_button_image_text(NkContext ctx, NkImage img, char* text, int len, uint align)
@@ -4494,7 +4494,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), text, (int)(len), (uint)(alignment),
-                    (int)(NK_BUTTON_DEFAULT), style.ContextualButton, _in_, style.Font)) != 0)
+                    NkButtonBehavior.NK_BUTTON_DEFAULT, style.ContextualButton, _in_, style.Font)) != 0)
             {
                 nk_contextual_close(ctx);
                 return (int)(nk_true);
@@ -4523,7 +4523,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (NkImage)(img), text,
-                    (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), style.ContextualButton, style.Font, _in_)) != 0)
+                    (int)(len), (uint)(align), NkButtonBehavior.NK_BUTTON_DEFAULT, style.ContextualButton, style.Font, _in_)) != 0)
             {
                 nk_contextual_close(ctx);
                 return (int)(nk_true);
@@ -4552,7 +4552,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (int)(symbol), text,
-                    (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), style.ContextualButton, style.Font, _in_)) != 0)
+                    (int)(len), (uint)(align), NkButtonBehavior.NK_BUTTON_DEFAULT, style.ContextualButton, style.Font, _in_)) != 0)
             {
                 nk_contextual_close(ctx);
                 return (int)(nk_true);
@@ -4647,7 +4647,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
@@ -4727,7 +4727,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0) background = style.Combo.active;
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) background = style.Combo.hover;
@@ -4788,7 +4788,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
@@ -4865,7 +4865,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if (s == 0) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
@@ -4950,7 +4950,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if ((s) == (NK_WIDGET_INVALID)) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0) background = style.Combo.active;
             else if ((ctx.LastWidgetState & NK_WIDGET_STATE_HOVER) != 0) background = style.Combo.hover;
@@ -5010,7 +5010,7 @@ namespace NuklearSharp
             s = (int)(nk_widget(&header, ctx));
             if (s == 0) return (int)(0);
             _in_ = (((win.Layout.Flags & NK_WINDOW_ROM) != 0) || ((s) == (NK_WIDGET_ROM))) ? null : ctx.Input;
-            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref ctx.LastWidgetState, (NkRect)(header), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 is_clicked = (int)(nk_true);
             if ((ctx.LastWidgetState & NK_WIDGET_STATE_ACTIVED) != 0)
             {
@@ -5312,7 +5312,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), title, (int)(len), (uint)(align),
-                    (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
+                    NkButtonBehavior.NK_BUTTON_DEFAULT, ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
             return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
@@ -5335,7 +5335,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (NkImage)(img),
-                    (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_)) != 0) is_clicked = (int)(nk_true);
+                    NkButtonBehavior.NK_BUTTON_DEFAULT, ctx.Style.MenuButton, _in_)) != 0) is_clicked = (int)(nk_true);
             return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
@@ -5353,7 +5353,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (int)(sym),
-                    (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
+                    NkButtonBehavior.NK_BUTTON_DEFAULT, ctx.Style.MenuButton, _in_, ctx.Style.Font)) != 0) is_clicked = (int)(nk_true);
             return (int)(nk_menu_begin(ctx, win, id, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
 
@@ -5372,7 +5372,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text_image(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (NkImage)(img), title,
-                    (int)(len), (uint)(align), (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
+                    (int)(len), (uint)(align), NkButtonBehavior.NK_BUTTON_DEFAULT, ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
                 is_clicked = (int)(nk_true);
             return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }
@@ -5398,7 +5398,7 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((win.Layout.Flags & NK_WINDOW_ROM) != 0)) ? null : ctx.Input;
             if (
                 (nk_do_button_text_symbol(ref ctx.LastWidgetState, win.Buffer, (NkRect)(header), (int)(sym), title, (int)(len),
-                    (uint)(align), (int)(NK_BUTTON_DEFAULT), ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
+                    (uint)(align), NkButtonBehavior.NK_BUTTON_DEFAULT, ctx.Style.MenuButton, ctx.Style.Font, _in_)) != 0)
                 is_clicked = (int)(nk_true);
             return (int)(nk_menu_begin(ctx, win, title, (int)(is_clicked), (NkRect)(header), (NkVec2)(size)));
         }

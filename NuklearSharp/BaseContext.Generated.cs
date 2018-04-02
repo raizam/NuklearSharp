@@ -724,12 +724,12 @@ namespace NuklearSharp
             Nk.nk_image_(_ctx, img);
         }
 
-        public void ButtonSetBehavior(int behavior)
+        public void ButtonSetBehavior(NkButtonBehavior behavior)
         {
             Nk.nk_button_set_behavior(_ctx, behavior);
         }
 
-        public bool ButtonPushBehavior(int behavior)
+        public bool ButtonPushBehavior(NkButtonBehavior behavior)
         {
             return Nk.nk_button_push_behavior(_ctx, behavior) != 0;
         }

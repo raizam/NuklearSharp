@@ -2269,7 +2269,7 @@ namespace NuklearSharp
             return (nk_font_config)(cfg);
         }
 
-        public static int nk_button_behavior(ref uint state, NkRect r, nk_input i, int behavior)
+        public static int nk_button_behavior(ref uint state, NkRect r, nk_input i, NkButtonBehavior behavior)
         {
             int ret = (int)(0);
             if (((state) & NK_WIDGET_STATE_MODIFIED) != 0)
@@ -2284,7 +2284,7 @@ namespace NuklearSharp
                 {
                     ret =
                         (int)
-                            ((behavior != NK_BUTTON_DEFAULT)
+                            ((behavior != NkButtonBehavior.NK_BUTTON_DEFAULT)
                                 ? nk_input_is_mouse_down(i, (int)(NK_BUTTON_LEFT))
                                 : nk_input_is_mouse_pressed(i, (int)(NK_BUTTON_LEFT)));
                 }
@@ -2297,7 +2297,7 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button(ref uint state, NkCommandBuffer _out_, NkRect r, nk_style_button style,
-            nk_input _in_, int behavior, NkRect* content)
+            nk_input _in_, NkButtonBehavior behavior, NkRect* content)
         {
             NkRect bounds = new NkRect();
             if ((_out_ == null) || (style == null)) return (int)(nk_false);
@@ -2309,16 +2309,16 @@ namespace NuklearSharp
             bounds.y = (float)(r.y - style.touch_padding.y);
             bounds.w = (float)(r.w + 2 * style.touch_padding.x);
             bounds.h = (float)(r.h + 2 * style.touch_padding.y);
-            return (int)(nk_button_behavior(ref state, (NkRect)(bounds), _in_, (int)(behavior)));
+            return (int)(nk_button_behavior(ref state, (NkRect)(bounds), _in_, behavior));
         }
 
         public static int nk_do_button_text(ref uint state, NkCommandBuffer _out_, NkRect bounds, char* _string_, int len,
-            uint align, int behavior, nk_style_button style, nk_input _in_, NkUserFont font)
+            uint align, NkButtonBehavior behavior, nk_style_button style, nk_input _in_, NkUserFont font)
         {
             NkRect content = new NkRect();
             int ret = (int)(nk_false);
             if ((((_out_ == null) || (style == null)) || (font == null)) || (_string_ == null)) return (int)(nk_false);
-            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, (int)(behavior), &content));
+            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
             nk_draw_button_text(_out_, &bounds, &content, (uint)(state), style, _string_, (int)(len), (uint)(align), font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
@@ -2326,25 +2326,25 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_symbol(ref uint state, NkCommandBuffer _out_, NkRect bounds, int symbol,
-            int behavior, nk_style_button style, nk_input _in_, NkUserFont font)
+            NkButtonBehavior behavior, nk_style_button style, nk_input _in_, NkUserFont font)
         {
             int ret;
             NkRect content = new NkRect();
             if ((((_out_ == null) || (style == null)) || (font == null))) return (int)(nk_false);
-            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, (int)(behavior), &content));
+            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
             nk_draw_button_symbol(_out_, &bounds, &content, (uint)(state), style, (int)(symbol), font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
             return (int)(ret);
         }
 
-        public static int nk_do_button_image(ref uint state, NkCommandBuffer _out_, NkRect bounds, NkImage img, int b,
+        public static int nk_do_button_image(ref uint state, NkCommandBuffer _out_, NkRect bounds, NkImage img, NkButtonBehavior b,
             nk_style_button style, nk_input _in_)
         {
             int ret;
             NkRect content = new NkRect();
             if (((_out_ == null) || (style == null))) return (int)(nk_false);
-            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, (int)(b), &content));
+            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, b, &content));
             content.x += (float)(style.image_padding.x);
             content.y += (float)(style.image_padding.y);
             content.w -= (float)(2 * style.image_padding.x);
@@ -2356,13 +2356,13 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_text_symbol(ref uint state, NkCommandBuffer _out_, NkRect bounds, int symbol,
-            char* str, int len, uint align, int behavior, nk_style_button style, NkUserFont font, nk_input _in_)
+            char* str, int len, uint align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
         {
             int ret;
             NkRect tri = new NkRect();
             NkRect content = new NkRect();
             if (((_out_ == null) || (style == null)) || (font == null)) return (int)(nk_false);
-            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, (int)(behavior), &content));
+            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             tri.y = (float)(content.y + (content.h / 2) - font.Height / 2);
             tri.w = (float)(font.Height);
             tri.h = (float)(font.Height);
@@ -2381,13 +2381,13 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_text_image(ref uint state, NkCommandBuffer _out_, NkRect bounds, NkImage img,
-            char* str, int len, uint align, int behavior, nk_style_button style, NkUserFont font, nk_input _in_)
+            char* str, int len, uint align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
         {
             int ret;
             NkRect icon = new NkRect();
             NkRect content = new NkRect();
             if ((((_out_ == null) || (font == null)) || (style == null)) || (str == null)) return (int)(nk_false);
-            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, (int)(behavior), &content));
+            ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             icon.y = (float)(bounds.y + style.padding.y);
             icon.w = (float)(icon.h = (float)(bounds.h - 2 * style.padding.y));
             if ((align & NK_TEXT_ALIGN_LEFT) != 0)
@@ -2461,7 +2461,7 @@ namespace NuklearSharp
             touch.y = (float)(bounds.y - style.touch_padding.y);
             touch.w = (float)(bounds.w + style.touch_padding.x * 2);
             touch.h = (float)(bounds.h + style.touch_padding.y * 2);
-            if ((nk_button_behavior(ref state, (NkRect)(touch), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref state, (NkRect)(touch), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 value = value != 0 ? 0 : 1;
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
             nk_draw_selectable(_out_, (uint)(state), style, (int)(value), &bounds, null, null, str, (int)(len), (uint)(align),
@@ -2483,7 +2483,7 @@ namespace NuklearSharp
             touch.y = (float)(bounds.y - style.touch_padding.y);
             touch.w = (float)(bounds.w + style.touch_padding.x * 2);
             touch.h = (float)(bounds.h + style.touch_padding.y * 2);
-            if ((nk_button_behavior(ref state, (NkRect)(touch), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+            if ((nk_button_behavior(ref state, (NkRect)(touch), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                 value = value != 0 ? 0 : 1;
             icon.y = (float)(bounds.y + style.padding.y);
             icon.w = (float)(icon.h = (float)(bounds.h - 2 * style.padding.y));
@@ -2578,11 +2578,11 @@ namespace NuklearSharp
                 button.h = (float)(bounds.h);
                 button.x = (float)(bounds.x);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), (int)(NK_BUTTON_DEFAULT),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), NkButtonBehavior.NK_BUTTON_DEFAULT,
                         style.dec_button, _in_, font)) != 0) val -= (float)(step);
                 button.x = (float)((bounds.x + bounds.w) - button.w);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), (int)(NK_BUTTON_DEFAULT),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), NkButtonBehavior.NK_BUTTON_DEFAULT,
                         style.inc_button, _in_, font)) != 0) val += (float)(step);
                 bounds.x = (float)(bounds.x + button.w + style.spacing.x);
                 bounds.w = (float)(bounds.w - (2 * button.w + 2 * style.spacing.x));
@@ -2737,7 +2737,7 @@ namespace NuklearSharp
             }
             else if (((((nk_input_is_key_pressed(_in_, (int)(NK_KEY_SCROLL_UP))) != 0) && ((o) == (NK_VERTICAL))) &&
                       ((has_scrolling) != 0)) ||
-                     ((nk_button_behavior(ref ws, (NkRect)(*empty0), _in_, (int)(NK_BUTTON_DEFAULT))) != 0))
+                     ((nk_button_behavior(ref ws, (NkRect)(*empty0), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0))
             {
                 if ((o) == (NK_VERTICAL))
                     scroll_offset = (float)((0) < (scroll_offset - scroll->h) ? (scroll_offset - scroll->h) : (0));
@@ -2745,7 +2745,7 @@ namespace NuklearSharp
             }
             else if (((((nk_input_is_key_pressed(_in_, (int)(NK_KEY_SCROLL_DOWN))) != 0) && ((o) == (NK_VERTICAL))) &&
                       ((has_scrolling) != 0)) ||
-                     ((nk_button_behavior(ref ws, (NkRect)(*empty1), _in_, (int)(NK_BUTTON_DEFAULT))) != 0))
+                     ((nk_button_behavior(ref ws, (NkRect)(*empty1), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0))
             {
                 if ((o) == (NK_VERTICAL))
                     scroll_offset =
@@ -2817,11 +2817,11 @@ namespace NuklearSharp
                 scroll_step = (float)((step) < (button_pixel_inc) ? (step) : (button_pixel_inc));
                 button.y = (float)(scroll.y);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), (int)(NK_BUTTON_REPEATER),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), NkButtonBehavior.NK_BUTTON_REPEATER,
                         style.dec_button, _in_, font)) != 0) offset = (float)(offset - scroll_step);
                 button.y = (float)(scroll.y + scroll.h - button.h);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), (int)(NK_BUTTON_REPEATER),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), NkButtonBehavior.NK_BUTTON_REPEATER,
                         style.inc_button, _in_, font)) != 0) offset = (float)(offset + scroll_step);
                 scroll.y = (float)(scroll.y + button.h);
                 scroll.h = (float)(scroll_h);
@@ -2892,11 +2892,11 @@ namespace NuklearSharp
                 scroll_step = (float)((step) < (button_pixel_inc) ? (step) : (button_pixel_inc));
                 button.x = (float)(scroll.x);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), (int)(NK_BUTTON_REPEATER),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.dec_symbol), NkButtonBehavior.NK_BUTTON_REPEATER,
                         style.dec_button, _in_, font)) != 0) offset = (float)(offset - scroll_step);
                 button.x = (float)(scroll.x + scroll.w - button.w);
                 if (
-                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), (int)(NK_BUTTON_REPEATER),
+                    (nk_do_button_symbol(ref ws, _out_, (NkRect)(button), (int)(style.inc_symbol), NkButtonBehavior.NK_BUTTON_REPEATER,
                         style.inc_button, _in_, font)) != 0) offset = (float)(offset + scroll_step);
                 scroll.x = (float)(scroll.x + button.w);
                 scroll.w = (float)(scroll_w);
@@ -3468,7 +3468,7 @@ namespace NuklearSharp
         {
             if (((_in_) != null) && ((state) == (NK_PROPERTY_DEFAULT)))
             {
-                if ((nk_button_behavior(ref ws, (NkRect)(edit), _in_, (int)(NK_BUTTON_DEFAULT))) != 0)
+                if ((nk_button_behavior(ref ws, (NkRect)(edit), _in_, NkButtonBehavior.NK_BUTTON_DEFAULT)) != 0)
                     state = (int)(NK_PROPERTY_EDIT);
                 else if ((nk_input_is_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (NkRect)(label), (int)(nk_true))) != 0)
                     state = (int)(NK_PROPERTY_DRAG);
@@ -3487,7 +3487,7 @@ namespace NuklearSharp
         public static void nk_do_property(ref uint ws, NkCommandBuffer _out_, NkRect property, char* name,
             NkPropertyVariant* variant, float inc_per_pixel, ref string buffer, ref int state, ref int cursor,
             ref int select_begin, ref int select_end, nk_style_property style, int filter, nk_input _in_, NkUserFont font,
-            nk_text_edit text_edit, int behavior)
+            nk_text_edit text_edit, NkButtonBehavior behavior)
         {
             NkPluginFilter[] filters = new NkPluginFilter[2];
             filters[0] = nk_filter_decimal;
@@ -3572,7 +3572,7 @@ namespace NuklearSharp
             nk_draw_property(_out_, style, &property, &label, (uint)(ws), name, (int)(name_len), font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
             if (
-                (nk_do_button_symbol(ref ws, _out_, (NkRect)(left), (int)(style.sym_left), (int)(behavior), style.dec_button,
+                (nk_do_button_symbol(ref ws, _out_, (NkRect)(left), (int)(style.sym_left), behavior, style.dec_button,
                     _in_, font)) != 0)
             {
                 switch (variant->kind)
@@ -3616,7 +3616,7 @@ namespace NuklearSharp
             }
 
             if (
-                (nk_do_button_symbol(ref ws, _out_, (NkRect)(right), (int)(style.sym_right), (int)(behavior), style.inc_button,
+                (nk_do_button_symbol(ref ws, _out_, (NkRect)(right), (int)(style.sym_right), behavior, style.inc_button,
                     _in_, font)) != 0)
             {
                 switch (variant->kind)
@@ -3744,7 +3744,7 @@ namespace NuklearSharp
             int value_changed = (int)(0);
             int hsv_changed = (int)(0);
             nk_colorf_hsva_fv(hsva, (NkColorF)(*color));
-            if ((nk_button_behavior(ref state, (NkRect)(*matrix), _in_, (int)(NK_BUTTON_REPEATER))) != 0)
+            if ((nk_button_behavior(ref state, (NkRect)(*matrix), _in_, NkButtonBehavior.NK_BUTTON_REPEATER)) != 0)
             {
                 hsva[1] =
                     (float)
@@ -3770,7 +3770,7 @@ namespace NuklearSharp
                 value_changed = (int)(hsv_changed = (int)(1));
             }
 
-            if ((nk_button_behavior(ref state, (NkRect)(*hue_bar), _in_, (int)(NK_BUTTON_REPEATER))) != 0)
+            if ((nk_button_behavior(ref state, (NkRect)(*hue_bar), _in_, NkButtonBehavior.NK_BUTTON_REPEATER)) != 0)
             {
                 hsva[0] =
                     (float)
@@ -3787,7 +3787,7 @@ namespace NuklearSharp
 
             if ((alpha_bar) != null)
             {
-                if ((nk_button_behavior(ref state, (NkRect)(*alpha_bar), _in_, (int)(NK_BUTTON_REPEATER))) != 0)
+                if ((nk_button_behavior(ref state, (NkRect)(*alpha_bar), _in_, NkButtonBehavior.NK_BUTTON_REPEATER)) != 0)
                 {
                     hsva[3] =
                         (float)
