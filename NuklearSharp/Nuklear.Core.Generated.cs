@@ -313,14 +313,14 @@ namespace NuklearSharp
                         (int)(layout.Row.columns)));
             switch (layout.Row.type)
             {
-                case NK_LAYOUT_DYNAMIC_FIXED:
+                case NkPanelRowLayoutType.DYNAMIC_FIXED:
                     {
                         item_width = (float)(((1.0f) < (panel_space - 1.0f) ? (panel_space - 1.0f) : (1.0f)) / (float)(layout.Row.columns));
                         item_offset = (float)((float)(layout.Row.index) * item_width);
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
-                case NK_LAYOUT_DYNAMIC_ROW:
+                case NkPanelRowLayoutType.DYNAMIC_ROW:
                     {
                         item_width = (float)(layout.Row.item_width * panel_space);
                         item_offset = (float)(layout.Row.item_offset);
@@ -333,7 +333,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_LAYOUT_DYNAMIC_FREE:
+                case NkPanelRowLayoutType.DYNAMIC_FREE:
                     {
                         bounds->x = (float)(layout.AtX + (layout.Bounds.w * layout.Row.item.x));
                         bounds->x -= ((float)(layout.Offset.x));
@@ -343,7 +343,7 @@ namespace NuklearSharp
                         bounds->h = (float)(layout.Row.height * layout.Row.item.h);
                         return;
                     }
-                case NK_LAYOUT_DYNAMIC:
+                case NkPanelRowLayoutType.DYNAMIC:
                     {
                         float ratio;
                         ratio =
@@ -359,14 +359,14 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NK_LAYOUT_STATIC_FIXED:
+                case NkPanelRowLayoutType.STATIC_FIXED:
                     {
                         item_width = (float)(layout.Row.item_width);
                         item_offset = (float)((float)(layout.Row.index) * item_width);
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
-                case NK_LAYOUT_STATIC_ROW:
+                case NkPanelRowLayoutType.STATIC_ROW:
                     {
                         item_width = (float)(layout.Row.item_width);
                         item_offset = (float)(layout.Row.item_offset);
@@ -374,7 +374,7 @@ namespace NuklearSharp
                         if ((modify) != 0) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
-                case NK_LAYOUT_STATIC_FREE:
+                case NkPanelRowLayoutType.STATIC_FREE:
                     {
                         bounds->x = (float)(layout.AtX + layout.Row.item.x);
                         bounds->w = (float)(layout.Row.item.w);
@@ -385,7 +385,7 @@ namespace NuklearSharp
                         bounds->h = (float)(layout.Row.item.h);
                         return;
                     }
-                case NK_LAYOUT_STATIC:
+                case NkPanelRowLayoutType.STATIC:
                     {
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                         item_width = (float)(layout.Row.ratio[layout.Row.index]);
@@ -393,7 +393,7 @@ namespace NuklearSharp
                         if ((modify) != 0) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
-                case NK_LAYOUT_TEMPLATE:
+                case NkPanelRowLayoutType.TEMPLATE:
                     {
                         item_width = (float)(layout.Row.templates[layout.Row.index]);
                         item_offset = (float)(layout.Row.item_offset);

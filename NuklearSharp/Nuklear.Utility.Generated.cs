@@ -3463,28 +3463,28 @@ namespace NuklearSharp
         }
 
         public static void nk_property_behavior(ref NkWidgetStates ws, nk_input _in_, NkRect property, NkRect label, NkRect edit,
-            NkRect empty, ref int state, NkPropertyVariant* variant, float inc_per_pixel)
+            NkRect empty, ref NkPropertyStatus state, NkPropertyVariant* variant, float inc_per_pixel)
         {
-            if (((_in_) != null) && ((state) == (NK_PROPERTY_DEFAULT)))
+            if (((_in_) != null) && ((state) == (NkPropertyStatus.NK_PROPERTY_DEFAULT)))
             {
                 if ((nk_button_behavior(ref ws, (NkRect)(edit), _in_, NkButtonBehavior.Default)) != 0)
-                    state = (int)(NK_PROPERTY_EDIT);
+                    state = NkPropertyStatus.NK_PROPERTY_EDIT;
                 else if ((nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(label), (int)(nk_true))) != 0)
-                    state = (int)(NK_PROPERTY_DRAG);
+                    state = NkPropertyStatus.NK_PROPERTY_DRAG;
                 else if ((nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(empty), (int)(nk_true))) != 0)
-                    state = (int)(NK_PROPERTY_DRAG);
+                    state = NkPropertyStatus.NK_PROPERTY_DRAG;
             }
 
-            if ((state) == (NK_PROPERTY_DRAG))
+            if ((state) == (NkPropertyStatus.NK_PROPERTY_DRAG))
             {
                 nk_drag_behavior(ref ws, _in_, (NkRect)(property), variant, (float)(inc_per_pixel));
-                if ((ws & NkWidgetStates.ACTIVED) == 0) state = (int)(NK_PROPERTY_DEFAULT);
+                if ((ws & NkWidgetStates.ACTIVED) == 0) state = (NkPropertyStatus.NK_PROPERTY_DEFAULT);
             }
 
         }
 
         public static void nk_do_property(ref NkWidgetStates ws, NkCommandBuffer _out_, NkRect property, char* name,
-            NkPropertyVariant* variant, float inc_per_pixel, ref string buffer, ref int state, ref int cursor,
+            NkPropertyVariant* variant, float inc_per_pixel, ref string buffer, ref NkPropertyStatus state, ref int cursor,
             ref int select_begin, ref int select_end, nk_style_property style, int filter, nk_input _in_, NkUserFont font,
             nk_text_edit text_edit, NkButtonBehavior behavior)
         {
@@ -3493,7 +3493,7 @@ namespace NuklearSharp
             filters[1] = nk_filter_float;
 
             int active;
-            int old;
+            NkPropertyStatus old;
             int name_len;
             float size;
             string dst = null;
@@ -3516,7 +3516,7 @@ namespace NuklearSharp
             right.w = (float)(left.w);
             right.h = (float)(left.h);
             right.x = (float)(property.x + property.w - (right.w + style.padding.x));
-            if ((state) == (NK_PROPERTY_EDIT))
+            if ((state) == (NkPropertyStatus.NK_PROPERTY_EDIT))
             {
                 fixed (char* ptr = buffer)
                 {
@@ -3564,7 +3564,7 @@ namespace NuklearSharp
             empty.x = (float)(label.x + label.w);
             empty.y = (float)(property.y);
             empty.h = (float)(property.h);
-            old = (int)((state) == (NK_PROPERTY_EDIT) ? 1 : 0);
+            old =((state) == (NkPropertyStatus.NK_PROPERTY_EDIT) ? NkPropertyStatus.NK_PROPERTY_EDIT : NkPropertyStatus.NK_PROPERTY_DEFAULT);
             nk_property_behavior(ref ws, _in_, (NkRect)(property), (NkRect)(label), (NkRect)(edit), (NkRect)(empty),
                 ref state, variant, (float)(inc_per_pixel));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
@@ -3658,13 +3658,13 @@ namespace NuklearSharp
                 }
             }
 
-            if ((old != NK_PROPERTY_EDIT) && ((state) == (NK_PROPERTY_EDIT)))
+            if ((old != NkPropertyStatus.NK_PROPERTY_EDIT) && ((state) == (NkPropertyStatus.NK_PROPERTY_EDIT)))
             {
                 buffer = dst;
                 cursor = buffer != null ? buffer.Length : 0;
                 active = (int)(0);
             }
-            else active = (int)((state) == (NK_PROPERTY_EDIT) ? 1 : 0);
+            else active = (int)((state) == (NkPropertyStatus.NK_PROPERTY_EDIT) ? 1 : 0);
             nk_textedit_clear_state(text_edit, (int)(NK_TEXT_EDIT_SINGLE_LINE), filters[filter]);
             text_edit.active = ((byte)(active));
 
@@ -3685,7 +3685,7 @@ namespace NuklearSharp
                         : ((select_end) < (length) ? (select_end) : (length)));
             text_edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
             nk_do_edit(ref ws, _out_, (NkRect)(edit),(NkEditFlags.FIELD | NkEditFlags.AUTO_SELECT), filters[filter], text_edit,
-                style.edit, ((state) == (NK_PROPERTY_EDIT)) ? _in_ : null, font);
+                style.edit, ((state) == (NkPropertyStatus.NK_PROPERTY_EDIT)) ? _in_ : null, font);
             cursor = (int)(text_edit.cursor);
             select_begin = (int)(text_edit.select_start);
             select_end = (int)(text_edit.select_end);
@@ -3693,7 +3693,7 @@ namespace NuklearSharp
                 text_edit.active = (byte)(nk_false);
             if (((active) != 0) && (text_edit.active == 0))
             {
-                state = (int)(NK_PROPERTY_DEFAULT);
+                state = (NkPropertyStatus.NK_PROPERTY_DEFAULT);
 
                 fixed (char* ptr = buffer)
                 {

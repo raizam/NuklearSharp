@@ -93,16 +93,16 @@ namespace NuklearSharp
 
     //public enum NkPanelRowLayoutType
     //{
-    //    NK_LAYOUT_DYNAMIC_FIXED = 0,
-    //    NK_LAYOUT_DYNAMIC_ROW = 1,
-    //    NK_LAYOUT_DYNAMIC_FREE = 2,
-    //    NK_LAYOUT_DYNAMIC = 3,
-    //    NK_LAYOUT_STATIC_FIXED = 4,
-    //    NK_LAYOUT_STATIC_ROW = 5,
-    //    NK_LAYOUT_STATIC_FREE = 6,
-    //    NK_LAYOUT_STATIC = 7,
-    //    NK_LAYOUT_TEMPLATE = 8,
-    //    NK_LAYOUT_COUNT = 9
+    //    NkPanelRowLayoutType.DYNAMIC_FIXED = 0,
+    //    NkPanelRowLayoutType.DYNAMIC_ROW = 1,
+    //    NkPanelRowLayoutType.DYNAMIC_FREE = 2,
+    //    NkPanelRowLayoutType.DYNAMIC = 3,
+    //    NkPanelRowLayoutType.STATIC_FIXED = 4,
+    //    NkPanelRowLayoutType.STATIC_ROW = 5,
+    //    NkPanelRowLayoutType.STATIC_FREE = 6,
+    //    NkPanelRowLayoutType.STATIC = 7,
+    //    NkPanelRowLayoutType.TEMPLATE = 8,
+    //    NkPanelRowLayoutType.COUNT = 9
     //}
 
 
@@ -391,12 +391,7 @@ namespace NuklearSharp
     //    NK_TOGGLE_OPTION = 1
     //}
 
-    //public enum NkPropertyStatus
-    //{
-    //    NK_PROPERTY_DEFAULT = 0,
-    //    NK_PROPERTY_EDIT = 1,
-    //    NK_PROPERTY_DRAG = 2
-    //}
+
 
     //public enum NkPropertyFilter
     //{
@@ -715,11 +710,46 @@ namespace NuklearSharp
         SET_SUB = NkPanelType.SET_POPUP | NkPanelType.GROUP,
     }
 
+    public enum FontAtlasFormat
+    {
+        Alpha8,
+        Rgba32
+    }
+
+
+    public enum NkPanelRowLayoutType
+    {
+        DYNAMIC_FIXED = 0,
+        DYNAMIC_ROW = 1,
+        DYNAMIC_FREE = 2,
+        DYNAMIC = 3,
+        STATIC_FIXED = 4,
+        STATIC_ROW = 5,
+        STATIC_FREE = 6,
+        STATIC = 7,
+        TEMPLATE = 8,
+        COUNT = 9
+    }
+
+    public enum NkPropertyKind
+    {
+        NK_PROPERTY_INT = 0,
+        NK_PROPERTY_FLOAT = 1,
+        NK_PROPERTY_DOUBLE = 2
+    }
+
+    public enum NkPropertyStatus
+    {
+        NK_PROPERTY_DEFAULT = 0,
+        NK_PROPERTY_EDIT = 1,
+        NK_PROPERTY_DRAG = 2
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
         public const int nk_true = 1;
-        //public const int NK_UP = 0;
+        /*/public const int NK_UP = 0;
         //public const int NK_RIGHT = 1;
         //public const int NK_DOWN = 2;
         //public const int NK_LEFT = 3;
@@ -813,7 +843,8 @@ namespace NuklearSharp
         //public const int NkPanelFlags.SCROLL_AUTO_HIDE = (1 << (7));
         //public const int NkPanelFlags.BACKGROUND = (1 << (8));
         //public const int NkPanelFlags.SCALE_LEFT = (1 << (9));
-        //public const int NkPanelFlags.NO_INPUT = (1 << (10));
+        //public const int NkPanelFlags.NO_INPUT = (1 << (10));*/
+
         public const int NK_WIDGET_INVALID = 0;
         public const int NK_WIDGET_VALID = 1;
         public const int NK_WIDGET_ROM = 2;
@@ -864,10 +895,10 @@ namespace NuklearSharp
         //public const int NkStyleCursor.RESIZE_TOP_LEFT_DOWN_RIGHT = 5;
         //public const int NkStyleCursor.RESIZE_TOP_RIGHT_DOWN_LEFT = 6;
         //public const int NkStyleCursor.COUNT = 7;
-        public const int NK_COORD_UV = 0;
-        public const int NK_COORD_PIXEL = 1;
-        public const int NK_FONT_ATLAS_ALPHA8 = 0;
-        public const int NK_FONT_ATLAS_RGBA32 = 1;
+        //public const int NK_COORD_UV = 0;
+        //public const int NK_COORD_PIXEL = 1;
+        //public const int NK_FONT_ATLAS_ALPHA8 = 0;
+        //public const int NK_FONT_ATLAS_RGBA32 = 1;
         public const int NK_BUFFER_FIXED = 0;
         public const int NK_BUFFER_DYNAMIC = 1;
         public const int NK_BUFFER_FRONT = 0;
@@ -923,16 +954,16 @@ namespace NuklearSharp
 
         //public const int NkPanelType.SET_POPUP = NkPanelType.SET_NONBLOCK | NkPanelType.POPUP;
         //public const int NkPanelType.SET_SUB = NkPanelType.SET_POPUP | NkPanelType.GROUP;
-        public const int NK_LAYOUT_DYNAMIC_FIXED = 0;
-        public const int NK_LAYOUT_DYNAMIC_ROW = 1;
-        public const int NK_LAYOUT_DYNAMIC_FREE = 2;
-        public const int NK_LAYOUT_DYNAMIC = 3;
-        public const int NK_LAYOUT_STATIC_FIXED = 4;
-        public const int NK_LAYOUT_STATIC_ROW = 5;
-        public const int NK_LAYOUT_STATIC_FREE = 6;
-        public const int NK_LAYOUT_STATIC = 7;
-        public const int NK_LAYOUT_TEMPLATE = 8;
-        public const int NK_LAYOUT_COUNT = 9;
+        //public const int NkPanelRowLayoutType.DYNAMIC_FIXED = 0;
+        //public const int NkPanelRowLayoutType.DYNAMIC_ROW = 1;
+        //public const int NkPanelRowLayoutType.DYNAMIC_FREE = 2;
+        //public const int NkPanelRowLayoutType.DYNAMIC = 3;
+        //public const int NkPanelRowLayoutType.STATIC_FIXED = 4;
+        //public const int NkPanelRowLayoutType.STATIC_ROW = 5;
+        //public const int NkPanelRowLayoutType.STATIC_FREE = 6;
+        //public const int NkPanelRowLayoutType.STATIC = 7;
+        //public const int NkPanelRowLayoutType.TEMPLATE = 8;
+        //public const int NkPanelRowLayoutType.COUNT = 9;
         //public const int NkPanelFlags.PRIVATE = (1 << (11));
         //public const int NkPanelFlags.DYNAMIC = NkPanelFlags.PRIVATE;
         //public const int NkPanelFlags.ROM = (1 << (12));
@@ -999,9 +1030,9 @@ namespace NuklearSharp
         public const int NK_TT_MAC_LANG_CHINESE_TRAD = 19;
         public const int NK_TOGGLE_CHECK = 0;
         public const int NK_TOGGLE_OPTION = 1;
-        public const int NK_PROPERTY_DEFAULT = 0;
-        public const int NK_PROPERTY_EDIT = 1;
-        public const int NK_PROPERTY_DRAG = 2;
+        //public const int NK_PROPERTY_DEFAULT = 0;
+        //public const int NK_PROPERTY_EDIT = 1;
+        //public const int NK_PROPERTY_DRAG = 2;
         public const int NK_FILTER_INT = 0;
         public const int NK_FILTER_FLOAT = 1;
         public const int NK_PROPERTY_INT = 0;

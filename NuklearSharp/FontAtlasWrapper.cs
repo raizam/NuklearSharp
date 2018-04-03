@@ -47,7 +47,7 @@ namespace NuklearSharp
         {
             int w = 0, h = 0;
 
-            var image = (int*)Nk.nk_font_atlas_bake(_atlas, ref w, ref h, Nk.NK_FONT_ATLAS_RGBA32);
+            var image = (int*)Nk.nk_font_atlas_bake(_atlas, ref w, ref h, FontAtlasFormat.Rgba32);
             var buffSize = w * h * 4;
             var arr = new byte[buffSize];
             Marshal.Copy((IntPtr)image, arr, 0, buffSize);

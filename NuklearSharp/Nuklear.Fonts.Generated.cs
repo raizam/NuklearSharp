@@ -1858,7 +1858,7 @@ namespace NuklearSharp
             return font;
         }
 
-        public static void* nk_font_atlas_bake(NkFontAtlas atlas, ref int width, ref int height, int fmt)
+        public static void* nk_font_atlas_bake(NkFontAtlas atlas, ref int width, ref int height, FontAtlasFormat fmt)
         {
             int i = (int) (0);
             void* tmp = null;
@@ -1895,7 +1895,7 @@ namespace NuklearSharp
                     (int) (27), ('.'), ('X'));
             }
 
-            if ((fmt) == (NK_FONT_ATLAS_RGBA32))
+            if ((fmt) == FontAtlasFormat.Rgba32)
             {
                 void* img_rgba = CRuntime.Malloc((ulong) (width * height * 4));
                 if (img_rgba == null) goto failed;

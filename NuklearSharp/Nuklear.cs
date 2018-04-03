@@ -834,7 +834,7 @@ namespace NuklearSharp
             var bounds = new NkRect();
             uint hash;
             string dummyBuffer = null;
-            var dummyState = NK_PROPERTY_DEFAULT;
+            NkPropertyStatus dummyState = NkPropertyStatus.NK_PROPERTY_DEFAULT;
             var dummyCursor = 0;
             var dummySelectBegin = 0;
             var dummySelectEnd = 0;
@@ -855,7 +855,7 @@ namespace NuklearSharp
                 ? null
                 : ctx.Input;
 
-            int oldState, state;
+            NkPropertyStatus oldState, state;
             string buffer;
             int cursor, selectBegin, selectEnd;
             if (win.Property.active != 0 && hash == win.Property.name)
@@ -886,7 +886,7 @@ namespace NuklearSharp
             }
 
             ctx.TextEdit.clip = ctx.Clip;
-            if (_in_ != null && state != NK_PROPERTY_DEFAULT && win.Property.active == 0)
+            if (_in_ != null && state != NkPropertyStatus.NK_PROPERTY_DEFAULT && win.Property.active == 0)
             {
                 win.Property.active = 1;
                 win.Property.buffer = buffer;
@@ -895,16 +895,16 @@ namespace NuklearSharp
                 win.Property.name = hash;
                 win.Property.select_start = selectBegin;
                 win.Property.select_end = selectEnd;
-                if (state == NK_PROPERTY_DRAG)
+                if (state == NkPropertyStatus.NK_PROPERTY_DRAG)
                 {
                     ctx.Input.mouse.Grab = nk_true;
                     ctx.Input.mouse.Grabbed = nk_true;
                 }
             }
 
-            if (state == NK_PROPERTY_DEFAULT && oldState != NK_PROPERTY_DEFAULT)
+            if (state == NkPropertyStatus.NK_PROPERTY_DEFAULT && oldState != NkPropertyStatus.NK_PROPERTY_DEFAULT)
             {
-                if (oldState == NK_PROPERTY_DRAG)
+                if (oldState == NkPropertyStatus.NK_PROPERTY_DRAG)
                 {
                     ctx.Input.mouse.Grab = nk_false;
                     ctx.Input.mouse.Grabbed = nk_false;

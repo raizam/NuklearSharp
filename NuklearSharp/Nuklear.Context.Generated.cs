@@ -2254,8 +2254,8 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             nk_panel_layout(ctx, win, (float)(height), (int)(cols));
-            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) win.Layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_FIXED);
-            else win.Layout.Row.type = (int)(NK_LAYOUT_STATIC_FIXED);
+            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) win.Layout.Row.type = (int)(NkPanelRowLayoutType.DYNAMIC_FIXED);
+            else win.Layout.Row.type = (NkPanelRowLayoutType.STATIC_FIXED);
             win.Layout.Row.ratio = null;
             win.Layout.Row.filled = (float)(0);
             win.Layout.Row.item_offset = (float)(0);
@@ -2292,8 +2292,8 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(row_height), (int)(cols));
-            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_ROW);
-            else layout.Row.type = (int)(NK_LAYOUT_STATIC_ROW);
+            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) layout.Row.type = (NkPanelRowLayoutType.DYNAMIC_ROW);
+            else layout.Row.type = (NkPanelRowLayoutType.STATIC_ROW);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
             layout.Row.item_width = (float)(0);
@@ -2308,8 +2308,8 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if ((layout.Row.type != NK_LAYOUT_STATIC_ROW) && (layout.Row.type != NK_LAYOUT_DYNAMIC_ROW)) return;
-            if ((layout.Row.type) == (NK_LAYOUT_DYNAMIC_ROW))
+            if ((layout.Row.type != NkPanelRowLayoutType.STATIC_ROW) && (layout.Row.type != NkPanelRowLayoutType.DYNAMIC_ROW)) return;
+            if ((layout.Row.type) == (NkPanelRowLayoutType.DYNAMIC_ROW))
             {
                 float ratio = (float)(ratio_or_width);
                 if ((ratio + layout.Row.filled) > (1.0f)) return;
@@ -2328,7 +2328,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if ((layout.Row.type != NK_LAYOUT_STATIC_ROW) && (layout.Row.type != NK_LAYOUT_DYNAMIC_ROW)) return;
+            if ((layout.Row.type != NkPanelRowLayoutType.STATIC_ROW) && (layout.Row.type != NkPanelRowLayoutType.DYNAMIC_ROW)) return;
             layout.Row.item_width = (float)(0);
             layout.Row.item_offset = (float)(0);
         }
@@ -2353,13 +2353,13 @@ namespace NuklearSharp
                     else r += (float)(ratio[i]);
                 }
                 r = (float)((0) < ((1.0f) < (1.0f - r) ? (1.0f) : (1.0f - r)) ? ((1.0f) < (1.0f - r) ? (1.0f) : (1.0f - r)) : (0));
-                layout.Row.type = (int)(NK_LAYOUT_DYNAMIC);
+                layout.Row.type = (NkPanelRowLayoutType.DYNAMIC);
                 layout.Row.item_width = (float)((((r) > (0)) && ((n_undef) > (0))) ? (r / (float)(n_undef)) : 0);
             }
             else
             {
                 layout.Row.ratio = ratio;
-                layout.Row.type = (int)(NK_LAYOUT_STATIC);
+                layout.Row.type = (NkPanelRowLayoutType.STATIC);
                 layout.Row.item_width = (float)(0);
                 layout.Row.item_offset = (float)(0);
             }
@@ -2376,7 +2376,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(height), (int)(1));
-            layout.Row.type = (int)(NK_LAYOUT_TEMPLATE);
+            layout.Row.type = (NkPanelRowLayoutType.TEMPLATE);
             layout.Row.columns = (int)(0);
             layout.Row.ratio = null;
             layout.Row.item_width = (float)(0);
@@ -2396,7 +2396,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NK_LAYOUT_TEMPLATE) return;
+            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(-1.0f);
         }
@@ -2408,7 +2408,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NK_LAYOUT_TEMPLATE) return;
+            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(-min_width);
         }
@@ -2420,7 +2420,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NK_LAYOUT_TEMPLATE) return;
+            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(width);
         }
@@ -2438,7 +2438,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NK_LAYOUT_TEMPLATE) return;
+            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
             for (i = (int)(0); (i) < (layout.Row.columns); ++i)
             {
                 float width = (float)(layout.Row.templates[i]);
@@ -2490,8 +2490,8 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(height), (int)(widget_count));
-            if ((fmt) == (NkLayoutFormat.NK_STATIC)) layout.Row.type = (int)(NK_LAYOUT_STATIC_FREE);
-            else layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_FREE);
+            if ((fmt) == (NkLayoutFormat.NK_STATIC)) layout.Row.type = (NkPanelRowLayoutType.STATIC_FREE);
+            else layout.Row.type = (NkPanelRowLayoutType.DYNAMIC_FREE);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
             layout.Row.item_width = (float)(0);
@@ -2890,7 +2890,7 @@ namespace NuklearSharp
                 cols = (int)(index);
             }
 
-            if ((layout.Row.type != NK_LAYOUT_DYNAMIC_FIXED) && (layout.Row.type != NK_LAYOUT_STATIC_FIXED))
+            if ((layout.Row.type != NkPanelRowLayoutType.DYNAMIC_FIXED) && (layout.Row.type != NkPanelRowLayoutType.STATIC_FIXED))
             {
                 for (i = (int)(0); (i) < (cols); ++i)
                 {

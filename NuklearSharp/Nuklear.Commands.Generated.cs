@@ -18,7 +18,7 @@ namespace NuklearSharp
 
         public unsafe partial class nk_row_layout
         {
-            public int type;
+            public NkPanelRowLayoutType type;
             public int index;
             public float height;
             public float min_height;
@@ -82,7 +82,7 @@ namespace NuklearSharp
             public uint name;
             public uint seq;
             public uint old;
-            public int state;
+            public NkPropertyStatus state;
         }
 
         public unsafe partial class nk_table
