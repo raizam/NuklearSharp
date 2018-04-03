@@ -2,17 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace NuklearSharp
 {
-
     [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct NkColor
-        {
-            public byte r;
-            public byte g;
-            public byte b;
-            public byte a;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct NkColorF
         {
             public float r;
@@ -35,16 +25,7 @@ namespace NuklearSharp
             public short y;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct NkRect
-        {
-            public float x;
-            public float y;
-            public float w;
-            public float h;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct NkRectI
         {
             public short x;
@@ -139,12 +120,12 @@ namespace NuklearSharp
 
         public static NkColor nk_rgba_cf(NkColorF c)
         {
-            return (NkColor)(nk_rgba_f((float)(c.r), (float)(c.g), (float)(c.b), (float)(c.a)));
+            return (NkColor)(NkColor.nk_rgba_f((float)(c.r), (float)(c.g), (float)(c.b), (float)(c.a)));
         }
 
         public static NkColor nk_rgb_cf(NkColorF c)
         {
-            return (NkColor)(nk_rgb_f((float)(c.r), (float)(c.g), (float)(c.b)));
+            return (NkColor)(NkColor.nk_rgb_f((float)(c.r), (float)(c.g), (float)(c.b)));
         }
 
         public static uint nk_color_u32(NkColor _in_)
@@ -159,7 +140,7 @@ namespace NuklearSharp
         public static NkColorF nk_color_cf(NkColor _in_)
         {
             NkColorF o = new NkColorF();
-            nk_color_f(&o.r, &o.g, &o.b, &o.a, (NkColor)(_in_));
+            NkColor.nk_color_f(&o.r, &o.g, &o.b, &o.a, (NkColor)(_in_));
             return (NkColorF)(o);
         }
 
@@ -253,26 +234,6 @@ namespace NuklearSharp
         public static void nk_mfree(NkHandle unused, void* ptr)
         {
             CRuntime.Free(ptr);
-        }
-
-        public static void nk_font_query_font_glyph(NkFont font, float height, NkUserFontGlyph* glyph, char codepoint,
-            char next_codepoint)
-        {
-            float scale;
-            nk_font_glyph* g;
-
-
-            if ((font == null) || (glyph == null)) return;
-            scale = (float)(height / font.Info.height);
-            g = nk_font_find_glyph(font, codepoint);
-            glyph->width = (float)((g->x1 - g->x0) * scale);
-            glyph->height = (float)((g->y1 - g->y0) * scale);
-            glyph->offset = (NkVec2)(nk_vec2_((float)(g->x0 * scale), (float)(g->y0 * scale)));
-            glyph->xadvance = (float)(g->xadvance * scale);
-            glyph->uv_x[0] = g->u0;
-            glyph->uv_y[0] = g->v0;
-            glyph->uv_x[1] = g->u1;
-            glyph->uv_y[1] = g->v1;
         }
 
         public static NkStyleItem nk_style_item_image(NkImage img)

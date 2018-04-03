@@ -48,7 +48,7 @@ namespace Extended
             var background = ctx.Ctx.Style.Window.fixed_background;
 
             ctx.Ctx.Style.Window.fixed_background = Nk.nk_style_item_hide();
-            ctx.Ctx.Style.Window.border_color = Nk.nk_rgba(0, 0, 0, 0);
+            ctx.Ctx.Style.Window.border_color = NkColor.nk_rgba(0, 0, 0, 0);
 
             var totalSpace = ctx.WindowGetContentRegion();
             ctx.Ctx.Style.Window.spacing = Nk.nk_vec2_(0, 0);
@@ -69,7 +69,7 @@ namespace Extended
                 Nk.nk_widget(&bounds, ctx.Ctx);
 
                 /* outer circle */
-                o.nk_fill_circle(bounds, Nk.nk_rgb(50, 50, 50));
+                o.nk_fill_circle(bounds, NkColor.nk_rgb(50, 50, 50));
                 int activeItem;
                 {
                     /* circle buttons */
@@ -89,7 +89,7 @@ namespace Extended
                     {
                         NkRect content;
                         o.nk_fill_arc(center.x, center.y, bounds.w / 2.0f,
-                            aMin, aMax, activeItem == i ? Nk.nk_rgb(45, 100, 255) : Nk.nk_rgb(60, 60, 60));
+                            aMin, aMax, activeItem == i ? NkColor.nk_rgb(45, 100, 255) : NkColor.nk_rgb(60, 60, 60));
 
                         /* separator line */
                         var rx = bounds.w / 2.0f;
@@ -97,7 +97,7 @@ namespace Extended
                         var dx = rx * (float)Math.Cos(aMin) - ry * (float)Math.Sin(aMin);
                         var dy = rx * (float)Math.Sin(aMin) + ry * (float)Math.Cos(aMin);
                         o.nk_stroke_line(center.x, center.y,
-                            center.x + dx, center.y + dy, 1.0f, Nk.nk_rgb(50, 50, 50));
+                            center.x + dx, center.y + dy, 1.0f, NkColor.nk_rgb(50, 50, 50));
 
                         /* button content */
                         var a = aMin + (aMax - aMin) / 2.0f;
@@ -107,7 +107,7 @@ namespace Extended
                         content.h = 30;
                         content.x = center.x + (rx * (float)Math.Cos(a) - ry * (float)Math.Sin(a) - content.w / 2.0f);
                         content.y = center.y + (rx * (float)Math.Sin(a) + ry * (float)Math.Cos(a) - content.h / 2.0f);
-                        o.nk_draw_image(content, icons[i], Nk.nk_rgb(255, 255, 255));
+                        o.nk_draw_image(content, icons[i], NkColor.nk_rgb(255, 255, 255));
                         aMin = aMax;
                         aMax += step;
                     }
@@ -119,14 +119,14 @@ namespace Extended
                     inner.y = bounds.y + bounds.h / 2 - bounds.h / 4;
                     inner.w = bounds.w / 2;
                     inner.h = bounds.h / 2;
-                    o.nk_fill_circle(inner, Nk.nk_rgb(45, 45, 45));
+                    o.nk_fill_circle(inner, NkColor.nk_rgb(45, 45, 45));
 
                     /* active icon content */
                     bounds.w = inner.w / 2.0f;
                     bounds.h = inner.h / 2.0f;
                     bounds.x = inner.x + inner.w / 2 - bounds.w / 2;
                     bounds.y = inner.y + inner.h / 2 - bounds.h / 2;
-                    o.nk_draw_image(bounds, icons[activeItem], Nk.nk_rgb(255, 255, 255));
+                    o.nk_draw_image(bounds, icons[activeItem], NkColor.nk_rgb(255, 255, 255));
                 }
                 ctx.LayoutSpaceEnd();
                 if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, NkButtons.RIGHT) == false)

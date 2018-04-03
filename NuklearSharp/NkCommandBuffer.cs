@@ -737,7 +737,7 @@
             if (background.Type == NkStyleItemType.IMAGE)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
-                text.background = Nk.nk_rgba((int)0, (int)0, (int)0, (int)0);
+                text.background = NkColor.nk_rgba((int)0, (int)0, (int)0, (int)0);
             }
             else
             {
@@ -979,7 +979,7 @@
             if (background.Type == NkStyleItemType.IMAGE)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
-                text.background = Nk.nk_rgba((int)0, (int)0, (int)0, (int)0);
+                text.background = NkColor.nk_rgba((int)0, (int)0, (int)0, (int)0);
             }
             else
             {
@@ -1004,7 +1004,7 @@
             float* hsva = stackalloc float[4];
             float line_y;
             int i;
-            Nk.nk_colorf_hsva_fv(hsva, col);
+            NkColor.nk_colorf_hsva_fv(hsva, col);
             for (i = 0; i < 6; ++i)
             {
                 nk_fill_rect_multi_color(
@@ -1014,7 +1014,7 @@
             }
             line_y = (int)(hue_bar->y + hsva[0] * matrix->h + 0.5f);
             nk_stroke_line(hue_bar->x - 1, line_y, hue_bar->x + hue_bar->w + 2,
-                line_y, 1, Nk.nk_rgb((int)255, (int)255, (int)255));
+                line_y, 1, NkColor.nk_rgb((int)255, (int)255, (int)255));
             if (alpha_bar != null)
             {
                 float alpha =
@@ -1024,10 +1024,10 @@
                     black, black);
                 nk_stroke_line(alpha_bar->x - 1, line_y,
                     alpha_bar->x + alpha_bar->w + 2, line_y, 1,
-                    Nk.nk_rgb((int)255, (int)255, (int)255));
+                    NkColor.nk_rgb((int)255, (int)255, (int)255));
             }
 
-            temp = Nk.nk_hsv_f((float)hsva[0], (float)1.0f, (float)1.0f);
+            temp = NkColor.nk_hsv_f((float)hsva[0], (float)1.0f, (float)1.0f);
             nk_fill_rect_multi_color(*matrix, white, temp, temp,
                 white);
             nk_fill_rect_multi_color(*matrix, black_trans, black_trans,

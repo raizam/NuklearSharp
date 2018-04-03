@@ -151,7 +151,7 @@ namespace NuklearSharp
             if (!closed) count = (ulong)(points_count - 1);
             thick_line = (int)((thickness) > (1.0f) ? 1 : 0);
             color.a = ((byte)((float)(color.a) * list.Config.GlobalAlpha));
-            nk_color_fv(&col.r, (NkColor)(color));
+            NkColor.nk_color_fv(&col.r, (NkColor)(color));
             col_trans = (NkColorF)(col);
             col_trans.a = (float)(0);
             if ((aliasing))
@@ -464,7 +464,7 @@ namespace NuklearSharp
             var points_count = (ulong)list.Points.Count;
             if ((list == null) || ((list.Points.Count) < (3))) return;
             color.a = ((byte)((float)(color.a) * list.Config.GlobalAlpha));
-            nk_color_fv(&col.r, (NkColor)(color));
+            NkColor.nk_color_fv(&col.r, (NkColor)(color));
             col_trans = (NkColorF)(col);
             col_trans.a = (float)(0);
             if ((aliasing))
@@ -793,10 +793,10 @@ namespace NuklearSharp
             NkColorF col_right = new NkColorF();
             NkColorF col_bottom = new NkColorF();
             ushort index;
-            nk_color_fv(&col_left.r, (NkColor)(left));
-            nk_color_fv(&col_right.r, (NkColor)(right));
-            nk_color_fv(&col_top.r, (NkColor)(top));
-            nk_color_fv(&col_bottom.r, (NkColor)(bottom));
+            NkColor.nk_color_fv(&col_left.r, (NkColor)(left));
+            NkColor.nk_color_fv(&col_right.r, (NkColor)(right));
+            NkColor.nk_color_fv(&col_top.r, (NkColor)(top));
+            NkColor.nk_color_fv(&col_bottom.r, (NkColor)(bottom));
             if (list == null) return;
             nk_draw_list_push_image(list, (NkHandle)(list.Config.Null.texture));
             index = ((ushort)(list.VertexOffset));
@@ -886,7 +886,7 @@ namespace NuklearSharp
             NkColorF col = new NkColorF();
             ushort index;
             if (list == null) return;
-            nk_color_fv(&col.r, (NkColor)(color));
+            NkColor.nk_color_fv(&col.r, (NkColor)(color));
             uvb = (NkVec2)(nk_vec2_((float)(uvc.x), (float)(uva.y)));
             uvd = (NkVec2)(nk_vec2_((float)(uva.x), (float)(uvc.y)));
             b = (NkVec2)(nk_vec2_((float)(c.x), (float)(a.y)));

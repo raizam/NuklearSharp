@@ -435,12 +435,12 @@ namespace NuklearSharp
 
         public void LayoutSetMinRowHeight(float height)
         {
-            Nk.nk_layout_set_min_row_height(_ctx, height);
+            Layout.nk_layout_set_min_row_height(_ctx, height);
         }
 
         public void LayoutResetMinRowHeight()
         {
-            Nk.nk_layout_reset_min_row_height(_ctx);
+            Layout.nk_layout_reset_min_row_height(_ctx);
         }
 
         public void PanelLayout(NkWindow win, float height, int cols)
@@ -455,110 +455,110 @@ namespace NuklearSharp
 
         public float LayoutRatioFromPixel(float pixel_width)
         {
-            return Nk.nk_layout_ratio_from_pixel(_ctx, pixel_width);
+            return Layout.nk_layout_ratio_from_pixel(_ctx, pixel_width);
         }
 
         public void LayoutRowDynamic(float height, int cols)
         {
-            Nk.nk_layout_row_dynamic(_ctx, height, cols);
+            Layout.nk_layout_row_dynamic(_ctx, height, cols);
         }
 
         public void LayoutRowStatic(float height, int item_width, int cols)
         {
-            Nk.nk_layout_row_static(_ctx, height, item_width, cols);
+            Layout.nk_layout_row_static(_ctx, height, item_width, cols);
         }
 
         public void LayoutRowBegin(NkLayoutFormat fmt, float row_height, int cols)
         {
-            Nk.nk_layout_row_begin(_ctx, fmt, row_height, cols);
+            Layout.nk_layout_row_begin(_ctx, fmt, row_height, cols);
         }
 
         public void LayoutRowPush(float ratio_or_width)
         {
-            Nk.nk_layout_row_push(_ctx, ratio_or_width);
+            Layout.nk_layout_row_push(_ctx, ratio_or_width);
         }
 
         public void LayoutRowEnd()
         {
-            Nk.nk_layout_row_end(_ctx);
+            Layout.nk_layout_row_end(_ctx);
         }
 
         public void LayoutRow(NkLayoutFormat fmt, float height, int cols, float[] ratio)
         {
             fixed (float* ptr = ratio)
             {
-                Nk.nk_layout_row(_ctx, fmt, height, cols, ptr);
+                Layout.nk_layout_row(_ctx, fmt, height, cols, ptr);
             }
         }
 
         public void LayoutRowTemplateBegin(float height)
         {
-            Nk.nk_layout_row_template_begin(_ctx, height);
+            Layout.nk_layout_row_template_begin(_ctx, height);
         }
 
         public void LayoutRowTemplatePushDynamic()
         {
-            Nk.nk_layout_row_template_push_dynamic(_ctx);
+            Layout.nk_layout_row_template_push_dynamic(_ctx);
         }
 
         public void LayoutRowTemplatePushVariable(float min_width)
         {
-            Nk.nk_layout_row_template_push_variable(_ctx, min_width);
+            Layout.nk_layout_row_template_push_variable(_ctx, min_width);
         }
 
         public void LayoutRowTemplatePushStatic(float width)
         {
-            Nk.nk_layout_row_template_push_static(_ctx, width);
+            Layout.nk_layout_row_template_push_static(_ctx, width);
         }
 
         public void LayoutRowTemplateEnd()
         {
-            Nk.nk_layout_row_template_end(_ctx);
+            Layout.nk_layout_row_template_end(_ctx);
         }
 
         public void LayoutSpaceBegin(NkLayoutFormat fmt, float height, int widget_count)
         {
-            Nk.nk_layout_space_begin(_ctx, fmt, height, widget_count);
+            Layout.nk_layout_space_begin(_ctx, fmt, height, widget_count);
         }
 
         public void LayoutSpaceEnd()
         {
-            Nk.nk_layout_space_end(_ctx);
+            Layout.nk_layout_space_end(_ctx);
         }
 
         public void LayoutSpacePush(NkRect rect)
         {
-            Nk.nk_layout_space_push(_ctx, rect);
+            Layout.nk_layout_space_push(_ctx, rect);
         }
 
         public NkRect LayoutSpaceBounds()
         {
-            return Nk.nk_layout_space_bounds(_ctx);
+            return Layout.nk_layout_space_bounds(_ctx);
         }
 
         public NkRect LayoutWidgetBounds()
         {
-            return Nk.nk_layout_widget_bounds(_ctx);
+            return Layout.nk_layout_widget_bounds(_ctx);
         }
 
         public NkVec2 LayoutSpaceToScreen(NkVec2 ret)
         {
-            return Nk.nk_layout_space_to_screen(_ctx, ret);
+            return Layout.nk_layout_space_to_screen(_ctx, ret);
         }
 
         public NkVec2 LayoutSpaceToLocal(NkVec2 ret)
         {
-            return Nk.nk_layout_space_to_local(_ctx, ret);
+            return Layout.nk_layout_space_to_local(_ctx, ret);
         }
 
         public NkRect LayoutSpaceRectToScreen(NkRect ret)
         {
-            return Nk.nk_layout_space_rect_to_screen(_ctx, ret);
+            return Layout.nk_layout_space_rect_to_screen(_ctx, ret);
         }
 
         public NkRect LayoutSpaceRectToLocal(NkRect ret)
         {
-            return Nk.nk_layout_space_rect_to_local(_ctx, ret);
+            return Layout.nk_layout_space_rect_to_local(_ctx, ret);
         }
 
         public void PanelAllocRow(NkWindow win)
@@ -572,14 +572,14 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
+                    return TreeUI.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
                 }
             }
         }
 
         public void TreeStatePop()
         {
-            Nk.nk_tree_state_pop(_ctx);
+            TreeUI.nk_tree_state_pop(_ctx);
         }
 
         public bool TreePushHashed(NkTreeType type, string title, int initial_state, string hash, int line)
@@ -588,7 +588,7 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
+                    return TreeUI.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
                 }
             }
         }
@@ -599,59 +599,59 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed);
+                    return TreeUI.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed);
                 }
             }
         }
 
         public void TreePop()
         {
-            Nk.nk_tree_pop(_ctx);
+            TreeUI.nk_tree_pop(_ctx);
         }
 
         public NkRect WidgetBounds()
         {
-            return Nk.nk_widget_bounds(_ctx);
+            return _ctx.nk_widget_bounds();
         }
 
         public NkVec2 WidgetPosition()
         {
-            return Nk.nk_widget_position(_ctx);
+            return _ctx.nk_widget_position();
         }
 
         public NkVec2 WidgetSize()
         {
-            return Nk.nk_widget_size(_ctx);
+            return _ctx.nk_widget_size();
         }
 
         public float WidgetWidth()
         {
-            return Nk.nk_widget_width(_ctx);
+            return _ctx.nk_widget_width();
         }
 
         public float WidgetHeight()
         {
-            return Nk.nk_widget_height(_ctx);
+            return _ctx.nk_widget_height();
         }
 
         public bool WidgetIsHovered()
         {
-            return Nk.nk_widget_is_hovered(_ctx);
+            return _ctx.nk_widget_is_hovered();
         }
 
         public bool WidgetIsMouseClicked(NkButtons btn)
         {
-            return Nk.nk_widget_is_mouse_clicked(_ctx, btn);
+            return _ctx.nk_widget_is_mouse_clicked(btn);
         }
 
         public bool WidgetHasMouseClickDown(NkButtons btn, bool down)
         {
-            return Nk.nk_widget_has_mouse_click_down(_ctx, btn, down);
+            return _ctx.nk_widget_has_mouse_click_down(btn, down);
         }
 
         public void Spacing(int cols)
         {
-            Nk.nk_spacing(_ctx, cols);
+            _ctx.nk_spacing(cols);
         }
 
         public void TextColored(string str, Alignment alignment, NkColor color)
@@ -1098,7 +1098,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nk.nk_property_int(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                _ctx.nk_property_int(name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1106,7 +1106,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nk.nk_property_float(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                _ctx.nk_property_float(name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1114,7 +1114,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                Nk.nk_property_double(_ctx, name_ptr, min, ref val, max, step, inc_per_pixel);
+                _ctx.nk_property_double(name_ptr, min, ref val, max, step, inc_per_pixel);
             }
         }
 
@@ -1122,7 +1122,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_propertyi(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return _ctx.nk_propertyi(name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 
@@ -1130,7 +1130,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_propertyf(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return _ctx.nk_propertyf(name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 
@@ -1138,7 +1138,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_propertyd(_ctx, name_ptr, min, val, max, step, inc_per_pixel);
+                return _ctx.nk_propertyd(name_ptr, min, val, max, step, inc_per_pixel);
             }
         }
 

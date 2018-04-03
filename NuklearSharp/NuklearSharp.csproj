@@ -35,10 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Delegates.cs" />
+    <Compile Include="Layout.cs" />
     <Compile Include="NkBuffer.cs" />
+    <Compile Include="NkColor.cs" />
     <Compile Include="NkCommandBuffer.cs" />
     <Compile Include="NkContext.cs" />
+    <Compile Include="NkFont.cs" />
     <Compile Include="NkPanel.cs" />
+    <Compile Include="NkRect.cs" />
     <Compile Include="NkStr.cs" />
     <Compile Include="NkWindow.cs" />
     <Compile Include="Nuklear.Context.Generated.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Runtime\Operations.cs" />
     <Compile Include="Runtime\PinnedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeUI.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

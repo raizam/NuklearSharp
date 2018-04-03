@@ -23,47 +23,7 @@ namespace NuklearSharp
             public NkQueryFontGlyphDelegate Query;
         }
 
-        public unsafe class NkFont
-        {
-            public NkFont Next;
-            public NkUserFont Handle = new NkUserFont();
-            public nk_baked_font Info = new nk_baked_font();
-            public float Scale;
-            public nk_font_glyph* Glyphs;
-            public nk_font_glyph* Fallback;
-            public char FallbackCodepoint;
-            public NkHandle Texture = new NkHandle();
-            public nk_font_config Config;
-
-            public float text_width(NkHandle h, float height, char* s, int length)
-            {
-                char unicode;
-                int textLen;
-                float textWidth = 0;
-
-                if (s == null || length == 0) return 0;
-                var scale = height / Info.height;
-                var glyphLen = textLen = Nk.nk_utf_decode(s, &unicode, length);
-                if (glyphLen == 0) return 0;
-                while (textLen <= length && glyphLen != 0)
-                {
-                    if (unicode == 0xFFFD) break;
-                    var g = Nk.nk_font_find_glyph(this, unicode);
-                    textWidth += g->xadvance * scale;
-                    glyphLen = Nk.nk_utf_decode(s + textLen, &unicode, length - textLen);
-                    textLen += glyphLen;
-                }
-                return textWidth;
-            }
-
-            public void query_font_glyph(NkHandle h, float height, NkUserFontGlyph* glyph, char codepoint,
-                char nextCodepoint)
-            {
-                Nk.nk_font_query_font_glyph(this, height, glyph, codepoint, nextCodepoint);
-            }
-        }
-
-        public class NkClipboard
+    public class NkClipboard
         {
             public NkHandle Userdata;
             public NkPluginPaste Paste;
@@ -723,93 +683,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_property_(NkContext ctx, char* name, NkPropertyVariant* variant, float incPerPixel,
-            NkPropertyFilter filter)
-        {
-            var bounds = new NkRect();
-            uint hash;
-            string dummyBuffer = null;
-            NkPropertyStatus dummyState = NkPropertyStatus.NK_PROPERTY_DEFAULT;
-            var dummyCursor = 0;
-            var dummySelectBegin = 0;
-            var dummySelectEnd = 0;
-            if (ctx == null || ctx.Current == null || ctx.Current.Layout == null) return;
-            var win = ctx.Current;
-            var layout = win.Layout;
-            var style = ctx.Style;
-            var s = nk_widget(&bounds, ctx);
-            if (s == 0) return;
-            if (name[0] == '#')
-            {
-                hash = nk_murmur_hash(name, nk_strlen(name), win.Property.seq++);
-                name++;
-            }
-            else hash = nk_murmur_hash(name, nk_strlen(name), 42);
-
-            var _in_ = s == NkWidgetLayoutStates.NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & PanelFlags.ROM) != 0
-                ? null
-                : ctx.Input;
-
-            NkPropertyStatus oldState, state;
-            string buffer;
-            int cursor, selectBegin, selectEnd;
-            if (win.Property.active != 0 && hash == win.Property.name)
-            {
-                oldState = win.Property.state;
-                nk_do_property(ref ctx.LastWidgetState, win.Buffer, bounds, name, variant, incPerPixel,
-                    ref win.Property.buffer, ref win.Property.state, ref win.Property.cursor,
-                    ref win.Property.select_start, ref win.Property.select_end, style.Property, filter, _in_, style.Font,
-                    ctx.TextEdit, ctx.ButtonBehavior);
-                state = win.Property.state;
-                buffer = win.Property.buffer;
-                cursor = win.Property.cursor;
-                selectBegin = win.Property.select_start;
-                selectEnd = win.Property.select_end;
-            }
-            else
-            {
-                oldState = dummyState;
-                nk_do_property(ref ctx.LastWidgetState, win.Buffer, bounds, name, variant, incPerPixel,
-                    ref dummyBuffer, ref dummyState, ref dummyCursor,
-                    ref dummySelectBegin, ref dummySelectEnd, style.Property, filter, _in_, style.Font,
-                    ctx.TextEdit, ctx.ButtonBehavior);
-                state = dummyState;
-                buffer = dummyBuffer;
-                cursor = dummyCursor;
-                selectBegin = dummySelectBegin;
-                selectEnd = dummySelectEnd;
-            }
-
-            ctx.TextEdit.clip = ctx.Clip;
-            if (_in_ != null && state != NkPropertyStatus.NK_PROPERTY_DEFAULT && win.Property.active == 0)
-            {
-                win.Property.active = 1;
-                win.Property.buffer = buffer;
-                win.Property.cursor = cursor;
-                win.Property.state = state;
-                win.Property.name = hash;
-                win.Property.select_start = selectBegin;
-                win.Property.select_end = selectEnd;
-                if (state == NkPropertyStatus.NK_PROPERTY_DRAG)
-                {
-                    ctx.Input.mouse.Grab = 1;
-                    ctx.Input.mouse.Grabbed = 1;
-                }
-            }
-
-            if (state == NkPropertyStatus.NK_PROPERTY_DEFAULT && oldState != NkPropertyStatus.NK_PROPERTY_DEFAULT)
-            {
-                if (oldState == NkPropertyStatus.NK_PROPERTY_DRAG)
-                {
-                    ctx.Input.mouse.Grab = 0;
-                    ctx.Input.mouse.Grabbed = 0;
-                    ctx.Input.mouse.Ungrab = 1;
-                }
-                win.Property.select_start = 0;
-                win.Property.select_end = 0;
-                win.Property.active = 0;
-            }
-        }
+     
 
         public static void nk_stroke_polygon(NkCommandBuffer b, float* points, int pointCount, float lineThickness,
             NkColor col)
@@ -860,30 +734,6 @@ namespace NuklearSharp
             }
         }
 
-        public static nk_font_config nk_font_config_clone(nk_font_config src)
-        {
-            return new nk_font_config
-            {
-                next = src.next,
-                ttf_blob = src.ttf_blob,
-                ttf_size = src.ttf_size,
-                ttf_data_owned_by_atlas = src.ttf_data_owned_by_atlas,
-                merge_mode = src.merge_mode,
-                pixel_snap = src.pixel_snap,
-                oversample_v = src.oversample_v,
-                oversample_h = src.oversample_h,
-                padding = src.padding,
-                size = src.size,
-                coord_type = src.coord_type,
-                spacing = src.spacing,
-                range = src.range,
-                font = src.font,
-                fallback_glyph = src.fallback_glyph,
-                n = src.n,
-                p = src.p
-            };
-        }
-
         public static int nk_strlen(byte* str)
         {
             int siz = 0;
@@ -895,34 +745,64 @@ namespace NuklearSharp
         }
 
 
-        public static uint* nk_font_default_glyph_ranges()
+        public static uint nk_murmur_hash(void* key, int len, uint seed)
         {
-            return default_ranges;
-        }
-
-        public static uint* nk_font_chinese_glyph_ranges()
-        {
-            return chinese_ranges;
-        }
-
-        public static uint* nk_font_cyrillic_glyph_ranges()
-        {
-            return cyrillic_ranges;
-        }
-
-        public static uint* nk_font_korean_glyph_ranges()
-        {
-            return korean_ranges;
-        }
-
-        public static NkVec2 nk_rect_pos(NkRect r)
-        {
-            NkVec2 ret = new NkVec2
+            NkMurmurHashUnion conv = new NkMurmurHashUnion(null);
+            byte* data = (byte*)(key);
+            int nblocks = (int)(len / 4);
+            uint h1 = (uint)(seed);
+            uint c1 = (uint)(0xcc9e2d51);
+            uint c2 = (uint)(0x1b873593);
+            byte* tail;
+            uint* blocks;
+            uint k1;
+            int i;
+            if (key == null) return (uint)(0);
+            conv.b = (data + nblocks * 4);
+            blocks = conv.i;
+            for (i = (int)(-nblocks); i != 0; ++i)
             {
-                x = r.x,
-                y = r.y
-            };
-            return ret;
+                k1 = (uint)(blocks[i]);
+                k1 *= (uint)(c1);
+                k1 = (uint)((k1) << (15) | ((k1) >> (32 - 15)));
+                k1 *= (uint)(c2);
+                h1 ^= (uint)(k1);
+                h1 = (uint)((h1) << (13) | ((h1) >> (32 - 13)));
+                h1 = (uint)(h1 * 5 + 0xe6546b64);
+            }
+            tail = (data + nblocks * 4);
+            k1 = (uint)(0);
+            int l = (int)(len & 3);
+            switch (l)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    if ((l) == (2))
+                    {
+                        k1 ^= ((uint)(tail[1] << 8));
+                    }
+                    else if ((l) == (3))
+                    {
+                        k1 ^= ((uint)(tail[2] << 16));
+                    }
+                    k1 ^= (uint)(tail[0]);
+                    k1 *= (uint)(c1);
+                    k1 = (uint)((k1) << (15) | ((k1) >> (32 - 15)));
+                    k1 *= (uint)(c2);
+                    h1 ^= (uint)(k1);
+                    break;
+                default:
+                    break;
+            }
+
+            h1 ^= ((uint)(len));
+            h1 ^= (uint)(h1 >> 16);
+            h1 *= (uint)(0x85ebca6b);
+            h1 ^= (uint)(h1 >> 13);
+            h1 *= (uint)(0xc2b2ae35);
+            h1 ^= (uint)(h1 >> 16);
+            return (uint)(h1);
         }
     }
 }

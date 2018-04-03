@@ -638,66 +638,6 @@ namespace NuklearSharp
             return s;
         }
 
-        public static uint nk_murmur_hash(void* key, int len, uint seed)
-        {
-            NkMurmurHashUnion conv = new NkMurmurHashUnion(null);
-            byte* data = (byte*)(key);
-            int nblocks = (int)(len / 4);
-            uint h1 = (uint)(seed);
-            uint c1 = (uint)(0xcc9e2d51);
-            uint c2 = (uint)(0x1b873593);
-            byte* tail;
-            uint* blocks;
-            uint k1;
-            int i;
-            if (key == null) return (uint)(0);
-            conv.b = (data + nblocks * 4);
-            blocks = conv.i;
-            for (i = (int)(-nblocks); i != 0; ++i)
-            {
-                k1 = (uint)(blocks[i]);
-                k1 *= (uint)(c1);
-                k1 = (uint)((k1) << (15) | ((k1) >> (32 - 15)));
-                k1 *= (uint)(c2);
-                h1 ^= (uint)(k1);
-                h1 = (uint)((h1) << (13) | ((h1) >> (32 - 13)));
-                h1 = (uint)(h1 * 5 + 0xe6546b64);
-            }
-            tail = (data + nblocks * 4);
-            k1 = (uint)(0);
-            int l = (int)(len & 3);
-            switch (l)
-            {
-                case 1:
-                case 2:
-                case 3:
-                    if ((l) == (2))
-                    {
-                        k1 ^= ((uint)(tail[1] << 8));
-                    }
-                    else if ((l) == (3))
-                    {
-                        k1 ^= ((uint)(tail[2] << 16));
-                    }
-                    k1 ^= (uint)(tail[0]);
-                    k1 *= (uint)(c1);
-                    k1 = (uint)((k1) << (15) | ((k1) >> (32 - 15)));
-                    k1 *= (uint)(c2);
-                    h1 ^= (uint)(k1);
-                    break;
-                default:
-                    break;
-            }
-
-            h1 ^= ((uint)(len));
-            h1 ^= (uint)(h1 >> 16);
-            h1 *= (uint)(0x85ebca6b);
-            h1 ^= (uint)(h1 >> 13);
-            h1 *= (uint)(0xc2b2ae35);
-            h1 ^= (uint)(h1 >> 16);
-            return (uint)(h1);
-        }
-
         public static int nk_parse_hex(sbyte* p, int length)
         {
             int i = (int)(0);
@@ -711,411 +651,6 @@ namespace NuklearSharp
                 len++;
             }
             return (int)(i);
-        }
-
-        public static NkColor nk_rgba(int r, int g, int b, int a)
-        {
-            NkColor ret = new NkColor();
-            ret.r = ((byte)(((r) < (255) ? (r) : (255)) < (0) ? (0) : ((r) < (255) ? (r) : (255))));
-            ret.g = ((byte)(((g) < (255) ? (g) : (255)) < (0) ? (0) : ((g) < (255) ? (g) : (255))));
-            ret.b = ((byte)(((b) < (255) ? (b) : (255)) < (0) ? (0) : ((b) < (255) ? (b) : (255))));
-            ret.a = ((byte)(((a) < (255) ? (a) : (255)) < (0) ? (0) : ((a) < (255) ? (a) : (255))));
-            return (NkColor)(ret);
-        }
-
-        public static NkColor nk_rgb_hex(sbyte* rgb)
-        {
-            NkColor col = new NkColor();
-            sbyte* c = rgb;
-            if ((*c) == ('#')) c++;
-            col.r = ((byte)(nk_parse_hex(c, (int)(2))));
-            col.g = ((byte)(nk_parse_hex(c + 2, (int)(2))));
-            col.b = ((byte)(nk_parse_hex(c + 4, (int)(2))));
-            col.a = (byte)(255);
-            return (NkColor)(col);
-        }
-
-        public static NkColor nk_rgba_hex(sbyte* rgb)
-        {
-            NkColor col = new NkColor();
-            sbyte* c = rgb;
-            if ((*c) == ('#')) c++;
-            col.r = ((byte)(nk_parse_hex(c, (int)(2))));
-            col.g = ((byte)(nk_parse_hex(c + 2, (int)(2))));
-            col.b = ((byte)(nk_parse_hex(c + 4, (int)(2))));
-            col.a = ((byte)(nk_parse_hex(c + 6, (int)(2))));
-            return (NkColor)(col);
-        }
-
-        public static void nk_color_hex_rgba(char* output, NkColor col)
-        {
-            output[0] = ((char)(((col.r & 0xF0) >> 4) <= 9 ? '0' + ((col.r & 0xF0) >> 4) : 'A' - 10 + ((col.r & 0xF0) >> 4)));
-            output[1] = ((char)((col.r & 0x0F) <= 9 ? '0' + (col.r & 0x0F) : 'A' - 10 + (col.r & 0x0F)));
-            output[2] = ((char)(((col.g & 0xF0) >> 4) <= 9 ? '0' + ((col.g & 0xF0) >> 4) : 'A' - 10 + ((col.g & 0xF0) >> 4)));
-            output[3] = ((char)((col.g & 0x0F) <= 9 ? '0' + (col.g & 0x0F) : 'A' - 10 + (col.g & 0x0F)));
-            output[4] = ((char)(((col.b & 0xF0) >> 4) <= 9 ? '0' + ((col.b & 0xF0) >> 4) : 'A' - 10 + ((col.b & 0xF0) >> 4)));
-            output[5] = ((char)((col.b & 0x0F) <= 9 ? '0' + (col.b & 0x0F) : 'A' - 10 + (col.b & 0x0F)));
-            output[6] = ((char)(((col.a & 0xF0) >> 4) <= 9 ? '0' + ((col.a & 0xF0) >> 4) : 'A' - 10 + ((col.a & 0xF0) >> 4)));
-            output[7] = ((char)((col.a & 0x0F) <= 9 ? '0' + (col.a & 0x0F) : 'A' - 10 + (col.a & 0x0F)));
-            output[8] = ('\0');
-        }
-
-        public static void nk_color_hex_rgb(char* output, NkColor col)
-        {
-            output[0] = ((char)(((col.r & 0xF0) >> 4) <= 9 ? '0' + ((col.r & 0xF0) >> 4) : 'A' - 10 + ((col.r & 0xF0) >> 4)));
-            output[1] = ((char)((col.r & 0x0F) <= 9 ? '0' + (col.r & 0x0F) : 'A' - 10 + (col.r & 0x0F)));
-            output[2] = ((char)(((col.g & 0xF0) >> 4) <= 9 ? '0' + ((col.g & 0xF0) >> 4) : 'A' - 10 + ((col.g & 0xF0) >> 4)));
-            output[3] = ((char)((col.g & 0x0F) <= 9 ? '0' + (col.g & 0x0F) : 'A' - 10 + (col.g & 0x0F)));
-            output[4] = ((char)(((col.b & 0xF0) >> 4) <= 9 ? '0' + ((col.b & 0xF0) >> 4) : 'A' - 10 + ((col.b & 0xF0) >> 4)));
-            output[5] = ((char)((col.b & 0x0F) <= 9 ? '0' + (col.b & 0x0F) : 'A' - 10 + (col.b & 0x0F)));
-            output[6] = ('\0');
-        }
-
-        public static NkColor nk_rgba_iv(int* c)
-        {
-            return (NkColor)(nk_rgba((int)(c[0]), (int)(c[1]), (int)(c[2]), (int)(c[3])));
-        }
-
-        public static NkColor nk_rgba_bv(byte* c)
-        {
-            return (NkColor)(nk_rgba((int)(c[0]), (int)(c[1]), (int)(c[2]), (int)(c[3])));
-        }
-
-        public static NkColor nk_rgb(int r, int g, int b)
-        {
-            NkColor ret = new NkColor();
-            ret.r = ((byte)(((r) < (255) ? (r) : (255)) < (0) ? (0) : ((r) < (255) ? (r) : (255))));
-            ret.g = ((byte)(((g) < (255) ? (g) : (255)) < (0) ? (0) : ((g) < (255) ? (g) : (255))));
-            ret.b = ((byte)(((b) < (255) ? (b) : (255)) < (0) ? (0) : ((b) < (255) ? (b) : (255))));
-            ret.a = ((byte)(255));
-            return (NkColor)(ret);
-        }
-
-        public static NkColor nk_rgb_iv(int* c)
-        {
-            return (NkColor)(nk_rgb((int)(c[0]), (int)(c[1]), (int)(c[2])));
-        }
-
-        public static NkColor nk_rgb_bv(byte* c)
-        {
-            return (NkColor)(nk_rgb((int)(c[0]), (int)(c[1]), (int)(c[2])));
-        }
-
-        public static NkColor nk_rgba_u32(uint _in_)
-        {
-            NkColor ret = new NkColor();
-            ret.r = (byte)(_in_ & 0xFF);
-            ret.g = (byte)((_in_ >> 8) & 0xFF);
-            ret.b = (byte)((_in_ >> 16) & 0xFF);
-            ret.a = ((byte)((_in_ >> 24) & 0xFF));
-            return (NkColor)(ret);
-        }
-
-        public static NkColor nk_rgba_f(float r, float g, float b, float a)
-        {
-            NkColor ret = new NkColor();
-            ret.r = ((byte)(((0) < ((1.0f) < (r) ? (1.0f) : (r)) ? ((1.0f) < (r) ? (1.0f) : (r)) : (0)) * 255.0f));
-            ret.g = ((byte)(((0) < ((1.0f) < (g) ? (1.0f) : (g)) ? ((1.0f) < (g) ? (1.0f) : (g)) : (0)) * 255.0f));
-            ret.b = ((byte)(((0) < ((1.0f) < (b) ? (1.0f) : (b)) ? ((1.0f) < (b) ? (1.0f) : (b)) : (0)) * 255.0f));
-            ret.a = ((byte)(((0) < ((1.0f) < (a) ? (1.0f) : (a)) ? ((1.0f) < (a) ? (1.0f) : (a)) : (0)) * 255.0f));
-            return (NkColor)(ret);
-        }
-
-        public static NkColor nk_rgba_fv(float* c)
-        {
-            return (NkColor)(nk_rgba_f((float)(c[0]), (float)(c[1]), (float)(c[2]), (float)(c[3])));
-        }
-
-        public static NkColor nk_rgb_f(float r, float g, float b)
-        {
-            NkColor ret = new NkColor();
-            ret.r = ((byte)(((0) < ((1.0f) < (r) ? (1.0f) : (r)) ? ((1.0f) < (r) ? (1.0f) : (r)) : (0)) * 255.0f));
-            ret.g = ((byte)(((0) < ((1.0f) < (g) ? (1.0f) : (g)) ? ((1.0f) < (g) ? (1.0f) : (g)) : (0)) * 255.0f));
-            ret.b = ((byte)(((0) < ((1.0f) < (b) ? (1.0f) : (b)) ? ((1.0f) < (b) ? (1.0f) : (b)) : (0)) * 255.0f));
-            ret.a = (byte)(255);
-            return (NkColor)(ret);
-        }
-
-        public static NkColor nk_rgb_fv(float* c)
-        {
-            return (NkColor)(nk_rgb_f((float)(c[0]), (float)(c[1]), (float)(c[2])));
-        }
-
-        public static NkColor nk_hsv(int h, int s, int v)
-        {
-            return (NkColor)(nk_hsva((int)(h), (int)(s), (int)(v), (int)(255)));
-        }
-
-        public static NkColor nk_hsv_iv(int* c)
-        {
-            return (NkColor)(nk_hsv((int)(c[0]), (int)(c[1]), (int)(c[2])));
-        }
-
-        public static NkColor nk_hsv_bv(byte* c)
-        {
-            return (NkColor)(nk_hsv((int)(c[0]), (int)(c[1]), (int)(c[2])));
-        }
-
-        public static NkColor nk_hsv_f(float h, float s, float v)
-        {
-            return (NkColor)(nk_hsva_f((float)(h), (float)(s), (float)(v), (float)(1.0f)));
-        }
-
-        public static NkColor nk_hsv_fv(float* c)
-        {
-            return (NkColor)(nk_hsv_f((float)(c[0]), (float)(c[1]), (float)(c[2])));
-        }
-
-        public static NkColor nk_hsva(int h, int s, int v, int a)
-        {
-            float hf = (float)(((float)(((h) < (255) ? (h) : (255)) < (0) ? (0) : ((h) < (255) ? (h) : (255)))) / 255.0f);
-            float sf = (float)(((float)(((s) < (255) ? (s) : (255)) < (0) ? (0) : ((s) < (255) ? (s) : (255)))) / 255.0f);
-            float vf = (float)(((float)(((v) < (255) ? (v) : (255)) < (0) ? (0) : ((v) < (255) ? (v) : (255)))) / 255.0f);
-            float af = (float)(((float)(((a) < (255) ? (a) : (255)) < (0) ? (0) : ((a) < (255) ? (a) : (255)))) / 255.0f);
-            return (NkColor)(nk_hsva_f((float)(hf), (float)(sf), (float)(vf), (float)(af)));
-        }
-
-        public static NkColor nk_hsva_iv(int* c)
-        {
-            return (NkColor)(nk_hsva((int)(c[0]), (int)(c[1]), (int)(c[2]), (int)(c[3])));
-        }
-
-        public static NkColor nk_hsva_bv(byte* c)
-        {
-            return (NkColor)(nk_hsva((int)(c[0]), (int)(c[1]), (int)(c[2]), (int)(c[3])));
-        }
-
-        public static NkColorF nk_hsva_colorf(float h, float s, float v, float a)
-        {
-            int i;
-            float p;
-            float q;
-            float t;
-            float f;
-            NkColorF _out_ = new NkColorF();
-            if (s <= 0.0f)
-            {
-                _out_.r = (float)(v);
-                _out_.g = (float)(v);
-                _out_.b = (float)(v);
-                _out_.a = (float)(a);
-                return (NkColorF)(_out_);
-            }
-
-            h = (float)(h / (60.0f / 360.0f));
-            i = ((int)(h));
-            f = (float)(h - (float)(i));
-            p = (float)(v * (1.0f - s));
-            q = (float)(v * (1.0f - (s * f)));
-            t = (float)(v * (1.0f - s * (1.0f - f)));
-            switch (i)
-            {
-                case 0:
-                default:
-                    _out_.r = (float)(v);
-                    _out_.g = (float)(t);
-                    _out_.b = (float)(p);
-                    break;
-                case 1:
-                    _out_.r = (float)(q);
-                    _out_.g = (float)(v);
-                    _out_.b = (float)(p);
-                    break;
-                case 2:
-                    _out_.r = (float)(p);
-                    _out_.g = (float)(v);
-                    _out_.b = (float)(t);
-                    break;
-                case 3:
-                    _out_.r = (float)(p);
-                    _out_.g = (float)(q);
-                    _out_.b = (float)(v);
-                    break;
-                case 4:
-                    _out_.r = (float)(t);
-                    _out_.g = (float)(p);
-                    _out_.b = (float)(v);
-                    break;
-                case 5:
-                    _out_.r = (float)(v);
-                    _out_.g = (float)(p);
-                    _out_.b = (float)(q);
-                    break;
-            }
-
-            _out_.a = (float)(a);
-            return (NkColorF)(_out_);
-        }
-
-        public static NkColorF nk_hsva_colorfv(float* c)
-        {
-            return (NkColorF)(nk_hsva_colorf((float)(c[0]), (float)(c[1]), (float)(c[2]), (float)(c[3])));
-        }
-
-        public static NkColor nk_hsva_f(float h, float s, float v, float a)
-        {
-            NkColorF c = (NkColorF)(nk_hsva_colorf((float)(h), (float)(s), (float)(v), (float)(a)));
-            return (NkColor)(nk_rgba_f((float)(c.r), (float)(c.g), (float)(c.b), (float)(c.a)));
-        }
-
-        public static NkColor nk_hsva_fv(float* c)
-        {
-            return (NkColor)(nk_hsva_f((float)(c[0]), (float)(c[1]), (float)(c[2]), (float)(c[3])));
-        }
-
-        public static void nk_color_f(float* r, float* g, float* b, float* a, NkColor _in_)
-        {
-            float s = (float)(1.0f / 255.0f);
-            *r = (float)((float)(_in_.r) * s);
-            *g = (float)((float)(_in_.g) * s);
-            *b = (float)((float)(_in_.b) * s);
-            *a = (float)((float)(_in_.a) * s);
-        }
-
-        public static void nk_color_fv(float* c, NkColor _in_)
-        {
-            nk_color_f(&c[0], &c[1], &c[2], &c[3], (NkColor)(_in_));
-        }
-
-        public static void nk_color_d(double* r, double* g, double* b, double* a, NkColor _in_)
-        {
-            double s = (double)(1.0 / 255.0);
-            *r = (double)((double)(_in_.r) * s);
-            *g = (double)((double)(_in_.g) * s);
-            *b = (double)((double)(_in_.b) * s);
-            *a = (double)((double)(_in_.a) * s);
-        }
-
-        public static void nk_color_dv(double* c, NkColor _in_)
-        {
-            nk_color_d(&c[0], &c[1], &c[2], &c[3], (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsv_f(float* out_h, float* out_s, float* out_v, NkColor _in_)
-        {
-            float a;
-            nk_color_hsva_f(out_h, out_s, out_v, &a, (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsv_fv(float* _out_, NkColor _in_)
-        {
-            float a;
-            nk_color_hsva_f(&_out_[0], &_out_[1], &_out_[2], &a, (NkColor)(_in_));
-        }
-
-        public static void nk_colorf_hsva_f(float* out_h, float* out_s, float* out_v, float* out_a, NkColorF _in_)
-        {
-            float chroma;
-            float K = (float)(0.0f);
-            if ((_in_.g) < (_in_.b))
-            {
-                float t = (float)(_in_.g);
-                _in_.g = (float)(_in_.b);
-                _in_.b = (float)(t);
-                K = (float)(-1.0f);
-            }
-
-            if ((_in_.r) < (_in_.g))
-            {
-                float t = (float)(_in_.r);
-                _in_.r = (float)(_in_.g);
-                _in_.g = (float)(t);
-                K = (float)(-2.0f / 6.0f - K);
-            }
-
-            chroma = (float)(_in_.r - (((_in_.g) < (_in_.b)) ? _in_.g : _in_.b));
-            *out_h =
-                (float)
-                    (((K + (_in_.g - _in_.b) / (6.0f * chroma + 1e-20f)) < (0))
-                        ? -(K + (_in_.g - _in_.b) / (6.0f * chroma + 1e-20f))
-                        : (K + (_in_.g - _in_.b) / (6.0f * chroma + 1e-20f)));
-            *out_s = (float)(chroma / (_in_.r + 1e-20f));
-            *out_v = (float)(_in_.r);
-            *out_a = (float)(_in_.a);
-        }
-
-        public static void nk_colorf_hsva_fv(float* hsva, NkColorF _in_)
-        {
-            nk_colorf_hsva_f(&hsva[0], &hsva[1], &hsva[2], &hsva[3], (NkColorF)(_in_));
-        }
-
-        public static void nk_color_hsva_f(float* out_h, float* out_s, float* out_v, float* out_a, NkColor _in_)
-        {
-            NkColorF col = new NkColorF();
-            nk_color_f(&col.r, &col.g, &col.b, &col.a, (NkColor)(_in_));
-            nk_colorf_hsva_f(out_h, out_s, out_v, out_a, (NkColorF)(col));
-        }
-
-        public static void nk_color_hsva_fv(float* _out_, NkColor _in_)
-        {
-            nk_color_hsva_f(&_out_[0], &_out_[1], &_out_[2], &_out_[3], (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsva_i(int* out_h, int* out_s, int* out_v, int* out_a, NkColor _in_)
-        {
-            float h;
-            float s;
-            float v;
-            float a;
-            nk_color_hsva_f(&h, &s, &v, &a, (NkColor)(_in_));
-            *out_h = (int)((byte)(h * 255.0f));
-            *out_s = (int)((byte)(s * 255.0f));
-            *out_v = (int)((byte)(v * 255.0f));
-            *out_a = (int)((byte)(a * 255.0f));
-        }
-
-        public static void nk_color_hsva_iv(int* _out_, NkColor _in_)
-        {
-            nk_color_hsva_i(&_out_[0], &_out_[1], &_out_[2], &_out_[3], (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsva_bv(byte* _out_, NkColor _in_)
-        {
-            int* tmp = stackalloc int[4];
-            nk_color_hsva_i(&tmp[0], &tmp[1], &tmp[2], &tmp[3], (NkColor)(_in_));
-            _out_[0] = ((byte)(tmp[0]));
-            _out_[1] = ((byte)(tmp[1]));
-            _out_[2] = ((byte)(tmp[2]));
-            _out_[3] = ((byte)(tmp[3]));
-        }
-
-        public static void nk_color_hsva_b(byte* h, byte* s, byte* v, byte* a, NkColor _in_)
-        {
-            int* tmp = stackalloc int[4];
-            nk_color_hsva_i(&tmp[0], &tmp[1], &tmp[2], &tmp[3], (NkColor)(_in_));
-            *h = ((byte)(tmp[0]));
-            *s = ((byte)(tmp[1]));
-            *v = ((byte)(tmp[2]));
-            *a = ((byte)(tmp[3]));
-        }
-
-        public static void nk_color_hsv_i(int* out_h, int* out_s, int* out_v, NkColor _in_)
-        {
-            int a;
-            nk_color_hsva_i(out_h, out_s, out_v, &a, (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsv_b(byte* out_h, byte* out_s, byte* out_v, NkColor _in_)
-        {
-            int* tmp = stackalloc int[4];
-            nk_color_hsva_i(&tmp[0], &tmp[1], &tmp[2], &tmp[3], (NkColor)(_in_));
-            *out_h = ((byte)(tmp[0]));
-            *out_s = ((byte)(tmp[1]));
-            *out_v = ((byte)(tmp[2]));
-        }
-
-        public static void nk_color_hsv_iv(int* _out_, NkColor _in_)
-        {
-            nk_color_hsv_i(&_out_[0], &_out_[1], &_out_[2], (NkColor)(_in_));
-        }
-
-        public static void nk_color_hsv_bv(byte* _out_, NkColor _in_)
-        {
-            int* tmp = stackalloc int[4];
-            nk_color_hsv_i(&tmp[0], &tmp[1], &tmp[2], (NkColor)(_in_));
-            _out_[0] = ((byte)(tmp[0]));
-            _out_[1] = ((byte)(tmp[1]));
-            _out_[2] = ((byte)(tmp[2]));
         }
 
         public static NkHandle nk_handle_ptr(void* ptr)
@@ -1348,14 +883,14 @@ namespace NuklearSharp
                 case VertexLayoutFormat.R8G8B8A8:
                 case VertexLayoutFormat.R8G8B8:
                     {
-                        NkColor col = (NkColor)(nk_rgba_fv(val));
+                        NkColor col = (NkColor)(NkColor.nk_rgba_fv(val));
                         nk_memcopy(attr, &col.r, (ulong)(sizeof(NkColor)));
                     }
                     break;
                 case VertexLayoutFormat.B8G8R8A8:
                     {
-                        NkColor col = (NkColor)(nk_rgba_fv(val));
-                        NkColor bgra = (NkColor)(nk_rgba((int)(col.b), (int)(col.g), (int)(col.r), (int)(col.a)));
+                        NkColor col = (NkColor)(NkColor.nk_rgba_fv(val));
+                        NkColor bgra = (NkColor)(NkColor.nk_rgba((int)(col.b), (int)(col.g), (int)(col.r), (int)(col.a)));
                         nk_memcopy(attr, &bgra, (ulong)(sizeof(NkColor)));
                     }
                     break;
@@ -1413,7 +948,7 @@ namespace NuklearSharp
                 case VertexLayoutFormat.RGB32:
                 case VertexLayoutFormat.RGBA32:
                     {
-                        NkColor col = (NkColor)(nk_rgba_fv(val));
+                        NkColor col = (NkColor)(NkColor.nk_rgba_fv(val));
                         uint color = (uint)(nk_color_u32((NkColor)(col)));
                         nk_memcopy(attr, &color, (ulong)(sizeof(uint)));
                     }
@@ -1965,7 +1500,7 @@ namespace NuklearSharp
                 i = iter;
                 do
                 {
-                    if (i.range == null) iter.range = nk_font_default_glyph_ranges();
+                    if (i.range == null) iter.range = NkFont.nk_font_default_glyph_ranges();
                     range_count = (int)(nk_range_count(i.range));
                     total_range_count += (int)(range_count);
                     glyph_count += (int)(nk_range_glyph_count(i.range, (int)(range_count)));
@@ -2264,7 +1799,7 @@ namespace NuklearSharp
             cfg.pixel_snap = (byte)(0);
             cfg.coord_type = (NkFontCoordType.NK_COORD_UV);
             cfg.spacing = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
-            cfg.range = nk_font_default_glyph_ranges();
+            cfg.range = NkFont.nk_font_default_glyph_ranges();
             cfg.merge_mode = (byte)(0);
             cfg.fallback_glyph = '?';
             cfg.font = null;
@@ -3276,7 +2811,7 @@ namespace NuklearSharp
                                 cursor_text_color = (NkColor)(style.cursor_text_normal);
                             }
                             if ((background.Type) == (NkStyleItemType.IMAGE))
-                                background_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                                background_color = (NkColor)(NkColor.nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
                             else background_color = (NkColor)(background.Data.Color);
                             if ((edit.select_start) == (edit.select_end))
                             {
@@ -3380,7 +2915,7 @@ namespace NuklearSharp
                                 text_color = (NkColor)(style.text_normal);
                             }
                             if ((background.Type) == (NkStyleItemType.IMAGE))
-                                background_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+                                background_color = (NkColor)(NkColor.nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
                             else background_color = (NkColor)(background.Data.Color);
                             _out_.nk_edit_draw_text(style, (float)(area.x - edit.scrollbar.x), (float)(area.y - edit.scrollbar.y),
                                 (float)(0), begin, (int)(l), (float)(row_height), font, (NkColor)(background_color),
@@ -3731,7 +3266,7 @@ namespace NuklearSharp
             float* hsva = stackalloc float[4];
             int value_changed = (int)(0);
             int hsv_changed = (int)(0);
-            nk_colorf_hsva_fv(hsva, (NkColorF)(*color));
+            NkColor.nk_colorf_hsva_fv(hsva, (NkColorF)(*color));
             if ((nk_button_behavior(ref state, (NkRect)(*matrix), _in_, NkButtonBehavior.Repeater)))
             {
                 hsva[1] =
@@ -3797,7 +3332,7 @@ namespace NuklearSharp
             else (state) = (NkWidgetStates.INACTIVE);
             if ((hsv_changed) != 0)
             {
-                *color = (NkColorF)(nk_hsva_colorfv(hsva));
+                *color = (NkColorF)(NkColor.nk_hsva_colorfv(hsva));
                 state = (NkWidgetStates.ACTIVE);
             }
 
@@ -3852,7 +3387,7 @@ namespace NuklearSharp
         {
             NkStyleItem i = new NkStyleItem();
             i.Type = (int)(NkStyleItemType.COLOR);
-            i.Data.Color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
+            i.Data.Color = (NkColor)(NkColor.nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             return (NkStyleItem)(i);
         }
 
