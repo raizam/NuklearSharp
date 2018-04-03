@@ -17,7 +17,7 @@ namespace NuklearSharp
             public NkColor text_normal = new NkColor();
             public NkColor text_hover = new NkColor();
             public NkColor text_active = new NkColor();
-            public uint text_alignment;
+            public Alignment text_alignment;
             public float border;
             public float rounding;
             public NkVec2 padding = new NkVec2();
@@ -326,9 +326,9 @@ namespace NuklearSharp
 
         }
 
-        public static float nk_panel_get_border(NkStyle style, uint flags, int type)
+        public static float nk_panel_get_border(NkStyle style, PanelFlags flags, int type)
         {
-            if ((flags & NK_WINDOW_BORDER) != 0)
+            if ((flags & PanelFlags.BORDER) != 0)
             {
                 switch (type)
                 {

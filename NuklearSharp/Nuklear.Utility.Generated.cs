@@ -2313,14 +2313,14 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_text(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, char* _string_, int len,
-            uint align, NkButtonBehavior behavior, nk_style_button style, nk_input _in_, NkUserFont font)
+            Alignment align, NkButtonBehavior behavior, nk_style_button style, nk_input _in_, NkUserFont font)
         {
             NkRect content = new NkRect();
             int ret = (int)(nk_false);
             if ((((_out_ == null) || (style == null)) || (font == null)) || (_string_ == null)) return (int)(nk_false);
             ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
-            nk_draw_button_text(_out_, &bounds, &content, (state), style, _string_, (int)(len), (uint)(align), font);
+            nk_draw_button_text(_out_, &bounds, &content, (state), style, _string_, (int)(len), (align), font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
             return (int)(ret);
         }
@@ -2356,7 +2356,7 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_text_symbol(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, NkSymbolType symbol,
-            char* str, int len, uint align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
+            char* str, int len, Alignment align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
         {
             int ret;
             NkRect tri = new NkRect();
@@ -2366,7 +2366,7 @@ namespace NuklearSharp
             tri.y = (float)(content.y + (content.h / 2) - font.Height / 2);
             tri.w = (float)(font.Height);
             tri.h = (float)(font.Height);
-            if ((align & NK_TEXT_ALIGN_LEFT) != 0)
+            if ((align & Alignment.LEFT) != 0)
             {
                 tri.x = (float)((content.x + content.w) - (2 * style.padding.x + tri.w));
                 tri.x = (float)((tri.x) < (0) ? (0) : (tri.x));
@@ -2380,7 +2380,7 @@ namespace NuklearSharp
         }
 
         public static int nk_do_button_text_image(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, NkImage img,
-            char* str, int len, uint align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
+            char* str, int len, Alignment align, NkButtonBehavior behavior, nk_style_button style, NkUserFont font, nk_input _in_)
         {
             int ret;
             NkRect icon = new NkRect();
@@ -2389,7 +2389,7 @@ namespace NuklearSharp
             ret = (int)(nk_do_button(ref state, _out_, (NkRect)(bounds), style, _in_, behavior, &content));
             icon.y = (float)(bounds.y + style.padding.y);
             icon.w = (float)(icon.h = (float)(bounds.h - 2 * style.padding.y));
-            if ((align & NK_TEXT_ALIGN_LEFT) != 0)
+            if ((align & Alignment.LEFT) != 0)
             {
                 icon.x = (float)((bounds.x + bounds.w) - (2 * style.padding.x + icon.w));
                 icon.x = (float)((icon.x) < (0) ? (0) : (icon.x));
@@ -2449,7 +2449,7 @@ namespace NuklearSharp
         }
 
         public static int nk_do_selectable(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, char* str, int len,
-            uint align, ref int value, nk_style_selectable style, nk_input _in_, NkUserFont font)
+            Alignment align, ref int value, nk_style_selectable style, nk_input _in_, NkUserFont font)
         {
             int old_value;
             NkRect touch = new NkRect();
@@ -2463,14 +2463,14 @@ namespace NuklearSharp
             if ((nk_button_behavior(ref state, (NkRect)(touch), _in_, NkButtonBehavior.Default)) != 0)
                 value = value != 0 ? 0 : 1;
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
-            nk_draw_selectable(_out_, (state), style, (int)(value), &bounds, null, null, str, (int)(len), (uint)(align),
+            nk_draw_selectable(_out_, (state), style, (int)(value), &bounds, null, null, str, (int)(len), (align),
                 font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
             return old_value != value ? 1 : 0;
         }
 
         public static int nk_do_selectable_image(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, char* str, int len,
-            uint align, ref int value, NkImage img, nk_style_selectable style, nk_input _in_, NkUserFont font)
+            Alignment align, ref int value, NkImage img, nk_style_selectable style, nk_input _in_, NkUserFont font)
         {
             int old_value;
             NkRect touch = new NkRect();
@@ -2486,7 +2486,7 @@ namespace NuklearSharp
                 value = value != 0 ? 0 : 1;
             icon.y = (float)(bounds.y + style.padding.y);
             icon.w = (float)(icon.h = (float)(bounds.h - 2 * style.padding.y));
-            if ((align & NK_TEXT_ALIGN_LEFT) != 0)
+            if ((align & Alignment.LEFT) != 0)
             {
                 icon.x = (float)((bounds.x + bounds.w) - (2 * style.padding.x + icon.w));
                 icon.x = (float)((icon.x) < (0) ? (0) : (icon.x));
@@ -2497,7 +2497,7 @@ namespace NuklearSharp
             icon.w -= (float)(2 * style.image_padding.x);
             icon.h -= (float)(2 * style.image_padding.y);
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
-            nk_draw_selectable(_out_, (state), style, (int)(value), &bounds, &icon, img, str, (int)(len), (uint)(align),
+            nk_draw_selectable(_out_, (state), style, (int)(value), &bounds, &icon, img, str, (int)(len), (align),
                 font);
             if ((style.draw_end) != null) style.draw_end(_out_, (NkHandle)(style.userdata));
             return old_value != value ? 1 : 0;
@@ -3356,7 +3356,7 @@ namespace NuklearSharp
                                     txt.background = (NkColor)(cursor_color);
                                     txt.text = (NkColor)(cursor_text_color);
                                     nk_fill_rect(_out_, (NkRect)(label), (float)(0), (NkColor)(cursor_color));
-                                    nk_widget_text(_out_, (NkRect)(label), cursor_ptr, (int)(glyph_len), &txt, (uint)(NK_TEXT_LEFT), font);
+                                    nk_widget_text(_out_, (NkRect)(label), cursor_ptr, (int)(glyph_len), &txt, (Alignment.MIDDLELEFT), font);
                                 }
                             }
                         }
@@ -3867,12 +3867,12 @@ namespace NuklearSharp
             return (NkStyleItem)(i);
         }
 
-        public static int nk_panel_has_header(uint flags, char* title)
+        public static int nk_panel_has_header(PanelFlags flags, char* title)
         {
             int active = (int)(0);
-            active = (int)(flags & (NK_WINDOW_CLOSABLE | NK_WINDOW_MINIMIZABLE));
-            active = (int)(((active) != 0) || ((flags & NK_WINDOW_TITLE) != 0) ? 1 : 0);
-            active = (int)((((active) != 0) && ((flags & NK_WINDOW_HIDDEN) == 0)) && ((title) != null) ? 1 : 0);
+            active = (int)(flags & (PanelFlags.CLOSABLE | PanelFlags.MINIMIZABLE));
+            active = (int)(((active) != 0) || ((flags & PanelFlags.TITLE) != 0) ? 1 : 0);
+            active = (int)((((active) != 0) && ((flags & PanelFlags.HIDDEN) == 0)) && ((title) != null) ? 1 : 0);
             return (int)(active);
         }
 

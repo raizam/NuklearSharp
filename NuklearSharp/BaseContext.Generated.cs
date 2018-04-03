@@ -212,7 +212,7 @@ namespace NuklearSharp
             Nk.nk_remove_window(_ctx, win);
         }
 
-        public bool Begin(string title, NkRect bounds, uint flags)
+        public bool Begin(string title, NkRect bounds, PanelFlags flags)
         {
             fixed (char* title_ptr = title)
             {
@@ -220,7 +220,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool BeginTitled(string name, string title, NkRect bounds, uint flags)
+        public bool BeginTitled(string name, string title, NkRect bounds, PanelFlags flags)
         {
             fixed (char* name_ptr = name)
             {
@@ -655,7 +655,7 @@ namespace NuklearSharp
             Nk.nk_spacing(_ctx, cols);
         }
 
-        public void TextColored(string str, uint alignment, NkColor color)
+        public void TextColored(string str, Alignment alignment, NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -671,7 +671,7 @@ namespace NuklearSharp
             }
         }
 
-        public void Text(string str, uint alignment)
+        public void Text(string str, Alignment alignment)
         {
             fixed (char* str_ptr = str)
             {
@@ -687,7 +687,7 @@ namespace NuklearSharp
             }
         }
 
-        public void Label(string str, uint alignment)
+        public void Label(string str, Alignment alignment)
         {
             fixed (char* str_ptr = str)
             {
@@ -695,7 +695,7 @@ namespace NuklearSharp
             }
         }
 
-        public void LabelColored(string str, uint align, NkColor color)
+        public void LabelColored(string str, Alignment align, NkColor color)
         {
             fixed (char* str_ptr = str)
             {
@@ -796,7 +796,7 @@ namespace NuklearSharp
             return Nk.nk_button_image(_ctx, img) != 0;
         }
 
-        public bool ButtonSymbolTextStyled(nk_style_button style, NkSymbolType symbol, string text, uint align)
+        public bool ButtonSymbolTextStyled(nk_style_button style, NkSymbolType symbol, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -804,7 +804,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolText(NkSymbolType symbol, string text, uint align)
+        public bool ButtonSymbolText(NkSymbolType symbol, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -812,7 +812,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolLabel(NkSymbolType symbol, string label, uint align)
+        public bool ButtonSymbolLabel(NkSymbolType symbol, string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -820,7 +820,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonSymbolLabelStyled(nk_style_button style, NkSymbolType symbol, string title, uint align)
+        public bool ButtonSymbolLabelStyled(nk_style_button style, NkSymbolType symbol, string title, Alignment align)
         {
             fixed (char* title_ptr = title)
             {
@@ -828,7 +828,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageTextStyled(nk_style_button style, NkImage img, string text, uint align)
+        public bool ButtonImageTextStyled(nk_style_button style, NkImage img, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -836,7 +836,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageText(NkImage img, string text, uint align)
+        public bool ButtonImageText(NkImage img, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -844,7 +844,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ButtonImageLabel(NkImage img, string label, uint align)
+        public bool ButtonImageLabel(NkImage img, string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -853,7 +853,7 @@ namespace NuklearSharp
         }
 
         public bool ButtonImageLabelStyled(nk_style_button style, NkImage img, string label,
-            uint text_alignment)
+            Alignment text_alignment)
         {
             fixed (char* label_ptr = label)
             {
@@ -861,7 +861,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableText(string str, uint align, ref int value)
+        public bool SelectableText(string str, Alignment align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -869,7 +869,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableImageText(NkImage img, string str, uint align, ref int value)
+        public bool SelectableImageText(NkImage img, string str, Alignment align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -877,7 +877,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectText(string str, uint align, int value)
+        public bool SelectText(string str, Alignment align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -885,7 +885,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableLabel(string str, uint align, ref int value)
+        public bool SelectableLabel(string str, Alignment align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -893,7 +893,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectableImageLabel(NkImage img, string str, uint align, ref int value)
+        public bool SelectableImageLabel(NkImage img, string str, Alignment align, ref int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -901,7 +901,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectLabel(string str, uint align, int value)
+        public bool SelectLabel(string str, Alignment align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -909,7 +909,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectImageLabel(NkImage img, string str, uint align, int value)
+        public bool SelectImageLabel(NkImage img, string str, Alignment align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -917,7 +917,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool SelectImageText(NkImage img, string str, uint align, int value)
+        public bool SelectImageText(NkImage img, string str, Alignment align, int value)
         {
             fixed (char* str_ptr = str)
             {
@@ -1222,7 +1222,7 @@ namespace NuklearSharp
             Nk.nk_group_scrolled_end(_ctx);
         }
 
-        public bool GroupScrolledBegin(nk_scroll scroll, string title, uint flags)
+        public bool GroupScrolledBegin(nk_scroll scroll, string title, PanelFlags flags)
         {
             fixed (char* title_ptr = title)
             {
@@ -1230,7 +1230,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool GroupBeginTitled(string id, string title, uint flags)
+        public bool GroupBeginTitled(string id, string title, PanelFlags flags)
         {
             fixed (char* id_ptr = id)
             {
@@ -1241,7 +1241,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool GroupBegin(string title, uint flags)
+        public bool GroupBegin(string title, PanelFlags flags)
         {
             fixed (char* title_ptr = title)
             {
@@ -1254,7 +1254,7 @@ namespace NuklearSharp
             Nk.nk_group_end(_ctx);
         }
 
-        public bool ListViewBegin(nk_list_view view, string title, uint flags, int row_height, int row_count)
+        public bool ListViewBegin(nk_list_view view, string title, PanelFlags flags, int row_height, int row_count)
         {
             fixed (char* title_ptr = title)
             {
@@ -1262,7 +1262,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool PopupBegin(int type, string title, uint flags, NkRect rect)
+        public bool PopupBegin(int type, string title, PanelFlags flags, NkRect rect)
         {
             fixed (char* title_ptr = title)
             {
@@ -1270,7 +1270,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool NonblockBegin(uint flags, NkRect body, NkRect header, int panel_type)
+        public bool NonblockBegin(PanelFlags flags, NkRect body, NkRect header, int panel_type)
         {
             return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
         }
@@ -1303,12 +1303,12 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualBegin(uint flags, NkVec2 size, NkRect trigger_bounds)
+        public bool ContextualBegin(PanelFlags flags, NkVec2 size, NkRect trigger_bounds)
         {
             return Nk.nk_contextual_begin(_ctx, flags, size, trigger_bounds) != 0;
         }
 
-        public bool ContextualItemText(string text, uint alignment)
+        public bool ContextualItemText(string text, Alignment alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1316,7 +1316,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemLabel(string label, uint align)
+        public bool ContextualItemLabel(string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1324,7 +1324,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemImageText(NkImage img, string text, uint align)
+        public bool ContextualItemImageText(NkImage img, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1332,7 +1332,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemImageLabel(NkImage img, string label, uint align)
+        public bool ContextualItemImageLabel(NkImage img, string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1340,7 +1340,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemSymbolText(NkSymbolType symbol, string text, uint align)
+        public bool ContextualItemSymbolText(NkSymbolType symbol, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1348,7 +1348,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ContextualItemSymbolLabel(NkSymbolType symbol, string text, uint align)
+        public bool ContextualItemSymbolLabel(NkSymbolType symbol, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1434,7 +1434,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemText(string text, uint align)
+        public bool ComboItemText(string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1442,7 +1442,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemLabel(string label, uint align)
+        public bool ComboItemLabel(string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1450,7 +1450,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemImageText(NkImage img, string text, uint alignment)
+        public bool ComboItemImageText(NkImage img, string text, Alignment alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1458,7 +1458,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemImageLabel(NkImage img, string text, uint alignment)
+        public bool ComboItemImageLabel(NkImage img, string text, Alignment alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1466,7 +1466,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemSymbolText(NkSymbolType sym, string text, uint alignment)
+        public bool ComboItemSymbolText(NkSymbolType sym, string text, Alignment alignment)
         {
             fixed (char* text_ptr = text)
             {
@@ -1474,7 +1474,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool ComboItemSymbolLabel(NkSymbolType sym, string label, uint alignment)
+        public bool ComboItemSymbolLabel(NkSymbolType sym, string label, Alignment alignment)
         {
             fixed (char* label_ptr = label)
             {
@@ -1556,7 +1556,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginText(string title, uint align, NkVec2 size)
+        public bool MenuBeginText(string title, Alignment align, NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1564,7 +1564,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginLabel(string text, uint align, NkVec2 size)
+        public bool MenuBeginLabel(string text, Alignment align, NkVec2 size)
         {
             fixed (char* text_ptr = text)
             {
@@ -1588,7 +1588,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginImageText(string title, uint align, NkImage img, NkVec2 size)
+        public bool MenuBeginImageText(string title, Alignment align, NkImage img, NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1596,7 +1596,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginImageLabel(string title, uint align, NkImage img, NkVec2 size)
+        public bool MenuBeginImageLabel(string title, Alignment align, NkImage img, NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1604,7 +1604,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbolText(string title, uint align, int sym, NkVec2 size)
+        public bool MenuBeginSymbolText(string title, Alignment align, int sym, NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1612,7 +1612,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuBeginSymbolLabel(string title, uint align, int sym, NkVec2 size)
+        public bool MenuBeginSymbolLabel(string title, Alignment align, int sym, NkVec2 size)
         {
             fixed (char* title_ptr = title)
             {
@@ -1620,7 +1620,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemText(string title, uint align)
+        public bool MenuItemText(string title, Alignment align)
         {
             fixed (char* title_ptr = title)
             {
@@ -1628,7 +1628,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemLabel(string label, uint align)
+        public bool MenuItemLabel(string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1636,7 +1636,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemImageLabel(NkImage img, string label, uint align)
+        public bool MenuItemImageLabel(NkImage img, string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {
@@ -1644,7 +1644,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemImageText(NkImage img, string text, uint align)
+        public bool MenuItemImageText(NkImage img, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1652,7 +1652,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemSymbolText(NkSymbolType sym, string text, uint align)
+        public bool MenuItemSymbolText(NkSymbolType sym, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
@@ -1660,7 +1660,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool MenuItemSymbolLabel(NkSymbolType sym, string label, uint align)
+        public bool MenuItemSymbolLabel(NkSymbolType sym, string label, Alignment align)
         {
             fixed (char* label_ptr = label)
             {

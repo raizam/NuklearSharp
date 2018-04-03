@@ -427,7 +427,7 @@ namespace NuklearSharp
             cmd.String[length] = ('\0');
         }
 
-        public static void nk_widget_text(NkCommandBuffer o, NkRect b, char* _string_, int len, nk_text* t, uint a,
+        public static void nk_widget_text(NkCommandBuffer o, NkRect b, char* _string_, int len, nk_text* t, Alignment a,
             NkUserFont f)
         {
             NkRect label = new NkRect();
@@ -440,12 +440,12 @@ namespace NuklearSharp
             label.h = (float)((f.Height) < (b.h - 2 * t->padding.y) ? (f.Height) : (b.h - 2 * t->padding.y));
             text_width = (float)(f.Width((NkHandle)(f.Userdata), (float)(f.Height), _string_, (int)(len)));
             text_width += (float)(2.0f * t->padding.x);
-            if ((a & NK_TEXT_ALIGN_LEFT) != 0)
+            if ((a & Alignment.LEFT) != 0)
             {
                 label.x = (float)(b.x + t->padding.x);
                 label.w = (float)((0) < (b.w - 2 * t->padding.x) ? (b.w - 2 * t->padding.x) : (0));
             }
-            else if ((a & NK_TEXT_ALIGN_CENTERED) != 0)
+            else if ((a & Alignment.CENTERED) != 0)
             {
                 label.w = (float)((1) < (2 * t->padding.x + text_width) ? (2 * t->padding.x + text_width) : (1));
                 label.x = (float)(b.x + t->padding.x + ((b.w - 2 * t->padding.x) - label.w) / 2);
@@ -453,7 +453,7 @@ namespace NuklearSharp
                 label.w = (float)((b.x + b.w) < (label.x + label.w) ? (b.x + b.w) : (label.x + label.w));
                 if ((label.w) >= (label.x)) label.w -= (float)(label.x);
             }
-            else if ((a & NK_TEXT_ALIGN_RIGHT) != 0)
+            else if ((a & Alignment.RIGHT) != 0)
             {
                 label.x =
                     (float)
@@ -463,7 +463,7 @@ namespace NuklearSharp
                 label.w = (float)(text_width + 2 * t->padding.x);
             }
             else return;
-            if ((a & NK_TEXT_ALIGN_MIDDLE) != 0)
+            if ((a & Alignment.MIDDLE) != 0)
             {
                 label.y = (float)(b.y + b.h / 2.0f - f.Height / 2.0f);
                 label.h =
@@ -472,7 +472,7 @@ namespace NuklearSharp
                             ? (b.h - (b.h / 2.0f + f.Height / 2.0f))
                             : (b.h / 2.0f));
             }
-            else if ((a & NK_TEXT_ALIGN_BOTTOM) != 0)
+            else if ((a & Alignment.BOTTOM) != 0)
             {
                 label.y = (float)(b.y + b.h - f.Height);
                 label.h = (float)(f.Height);
@@ -509,7 +509,7 @@ namespace NuklearSharp
             while ((done) < (len))
             {
                 if ((fitting == 0) || ((line.y + line.h) >= (b.y + b.h))) break;
-                nk_widget_text(o, (NkRect)(line), &_string_[done], (int)(fitting), &text, (uint)(NK_TEXT_LEFT), f);
+                nk_widget_text(o, (NkRect)(line), &_string_[done], (int)(fitting), &text, (Alignment.MIDDLELEFT), f);
                 done += (int)(fitting);
                 line.y += (float)(f.Height + 2 * t->padding.y);
                 fitting =
@@ -536,7 +536,7 @@ namespace NuklearSharp
                         text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
                         text.background = (NkColor)(background);
                         text.text = (NkColor)(foreground);
-                        nk_widget_text(_out_, (NkRect)(content), &X, (int)(1), &text, (uint)(NK_TEXT_CENTERED), font);
+                        nk_widget_text(_out_, (NkRect)(content), &X, (int)(1), &text, (Alignment.MIDDLECENTERED), font);
                     }
                     break;
                 case NkSymbolType.CIRCLE_SOLID:
@@ -609,7 +609,7 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_button_text(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
-            nk_style_button style, char* txt, int len, uint text_alignment, NkUserFont font)
+            nk_style_button style, char* txt, int len, Alignment text_alignment, NkUserFont font)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
@@ -620,7 +620,7 @@ namespace NuklearSharp
             else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = (NkColor)(style.text_active);
             else text.text = (NkColor)(style.text_normal);
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
-            nk_widget_text(_out_, (NkRect)(*content), txt, (int)(len), &text, (uint)(text_alignment), font);
+            nk_widget_text(_out_, (NkRect)(*content), txt, (int)(len), &text, (text_alignment), font);
         }
 
         public static void nk_draw_button_symbol(NkCommandBuffer _out_, NkRect* bounds, NkRect* content, NkWidgetStates state,
@@ -674,7 +674,7 @@ namespace NuklearSharp
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
             nk_draw_symbol(_out_, type, (NkRect)(*symbol), (NkColor)(style.text_background),
                 (NkColor)(sym), (float)(0), font);
-            nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
+            nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (Alignment.MIDDLECENTERED), font);
         }
 
         public static void nk_draw_button_text_image(NkCommandBuffer _out_, NkRect* bounds, NkRect* label,
@@ -689,7 +689,7 @@ namespace NuklearSharp
             else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = (NkColor)(style.text_active);
             else text.text = (NkColor)(style.text_normal);
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
-            nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
+            nk_widget_text(_out_, (NkRect)(*label), str, (int)(len), &text, (Alignment.MIDDLECENTERED), font);
             nk_draw_image(_out_, (NkRect)(*image), img, (NkColor)(nk_white));
         }
 
@@ -735,7 +735,7 @@ namespace NuklearSharp
             text.padding.x = (float)(0);
             text.padding.y = (float)(0);
             text.background = (NkColor)(style.text_background);
-            nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
+            nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (Alignment.MIDDLELEFT), font);
         }
 
         public static void nk_draw_option(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, int active,
@@ -780,11 +780,11 @@ namespace NuklearSharp
             text.padding.x = (float)(0);
             text.padding.y = (float)(0);
             text.background = (NkColor)(style.text_background);
-            nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (uint)(NK_TEXT_LEFT), font);
+            nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (Alignment.MIDDLELEFT), font);
         }
 
         public static void nk_draw_selectable(NkCommandBuffer _out_, NkWidgetStates state, nk_style_selectable style, int active,
-            NkRect* bounds, NkRect* icon, NkImage img, char* _string_, int len, uint align, NkUserFont font)
+            NkRect* bounds, NkRect* icon, NkImage img, char* _string_, int len, Alignment align, NkUserFont font)
         {
             NkStyleItem background;
             nk_text text = new nk_text();
@@ -839,7 +839,7 @@ namespace NuklearSharp
 
             if (((img) != null) && ((icon) != null))
                 nk_draw_image(_out_, (NkRect)(*icon), img, (NkColor)(nk_white));
-            nk_widget_text(_out_, (NkRect)(*bounds), _string_, (int)(len), &text, (uint)(align), font);
+            nk_widget_text(_out_, (NkRect)(*bounds), _string_, (int)(len), &text, (align), font);
         }
 
         public static void nk_draw_slider(NkCommandBuffer _out_, NkWidgetStates state, nk_style_slider style, NkRect* bounds,
@@ -1006,7 +1006,7 @@ namespace NuklearSharp
                         if ((is_selected) != 0)
                             nk_fill_rect(_out_, (NkRect)(label), (float)(0), (NkColor)(background));
                         nk_widget_text(_out_, (NkRect)(label), line, (int)((text + text_len) - line), &txt,
-                            (uint)(NK_TEXT_CENTERED), font);
+                            (Alignment.MIDDLECENTERED), font);
                         text_len++;
                         line_count++;
                         line_width = (float)(0);
@@ -1041,7 +1041,7 @@ namespace NuklearSharp
                     if ((is_selected) != 0)
                         nk_fill_rect(_out_, (NkRect)(label), (float)(0), (NkColor)(background));
                     nk_widget_text(_out_, (NkRect)(label), line, (int)((text + text_len) - line), &txt,
-                        (uint)(NK_TEXT_LEFT), font);
+                        (Alignment.MIDDLELEFT), font);
                 }
             }
 
@@ -1082,7 +1082,7 @@ namespace NuklearSharp
             }
 
             text.padding = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
-            nk_widget_text(_out_, (NkRect)(*label), name, (int)(len), &text, (uint)(NK_TEXT_CENTERED), font);
+            nk_widget_text(_out_, (NkRect)(*label), name, (int)(len), &text, (Alignment.MIDDLECENTERED), font);
         }
 
         public static void nk_draw_color_picker(NkCommandBuffer o, NkRect* matrix, NkRect* hue_bar,

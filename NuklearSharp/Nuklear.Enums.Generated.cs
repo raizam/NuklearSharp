@@ -196,7 +196,7 @@ namespace NuklearSharp
     //    NK_TREE_TAB = 1
     //}
 
-  
+
 
     //public enum NkButtons
     //{
@@ -240,41 +240,10 @@ namespace NuklearSharp
     //    NK_COMMAND_CUSTOM = 18
     //}
 
-    //[Flags]
-    //public enum NkPanelFlags
-    //{
-    //    NK_WINDOW_BORDER = 1,
-    //    NK_WINDOW_MOVABLE = 2,
-    //    NK_WINDOW_SCALABLE = 4,
-    //    NK_WINDOW_CLOSABLE = 8,
-    //    NK_WINDOW_MINIMIZABLE = 16,
-    //    NK_WINDOW_NO_SCROLLBAR = 32,
-    //    NK_WINDOW_TITLE = 64,
-    //    NK_WINDOW_SCROLL_AUTO_HIDE = 128,
-    //    NK_WINDOW_BACKGROUND = 256,
-    //    NK_WINDOW_SCALE_LEFT = 512,
-    //    NK_WINDOW_NO_INPUT = 1024
-    //}
 
 
 
-    //[Flags]
-    //public enum NkTextAlign
-    //{
-    //    NK_TEXT_ALIGN_LEFT = 1,
-    //    NK_TEXT_ALIGN_CENTERED = 2,
-    //    NK_TEXT_ALIGN_RIGHT = 4,
-    //    NK_TEXT_ALIGN_TOP = 8,
-    //    NK_TEXT_ALIGN_MIDDLE = 16,
-    //    NK_TEXT_ALIGN_BOTTOM = 32
-    //}
 
-    //public enum NkTextAlignment
-    //{
-    //    NK_TEXT_LEFT = 17,
-    //    NK_TEXT_CENTERED = 18,
-    //    NK_TEXT_RIGHT = 20
-    //}
 
     //[Flags]
     //public enum NkEditFlags
@@ -410,14 +379,14 @@ namespace NuklearSharp
 
     //public enum NkWindowFlags
     //{
-    //    NK_WINDOW_PRIVATE = 2048,
-    //    NK_WINDOW_DYNAMIC = 2048,
-    //    NK_WINDOW_ROM = 4096,
-    //    NK_WINDOW_NOT_INTERACTIVE = 5120,
-    //    NK_WINDOW_HIDDEN = 8192,
-    //    NK_WINDOW_CLOSED = 16384,
-    //    NK_WINDOW_MINIMIZED = 32768,
-    //    NK_WINDOW_REMOVE_ROM = 65536
+    //    NkPanelFlags.PRIVATE = 2048,
+    //    NkPanelFlags.DYNAMIC = 2048,
+    //    NkPanelFlags.ROM = 4096,
+    //    NkPanelFlags.NOT_INTERACTIVE = 5120,
+    //    NkPanelFlags.HIDDEN = 8192,
+    //    NkPanelFlags.CLOSED = 16384,
+    //    NkPanelFlags.MINIMIZED = 32768,
+    //    NkPanelFlags.REMOVE_ROM = 65536
     //}
 
 
@@ -496,6 +465,7 @@ namespace NuklearSharp
         HOVERED = 18,
         ACTIVE = 34
     }
+
 
 
     public enum NkStyleColors
@@ -597,6 +567,47 @@ namespace NuklearSharp
         MAX = 30
     }
 
+
+    [Flags]
+    public enum Alignment
+    {
+        LEFT = 1,
+        CENTERED = 2,
+        RIGHT = 4,
+        TOP = 8,
+        MIDDLE = 16,
+        BOTTOM = 32,
+
+        MIDDLELEFT = 17,
+        MIDDLECENTERED = 18,
+        MIDDLERIGHT = 20
+    }
+
+    [Flags]
+    public enum PanelFlags : uint
+    {
+        BORDER = 1,
+        MOVABLE = 2,
+        SCALABLE = 4,
+        CLOSABLE = 8,
+        MINIMIZABLE = 16,
+        NO_SCROLLBAR = 32,
+        TITLE = 64,
+        SCROLL_AUTO_HIDE = 128,
+        BACKGROUND = 256,
+        SCALE_LEFT = 512,
+        NO_INPUT = 1024,
+
+        PRIVATE = (1 << (11)),
+        DYNAMIC = PanelFlags.PRIVATE,
+        ROM = (1 << (12)),
+        NOT_INTERACTIVE = PanelFlags.ROM | PanelFlags.NO_INPUT,
+        HIDDEN = (1 << (13)),
+        CLOSED = (1 << (14)),
+        MINIMIZED = (1 << (15)),
+        REMOVE_ROM = (1 << (16)),
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -607,8 +618,8 @@ namespace NuklearSharp
         //public const int NK_LEFT = 3;
         //public const int NK_BUTTON_DEFAULT = 0;
         //public const int NK_BUTTON_REPEATER = 1;
-      //  public const int NK_FIXED = nk_false;
-      //  public const int NK_MODIFIABLE = nk_true;
+        //  public const int NK_FIXED = nk_false;
+        //  public const int NK_MODIFIABLE = nk_true;
         //public const int NK_VERTICAL = 0;
         //public const int NK_HORIZONTAL = 1;
         //public const int NK_MINIMIZED = nk_false;
@@ -685,30 +696,30 @@ namespace NuklearSharp
         public const int NK_CONVERT_COMMAND_BUFFER_FULL = (1 << (1));
         public const int NK_CONVERT_VERTEX_BUFFER_FULL = (1 << (2));
         public const int NK_CONVERT_ELEMENT_BUFFER_FULL = (1 << (3));
-        public const int NK_WINDOW_BORDER = (1 << (0));
-        public const int NK_WINDOW_MOVABLE = (1 << (1));
-        public const int NK_WINDOW_SCALABLE = (1 << (2));
-        public const int NK_WINDOW_CLOSABLE = (1 << (3));
-        public const int NK_WINDOW_MINIMIZABLE = (1 << (4));
-        public const int NK_WINDOW_NO_SCROLLBAR = (1 << (5));
-        public const int NK_WINDOW_TITLE = (1 << (6));
-        public const int NK_WINDOW_SCROLL_AUTO_HIDE = (1 << (7));
-        public const int NK_WINDOW_BACKGROUND = (1 << (8));
-        public const int NK_WINDOW_SCALE_LEFT = (1 << (9));
-        public const int NK_WINDOW_NO_INPUT = (1 << (10));
+        //public const int NkPanelFlags.BORDER = (1 << (0));
+        //public const int NkPanelFlags.MOVABLE = (1 << (1));
+        //public const int NkPanelFlags.SCALABLE = (1 << (2));
+        //public const int NkPanelFlags.CLOSABLE = (1 << (3));
+        //public const int NkPanelFlags.MINIMIZABLE = (1 << (4));
+        //public const int NkPanelFlags.NO_SCROLLBAR = (1 << (5));
+        //public const int NkPanelFlags.TITLE = (1 << (6));
+        //public const int NkPanelFlags.SCROLL_AUTO_HIDE = (1 << (7));
+        //public const int NkPanelFlags.BACKGROUND = (1 << (8));
+        //public const int NkPanelFlags.SCALE_LEFT = (1 << (9));
+        //public const int NkPanelFlags.NO_INPUT = (1 << (10));
         public const int NK_WIDGET_INVALID = 0;
         public const int NK_WIDGET_VALID = 1;
         public const int NK_WIDGET_ROM = 2;
 
-        public const int NK_TEXT_ALIGN_LEFT = 0x01;
-        public const int NK_TEXT_ALIGN_CENTERED = 0x02;
-        public const int NK_TEXT_ALIGN_RIGHT = 0x04;
-        public const int NK_TEXT_ALIGN_TOP = 0x08;
-        public const int NK_TEXT_ALIGN_MIDDLE = 0x10;
-        public const int NK_TEXT_ALIGN_BOTTOM = 0x20;
-        public const int NK_TEXT_LEFT = NK_TEXT_ALIGN_MIDDLE | NK_TEXT_ALIGN_LEFT;
-        public const int NK_TEXT_CENTERED = NK_TEXT_ALIGN_MIDDLE | NK_TEXT_ALIGN_CENTERED;
-        public const int NK_TEXT_RIGHT = NK_TEXT_ALIGN_MIDDLE | NK_TEXT_ALIGN_RIGHT;
+        //public const int NkTextAlign.LEFT = 0x01;
+        //public const int NkTextAlign.CENTERED = 0x02;
+        //public const int NkTextAlign.RIGHT = 0x04;
+        //public const int NkTextAlign.TOP = 0x08;
+        //public const int NkTextAlign.MIDDLE = 0x10;
+        //public const int NkTextAlign.BOTTOM = 0x20;
+        //public const int NkTextAlign.MIDDLELEFT = NkTextAlign.MIDDLE | NkTextAlign.LEFT;
+        //public const int NkTextAlign.MIDDLECENTERED = NkTextAlign.MIDDLE | NkTextAlign.CENTERED;
+        //public const int NkTextAlign.MIDDLERIGHT = NkTextAlign.MIDDLE | NkTextAlign.RIGHT;
         public const int NK_EDIT_DEFAULT = 0;
         public const int NK_EDIT_READ_ONLY = (1 << (0));
         public const int NK_EDIT_AUTO_SELECT = (1 << (1));
@@ -815,14 +826,14 @@ namespace NuklearSharp
         public const int NK_LAYOUT_STATIC = 7;
         public const int NK_LAYOUT_TEMPLATE = 8;
         public const int NK_LAYOUT_COUNT = 9;
-        public const int NK_WINDOW_PRIVATE = (1 << (11));
-        public const int NK_WINDOW_DYNAMIC = NK_WINDOW_PRIVATE;
-        public const int NK_WINDOW_ROM = (1 << (12));
-        public const int NK_WINDOW_NOT_INTERACTIVE = NK_WINDOW_ROM | NK_WINDOW_NO_INPUT;
-        public const int NK_WINDOW_HIDDEN = (1 << (13));
-        public const int NK_WINDOW_CLOSED = (1 << (14));
-        public const int NK_WINDOW_MINIMIZED = (1 << (15));
-        public const int NK_WINDOW_REMOVE_ROM = (1 << (16));
+        //public const int NkPanelFlags.PRIVATE = (1 << (11));
+        //public const int NkPanelFlags.DYNAMIC = NkPanelFlags.PRIVATE;
+        //public const int NkPanelFlags.ROM = (1 << (12));
+        //public const int NkPanelFlags.NOT_INTERACTIVE = NkPanelFlags.ROM | NkPanelFlags.NO_INPUT;
+        //public const int NkPanelFlags.HIDDEN = (1 << (13));
+        //public const int NkPanelFlags.CLOSED = (1 << (14));
+        //public const int NkPanelFlags.MINIMIZED = (1 << (15));
+        //public const int NkPanelFlags.REMOVE_ROM = (1 << (16));
         public const int NK_DO_NOT_STOP_ON_NEW_LINE = 0;
         public const int NK_STOP_ON_NEW_LINE = 1;
         public const int NK_RP_HEURISTIC_Skyline_default = 0;

@@ -114,7 +114,7 @@ namespace NuklearSharp
         public class NkPanel
         {
             public int Type;
-            public uint Flags;
+            public PanelFlags Flags;
             public NkRect Bounds = new NkRect();
             public nk_scroll Offset;
             public float AtX;
@@ -137,7 +137,7 @@ namespace NuklearSharp
             public uint Seq;
             public uint Name;
             public PinnedArray<char> NameString = new PinnedArray<char>(64);
-            public uint Flags;
+            public PanelFlags Flags;
             public NkRect Bounds = new NkRect();
             public nk_scroll Scrollbar = new nk_scroll();
             public NkCommandBuffer Buffer = new NkCommandBuffer();
@@ -633,7 +633,7 @@ namespace NuklearSharp
 
             var iter = ctx.Begin;
             while (iter != null &&
-                   (iter.Buffer.Count == 0 || (iter.Flags & NK_WINDOW_HIDDEN) != 0 || iter.Seq != ctx.Seq))
+                   (iter.Buffer.Count == 0 || (iter.Flags & PanelFlags.HIDDEN) != 0 || iter.Seq != ctx.Seq))
             {
                 iter = iter.Next;
             }
@@ -663,12 +663,12 @@ namespace NuklearSharp
             for (; it != null;)
             {
                 var next = it.Next;
-                if ((it.Flags & NK_WINDOW_HIDDEN) != 0 || it.Seq != ctx.Seq)
+                if ((it.Flags & PanelFlags.HIDDEN) != 0 || it.Seq != ctx.Seq)
                     goto cont;
                 cmd = it.Buffer.Last;
 
                 while (next != null &&
-                       (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & NK_WINDOW_HIDDEN) != 0))
+                       (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & PanelFlags.HIDDEN) != 0))
                 {
                     next = next.Next;
                 }
@@ -811,7 +811,7 @@ namespace NuklearSharp
         {
         }
 
-        public static int nk_popup_begin(NkContext ctx, int type, string title, uint flags, NkRect rect)
+        public static int nk_popup_begin(NkContext ctx, int type, string title, PanelFlags flags, NkRect rect)
         {
             fixed (char* ptr = title)
             {
@@ -851,7 +851,7 @@ namespace NuklearSharp
             }
             else hash = nk_murmur_hash(name, nk_strlen(name), 42);
 
-            var _in_ = s == NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & NK_WINDOW_ROM) != 0
+            var _in_ = s == NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & PanelFlags.ROM) != 0
                 ? null
                 : ctx.Input;
 

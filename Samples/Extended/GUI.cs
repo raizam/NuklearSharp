@@ -54,7 +54,7 @@ namespace Extended
             ctx.Ctx.Style.Window.spacing = Nk.nk_vec2_(0, 0);
             ctx.Ctx.Style.Window.padding = Nk.nk_vec2_(0, 0);
 
-            if (ctx.PopupBegin(Nk.NK_POPUP_STATIC, "piemenu", Nk.NK_WINDOW_NO_SCROLLBAR,
+            if (ctx.PopupBegin(Nk.NK_POPUP_STATIC, "piemenu", PanelFlags.NO_SCROLLBAR,
                 Nk.nk_rect_(pos.x - totalSpace.x - radius, pos.y - radius - totalSpace.y,
                     2 * radius, 2 * radius)))
             {
@@ -156,27 +156,27 @@ namespace Extended
             int i;
             ctx.StyleSetFont(media.Font20.Handle);
             if (ctx.Begin("Grid Demo", Nk.nk_rect_(600, 350, 275, 250),
-                Nk.NK_WINDOW_TITLE | Nk.NK_WINDOW_BORDER | Nk.NK_WINDOW_MOVABLE |
-                Nk.NK_WINDOW_NO_SCROLLBAR))
+                PanelFlags.TITLE | PanelFlags.BORDER | PanelFlags.MOVABLE |
+                PanelFlags.NO_SCROLLBAR))
             {
                 ctx.StyleSetFont(media.Font18.Handle);
                 ctx.LayoutRowDynamic(30, 2);
-                ctx.Label("String:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("String:", Alignment.MIDDLERIGHT);
                 ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[0], 64, Nk.nk_filter_default);
-                ctx.Label("Floating point:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("Floating point:", Alignment.MIDDLERIGHT);
                 ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[1], 64, Nk.nk_filter_float);
-                ctx.Label("Hexadecimal:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("Hexadecimal:", Alignment.MIDDLERIGHT);
                 ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[2], 64, Nk.nk_filter_hex);
-                ctx.Label("Binary:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("Binary:", Alignment.MIDDLERIGHT);
                 ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[3], 64, Nk.nk_filter_binary);
-                ctx.Label("Checkbox:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("Checkbox:", Alignment.MIDDLERIGHT);
                 ctx.CheckboxLabel("Check me", ref _gridCheck);
-                ctx.Label("Combobox:", Nk.NK_TEXT_RIGHT);
+                ctx.Label("Combobox:", Alignment.MIDDLERIGHT);
                 if (ctx.ComboBeginLabel(Items[_selectedItem2], Nk.nk_vec2_(ctx.WidgetWidth(), 200)))
                 {
                     ctx.LayoutRowDynamic(25, 1);
                     for (i = 0; i < 3; ++i)
-                        if (ctx.ComboItemLabel(Items[i], Nk.NK_TEXT_LEFT))
+                        if (ctx.ComboItemLabel(Items[i], Alignment.MIDDLELEFT))
                             _selectedItem2 = i;
                     ctx.ComboEnd();
                 }
@@ -189,7 +189,7 @@ namespace Extended
         {
             ctx.StyleSetFont(media.Font18.Handle);
             ctx.LayoutRowDynamic(20, 1);
-            ctx.Label(title, Nk.NK_TEXT_LEFT);
+            ctx.Label(title, Alignment.MIDDLELEFT);
         }
 
         public static void ui_widget(NuklearContext ctx, Media media, float height)
@@ -210,7 +210,7 @@ namespace Extended
         {
             ctx.StyleSetFont(media.Font20.Handle);
             ctx.Begin("Button Demo", Nk.nk_rect_(50, 50, 255, 610),
-                Nk.NK_WINDOW_BORDER | Nk.NK_WINDOW_MOVABLE | Nk.NK_WINDOW_TITLE);
+                PanelFlags.BORDER | PanelFlags.MOVABLE | PanelFlags.TITLE);
 
             /*------------------------------------------------
      *                  MENU
@@ -223,11 +223,11 @@ namespace Extended
                 {
                     /* settings */
                     ctx.LayoutRowDynamic(25, 1);
-                    ctx.MenuItemImageLabel(media.Play, "Play", Nk.NK_TEXT_RIGHT);
-                    ctx.MenuItemImageLabel(media.Stop, "Stop", Nk.NK_TEXT_RIGHT);
-                    ctx.MenuItemImageLabel(media.Pause, "Pause", Nk.NK_TEXT_RIGHT);
-                    ctx.MenuItemImageLabel(media.Next, "Next", Nk.NK_TEXT_RIGHT);
-                    ctx.MenuItemImageLabel(media.Prev, "Prev", Nk.NK_TEXT_RIGHT);
+                    ctx.MenuItemImageLabel(media.Play, "Play", Alignment.MIDDLERIGHT);
+                    ctx.MenuItemImageLabel(media.Stop, "Stop", Alignment.MIDDLERIGHT);
+                    ctx.MenuItemImageLabel(media.Pause, "Pause", Alignment.MIDDLERIGHT);
+                    ctx.MenuItemImageLabel(media.Next, "Next", Alignment.MIDDLERIGHT);
+                    ctx.MenuItemImageLabel(media.Prev, "Prev", Alignment.MIDDLERIGHT);
                     ctx.MenuEnd();
                 }
                 ctx.ButtonImage(media.Tools);
@@ -244,7 +244,7 @@ namespace Extended
             if (ctx.ButtonLabel("Push me"))
                 Console.Write("pushed!\n");
             ui_widget(ctx, media, 35);
-            if (ctx.ButtonImageLabel(media.Rocket, "Styled", Nk.NK_TEXT_CENTERED))
+            if (ctx.ButtonImageLabel(media.Rocket, "Styled", Alignment.MIDDLECENTERED))
                 Console.Write("rocket!\n");
 
             /*------------------------------------------------
@@ -260,15 +260,15 @@ namespace Extended
      *------------------------------------------------*/
             ui_header(ctx, media, "Toggle buttons");
             ui_widget(ctx, media, 35);
-            if (ctx.ButtonImageLabel(_toggle0 ? media.Checkd : media.Uncheckd, "Toggle", Nk.NK_TEXT_LEFT))
+            if (ctx.ButtonImageLabel(_toggle0 ? media.Checkd : media.Uncheckd, "Toggle", Alignment.MIDDLELEFT))
                 _toggle0 = !_toggle0;
 
             ui_widget(ctx, media, 35);
-            if (ctx.ButtonImageLabel(_toggle1 ? media.Checkd : media.Uncheckd, "Toggle", Nk.NK_TEXT_LEFT))
+            if (ctx.ButtonImageLabel(_toggle1 ? media.Checkd : media.Uncheckd, "Toggle", Alignment.MIDDLELEFT))
                 _toggle1 = !_toggle1;
 
             ui_widget(ctx, media, 35);
-            if (ctx.ButtonImageLabel(_toggle2 ? media.Checkd : media.Uncheckd, "Toggle", Nk.NK_TEXT_LEFT))
+            if (ctx.ButtonImageLabel(_toggle2 ? media.Checkd : media.Uncheckd, "Toggle", Alignment.MIDDLELEFT))
                 _toggle2 = !_toggle2;
 
             /*------------------------------------------------
@@ -277,31 +277,31 @@ namespace Extended
             ui_header(ctx, media, "Radio buttons");
             ui_widget(ctx, media, 35);
             if (ctx.ButtonSymbolLabel(_option == 0 ? NkSymbolType.CIRCLE_OUTLINE : NkSymbolType.CIRCLE_SOLID, "Select",
-                Nk.NK_TEXT_LEFT))
+                Alignment.MIDDLELEFT))
                 _option = 0;
             ui_widget(ctx, media, 35);
             if (ctx.ButtonSymbolLabel(_option == 1 ? NkSymbolType.CIRCLE_OUTLINE : NkSymbolType.CIRCLE_SOLID, "Select",
-                Nk.NK_TEXT_LEFT))
+                Alignment.MIDDLELEFT))
                 _option = 1;
             ui_widget(ctx, media, 35);
             if (ctx.ButtonSymbolLabel(_option == 2 ? NkSymbolType.CIRCLE_OUTLINE : NkSymbolType.CIRCLE_SOLID, "Select",
-                Nk.NK_TEXT_LEFT))
+                Alignment.MIDDLELEFT))
                 _option = 2;
 
             /*------------------------------------------------
      *                  CONTEXTUAL
      *------------------------------------------------*/
             ctx.StyleSetFont(media.Font18.Handle);
-            if (ctx.ContextualBegin(Nk.NK_WINDOW_NO_SCROLLBAR, Nk.nk_vec2_(150, 300), ctx.WindowGetBounds()))
+            if (ctx.ContextualBegin(PanelFlags.NO_SCROLLBAR, Nk.nk_vec2_(150, 300), ctx.WindowGetBounds()))
             {
                 ctx.LayoutRowDynamic(30, 1);
-                if (ctx.ContextualItemImageLabel(media.Copy, "Clone", Nk.NK_TEXT_RIGHT))
+                if (ctx.ContextualItemImageLabel(media.Copy, "Clone", Alignment.MIDDLERIGHT))
                     Console.Write("pressed clone!\n");
-                if (ctx.ContextualItemImageLabel(media.Del, "Delete", Nk.NK_TEXT_RIGHT))
+                if (ctx.ContextualItemImageLabel(media.Del, "Delete", Alignment.MIDDLERIGHT))
                     Console.Write("pressed delete!\n");
-                if (ctx.ContextualItemImageLabel(media.Convert, "Convert", Nk.NK_TEXT_RIGHT))
+                if (ctx.ContextualItemImageLabel(media.Convert, "Convert", Alignment.MIDDLERIGHT))
                     Console.Write("pressed convert!\n");
-                if (ctx.ContextualItemImageLabel(media.Edit, "Edit", Nk.NK_TEXT_RIGHT))
+                if (ctx.ContextualItemImageLabel(media.Edit, "Edit", Alignment.MIDDLERIGHT))
                     Console.Write("pressed edit!\n");
                 ctx.ContextualEnd();
             }
@@ -314,11 +314,11 @@ namespace Extended
             int i;
             ctx.StyleSetFont(media.Font20.Handle);
             ctx.Begin("Basic Demo", Nk.nk_rect_(320, 50, 275, 610),
-                Nk.NK_WINDOW_BORDER | Nk.NK_WINDOW_MOVABLE | Nk.NK_WINDOW_TITLE);
+                PanelFlags.BORDER | PanelFlags.MOVABLE | PanelFlags.TITLE);
 
             ui_header(ctx, media, "Popup & Scrollbar & Images");
             ui_widget(ctx, media, 35);
-            if (ctx.ButtonImageLabel(media.Dir, "Images", Nk.NK_TEXT_CENTERED))
+            if (ctx.ButtonImageLabel(media.Dir, "Images", Alignment.MIDDLECENTERED))
                 _imageActive = !_imageActive;
 
             ui_header(ctx, media, "Selected Image");
@@ -349,7 +349,7 @@ namespace Extended
             {
                 ctx.LayoutRowDynamic(35, 1);
                 for (i = 0; i < 3; ++i)
-                    if (ctx.ComboItemLabel(Items2[i], Nk.NK_TEXT_LEFT))
+                    if (ctx.ComboItemLabel(Items2[i], Alignment.MIDDLELEFT))
                         _selectedItem1 = i;
                 ctx.ComboEnd();
             }
@@ -360,7 +360,7 @@ namespace Extended
             {
                 ctx.LayoutRowDynamic(35, 1);
                 for (i = 0; i < 3; ++i)
-                    if (ctx.ComboItemImageLabel(media.Images[i], Items2[i], Nk.NK_TEXT_RIGHT))
+                    if (ctx.ComboItemImageLabel(media.Images[i], Items2[i], Alignment.MIDDLERIGHT))
                         _selectedIcon = i;
                 ctx.ComboEnd();
             }

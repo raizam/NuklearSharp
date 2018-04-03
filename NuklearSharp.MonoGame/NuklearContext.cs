@@ -246,7 +246,7 @@ namespace NuklearSharp.MonoGame
             _previousKeyboardState = keyboardState;
         }
 
-        public bool BeginTitled(string name, string title, Rectangle bounds, uint flags)
+        public bool BeginTitled(string name, string title, Rectangle bounds, PanelFlags flags)
         {
             return BeginTitled(name, title, bounds.ToRect(), flags);
         }
@@ -256,7 +256,7 @@ namespace NuklearSharp.MonoGame
             return ButtonColor(color.ToNkColor());
         }
 
-        public void LabelColored(string str, uint align, Color color)
+        public void LabelColored(string str, Alignment align, Color color)
         {
             LabelColored(str, align, color.ToNkColor());
         }
