@@ -9,29 +9,7 @@ namespace NuklearSharp
         public uint y;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct nk_command
-    {
-        public NkCommandType type;
-        public ulong next;
-    }
 
-    public unsafe partial class nk_row_layout
-    {
-        public NkPanelRowLayoutType type;
-        public int index;
-        public float height;
-        public float min_height;
-        public int columns;
-        public float* ratio;
-        public float item_width;
-        public float item_height;
-        public float item_offset;
-        public float filled;
-        public NkRect item = new NkRect();
-        public int tree_depth;
-        public PinnedArray<float> templates = new PinnedArray<float>(16);
-    }
 
     public unsafe partial class nk_menu_state
     {

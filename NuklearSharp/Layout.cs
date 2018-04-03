@@ -1,5 +1,22 @@
 namespace NuklearSharp
 {
+    public unsafe partial class nk_row_layout
+    {
+        public NkPanelRowLayoutType type;
+        public int index;
+        public float height;
+        public float min_height;
+        public int columns;
+        public float* ratio;
+        public float item_width;
+        public float item_height;
+        public float item_offset;
+        public float filled;
+        public NkRect item = new NkRect();
+        public int tree_depth;
+        public PinnedArray<float> templates = new PinnedArray<float>(16);
+    }
+
     static internal class Layout
     {
         public static void nk_layout_set_min_row_height(NkContext ctx, float height)

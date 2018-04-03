@@ -53,7 +53,7 @@ namespace NuklearSharp
 
         public void InputChar(char c)
         {
-            Nk.nk_input_char(_ctx, c);
+            Nk.nk_input_unicode(_ctx, c);
         }
 
         public void StyleDefault()

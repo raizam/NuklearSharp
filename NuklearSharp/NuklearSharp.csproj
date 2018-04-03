@@ -34,12 +34,15 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Behaviors.cs" />
+    <Compile Include="Commands.cs" />
     <Compile Include="Delegates.cs" />
     <Compile Include="Layout.cs" />
     <Compile Include="NkBuffer.cs" />
     <Compile Include="NkColor.cs" />
     <Compile Include="NkCommandBuffer.cs" />
     <Compile Include="NkContext.cs" />
+    <Compile Include="NkDrawList.cs" />
     <Compile Include="NkFont.cs" />
     <Compile Include="NkPanel.cs" />
     <Compile Include="NkRect.cs" />
@@ -51,7 +54,7 @@
     <Compile Include="Runtime\CRuntime.cs" />
     <Compile Include="FontAtlasWrapper.cs" />
     <Compile Include="Nuklear.Commands.Generated.cs" />
-    <Compile Include="Nuklear.Config.Generated.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Nuklear.Core.Generated.cs" />
     <Compile Include="Nuklear.cs" />
     <Compile Include="BaseContext.cs" />
@@ -59,7 +62,7 @@
     <Compile Include="Nuklear.Drawing.Generated.cs" />
     <Compile Include="Nuklear.Enums.Generated.cs" />
     <Compile Include="Nuklear.GlobalVariables.Generated.cs" />
-    <Compile Include="Nuklear.Input.Generated.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Nuklear.Styles.Generated.cs" />
     <Compile Include="Nuklear.TextEdit.Generated.cs" />
     <Compile Include="Nuklear.Utility.Generated.cs" />

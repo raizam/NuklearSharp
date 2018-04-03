@@ -64,8 +64,8 @@
         public void remove_at(int pos, int l)
         {
             if (l == 0) return;
-
-            Str = Str.Substring(0, pos) + Str.Substring(pos + l);
+            //Str.Remove(pos, l);
+            Str = Str.Remove(pos, l); //Str.Substring(0, pos) + Str.Substring(pos + l);
         }
     }
 }

@@ -1814,22 +1814,22 @@ namespace NuklearSharp
                 (state) = (NkWidgetStates.INACTIVE | NkWidgetStates.MODIFIED);
             else (state) = (NkWidgetStates.INACTIVE);
             if (i == null) return false;
-            if ((nk_input_is_mouse_hovering_rect(i, (NkRect)(r))))
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(i, (NkRect)(r))))
             {
                 state = (NkWidgetStates.HOVERED);
-                if ((nk_input_is_mouse_down(i, (int)(NkButtons.LEFT)))) state = (NkWidgetStates.ACTIVE);
-                if ((nk_input_has_mouse_click_in_rect(i, (int)(NkButtons.LEFT), (NkRect)(r))))
+                if ((InputExtentions.nk_input_is_mouse_down(i, (int)(NkButtons.LEFT)))) state = (NkWidgetStates.ACTIVE);
+                if ((InputExtentions.nk_input_has_mouse_click_in_rect(i, (int)(NkButtons.LEFT), (NkRect)(r))))
                 {
                     ret =
                             ((behavior != NkButtonBehavior.Default)
-                                ? nk_input_is_mouse_down(i, (NkButtons.LEFT))
-                                : nk_input_is_mouse_pressed(i, (NkButtons.LEFT)));
+                                ? InputExtentions.nk_input_is_mouse_down(i, (NkButtons.LEFT))
+                                : InputExtentions.nk_input_is_mouse_pressed(i, (NkButtons.LEFT)));
                 }
             }
 
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(i, (NkRect)(r)) == false))
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(i, (NkRect)(r)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(i, (NkRect)(r)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(i, (NkRect)(r)))) state |= (NkWidgetStates.LEFT);
             return (ret);
         }
 
@@ -1970,7 +1970,7 @@ namespace NuklearSharp
             label.w = (float)(((r.x + r.w) < (label.x) ? (label.x) : (r.x + r.w)) - label.x);
             label.h = (float)(select.w);
             was_active = (*active);
-            *active = (nk_toggle_behavior(_in_, (NkRect)(bounds), ref state, (*active)));
+            *active = (Behaviors.nk_toggle_behavior(_in_, (NkRect)(bounds), ref state, (*active)));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
             if ((type) == (NkToggleType.NK_TOGGLE_CHECK))
             {
@@ -2053,7 +2053,7 @@ namespace NuklearSharp
             left_mouse_click_in_cursor =
 
                     (((_in_) != null) &&
-                     ((nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(*visual_cursor), true))));
+                     ((InputExtentions.nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(*visual_cursor), true))));
             if (((left_mouse_down)) && ((left_mouse_click_in_cursor)))
             {
                 float ratio = (float)(0);
@@ -2075,10 +2075,10 @@ namespace NuklearSharp
                 }
             }
 
-            if ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(bounds)))) state = (NkWidgetStates.HOVERED);
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(bounds)) == false))
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(bounds)))) state = (NkWidgetStates.HOVERED);
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(bounds)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(bounds)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(bounds)))) state |= (NkWidgetStates.LEFT);
             return (float)(slider_value);
         }
 
@@ -2164,8 +2164,8 @@ namespace NuklearSharp
             if ((_in_ == null) || (modifiable == false)) return (ulong)(value);
             left_mouse_down = (((_in_) != null) && ((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down)!=0));
             left_mouse_click_in_cursor = (((_in_) != null) &&
-                     ((nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(cursor), true))));
-            if ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(r)))) state = (NkWidgetStates.HOVERED);
+                     ((InputExtentions.nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(cursor), true))));
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(r)))) state = (NkWidgetStates.HOVERED);
             if ((((_in_) != null) && ((left_mouse_down))) && ((left_mouse_click_in_cursor)))
             {
                 if (((left_mouse_down)) && ((left_mouse_click_in_cursor)))
@@ -2181,9 +2181,9 @@ namespace NuklearSharp
                 }
             }
 
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(r)) == false))
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(r)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(r)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(r)))) state |= (NkWidgetStates.LEFT);
             return (ulong)(value);
         }
 
@@ -2228,8 +2228,8 @@ namespace NuklearSharp
             if (_in_ == null) return (float)(scroll_offset);
             left_mouse_down = (((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down) != 0;
             left_mouse_click_in_cursor =
-                (nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(cursor), true));
-            if ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(*scroll)))) state = (NkWidgetStates.HOVERED);
+                (InputExtentions.nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(cursor), true));
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(*scroll)))) state = (NkWidgetStates.HOVERED);
             scroll_delta = (float)(((o) == (NkOrientation.Vertical)) ? _in_.mouse.ScrollDelta.y : _in_.mouse.ScrollDelta.x);
             if (((left_mouse_down)) && ((left_mouse_click_in_cursor)))
             {
@@ -2263,7 +2263,7 @@ namespace NuklearSharp
                     ((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked_pos.x = (float)(cursor_x + cursor.w / 2.0f);
                 }
             }
-            else if (((((nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_UP)))) && ((o) == (NkOrientation.Vertical))) &&
+            else if (((((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_UP)))) && ((o) == (NkOrientation.Vertical))) &&
                       ((has_scrolling))) ||
                      ((nk_button_behavior(ref ws, (NkRect)(*empty0), _in_, NkButtonBehavior.Default))))
             {
@@ -2271,7 +2271,7 @@ namespace NuklearSharp
                     scroll_offset = (float)((0) < (scroll_offset - scroll->h) ? (scroll_offset - scroll->h) : (0));
                 else scroll_offset = (float)((0) < (scroll_offset - scroll->w) ? (scroll_offset - scroll->w) : (0));
             }
-            else if (((((nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_DOWN)))) && ((o) == (NkOrientation.Vertical))) &&
+            else if (((((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_DOWN)))) && ((o) == (NkOrientation.Vertical))) &&
                       ((has_scrolling))) ||
                      ((nk_button_behavior(ref ws, (NkRect)(*empty1), _in_, NkButtonBehavior.Default))))
             {
@@ -2302,19 +2302,19 @@ namespace NuklearSharp
                                     ? (0)
                                     : ((scroll_offset) < (target - scroll->w) ? (scroll_offset) : (target - scroll->w)));
                 }
-                else if ((nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_START))))
+                else if ((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_START))))
                 {
                     if ((o) == (NkOrientation.Vertical)) scroll_offset = (float)(0);
                 }
-                else if ((nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_END))))
+                else if ((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.SCROLL_END))))
                 {
                     if ((o) == (NkOrientation.Vertical)) scroll_offset = (float)(target - scroll->h);
                 }
             }
 
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*scroll)) == false))
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*scroll)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*scroll)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*scroll)))) state |= (NkWidgetStates.LEFT);
             return (float)(scroll_offset);
         }
 
@@ -2486,7 +2486,7 @@ namespace NuklearSharp
             nk_unify(ref clip, ref old_clip, (float)(area.x), (float)(area.y), (float)(area.x + area.w),
                 (float)(area.y + area.h));
             prev_state = ((sbyte)(edit.active));
-            is_hovered = ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(bounds))));
+            is_hovered = ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(bounds))));
             if ((((_in_) != null) && ((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked) != 0)) &&
                 ((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down) != 0))
             {
@@ -2519,7 +2519,7 @@ namespace NuklearSharp
                 bool shift_mod = (_in_.keyboard.Keys[(int)NkKeys.SHIFT].down != 0);
                 float mouse_x = (float)((_in_.mouse.Pos.x - area.x) + edit.scrollbar.x);
                 float mouse_y = (float)((_in_.mouse.Pos.y - area.y) + edit.scrollbar.y);
-                is_hovered = ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(area))));
+                is_hovered = ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(area))));
                 if ((select_all))
                 {
                     nk_textedit_select_all(edit);
@@ -2548,7 +2548,7 @@ namespace NuklearSharp
                     for (i = (int)(0); (i) < ((int)NkKeys.MAX); ++i)
                     {
                         if (((i) == ((int)NkKeys.ENTER)) || ((i) == ((int)NkKeys.TAB))) continue;
-                        if ((nk_input_is_key_pressed(_in_, (NkKeys)(i))))
+                        if ((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys)(i))))
                         {
                             nk_textedit_key(edit, (NkKeys)(i), (shift_mod), font, (float)(row_height));
                             cursor_follow = (true);
@@ -2566,7 +2566,7 @@ namespace NuklearSharp
                     cursor_follow = true;
                     _in_.keyboard.TextLen = (int)(0);
                 }
-                if ((nk_input_is_key_pressed(_in_, (NkKeys.ENTER))))
+                if ((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.ENTER))))
                 {
                     cursor_follow = (true);
                     if (((flags & NkEditFlags.CTRL_ENTER_NEWLINE) != 0) && ((shift_mod))) nk_textedit_text(edit, "\n", (int)(1));
@@ -2574,8 +2574,8 @@ namespace NuklearSharp
                     else nk_textedit_text(edit, "\n", (int)(1));
                 }
                 {
-                    bool copy = (nk_input_is_key_pressed(_in_, (NkKeys.COPY)));
-                    bool cut = (nk_input_is_key_pressed(_in_, (NkKeys.CUT)));
+                    bool copy = (InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.COPY)));
+                    bool cut = (InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.CUT)));
                     if ((((copy)) || ((cut))) && ((flags & NkEditFlags.CLIPBOARD) != 0))
                     {
                         char* text;
@@ -2596,7 +2596,7 @@ namespace NuklearSharp
                     }
                 }
                 {
-                    bool paste = (nk_input_is_key_pressed(_in_, (NkKeys.PASTE)));
+                    bool paste = (InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.PASTE)));
                     if ((((paste)) && ((flags & NkEditFlags.CLIPBOARD) != 0)) && ((edit.clip.Paste) != null))
                     {
                         edit.clip.Paste((NkHandle)(edit.clip.Userdata), edit);
@@ -2604,7 +2604,7 @@ namespace NuklearSharp
                     }
                 }
                 {
-                    bool tab = (nk_input_is_key_pressed(_in_, (NkKeys.TAB)));
+                    bool tab = (InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.TAB)));
                     if (((tab)) && ((flags & NkEditFlags.ALLOW_TAB) != 0))
                     {
                         nk_textedit_text(edit, "    ", (int)(4));
@@ -2935,11 +2935,11 @@ namespace NuklearSharp
         {
             bool left_mouse_down =
                 (((_in_) != null) && ((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down) != 0));
-            bool left_mouse_click_in_cursor = (((_in_) != null) && ((nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(drag), true))));
+            bool left_mouse_click_in_cursor = (((_in_) != null) && ((InputExtentions.nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(drag), true))));
             if (((state) & NkWidgetStates.MODIFIED) != 0)
                 (state) = (NkWidgetStates.INACTIVE | NkWidgetStates.MODIFIED);
             else (state) = (NkWidgetStates.INACTIVE);
-            if ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(drag)))) state = (NkWidgetStates.HOVERED);
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(drag)))) state = (NkWidgetStates.HOVERED);
             if (((left_mouse_down)) && ((left_mouse_click_in_cursor)))
             {
                 float delta;
@@ -2981,9 +2981,9 @@ namespace NuklearSharp
                 state = (NkWidgetStates.ACTIVE);
             }
 
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(drag)) == false))
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(drag)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(drag)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(drag)))) state |= (NkWidgetStates.LEFT);
         }
 
         public static void nk_property_behavior(ref NkWidgetStates ws, nk_input _in_, NkRect property, NkRect label, NkRect edit,
@@ -2993,9 +2993,9 @@ namespace NuklearSharp
             {
                 if ((nk_button_behavior(ref ws, (NkRect)(edit), _in_, NkButtonBehavior.Default)))
                     state = NkPropertyStatus.NK_PROPERTY_EDIT;
-                else if ((nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(label), true)))
+                else if ((InputExtentions.nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(label), true)))
                     state = NkPropertyStatus.NK_PROPERTY_DRAG;
-                else if ((nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(empty), true)))
+                else if ((InputExtentions.nk_input_is_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(empty), true)))
                     state = NkPropertyStatus.NK_PROPERTY_DRAG;
             }
 
@@ -3213,7 +3213,7 @@ namespace NuklearSharp
             cursor = (int)(text_edit.cursor);
             select_begin = (int)(text_edit.select_start);
             select_end = (int)(text_edit.select_end);
-            if (((text_edit.active) != 0) && ((nk_input_is_key_pressed(_in_, (NkKeys.ENTER)))))
+            if (((text_edit.active) != 0) && ((InputExtentions.nk_input_is_key_pressed(_in_, (NkKeys.ENTER)))))
                 text_edit.active = (byte)(0);
             if (((active) != 0) && (text_edit.active == 0))
             {
@@ -3342,10 +3342,10 @@ namespace NuklearSharp
                 state = (NkWidgetStates.ACTIVE);
             }
 
-            if ((nk_input_is_mouse_hovering_rect(_in_, (NkRect)(*bounds)))) state = (NkWidgetStates.HOVERED);
-            if (((state & NkWidgetStates.HOVER) != 0) && (nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*bounds)) == false))
+            if ((InputExtentions.nk_input_is_mouse_hovering_rect(_in_, (NkRect)(*bounds)))) state = (NkWidgetStates.HOVERED);
+            if (((state & NkWidgetStates.HOVER) != 0) && (InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*bounds)) == false))
                 state |= (NkWidgetStates.ENTERED);
-            else if ((nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*bounds)))) state |= (NkWidgetStates.LEFT);
+            else if ((InputExtentions.nk_input_is_mouse_prev_hovering_rect(_in_, (NkRect)(*bounds)))) state |= (NkWidgetStates.LEFT);
             return (int)(value_changed);
         }
 

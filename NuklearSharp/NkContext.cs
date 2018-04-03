@@ -1,6 +1,6 @@
 ﻿namespace NuklearSharp
 {
-    public class NkContext
+    public unsafe class NkContext
     {
         public nk_input Input = new nk_input();
         public NkStyle Style = new NkStyle();
@@ -79,7 +79,7 @@
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return false;
-            return (Nk.nk_input_is_mouse_hovering_rect(Input, (NkRect)(bounds)));
+            return (InputExtentions.nk_input_is_mouse_hovering_rect(Input, (NkRect)(bounds)));
         }
 
         public bool nk_widget_is_mouse_clicked(NkButtons btn)
@@ -99,7 +99,7 @@
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return false;
-            return (Nk.nk_input_mouse_clicked(Input, (btn), (NkRect)(bounds)));
+            return (InputExtentions.nk_input_mouse_clicked(Input, (btn), (NkRect)(bounds)));
         }
 
         public bool nk_widget_has_mouse_click_down(NkButtons btn, bool down)
@@ -119,22 +119,18 @@
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return false;
-            return (Nk.nk_input_has_mouse_click_down_in_rect(Input, (btn), (NkRect)(bounds), (down)));
+            return (InputExtentions.nk_input_has_mouse_click_down_in_rect(Input, (btn), (NkRect)(bounds), (down)));
         }
 
         public void nk_spacing(int cols)
         {
-            NkWindow win;
-            NkPanel layout;
             NkRect none = new NkRect();
             int i;
-            int index;
-            int rows;
             if (((this == null) || (Current == null)) || (Current.Layout == null)) return;
-            win = Current;
-            layout = win.Layout;
-            index = (int)((layout.Row.index + cols) % layout.Row.columns);
-            rows = (int)((layout.Row.index + cols) / layout.Row.columns);
+            var win = Current;
+            var layout = win.Layout;
+            var index = (int)((layout.Row.index + cols) % layout.Row.columns);
+            var rows = (int)((layout.Row.index + cols) / layout.Row.columns);
             if ((rows) != 0)
             {
                 for (i = (int)(0); (i) < (rows); ++i)
@@ -154,36 +150,123 @@
 
             layout.Row.index = (int)(index);
         }
-    }
 
-    public class NkDrawList
-    {
-        public NkRect ClipRect;
-        public readonly NkVec2[] CircleVtx = new NkVec2[12];
-        public NkConvertConfig Config;
-        public readonly NkBuffer<NkVec2> Points = new NkBuffer<NkVec2>();
-        public NkBuffer<nk_draw_command> Buffer;
-        public NkBuffer<byte> Vertices;
-        public readonly NkBuffer<NkVec2> Normals = new NkBuffer<NkVec2>();
-        public NkBuffer<ushort> Elements;
-        public bool LineAa;
-        public bool ShapeAa;
-        public NkHandle Userdata;
-
-        public int VertexOffset
+        public void nk_free()
         {
-            get { return Vertices.Count / (int)Config.VertexSize; }
+            if (this == null) return;
+
+            Seq = 0;
+            Build = false;
+            Begin = null;
+            End = null;
+            Active = null;
+            Current = null;
+            Count = 0;
         }
 
-        public int AddElements(int size)
+        public NkWindow nk_create_window()
         {
-            int result = Elements.Count;
-
-            Elements.AddToEnd(size);
-
-            Buffer.Data[Buffer.Count - 1].elem_count += (uint)size;
+            var result = new NkWindow { Seq = Seq };
 
             return result;
+        }
+
+        public void nk_free_window(NkWindow win)
+        {
+            nk_table it = win.Tables;
+            if (win.Popup.win != null)
+            {
+                nk_free_window(win.Popup.win);
+                win.Popup.win = null;
+            }
+
+            win.Next = null;
+            win.Prev = null;
+            while (it != null)
+            {
+                var n = it.next;
+                win.nk_remove_table(it);
+                if (it == win.Tables) win.Tables = n;
+                it = n;
+            }
+        }
+
+        public void nk_build()
+        {
+            if (Style.CursorActive == null) Style.CursorActive = Style.Cursors[(int)NkStyleCursor.ARROW];
+            if (Style.CursorActive != null && Input.mouse.Grabbed == 0 && Style.CursorVisible)
+            {
+                var mouseBounds = new NkRect();
+                var cursor = Style.CursorActive;
+                Overlay.nk_command_buffer_init(false);
+                Nk.nk_start_buffer(this, Overlay);
+                mouseBounds.x = Input.mouse.Pos.x - cursor.offset.x;
+                mouseBounds.y = Input.mouse.Pos.y - cursor.offset.y;
+                mouseBounds.w = cursor.size.x;
+                mouseBounds.h = cursor.size.y;
+                Overlay.nk_draw_image(mouseBounds, cursor.img, Nk.nk_white);
+            }
+
+            var it = Begin;
+            NkCommandBase cmd = null;
+            for (; it != null;)
+            {
+                var next = it.Next;
+                if ((it.Flags & PanelFlags.HIDDEN) != 0 || it.Seq != Seq)
+                    goto cont;
+                cmd = it.Buffer.Last;
+
+                while (next != null &&
+                       (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & PanelFlags.HIDDEN) != 0))
+                {
+                    next = next.Next;
+                }
+
+                if (next != null) cmd.Next = next.Buffer.First;
+                cont:
+                it = next;
+            }
+
+            it = Begin;
+
+            while (it != null)
+            {
+                var next = it.Next;
+
+                if (it.Popup.buf.Buffer.Count == 0) goto skip;
+
+                var buf = it.Popup.buf.Buffer;
+                cmd.Next = buf.First;
+                cmd = buf.Last;
+
+                it.Popup.buf.Buffer.Count = 0;
+
+                skip:
+                it = next;
+            }
+            if (cmd != null)
+            {
+                cmd.Next = Overlay.Count > 0 ? Overlay.First : null;
+            }
+        }
+
+        public NkWindow nk__begin()
+        {
+            if (this == null || Count == 0) return null;
+            if (Build == false)
+            {
+                nk_build();
+                Build = true;
+            }
+
+            var iter = Begin;
+            while (iter != null &&
+                   (iter.Buffer.Count == 0 || (iter.Flags & PanelFlags.HIDDEN) != 0 || iter.Seq != Seq))
+            {
+                iter = iter.Next;
+            }
+
+            return iter;
         }
     }
 }

@@ -3,56 +3,56 @@ using System.Runtime.InteropServices;
 namespace NuklearSharp
 {
 
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_text_undo_record
-        {
-            public int where;
-            public short insert_length;
-            public short delete_length;
-            public short char_storage;
-        }
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct nk_text_undo_record
+    {
+        public int where;
+        public short insert_length;
+        public short delete_length;
+        public short char_storage;
+    }
 
-        public unsafe partial class nk_text_edit
-        {
-            public NkClipboard clip = new NkClipboard();
-            public NkStr _string_ = new NkStr();
-            public NkPluginFilter filter;
-            public NkVec2 scrollbar = new NkVec2();
-            public int cursor;
-            public int select_start;
-            public int select_end;
-            public NkTextEditMode mode;
-            public byte cursor_at_end_of_line;
-            public byte initialized;
-            public byte has_preferred_x;
-            public byte single_line;
-            public byte active;
-            public byte padding1;
-            public float preferred_x;
-            public NkTextUndoState undo = new NkTextUndoState();
-        }
+    public unsafe partial class nk_text_edit
+    {
+        public NkClipboard clip = new NkClipboard();
+        public NkStr _string_ = new NkStr();
+        public NkPluginFilter filter;
+        public NkVec2 scrollbar = new NkVec2();
+        public int cursor;
+        public int select_start;
+        public int select_end;
+        public NkTextEditMode mode;
+        public byte cursor_at_end_of_line;
+        public byte initialized;
+        public byte has_preferred_x;
+        public byte single_line;
+        public byte active;
+        public byte padding1;
+        public float preferred_x;
+        public NkTextUndoState undo = new NkTextUndoState();
+    }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_text_find
-        {
-            public float x;
-            public float y;
-            public float height;
-            public int first_char;
-            public int length;
-            public int prev_first;
-        }
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct nk_text_find
+    {
+        public float x;
+        public float y;
+        public float height;
+        public int first_char;
+        public int length;
+        public int prev_first;
+    }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe partial struct nk_text_edit_row
-        {
-            public float x0;
-            public float x1;
-            public float baseline_y_delta;
-            public float ymin;
-            public float ymax;
-            public int num_chars;
-        }
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct nk_text_edit_row
+    {
+        public float x0;
+        public float x1;
+        public float baseline_y_delta;
+        public float ymin;
+        public float ymax;
+        public int num_chars;
+    }
     public unsafe static partial class Nk
     {
         public static float nk_textedit_get_width(nk_text_edit edit, int line_start, int char_id, NkUserFont font)
@@ -653,7 +653,7 @@ namespace NuklearSharp
                     break;
                 case NkKeys.TEXT_LINE_END:
                     {
-                        if ((shift_mod) )
+                        if ((shift_mod))
                         {
                             nk_text_find find = new nk_text_find();
                             nk_textedit_clamp(state);

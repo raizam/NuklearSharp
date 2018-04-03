@@ -1,5 +1,16 @@
-﻿namespace NuklearSharp
+﻿using System;
+using System.Runtime.InteropServices;
+
+namespace NuklearSharp
 {
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct nk_command
+    {
+        public NkCommandType type;
+        public ulong next;
+    }
+
+
     public unsafe class NkCommandBuffer
     {
         public NkCommandBase First;
@@ -18,7 +29,7 @@
             Clip.y = r.y;
             Clip.w = r.w;
             Clip.h = r.h;
-            cmd = (NkCommandScissor)Nk.nk_command_buffer_push(this, NkCommandType.SCISSOR);
+            cmd = (NkCommandScissor)nk_command_buffer_push(NkCommandType.SCISSOR);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -31,7 +42,7 @@
         {
             NkCommandLine cmd;
             if (this == null || line_thickness <= 0) return;
-            cmd = (NkCommandLine)Nk.nk_command_buffer_push(this, NkCommandType.LINE);
+            cmd = (NkCommandLine)nk_command_buffer_push(NkCommandType.LINE);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Begin.x = (short)x0;
@@ -46,7 +57,7 @@
         {
             NkCommandCurve cmd;
             if (this == null || col.a == 0 || line_thickness <= 0) return;
-            cmd = (NkCommandCurve)Nk.nk_command_buffer_push(this, NkCommandType.CURVE);
+            cmd = (NkCommandCurve)nk_command_buffer_push(NkCommandType.CURVE);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Begin.x = (short)ax;
@@ -73,7 +84,7 @@
                     Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y) return;
             }
 
-            cmd = (NkCommandRect)Nk.nk_command_buffer_push(this, NkCommandType.RECT);
+            cmd = (NkCommandRect)nk_command_buffer_push(NkCommandType.RECT);
             if (cmd == null) return;
             cmd.Rounding = (ushort)rounding;
             cmd.LineThickness = (ushort)line_thickness;
@@ -95,7 +106,7 @@
                        Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y)) return;
             }
 
-            cmd = (NkCommandRectFilled)Nk.nk_command_buffer_push(this, NkCommandType.RECT_FILLED);
+            cmd = (NkCommandRectFilled)nk_command_buffer_push(NkCommandType.RECT_FILLED);
             if (cmd == null) return;
             cmd.Rounding = (ushort)rounding;
             cmd.X = (short)rect.x;
@@ -117,7 +128,7 @@
                        Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y)) return;
             }
 
-            cmd = (NkCommandRectMultiColor)Nk.nk_command_buffer_push(this, NkCommandType.RECT_MULTI_COLOR);
+            cmd = (NkCommandRectMultiColor)nk_command_buffer_push(NkCommandType.RECT_MULTI_COLOR);
             if (cmd == null) return;
             cmd.X = (short)rect.x;
             cmd.Y = (short)rect.y;
@@ -140,7 +151,7 @@
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCircle)Nk.nk_command_buffer_push(this, NkCommandType.CIRCLE);
+            cmd = (NkCommandCircle)nk_command_buffer_push(NkCommandType.CIRCLE);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.X = (short)r.x;
@@ -161,7 +172,7 @@
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCircleFilled)Nk.nk_command_buffer_push(this, NkCommandType.CIRCLE_FILLED);
+            cmd = (NkCommandCircleFilled)nk_command_buffer_push(NkCommandType.CIRCLE_FILLED);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -175,7 +186,7 @@
         {
             NkCommandArc cmd;
             if (this == null || c.a == 0 || line_thickness <= 0) return;
-            cmd = (NkCommandArc)Nk.nk_command_buffer_push(this, NkCommandType.ARC);
+            cmd = (NkCommandArc)nk_command_buffer_push(NkCommandType.ARC);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Cx = (short)cx;
@@ -191,7 +202,7 @@
         {
             NkCommandArcFilled cmd;
             if (this == null || c.a == 0) return;
-            cmd = (NkCommandArcFilled)Nk.nk_command_buffer_push(this, NkCommandType.ARC_FILLED);
+            cmd = (NkCommandArcFilled)nk_command_buffer_push(NkCommandType.ARC_FILLED);
             if (cmd == null) return;
             cmd.Cx = (short)cx;
             cmd.Cy = (short)cy;
@@ -214,7 +225,7 @@
                     !(Clip.x <= x2 && x2 < Clip.x + Clip.w && Clip.y <= y2 && y2 < Clip.y + Clip.h)) return;
             }
 
-            cmd = (NkCommandTriangle)Nk.nk_command_buffer_push(this, NkCommandType.TRIANGLE);
+            cmd = (NkCommandTriangle)nk_command_buffer_push(NkCommandType.TRIANGLE);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.A.x = (short)x0;
@@ -240,7 +251,7 @@
                     !(Clip.x <= x2 && x2 < Clip.x + Clip.w && Clip.y <= y2 && y2 < Clip.y + Clip.h)) return;
             }
 
-            cmd = (NkCommandTriangleFilled)Nk.nk_command_buffer_push(this, NkCommandType.TRIANGLE_FILLED);
+            cmd = (NkCommandTriangleFilled)nk_command_buffer_push(NkCommandType.TRIANGLE_FILLED);
             if (cmd == null) return;
             cmd.A.x = (short)x0;
             cmd.A.y = (short)y0;
@@ -262,7 +273,7 @@
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandImage)Nk.nk_command_buffer_push(this, NkCommandType.IMAGE);
+            cmd = (NkCommandImage)nk_command_buffer_push(NkCommandType.IMAGE);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -283,7 +294,7 @@
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCustom)Nk.nk_command_buffer_push(this, NkCommandType.CUSTOM);
+            cmd = (NkCommandCustom)nk_command_buffer_push(NkCommandType.CUSTOM);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -319,7 +330,7 @@
             }
 
             if (length == 0) return;
-            cmd = (NkCommandText)Nk.nk_command_buffer_push(this, NkCommandType.TEXT);
+            cmd = (NkCommandText)nk_command_buffer_push(NkCommandType.TEXT);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -1049,5 +1060,77 @@
             }
 
         }
+
+        public void nk_command_buffer_init(bool clip)
+        {
+            UseClipping = clip;
+            First = Last = null;
+            Count = 0;
+        }
+
+        public void nk_command_buffer_reset()
+        {
+            if (this == null) return;
+            First = Last = null;
+            Count = 0;
+            Clip = Nk.nk_null_rect;
+        }
+
+        private static object nk_create_command<T>() where T : new()
+        {
+            return new T();
+        }
+
+        public NkCommandBase nk_command_buffer_push(NkCommandType t)
+        {
+            if (this == null || t < 0 || (int)t >= CommandCreators.Length || CommandCreators[(int)t] == null) return null;
+
+            var creator = CommandCreators[(int)t];
+
+            var command = (NkCommandBase)creator();
+
+            command.Header = new nk_command
+            {
+                type = t
+            };
+
+            if (Last == null)
+            {
+                First = command;
+                Last = command;
+            }
+            else
+            {
+                Last.Next = command;
+                Last = command;
+            }
+
+            ++Count;
+
+            return command;
+        }
+
+        private static readonly Func<object>[] CommandCreators =
+        {
+            null,
+            () => nk_create_command<NkCommandScissor>(),
+            () => nk_create_command<NkCommandLine>(),
+            () => nk_create_command<NkCommandCurve>(),
+            () => nk_create_command<NkCommandRect>(),
+            () => nk_create_command<NkCommandRectFilled>(),
+            () => nk_create_command<NkCommandRectMultiColor>(),
+            () => nk_create_command<NkCommandCircle>(),
+            () => nk_create_command<NkCommandCircleFilled>(),
+            () => nk_create_command<NkCommandArc>(),
+            () => nk_create_command<NkCommandArcFilled>(),
+            () => nk_create_command<NkCommandTriangle>(),
+            () => nk_create_command<NkCommandTriangleFilled>(),
+            () => nk_create_command<NkCommandPolygon>(),
+            () => nk_create_command<NkCommandPolygonFilled>(),
+            () => nk_create_command<NkCommandPolyline>(),
+            () => nk_create_command<NkCommandText>(),
+            () => nk_create_command<NkCommandImage>(),
+            () => nk_create_command<NkCommandCustom>()
+        };
     }
 }
