@@ -5,7 +5,7 @@ namespace NuklearSharp
 {
 
 
-        [StructLayout(LayoutKind.Explicit)]
+    [StructLayout(LayoutKind.Explicit)]
         public unsafe struct NkHandle
         {
             [FieldOffset(0)] public void* ptr;
@@ -89,101 +89,7 @@ namespace NuklearSharp
             public byte Ungrab;
         }
 
-        public class NkContext
-        {
-            public nk_input Input = new nk_input();
-            public NkStyle Style = new NkStyle();
-            public NkClipboard Clip = new NkClipboard();
-            public NkWidgetStates LastWidgetState;
-            public NkButtonBehavior ButtonBehavior;
-            public nk_configuration_stacks Stacks = new nk_configuration_stacks();
-            public float DeltaTimeSeconds;
-            public NkDrawList DrawList = new NkDrawList();
-            public NkHandle Userdata = new NkHandle();
-            public nk_text_edit TextEdit = new nk_text_edit();
-            public NkCommandBuffer Overlay = new NkCommandBuffer();
-            public bool Build;
-            public NkWindow Begin;
-            public NkWindow End;
-            public NkWindow Active;
-            public NkWindow Current;
-            public uint Count;
-            public uint Seq;
-        }
-
-        public class NkPanel
-        {
-            public NkPanelType Type;
-            public PanelFlags Flags;
-            public NkRect Bounds = new NkRect();
-            public nk_scroll Offset;
-            public float AtX;
-            public float AtY;
-            public float MaxX;
-            public float FooterHeight;
-            public float HeaderHeight;
-            public float Border;
-            public bool HasScrolling;
-            public NkRect Clip = new NkRect();
-            public nk_menu_state Menu = new nk_menu_state();
-            public nk_row_layout Row = new nk_row_layout();
-            public NkChart Chart = new NkChart();
-            public NkCommandBuffer Buffer;
-            public NkPanel Parent;
-        }
-
-        public class NkWindow
-        {
-            public uint Seq;
-            public uint Name;
-            public PinnedArray<char> NameString = new PinnedArray<char>(64);
-            public PanelFlags Flags;
-            public NkRect Bounds = new NkRect();
-            public nk_scroll Scrollbar = new nk_scroll();
-            public NkCommandBuffer Buffer = new NkCommandBuffer();
-            public NkPanel Layout;
-            public float ScrollbarHidingTimer;
-            public nk_property_state Property = new nk_property_state();
-            public nk_popup_state Popup = new nk_popup_state();
-            public nk_edit_state Edit = new nk_edit_state();
-            public bool Scrolled;
-            public nk_table Tables;
-            public uint TableCount;
-            public NkWindow Next;
-            public NkWindow Prev;
-            public NkWindow Parent;
-        }
-
-        public class NkDrawList
-        {
-            public NkRect ClipRect;
-            public readonly NkVec2[] CircleVtx = new NkVec2[12];
-            public NkConvertConfig Config;
-            public readonly NkBuffer<NkVec2> Points = new NkBuffer<NkVec2>();
-            public NkBuffer<nk_draw_command> Buffer;
-            public NkBuffer<byte> Vertices;
-            public readonly NkBuffer<NkVec2> Normals = new NkBuffer<NkVec2>();
-            public NkBuffer<ushort> Elements;
-            public bool LineAa;
-            public bool ShapeAa;
-            public NkHandle Userdata;
-
-            public int VertexOffset
-            {
-                get { return Vertices.Count / (int)Config.VertexSize; }
-            }
-
-            public int AddElements(int size)
-            {
-                int result = Elements.Count;
-
-                Elements.AddToEnd(size);
-
-                Buffer.Data[Buffer.Count - 1].elem_count += (uint)size;
-
-                return result;
-            }
-        }
+        
 
         public class NkStyleItemData
         {
@@ -499,17 +405,6 @@ namespace NuklearSharp
             public NkCommandCustomCallback Callback;
         }
 
-        public class NkCommandBuffer
-        {
-            public NkCommandBase First;
-            public NkCommandBase Last;
-            public int Count;
-
-            public NkRect Clip;
-            public bool UseClipping;
-            public NkHandle Userdata = new NkHandle();
-        }
-
         public class NkPopupBuffer
         {
             public NkCommandBuffer OldBuffer;
@@ -655,7 +550,7 @@ namespace NuklearSharp
                 mouseBounds.y = ctx.Input.mouse.Pos.y - cursor.offset.y;
                 mouseBounds.w = cursor.size.x;
                 mouseBounds.h = cursor.size.y;
-                nk_draw_image(ctx.Overlay, mouseBounds, cursor.img, nk_white);
+                ctx.Overlay.nk_draw_image(mouseBounds, cursor.img, nk_white);
             }
 
             var it = ctx.Begin;
@@ -794,7 +689,7 @@ namespace NuklearSharp
             while (it != null)
             {
                 var n = it.next;
-                nk_remove_table(win, it);
+                win.nk_remove_table(it);
                 if (it == win.Tables) win.Tables = n;
                 it = n;
             }

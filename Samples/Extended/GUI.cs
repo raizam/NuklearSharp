@@ -69,7 +69,7 @@ namespace Extended
                 Nk.nk_widget(&bounds, ctx.Ctx);
 
                 /* outer circle */
-                Nk.nk_fill_circle(o, bounds, Nk.nk_rgb(50, 50, 50));
+                o.nk_fill_circle(bounds, Nk.nk_rgb(50, 50, 50));
                 int activeItem;
                 {
                     /* circle buttons */
@@ -88,7 +88,7 @@ namespace Extended
                     for (i = 0; i < itemCount; ++i)
                     {
                         NkRect content;
-                        Nk.nk_fill_arc(o, center.x, center.y, bounds.w / 2.0f,
+                        o.nk_fill_arc(center.x, center.y, bounds.w / 2.0f,
                             aMin, aMax, activeItem == i ? Nk.nk_rgb(45, 100, 255) : Nk.nk_rgb(60, 60, 60));
 
                         /* separator line */
@@ -96,7 +96,7 @@ namespace Extended
                         float ry = 0;
                         var dx = rx * (float)Math.Cos(aMin) - ry * (float)Math.Sin(aMin);
                         var dy = rx * (float)Math.Sin(aMin) + ry * (float)Math.Cos(aMin);
-                        Nk.nk_stroke_line(o, center.x, center.y,
+                        o.nk_stroke_line(center.x, center.y,
                             center.x + dx, center.y + dy, 1.0f, Nk.nk_rgb(50, 50, 50));
 
                         /* button content */
@@ -107,7 +107,7 @@ namespace Extended
                         content.h = 30;
                         content.x = center.x + (rx * (float)Math.Cos(a) - ry * (float)Math.Sin(a) - content.w / 2.0f);
                         content.y = center.y + (rx * (float)Math.Sin(a) + ry * (float)Math.Cos(a) - content.h / 2.0f);
-                        Nk.nk_draw_image(o, content, icons[i], Nk.nk_rgb(255, 255, 255));
+                        o.nk_draw_image(content, icons[i], Nk.nk_rgb(255, 255, 255));
                         aMin = aMax;
                         aMax += step;
                     }
@@ -119,14 +119,14 @@ namespace Extended
                     inner.y = bounds.y + bounds.h / 2 - bounds.h / 4;
                     inner.w = bounds.w / 2;
                     inner.h = bounds.h / 2;
-                    Nk.nk_fill_circle(o, inner, Nk.nk_rgb(45, 45, 45));
+                    o.nk_fill_circle(inner, Nk.nk_rgb(45, 45, 45));
 
                     /* active icon content */
                     bounds.w = inner.w / 2.0f;
                     bounds.h = inner.h / 2.0f;
                     bounds.x = inner.x + inner.w / 2 - bounds.w / 2;
                     bounds.y = inner.y + inner.h / 2 - bounds.h / 2;
-                    Nk.nk_draw_image(o, bounds, icons[activeItem], Nk.nk_rgb(255, 255, 255));
+                    o.nk_draw_image(bounds, icons[activeItem], Nk.nk_rgb(255, 255, 255));
                 }
                 ctx.LayoutSpaceEnd();
                 if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, NkButtons.RIGHT) == false)

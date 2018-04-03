@@ -36,7 +36,11 @@
   <ItemGroup>
     <Compile Include="Delegates.cs" />
     <Compile Include="NkBuffer.cs" />
+    <Compile Include="NkCommandBuffer.cs" />
+    <Compile Include="NkContext.cs" />
+    <Compile Include="NkPanel.cs" />
     <Compile Include="NkStr.cs" />
+    <Compile Include="NkWindow.cs" />
     <Compile Include="Nuklear.Context.Generated.cs" />
     <Compile Include="Nuklear.Fonts.Generated.cs" />
     <Compile Include="Nuklear.RectPacts.Generated.cs" />
