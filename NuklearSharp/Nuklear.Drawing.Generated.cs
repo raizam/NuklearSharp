@@ -921,7 +921,7 @@ namespace NuklearSharp
         {
             if (list == null) return;
             nk_draw_list_push_image(list, (NkHandle)(texture.handle));
-            if ((nk_image_is_subimage(texture)) != 0)
+            if ((nk_image_is_subimage(texture)))
             {
                 NkVec2* uv = stackalloc NkVec2[2];
                 uv[0].x = (float)((float)(texture.region[0]) / (float)(texture.w));

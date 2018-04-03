@@ -94,7 +94,7 @@ namespace NuklearSharp
             public NkVec2 padding = new NkVec2();
             public NkVec2 spacing = new NkVec2();
             public NkVec2 cursor_size = new NkVec2();
-            public int show_buttons;
+            public bool show_buttons;
             public nk_style_button inc_button = new nk_style_button();
             public nk_style_button dec_button = new nk_style_button();
             public NkSymbolType inc_symbol;
@@ -139,7 +139,7 @@ namespace NuklearSharp
             public float border_cursor;
             public float rounding_cursor;
             public NkVec2 padding = new NkVec2();
-            public int show_buttons;
+            public bool show_buttons;
             public nk_style_button inc_button = new nk_style_button();
             public nk_style_button dec_button = new nk_style_button();
             public NkSymbolType inc_symbol;

@@ -102,7 +102,7 @@ namespace NuklearSharp
             public NkHandle Userdata = new NkHandle();
             public nk_text_edit TextEdit = new nk_text_edit();
             public NkCommandBuffer Overlay = new NkCommandBuffer();
-            public int Build;
+            public bool Build;
             public NkWindow Begin;
             public NkWindow End;
             public NkWindow Active;
@@ -123,7 +123,7 @@ namespace NuklearSharp
             public float FooterHeight;
             public float HeaderHeight;
             public float Border;
-            public uint HasScrolling;
+            public bool HasScrolling;
             public NkRect Clip = new NkRect();
             public nk_menu_state Menu = new nk_menu_state();
             public nk_row_layout Row = new nk_row_layout();
@@ -146,7 +146,7 @@ namespace NuklearSharp
             public nk_property_state Property = new nk_property_state();
             public nk_popup_state Popup = new nk_popup_state();
             public nk_edit_state Edit = new nk_edit_state();
-            public uint Scrolled;
+            public bool Scrolled;
             public nk_table Tables;
             public uint TableCount;
             public NkWindow Next;
@@ -194,7 +194,7 @@ namespace NuklearSharp
         public class NkStyleItem
         {
             public NkStyleItemType Type;
-            public NkStyleItemData Data = new NkStyleItemData();
+            public NkStyleItemData Data= new NkStyleItemData();
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -269,7 +269,7 @@ namespace NuklearSharp
             public NkCursor[] Cursors = new NkCursor[(int)NkStyleCursor.COUNT];
             public NkCursor CursorActive;
             public NkCursor CursorLast;
-            public int CursorVisible;
+            public bool CursorVisible;
             public nk_style_text Text = new nk_style_text();
             public nk_style_button Button = new nk_style_button();
             public nk_style_button ContextualButton = new nk_style_button();
@@ -625,10 +625,10 @@ namespace NuklearSharp
         public static NkWindow nk__begin(NkContext ctx)
         {
             if (ctx == null || ctx.Count == 0) return null;
-            if (ctx.Build == 0)
+            if (ctx.Build == false)
             {
                 nk_build(ctx);
-                ctx.Build = nk_true;
+                ctx.Build = true;
             }
 
             var iter = ctx.Begin;
@@ -645,7 +645,7 @@ namespace NuklearSharp
         public static void nk_build(NkContext ctx)
         {
             if (ctx.Style.CursorActive == null) ctx.Style.CursorActive = ctx.Style.Cursors[(int)NkStyleCursor.ARROW];
-            if (ctx.Style.CursorActive != null && ctx.Input.mouse.Grabbed == 0 && ctx.Style.CursorVisible != 0)
+            if (ctx.Style.CursorActive != null && ctx.Input.mouse.Grabbed == 0 && ctx.Style.CursorVisible)
             {
                 var mouseBounds = new NkRect();
                 var cursor = ctx.Style.CursorActive;
@@ -758,7 +758,7 @@ namespace NuklearSharp
             if (ctx == null) return;
 
             ctx.Seq = 0;
-            ctx.Build = 0;
+            ctx.Build = false;
             ctx.Begin = null;
             ctx.End = null;
             ctx.Active = null;
@@ -897,8 +897,8 @@ namespace NuklearSharp
                 win.Property.select_end = selectEnd;
                 if (state == NkPropertyStatus.NK_PROPERTY_DRAG)
                 {
-                    ctx.Input.mouse.Grab = nk_true;
-                    ctx.Input.mouse.Grabbed = nk_true;
+                    ctx.Input.mouse.Grab = 1;
+                    ctx.Input.mouse.Grabbed = 1;
                 }
             }
 
@@ -906,9 +906,9 @@ namespace NuklearSharp
             {
                 if (oldState == NkPropertyStatus.NK_PROPERTY_DRAG)
                 {
-                    ctx.Input.mouse.Grab = nk_false;
-                    ctx.Input.mouse.Grabbed = nk_false;
-                    ctx.Input.mouse.Ungrab = nk_true;
+                    ctx.Input.mouse.Grab = 0;
+                    ctx.Input.mouse.Grabbed = 0;
+                    ctx.Input.mouse.Ungrab = 1;
                 }
                 win.Property.select_start = 0;
                 win.Property.select_end = 0;

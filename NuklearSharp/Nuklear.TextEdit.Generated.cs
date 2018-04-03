@@ -364,7 +364,7 @@ namespace NuklearSharp
             {
                 if ((unicode) == (127)) goto next;
                 if (((unicode) == ('\n')) && ((state.single_line) != 0)) goto next;
-                if (((state.filter) != null) && (state.filter(state, unicode) == 0)) goto next;
+                if (((state.filter) != null) && (state.filter(state, unicode) == false)) goto next;
                 if ((!((state).select_start != (state).select_end)) && ((state.cursor) < (state._string_.Len)))
                 {
                     if ((state.mode) == (NkTextEditMode.REPLACE))
@@ -395,7 +395,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_textedit_key(nk_text_edit state, NkKeys key, int shift_mod, NkUserFont font, float row_height)
+        public static void nk_textedit_key(nk_text_edit state, NkKeys key, bool shift_mod, NkUserFont font, float row_height)
         {
             retry:
             ;
@@ -435,7 +435,7 @@ namespace NuklearSharp
                         state.mode = (byte)(NkTextEditMode.VIEW);
                     break;
                 case NkKeys.LEFT:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         nk_textedit_clamp(state);
                         nk_textedit_prep_selection_at_cursor(state);
@@ -451,7 +451,7 @@ namespace NuklearSharp
                     }
                     break;
                 case NkKeys.RIGHT:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
                         ++state.select_end;
@@ -468,7 +468,7 @@ namespace NuklearSharp
                     }
                     break;
                 case NkKeys.TEXT_WORD_LEFT:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
                         state.cursor = (int)(nk_textedit_move_to_word_previous(state));
@@ -486,7 +486,7 @@ namespace NuklearSharp
                     }
                     break;
                 case NkKeys.TEXT_WORD_RIGHT:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
                         state.cursor = (int)(nk_textedit_move_to_word_next(state));
@@ -508,13 +508,13 @@ namespace NuklearSharp
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
                         int i;
-                        int sel = (int)(shift_mod);
+                        bool sel = (shift_mod);
                         if ((state.single_line) != 0)
                         {
                             key = (NkKeys.RIGHT);
                             goto retry;
                         }
-                        if ((sel) != 0) nk_textedit_prep_selection_at_cursor(state);
+                        if ((sel)) nk_textedit_prep_selection_at_cursor(state);
                         else if (((state).select_start != (state).select_end)) nk_textedit_move_to_last(state);
                         nk_textedit_clamp(state);
                         nk_textedit_find_charpos(&find, state, (int)(state.cursor), (int)(state.single_line), font, (float)(row_height));
@@ -536,7 +536,7 @@ namespace NuklearSharp
                             nk_textedit_clamp(state);
                             state.has_preferred_x = (byte)(1);
                             state.preferred_x = (float)(goal_x);
-                            if ((sel) != 0) state.select_end = (int)(state.cursor);
+                            if ((sel)) state.select_end = (int)(state.cursor);
                         }
                     }
                     break;
@@ -545,13 +545,13 @@ namespace NuklearSharp
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
                         int i;
-                        int sel = (int)(shift_mod);
+                        bool sel = (bool)(shift_mod);
                         if ((state.single_line) != 0)
                         {
                             key = (NkKeys.LEFT);
                             goto retry;
                         }
-                        if ((sel) != 0) nk_textedit_prep_selection_at_cursor(state);
+                        if ((sel)) nk_textedit_prep_selection_at_cursor(state);
                         else if (((state).select_start != (state).select_end)) nk_textedit_move_to_first(state);
                         nk_textedit_clamp(state);
                         nk_textedit_find_charpos(&find, state, (int)(state.cursor), (int)(state.single_line), font, (float)(row_height));
@@ -572,7 +572,7 @@ namespace NuklearSharp
                             nk_textedit_clamp(state);
                             state.has_preferred_x = (byte)(1);
                             state.preferred_x = (float)(goal_x);
-                            if ((sel) != 0) state.select_end = (int)(state.cursor);
+                            if ((sel)) state.select_end = (int)(state.cursor);
                         }
                     }
                     break;
@@ -601,7 +601,7 @@ namespace NuklearSharp
                     state.has_preferred_x = (byte)(0);
                     break;
                 case NkKeys.TEXT_START:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
                         state.cursor = (int)(state.select_end = (int)(0));
@@ -614,7 +614,7 @@ namespace NuklearSharp
                     }
                     break;
                 case NkKeys.TEXT_END:
-                    if ((shift_mod) != 0)
+                    if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
                         state.cursor = (int)(state.select_end = (int)(state._string_.Len));
@@ -629,7 +629,7 @@ namespace NuklearSharp
                     break;
                 case NkKeys.TEXT_LINE_START:
                     {
-                        if ((shift_mod) != 0)
+                        if ((shift_mod))
                         {
                             nk_text_find find = new nk_text_find();
                             nk_textedit_clamp(state);
@@ -653,7 +653,7 @@ namespace NuklearSharp
                     break;
                 case NkKeys.TEXT_LINE_END:
                     {
-                        if ((shift_mod) != 0)
+                        if ((shift_mod) )
                         {
                             nk_text_find find = new nk_text_find();
                             nk_textedit_clamp(state);
@@ -958,46 +958,46 @@ namespace NuklearSharp
             state._string_.Str = string.Empty;
         }
 
-        public static int nk_filter_default(nk_text_edit box, char unicode)
+        public static bool nk_filter_default(nk_text_edit box, char unicode)
         {
-            return (int)(nk_true);
+            return true;
         }
 
-        public static int nk_filter_ascii(nk_text_edit box, char unicode)
+        public static bool nk_filter_ascii(nk_text_edit box, char unicode)
         {
-            if ((unicode) > (128)) return (int)(nk_false);
-            else return (int)(nk_true);
+            if ((unicode) > (128)) return false;
+            else return true;
         }
 
-        public static int nk_filter_float(nk_text_edit box, char unicode)
+        public static bool nk_filter_float(nk_text_edit box, char unicode)
         {
-            if (((((unicode) < ('0')) || ((unicode) > ('9'))) && (unicode != '.')) && (unicode != '-')) return (int)(nk_false);
-            else return (int)(nk_true);
+            if (((((unicode) < ('0')) || ((unicode) > ('9'))) && (unicode != '.')) && (unicode != '-')) return false;
+            else return true;
         }
 
-        public static int nk_filter_decimal(nk_text_edit box, char unicode)
+        public static bool nk_filter_decimal(nk_text_edit box, char unicode)
         {
-            if ((((unicode) < ('0')) || ((unicode) > ('9'))) && (unicode != '-')) return (int)(nk_false);
-            else return (int)(nk_true);
+            if ((((unicode) < ('0')) || ((unicode) > ('9'))) && (unicode != '-')) return false;
+            else return true;
         }
 
-        public static int nk_filter_hex(nk_text_edit box, char unicode)
+        public static bool nk_filter_hex(nk_text_edit box, char unicode)
         {
             if (((((unicode) < ('0')) || ((unicode) > ('9'))) && (((unicode) < ('a')) || ((unicode) > ('f')))) &&
-                (((unicode) < ('A')) || ((unicode) > ('F')))) return (int)(nk_false);
-            else return (int)(nk_true);
+                (((unicode) < ('A')) || ((unicode) > ('F')))) return false;
+            else return true;
         }
 
-        public static int nk_filter_oct(nk_text_edit box, char unicode)
+        public static bool nk_filter_oct(nk_text_edit box, char unicode)
         {
-            if (((unicode) < ('0')) || ((unicode) > ('7'))) return (int)(nk_false);
-            else return (int)(nk_true);
+            if (((unicode) < ('0')) || ((unicode) > ('7'))) return false;
+            else return true;
         }
 
-        public static int nk_filter_binary(nk_text_edit box, char unicode)
+        public static bool nk_filter_binary(nk_text_edit box, char unicode)
         {
-            if ((unicode != '0') && (unicode != '1')) return (int)(nk_false);
-            else return (int)(nk_true);
+            if ((unicode != '0') && (unicode != '1')) return false;
+            else return true;
         }
     }
 }

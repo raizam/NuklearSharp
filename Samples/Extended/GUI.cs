@@ -129,7 +129,7 @@ namespace Extended
                     Nk.nk_draw_image(o, bounds, icons[activeItem], Nk.nk_rgb(255, 255, 255));
                 }
                 ctx.LayoutSpaceEnd();
-                if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, NkButtons.RIGHT) == 0)
+                if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, NkButtons.RIGHT) == false)
                 {
                     ctx.PopupClose();
                     ret = activeItem;
@@ -373,10 +373,10 @@ namespace Extended
 
             ui_header(ctx, media, "Progressbar");
             ui_widget(ctx, media, 35);
-            ctx.Progress(ref _prog, 100, Nk.nk_true);
+            ctx.Progress(ref _prog, 100, true);
 
             if (Nk.nk_input_is_mouse_click_down_in_rect(ctx.Ctx.Input, NkButtons.RIGHT,
-                ctx.WindowGetBounds(), Nk.nk_true) != 0)
+                ctx.WindowGetBounds(), true))
             {
                 _piemenuPos = ctx.Ctx.Input.mouse.Pos;
                 _piemenuActive = true;

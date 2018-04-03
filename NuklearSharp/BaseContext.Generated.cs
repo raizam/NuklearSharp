@@ -73,67 +73,67 @@ namespace NuklearSharp
 
         public bool StylePushFont(NkUserFont font)
         {
-            return Nk.nk_style_push_font(_ctx, font) != 0;
+            return Nk.nk_style_push_font(_ctx, font) ;
         }
 
         public bool StylePopFont()
         {
-            return Nk.nk_style_pop_font(_ctx) != 0;
+            return Nk.nk_style_pop_font(_ctx) ;
         }
 
-        public bool StylePushStyleItem(NkStyleItem address, NkStyleItem value)
+        public unsafe bool StylePushStyleItem(NkStyleItem address, NkStyleItem value)
         {
-            return Nk.nk_style_push_style_item(_ctx, address, value) != 0;
+            return Nk.nk_style_push_style_item(_ctx, address, value) ;
         }
 
         public bool StylePushFloat(float* address, float value)
         {
-            return Nk.nk_style_push_float(_ctx, address, value) != 0;
+            return Nk.nk_style_push_float(_ctx, address, value) ;
         }
 
         public bool StylePushVec2(NkVec2* address, NkVec2 value)
         {
-            return Nk.nk_style_push_vec2(_ctx, address, value) != 0;
+            return Nk.nk_style_push_vec2(_ctx, address, value) ;
         }
 
         public bool StylePushFlags(uint* address, uint value)
         {
-            return Nk.nk_style_push_flags(_ctx, address, value) != 0;
+            return Nk.nk_style_push_flags(_ctx, address, value) ;
         }
 
         public bool StylePushColor(NkColor* address, NkColor value)
         {
-            return Nk.nk_style_push_color(_ctx, address, value) != 0;
+            return Nk.nk_style_push_color(_ctx, address, value) ;
         }
 
         public bool StylePopStyleItem()
         {
-            return Nk.nk_style_pop_style_item(_ctx) != 0;
+            return Nk.nk_style_pop_style_item(_ctx) ;
         }
 
         public bool StylePopFloat()
         {
-            return Nk.nk_style_pop_float(_ctx) != 0;
+            return Nk.nk_style_pop_float(_ctx) ;
         }
 
         public bool StylePopVec2()
         {
-            return Nk.nk_style_pop_vec2(_ctx) != 0;
+            return Nk.nk_style_pop_vec2(_ctx) ;
         }
 
         public bool StylePopFlags()
         {
-            return Nk.nk_style_pop_flags(_ctx) != 0;
+            return Nk.nk_style_pop_flags(_ctx) ;
         }
 
         public bool StylePopColor()
         {
-            return Nk.nk_style_pop_color(_ctx) != 0;
+            return Nk.nk_style_pop_color(_ctx) ;
         }
 
         public bool StyleSetCursor(int c)
         {
-            return Nk.nk_style_set_cursor(_ctx, c) != 0;
+            return Nk.nk_style_set_cursor(_ctx, c) ;
         }
 
         public void StyleShowCursor()
@@ -180,7 +180,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_panel_begin(_ctx, title_ptr, panel_type) != 0;
+                return Nk.nk_panel_begin(_ctx, title_ptr, panel_type) ;
             }
         }
 
@@ -216,7 +216,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_begin(_ctx, title_ptr, bounds, flags) != 0;
+                return Nk.nk_begin(_ctx, title_ptr, bounds, flags) ;
             }
         }
 
@@ -226,7 +226,7 @@ namespace NuklearSharp
             {
                 fixed (char* title_ptr = title)
                 {
-                    return Nk.nk_begin_titled(_ctx, name_ptr, title_ptr, bounds, flags) != 0;
+                    return Nk.nk_begin_titled(_ctx, name_ptr, title_ptr, bounds, flags) ;
                 }
             }
         }
@@ -293,29 +293,29 @@ namespace NuklearSharp
 
         public bool WindowHasFocus()
         {
-            return Nk.nk_window_has_focus(_ctx) != 0;
+            return Nk.nk_window_has_focus(_ctx) ;
         }
 
         public bool WindowIsHovered()
         {
-            return Nk.nk_window_is_hovered(_ctx) != 0;
+            return Nk.nk_window_is_hovered(_ctx) ;
         }
 
         public bool WindowIsAnyHovered()
         {
-            return Nk.nk_window_is_any_hovered(_ctx) != 0;
+            return Nk.nk_window_is_any_hovered(_ctx) ;
         }
 
         public bool ItemIsAnyActive()
         {
-            return Nk.nk_item_is_any_active(_ctx) != 0;
+            return Nk.nk_item_is_any_active(_ctx) ;
         }
 
         public bool WindowIsCollapsed(string name)
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_window_is_collapsed(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_collapsed(_ctx, name_ptr) ;
             }
         }
 
@@ -323,7 +323,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_window_is_closed(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_closed(_ctx, name_ptr) ;
             }
         }
 
@@ -331,7 +331,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_window_is_hidden(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_hidden(_ctx, name_ptr) ;
             }
         }
 
@@ -339,7 +339,7 @@ namespace NuklearSharp
         {
             fixed (char* name_ptr = name)
             {
-                return Nk.nk_window_is_active(_ctx, name_ptr) != 0;
+                return Nk.nk_window_is_active(_ctx, name_ptr) ;
             }
         }
 
@@ -572,7 +572,7 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
+                    return Nk.nk_tree_base(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
                 }
             }
         }
@@ -588,7 +588,7 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) != 0;
+                    return Nk.nk_tree_push_hashed(_ctx, type, title_ptr, initial_state, hash_ptr, hash.Length, line) ;
                 }
             }
         }
@@ -599,8 +599,7 @@ namespace NuklearSharp
             {
                 fixed (char* hash_ptr = hash)
                 {
-                    return Nk.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed) !=
-                           0;
+                    return Nk.nk_tree_image_push_hashed(_ctx, type, img, title_ptr, initial_state, hash_ptr, hash.Length, seed);
                 }
             }
         }
@@ -637,17 +636,17 @@ namespace NuklearSharp
 
         public bool WidgetIsHovered()
         {
-            return Nk.nk_widget_is_hovered(_ctx) != 0;
+            return Nk.nk_widget_is_hovered(_ctx);
         }
 
         public bool WidgetIsMouseClicked(NkButtons btn)
         {
-            return Nk.nk_widget_is_mouse_clicked(_ctx, btn) != 0;
+            return Nk.nk_widget_is_mouse_clicked(_ctx, btn);
         }
 
-        public bool WidgetHasMouseClickDown(NkButtons btn, int down)
+        public bool WidgetHasMouseClickDown(NkButtons btn, bool down)
         {
-            return Nk.nk_widget_has_mouse_click_down(_ctx, btn, down) != 0;
+            return Nk.nk_widget_has_mouse_click_down(_ctx, btn, down);
         }
 
         public void Spacing(int cols)
@@ -731,19 +730,19 @@ namespace NuklearSharp
 
         public bool ButtonPushBehavior(NkButtonBehavior behavior)
         {
-            return Nk.nk_button_push_behavior(_ctx, behavior) != 0;
+            return Nk.nk_button_push_behavior(_ctx, behavior) ;
         }
 
         public bool ButtonPopBehavior()
         {
-            return Nk.nk_button_pop_behavior(_ctx) != 0;
+            return Nk.nk_button_pop_behavior(_ctx) ;
         }
 
         public bool ButtonTextStyled(nk_style_button style, string title)
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_button_text_styled(_ctx, style, title_ptr, title.Length) != 0;
+                return Nk.nk_button_text_styled(_ctx, style, title_ptr, title.Length) ;
             }
         }
 
@@ -751,7 +750,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_button_text(_ctx, title_ptr, title.Length) != 0;
+                return Nk.nk_button_text(_ctx, title_ptr, title.Length) ;
             }
         }
 
@@ -759,7 +758,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_button_label_styled(_ctx, style, title_ptr) != 0;
+                return Nk.nk_button_label_styled(_ctx, style, title_ptr) ;
             }
         }
 
@@ -767,40 +766,40 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_button_label(_ctx, title_ptr) != 0;
+                return Nk.nk_button_label(_ctx, title_ptr) ;
             }
         }
 
         public bool ButtonColor(NkColor color)
         {
-            return Nk.nk_button_color(_ctx, color) != 0;
+            return Nk.nk_button_color(_ctx, color) ;
         }
 
         public bool ButtonSymbolStyled(nk_style_button style, NkSymbolType symbol)
         {
-            return Nk.nk_button_symbol_styled(_ctx, style, symbol) != 0;
+            return Nk.nk_button_symbol_styled(_ctx, style, symbol) ;
         }
 
         public bool ButtonSymbol(NkSymbolType symbol)
         {
-            return Nk.nk_button_symbol(_ctx, symbol) != 0;
+            return Nk.nk_button_symbol(_ctx, symbol) ;
         }
 
         public bool ButtonImageStyled(nk_style_button style, NkImage img)
         {
-            return Nk.nk_button_image_styled(_ctx, style, img) != 0;
+            return Nk.nk_button_image_styled(_ctx, style, img) ;
         }
 
         public bool ButtonImage(NkImage img)
         {
-            return Nk.nk_button_image(_ctx, img) != 0;
+            return Nk.nk_button_image(_ctx, img) ;
         }
 
         public bool ButtonSymbolTextStyled(nk_style_button style, NkSymbolType symbol, string text, Alignment align)
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_button_symbol_text_styled(_ctx, style, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_symbol_text_styled(_ctx, style, symbol, text_ptr, text.Length, align) ;
             }
         }
 
@@ -808,7 +807,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_button_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_symbol_text(_ctx, symbol, text_ptr, text.Length, align) ;
             }
         }
 
@@ -816,7 +815,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_button_symbol_label(_ctx, symbol, label_ptr, align) != 0;
+                return Nk.nk_button_symbol_label(_ctx, symbol, label_ptr, align) ;
             }
         }
 
@@ -824,7 +823,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_button_symbol_label_styled(_ctx, style, symbol, title_ptr, align) != 0;
+                return Nk.nk_button_symbol_label_styled(_ctx, style, symbol, title_ptr, align) ;
             }
         }
 
@@ -832,7 +831,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_button_image_text_styled(_ctx, style, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_image_text_styled(_ctx, style, img, text_ptr, text.Length, align) ;
             }
         }
 
@@ -840,7 +839,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_button_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_button_image_text(_ctx, img, text_ptr, text.Length, align) ;
             }
         }
 
@@ -848,7 +847,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_button_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_button_image_label(_ctx, img, label_ptr, align) ;
             }
         }
 
@@ -857,7 +856,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_button_image_label_styled(_ctx, style, img, label_ptr, text_alignment) != 0;
+                return Nk.nk_button_image_label_styled(_ctx, style, img, label_ptr, text_alignment) ;
             }
         }
 
@@ -865,7 +864,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nk.nk_selectable_text(_ctx, str_ptr, str.Length, align, ref value) != 0;
+                return Nk.nk_selectable_text(_ctx, str_ptr, str.Length, align, ref value) ;
             }
         }
 
@@ -873,7 +872,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nk.nk_selectable_image_text(_ctx, img, str_ptr, str.Length, align, ref value) != 0;
+                return Nk.nk_selectable_image_text(_ctx, img, str_ptr, str.Length, align, ref value) !=0;
             }
         }
 
@@ -889,7 +888,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nk.nk_selectable_label(_ctx, str_ptr, align, ref value) != 0;
+                return Nk.nk_selectable_label(_ctx, str_ptr, align, ref value);
             }
         }
 
@@ -921,7 +920,7 @@ namespace NuklearSharp
         {
             fixed (char* str_ptr = str)
             {
-                return Nk.nk_select_image_text(_ctx, img, str_ptr, str.Length, align, value) != 0;
+                return Nk.nk_select_image_text(_ctx, img, str_ptr, str.Length, align, value) !=0;
             }
         }
 
@@ -929,7 +928,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_check_text(_ctx, text_ptr, text.Length, active ? 1 : 0) != 0;
+                return Nk.nk_check_text(_ctx, text_ptr, text.Length, active);
             }
         }
 
@@ -941,13 +940,11 @@ namespace NuklearSharp
             }
         }
 
-        public bool CheckboxText(string text, ref bool active)
+        public bool CheckboxText(string text, bool active)
         {
             fixed (char* text_ptr = text)
             {
-                int i = active ? 1 : 0;
-                var res = Nk.nk_checkbox_text(_ctx, text_ptr, text.Length, &i) != 0;
-                active = i != 0;
+                var res = Nk.nk_checkbox_text(_ctx, text_ptr, text.Length, ref active);
                 return res;
             }
         }
@@ -957,7 +954,7 @@ namespace NuklearSharp
             fixed (char* text_ptr = text)
             {
                 uint f = flags;
-                var res = Nk.nk_checkbox_flags_text(_ctx, text_ptr, text.Length, &f, value) != 0;
+                var res = Nk.nk_checkbox_flags_text(_ctx, text_ptr, text.Length, &f, value);
 
                 flags = f;
                 return res;
@@ -968,7 +965,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_check_label(_ctx, label_ptr, active ? 1 : 0) != 0;
+                return Nk.nk_check_label(_ctx, label_ptr, active);
             }
         }
 
@@ -984,9 +981,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                int i = active ? 1 : 0;
-                var res = Nk.nk_checkbox_label(_ctx, label_ptr, &i) != 0;
-                active = i != 0;
+                var res = Nk.nk_checkbox_label(_ctx, label_ptr, ref active) ;
                 return res;
             }
         }
@@ -996,27 +991,27 @@ namespace NuklearSharp
             fixed (char* label_ptr = label)
             {
                 uint f = flags;
-                var res = Nk.nk_checkbox_flags_label(_ctx, label_ptr, &f, value) != 0;
+                var res = Nk.nk_checkbox_flags_label(_ctx, label_ptr, &f, value);
                 flags = f;
                 return res;
             }
         }
 
-        public bool OptionText(string text, int is_active)
+        public bool OptionText(string text, bool is_active)
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_option_text(_ctx, text_ptr, text.Length, is_active) != 0;
+                return Nk.nk_option_text(_ctx, text_ptr, text.Length, is_active);
             }
         }
 
-        public bool RadioText(string text, ref bool active)
+        public bool RadioText(string text, bool active)
         {
             fixed (char* text_ptr = text)
             {
-                int i = active ? 1 : 0;
-                var res = Nk.nk_radio_text(_ctx, text_ptr, text.Length, &i) != 0;
-                active = i != 0;
+                
+                var res = Nk.nk_radio_text(_ctx, text_ptr, text.Length, &active);
+
                 return res;
             }
         }
@@ -1025,24 +1020,24 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_option_label(_ctx, label_ptr, active ? 1 : 0) != 0;
+                return Nk.nk_option_label(_ctx, label_ptr, active);
             }
         }
 
-        public bool RadioLabel(string label, ref bool active)
+        public bool RadioLabel(string label, bool active)
         {
             fixed (char* label_ptr = label)
             {
-                int i = active ? 1 : 0;
-                var res = Nk.nk_radio_label(_ctx, label_ptr, &i) != 0;
-                active = i != 0;
+                
+                var res = Nk.nk_radio_label(_ctx, label_ptr, &active) ;
+         
                 return res;
             }
         }
 
         public bool SliderFloat(float min_value, ref float value, float max_value, float value_step)
         {
-            return Nk.nk_slider_float(_ctx, min_value, ref value, max_value, value_step) != 0;
+            return Nk.nk_slider_float(_ctx, min_value, ref value, max_value, value_step) !=0;
         }
 
         public float SlideFloat(float min, float val, float max, float step)
@@ -1052,24 +1047,24 @@ namespace NuklearSharp
 
         public bool SlideInt(int min, int val, int max, int step)
         {
-            return Nk.nk_slide_int(_ctx, min, val, max, step) != 0;
+            return Nk.nk_slide_int(_ctx, min, val, max, step) !=0;
         }
 
         public bool SliderInt(int min, ref int val, int max, int step)
         {
-            return Nk.nk_slider_int(_ctx, min, ref val, max, step) != 0;
+            return Nk.nk_slider_int(_ctx, min, ref val, max, step)!=0 ;
         }
 
-        public bool Progress(ref ulong cur, ulong max, int is_modifyable)
+        public bool Progress(ref ulong cur, ulong max, bool is_modifyable)
         {
             ulong temp = cur;
-            var res = Nk.nk_progress(_ctx, &temp, max, is_modifyable) != 0;
+            var res = Nk.nk_progress(_ctx, &temp, max, is_modifyable) !=0;
             cur = temp;
 
             return res;
         }
 
-        public ulong Prog(ulong cur, ulong max, int modifyable)
+        public ulong Prog(ulong cur, ulong max, bool modifyable)
         {
             return Nk.nk_prog(_ctx, cur, max, modifyable);
         }
@@ -1149,7 +1144,7 @@ namespace NuklearSharp
 
         public bool ColorPick(NkColorF color, NkColorFormat fmt)
         {
-            return Nk.nk_color_pick(_ctx, &color, fmt) != 0;
+            return Nk.nk_color_pick(_ctx, &color, fmt) !=0;
         }
 
         public NkColorF ColorPicker(NkColorF color, NkColorFormat fmt)
@@ -1160,12 +1155,12 @@ namespace NuklearSharp
         public bool ChartBeginColored(NkChartType type, NkColor color, NkColor highlight, int count, float min_value,
             float max_value)
         {
-            return Nk.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value) != 0;
+            return Nk.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value)!=0 ;
         }
 
         public bool ChartBegin(NkChartType type, int count, float min_value, float max_value)
         {
-            return Nk.nk_chart_begin(_ctx, type, count, min_value, max_value) != 0;
+            return Nk.nk_chart_begin(_ctx, type, count, min_value, max_value) !=0;
         }
 
         public void ChartAddSlotColored(NkChartType type, NkColor color, NkColor highlight, int count,
@@ -1189,12 +1184,12 @@ namespace NuklearSharp
             return Nk.nk_chart_push_column(_ctx, win, chart, value, slot);
         }
 
-        public uint ChartPushSlot(float value, int slot)
+        public NkChartEvent ChartPushSlot(float value, int slot)
         {
             return Nk.nk_chart_push_slot(_ctx, value, slot);
         }
 
-        public uint ChartPush(float value)
+        public NkChartEvent ChartPush(float value)
         {
             return Nk.nk_chart_push(_ctx, value);
         }
@@ -1226,7 +1221,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_group_scrolled_begin(_ctx, scroll, title_ptr, flags) != 0;
+                return Nk.nk_group_scrolled_begin(_ctx, scroll, title_ptr, flags) !=0;
             }
         }
 
@@ -1236,7 +1231,7 @@ namespace NuklearSharp
             {
                 fixed (char* title_ptr = title)
                 {
-                    return Nk.nk_group_begin_titled(_ctx, id_ptr, title_ptr, flags) != 0;
+                    return Nk.nk_group_begin_titled(_ctx, id_ptr, title_ptr, flags)!=0 ;
                 }
             }
         }
@@ -1245,7 +1240,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_group_begin(_ctx, title_ptr, flags) != 0;
+                return Nk.nk_group_begin(_ctx, title_ptr, flags) !=0;
             }
         }
 
@@ -1258,7 +1253,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_list_view_begin(_ctx, view, title_ptr, flags, row_height, row_count) != 0;
+                return Nk.nk_list_view_begin(_ctx, view, title_ptr, flags, row_height, row_count)!=0 ;
             }
         }
 
@@ -1266,13 +1261,13 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_popup_begin(_ctx, type, title_ptr, flags, rect) != 0;
+                return Nk.nk_popup_begin(_ctx, type, title_ptr, flags, rect) !=0;
             }
         }
 
         public bool NonblockBegin(PanelFlags flags, NkRect body, NkRect header, NkPanelType panel_type)
         {
-            return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
+            return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) ;
         }
 
         public void PopupClose()
@@ -1287,7 +1282,7 @@ namespace NuklearSharp
 
         public bool TooltipBegin(float width)
         {
-            return Nk.nk_tooltip_begin(_ctx, width) != 0;
+            return Nk.nk_tooltip_begin(_ctx, width) !=0;
         }
 
         public void TooltipEnd()
@@ -1305,14 +1300,14 @@ namespace NuklearSharp
 
         public bool ContextualBegin(PanelFlags flags, NkVec2 size, NkRect trigger_bounds)
         {
-            return Nk.nk_contextual_begin(_ctx, flags, size, trigger_bounds) != 0;
+            return Nk.nk_contextual_begin(_ctx, flags, size, trigger_bounds) ;
         }
 
         public bool ContextualItemText(string text, Alignment alignment)
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_contextual_item_text(_ctx, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_contextual_item_text(_ctx, text_ptr, text.Length, alignment) ;
             }
         }
 
@@ -1320,7 +1315,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_contextual_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_contextual_item_label(_ctx, label_ptr, align) ;
             }
         }
 
@@ -1328,7 +1323,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_contextual_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_contextual_item_image_text(_ctx, img, text_ptr, text.Length, align) ;
             }
         }
 
@@ -1336,7 +1331,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_contextual_item_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_contextual_item_image_label(_ctx, img, label_ptr, align) ;
             }
         }
 
@@ -1344,7 +1339,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_contextual_item_symbol_text(_ctx, symbol, text_ptr, text.Length, align) != 0;
+                return Nk.nk_contextual_item_symbol_text(_ctx, symbol, text_ptr, text.Length, align) ;
             }
         }
 
@@ -1352,7 +1347,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_contextual_item_symbol_label(_ctx, symbol, text_ptr, align) != 0;
+                return Nk.nk_contextual_item_symbol_label(_ctx, symbol, text_ptr, align) ;
             }
         }
 
@@ -1366,16 +1361,16 @@ namespace NuklearSharp
             Nk.nk_contextual_end(_ctx);
         }
 
-        public bool ComboBegin(NkWindow win, NkVec2 size, int is_clicked, NkRect header)
+        public bool ComboBegin(NkWindow win, NkVec2 size, bool is_clicked, NkRect header)
         {
-            return Nk.nk_combo_begin(_ctx, win, size, is_clicked, header) != 0;
+            return Nk.nk_combo_begin(_ctx, win, size, is_clicked, header);
         }
 
         public bool ComboBeginText(string selected, NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_text(_ctx, selected_ptr, selected.Length, size) != 0;
+                return Nk.nk_combo_begin_text(_ctx, selected_ptr, selected.Length, size);
             }
         }
 
@@ -1383,38 +1378,38 @@ namespace NuklearSharp
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_label(_ctx, selected_ptr, size) != 0;
+                return Nk.nk_combo_begin_label(_ctx, selected_ptr, size) ;
             }
         }
 
         public bool ComboBeginColor(NkColor color, NkVec2 size)
         {
-            return Nk.nk_combo_begin_color(_ctx, color, size) != 0;
+            return Nk.nk_combo_begin_color(_ctx, color, size) ;
         }
 
         public bool ComboBeginSymbol(NkSymbolType symbol, NkVec2 size)
         {
-            return Nk.nk_combo_begin_symbol(_ctx, symbol, size) != 0;
+            return Nk.nk_combo_begin_symbol(_ctx, symbol, size) ;
         }
 
         public bool ComboBeginSymbolText(string selected, NkSymbolType symbol, NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_symbol_text(_ctx, selected_ptr, selected.Length, symbol, size) != 0;
+                return Nk.nk_combo_begin_symbol_text(_ctx, selected_ptr, selected.Length, symbol, size) ;
             }
         }
 
         public bool ComboBeginImage(NkImage img, NkVec2 size)
         {
-            return Nk.nk_combo_begin_image(_ctx, img, size) != 0;
+            return Nk.nk_combo_begin_image(_ctx, img, size) ;
         }
 
         public bool ComboBeginImageText(string selected, NkImage img, NkVec2 size)
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_image_text(_ctx, selected_ptr, selected.Length, img, size) != 0;
+                return Nk.nk_combo_begin_image_text(_ctx, selected_ptr, selected.Length, img, size) ;
             }
         }
 
@@ -1422,7 +1417,7 @@ namespace NuklearSharp
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_symbol_label(_ctx, selected_ptr, type, size) != 0;
+                return Nk.nk_combo_begin_symbol_label(_ctx, selected_ptr, type, size) ;
             }
         }
 
@@ -1430,7 +1425,7 @@ namespace NuklearSharp
         {
             fixed (char* selected_ptr = selected)
             {
-                return Nk.nk_combo_begin_image_label(_ctx, selected_ptr, img, size) != 0;
+                return Nk.nk_combo_begin_image_label(_ctx, selected_ptr, img, size) ;
             }
         }
 
@@ -1438,7 +1433,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_combo_item_text(_ctx, text_ptr, text.Length, align) != 0;
+                return Nk.nk_combo_item_text(_ctx, text_ptr, text.Length, align) ;
             }
         }
 
@@ -1446,7 +1441,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_combo_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_combo_item_label(_ctx, label_ptr, align) ;
             }
         }
 
@@ -1454,7 +1449,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_combo_item_image_text(_ctx, img, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_combo_item_image_text(_ctx, img, text_ptr, text.Length, alignment) ;
             }
         }
 
@@ -1462,7 +1457,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_combo_item_image_label(_ctx, img, text_ptr, alignment) != 0;
+                return Nk.nk_combo_item_image_label(_ctx, img, text_ptr, alignment) ;
             }
         }
 
@@ -1470,7 +1465,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_combo_item_symbol_text(_ctx, sym, text_ptr, text.Length, alignment) != 0;
+                return Nk.nk_combo_item_symbol_text(_ctx, sym, text_ptr, text.Length, alignment) ;
             }
         }
 
@@ -1478,7 +1473,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_combo_item_symbol_label(_ctx, sym, label_ptr, alignment) != 0;
+                return Nk.nk_combo_item_symbol_label(_ctx, sym, label_ptr, alignment) ;
             }
         }
 
@@ -1508,14 +1503,14 @@ namespace NuklearSharp
         {
             fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
             {
-                return Nk.nk_combo_string(_ctx, items_separated_by_zeros_ptr, selected, count, item_height, size) != 0;
+                return Nk.nk_combo_string(_ctx, items_separated_by_zeros_ptr, selected, count, item_height, size)!=0 ;
             }
         }
 
         public bool ComboCallback(NkComboCallback item_getter, IntPtr userdata, int selected, int count,
             int item_height, NkVec2 size)
         {
-            return Nk.nk_combo_callback(_ctx, item_getter, userdata.ToPointer(), selected, count, item_height, size) != 0;
+            return Nk.nk_combo_callback(_ctx, item_getter, userdata.ToPointer(), selected, count, item_height, size) !=0;
         }
 
         public void ComboboxString(string items_separated_by_zeros, ref int selected, int count, int item_height,
@@ -1548,11 +1543,11 @@ namespace NuklearSharp
             selected = s;
         }
 
-        public bool MenuBegin(NkWindow win, string id, int is_clicked, NkRect header, NkVec2 size)
+        public bool MenuBegin(NkWindow win, string id, bool is_clicked, NkRect header, NkVec2 size)
         {
             fixed (char* id_ptr = id)
             {
-                return Nk.nk_menu_begin(_ctx, win, id_ptr, is_clicked, header, size) != 0;
+                return Nk.nk_menu_begin(_ctx, win, id_ptr, is_clicked, header, size);
             }
         }
 
@@ -1560,7 +1555,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_begin_text(_ctx, title_ptr, title.Length, align, size) != 0;
+                return Nk.nk_menu_begin_text(_ctx, title_ptr, title.Length, align, size);
             }
         }
 
@@ -1568,7 +1563,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_menu_begin_label(_ctx, text_ptr, align, size) != 0;
+                return Nk.nk_menu_begin_label(_ctx, text_ptr, align, size);
             }
         }
 
@@ -1576,7 +1571,7 @@ namespace NuklearSharp
         {
             fixed (char* id_ptr = id)
             {
-                return Nk.nk_menu_begin_image(_ctx, id_ptr, img, size) != 0;
+                return Nk.nk_menu_begin_image(_ctx, id_ptr, img, size);
             }
         }
 
@@ -1584,7 +1579,7 @@ namespace NuklearSharp
         {
             fixed (char* id_ptr = id)
             {
-                return Nk.nk_menu_begin_symbol(_ctx, id_ptr, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol(_ctx, id_ptr, sym, size);
             }
         }
 
@@ -1592,7 +1587,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_begin_image_text(_ctx, title_ptr, title.Length, align, img, size) != 0;
+                return Nk.nk_menu_begin_image_text(_ctx, title_ptr, title.Length, align, img, size);
             }
         }
 
@@ -1600,7 +1595,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_begin_image_label(_ctx, title_ptr, align, img, size) != 0;
+                return Nk.nk_menu_begin_image_label(_ctx, title_ptr, align, img, size);
             }
         }
 
@@ -1608,7 +1603,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_begin_symbol_text(_ctx, title_ptr, title.Length, align, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol_text(_ctx, title_ptr, title.Length, align, sym, size);
             }
         }
 
@@ -1616,7 +1611,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_begin_symbol_label(_ctx, title_ptr, align, sym, size) != 0;
+                return Nk.nk_menu_begin_symbol_label(_ctx, title_ptr, align, sym, size);
             }
         }
 
@@ -1624,7 +1619,7 @@ namespace NuklearSharp
         {
             fixed (char* title_ptr = title)
             {
-                return Nk.nk_menu_item_text(_ctx, title_ptr, title.Length, align) != 0;
+                return Nk.nk_menu_item_text(_ctx, title_ptr, title.Length, align);
             }
         }
 
@@ -1632,7 +1627,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_menu_item_label(_ctx, label_ptr, align) != 0;
+                return Nk.nk_menu_item_label(_ctx, label_ptr, align);
             }
         }
 
@@ -1640,7 +1635,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_menu_item_image_label(_ctx, img, label_ptr, align) != 0;
+                return Nk.nk_menu_item_image_label(_ctx, img, label_ptr, align);
             }
         }
 
@@ -1648,7 +1643,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_menu_item_image_text(_ctx, img, text_ptr, text.Length, align) != 0;
+                return Nk.nk_menu_item_image_text(_ctx, img, text_ptr, text.Length, align);
             }
         }
 
@@ -1656,7 +1651,7 @@ namespace NuklearSharp
         {
             fixed (char* text_ptr = text)
             {
-                return Nk.nk_menu_item_symbol_text(_ctx, sym, text_ptr, text.Length, align) != 0;
+                return Nk.nk_menu_item_symbol_text(_ctx, sym, text_ptr, text.Length, align);
             }
         }
 
@@ -1664,7 +1659,7 @@ namespace NuklearSharp
         {
             fixed (char* label_ptr = label)
             {
-                return Nk.nk_menu_item_symbol_label(_ctx, sym, label_ptr, align) != 0;
+                return Nk.nk_menu_item_symbol_label(_ctx, sym, label_ptr, align);
             }
         }
 

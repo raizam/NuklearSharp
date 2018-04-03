@@ -1442,7 +1442,7 @@ namespace NuklearSharp
             *xpos += (float) (b->xadvance);
         }
 
-        public static int nk_font_bake_pack(nk_font_baker* baker, ulong* image_memory, ref int width, ref int height,
+        public static bool nk_font_bake_pack(nk_font_baker* baker, ulong* image_memory, ref int width, ref int height,
             ref NkRectI custom, nk_font_config config_list, int count)
         {
             ulong max_height = (ulong) (1024 * 32);
@@ -1453,7 +1453,7 @@ namespace NuklearSharp
             int range_count = (int) (0);
             int i = (int) (0);
             if (((((image_memory == null))) || (config_list == null)) || (count == 0))
-                return (int) (nk_false);
+                return  (false);
             for (config_iter = config_list; config_iter != null; config_iter = config_iter.next)
             {
                 it = config_iter;
@@ -1471,7 +1471,7 @@ namespace NuklearSharp
                 do
                 {
                     if (nk_tt_InitFont(&baker->build[i++].info, (byte*) (it.ttf_blob), (int) (0)) == 0)
-                        return (int) (nk_false);
+                        return (false);
                 } while ((it = it.n) != config_iter);
             }
 
@@ -1552,7 +1552,7 @@ namespace NuklearSharp
 
             height = ((int) (nk_round_up_pow2((uint) (height))));
             *image_memory = (ulong) ((ulong) (width) * (ulong) (height));
-            return (int) (nk_true);
+            return (true);
         }
 
         public static void nk_font_bake(nk_font_baker* baker, void* image_memory, int width, int height,
@@ -1881,8 +1881,7 @@ namespace NuklearSharp
             atlas.Custom.h = (short) (27 + 1);
             if (
                 nk_font_bake_pack(baker, &img_size, ref width, ref height, ref atlas.Custom, atlas.Config,
-                    (int) (atlas.FontNum)) ==
-                0) goto failed;
+                    (int) (atlas.FontNum)) == false) goto failed;
             atlas.Pixel = CRuntime.Malloc((ulong) (img_size));
             if (atlas.Pixel == null) goto failed;
             nk_font_bake(baker, atlas.Pixel, (int) (width), (int) (height), atlas.Glyphs, (int) (atlas.GlyphCount),

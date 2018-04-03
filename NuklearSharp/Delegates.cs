@@ -14,7 +14,7 @@
 
     public delegate void NkDrawNotify(NkCommandBuffer buffer, NkHandle handle);
 
-    public delegate int NkPluginFilter(nk_text_edit textEdit, char unicode);
+    public delegate bool NkPluginFilter(nk_text_edit textEdit, char unicode);
 
     public unsafe delegate float NkFloatValueGetter(void* handle, int index);
 

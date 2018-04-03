@@ -693,7 +693,7 @@ namespace NuklearSharp
             nk_draw_image(_out_, (NkRect)(*image), img, (NkColor)(nk_white));
         }
 
-        public static void nk_draw_checkbox(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, int active,
+        public static void nk_draw_checkbox(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, bool active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
@@ -725,7 +725,7 @@ namespace NuklearSharp
                     (float)(0), (NkColor)(background.Data.Color));
             }
             else nk_draw_image(_out_, (NkRect)(*selector), background.Data.Image, (NkColor)(nk_white));
-            if ((active) != 0)
+            if ((active))
             {
                 if ((cursor.Type) == (NkStyleItemType.IMAGE))
                     nk_draw_image(_out_, (NkRect)(*cursors), cursor.Data.Image, (NkColor)(nk_white));
@@ -738,7 +738,7 @@ namespace NuklearSharp
             nk_widget_text(_out_, (NkRect)(*label), _string_, (int)(len), &text, (Alignment.MIDDLELEFT), font);
         }
 
-        public static void nk_draw_option(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, int active,
+        public static void nk_draw_option(NkCommandBuffer _out_, NkWidgetStates state, nk_style_toggle style, bool active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
@@ -770,7 +770,7 @@ namespace NuklearSharp
                     (NkColor)(background.Data.Color));
             }
             else nk_draw_image(_out_, (NkRect)(*selector), background.Data.Image, (NkColor)(nk_white));
-            if ((active) != 0)
+            if ((active))
             {
                 if ((cursor.Type) == (NkStyleItemType.IMAGE))
                     nk_draw_image(_out_, (NkRect)(*cursors), cursor.Data.Image, (NkColor)(nk_white));
@@ -975,7 +975,7 @@ namespace NuklearSharp
 
         public static void nk_edit_draw_text(NkCommandBuffer _out_, nk_style_edit style, float pos_x, float pos_y,
             float x_offset, char* text, int byte_len, float row_height, NkUserFont font, NkColor background,
-            NkColor foreground, int is_selected)
+            NkColor foreground, bool is_selected)
         {
             if ((((text == null) || (byte_len == 0)) || (_out_ == null)) || (style == null)) return;
             {
@@ -1003,7 +1003,7 @@ namespace NuklearSharp
                         label.w = (float)(line_width);
                         label.x = (float)(pos_x);
                         if (line_count == 0) label.x += (float)(x_offset);
-                        if ((is_selected) != 0)
+                        if ((is_selected))
                             nk_fill_rect(_out_, (NkRect)(label), (float)(0), (NkColor)(background));
                         nk_widget_text(_out_, (NkRect)(label), line, (int)((text + text_len) - line), &txt,
                             (Alignment.MIDDLECENTERED), font);
@@ -1038,7 +1038,7 @@ namespace NuklearSharp
                     label.w = (float)(line_width);
                     label.x = (float)(pos_x);
                     if (line_count == 0) label.x += (float)(x_offset);
-                    if ((is_selected) != 0)
+                    if ((is_selected))
                         nk_fill_rect(_out_, (NkRect)(label), (float)(0), (NkColor)(background));
                     nk_widget_text(_out_, (NkRect)(label), line, (int)((text + text_len) - line), &txt,
                         (Alignment.MIDDLELEFT), font);

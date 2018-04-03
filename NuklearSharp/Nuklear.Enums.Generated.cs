@@ -442,9 +442,7 @@ namespace NuklearSharp
 
     unsafe partial class Nk
     {
-        public const int nk_false = 0;
-        public const int nk_true = 1;
-    
+   
         public const int NK_RP_HEURISTIC_Skyline_default = 0;
         public const int NK_RP_HEURISTIC_Skyline_BL_sortHeight = NK_RP_HEURISTIC_Skyline_default;
         public const int NK_RP_HEURISTIC_Skyline_BF_sortHeight = 2;
@@ -499,16 +497,7 @@ namespace NuklearSharp
         public const int NK_TT_MAC_LANG_CHINESE_SIMPLIFIED = 33;
         public const int NK_TT_MAC_LANG_ITALIAN = 3;
         public const int NK_TT_MAC_LANG_CHINESE_TRAD = 19;
-        //public const int NK_TOGGLE_CHECK = 0;
-        //public const int NK_TOGGLE_OPTION = 1;
-        //public const int NK_PROPERTY_DEFAULT = 0;
-        //public const int NK_PROPERTY_EDIT = 1;
-        //public const int NK_PROPERTY_DRAG = 2;
-        //public const int NK_FILTER_INT = 0;
-        //public const int NK_FILTER_FLOAT = 1;
-        //public const int NK_PROPERTY_INT = 0;
-        //public const int NK_PROPERTY_FLOAT = 1;
-        //public const int NK_PROPERTY_DOUBLE = 2;
+
         public const int NK_INSERT_BACK = 0;
         public const int NK_INSERT_FRONT = 1;
     }
