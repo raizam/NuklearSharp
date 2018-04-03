@@ -82,13 +82,13 @@ namespace NuklearSharp
     //[Flags]
     //public enum NkPanelType
     //{
-    //    NK_PANEL_WINDOW = 1,
-    //    NK_PANEL_GROUP = 2,
-    //    NK_PANEL_POPUP = 4,
-    //    NK_PANEL_CONTEXTUAL = 16,
-    //    NK_PANEL_COMBO = 32,
-    //    NK_PANEL_MENU = 64,
-    //    NK_PANEL_TOOLTIP = 128
+    //    NkPanelType.WINDOW = 1,
+    //    NkPanelType.GROUP = 2,
+    //    NkPanelType.POPUP = 4,
+    //    NkPanelType.CONTEXTUAL = 16,
+    //    NkPanelType.COMBO = 32,
+    //    NkPanelType.MENU = 64,
+    //    NkPanelType.TOOLTIP = 128
     //}
 
     //public enum NkPanelRowLayoutType
@@ -367,9 +367,9 @@ namespace NuklearSharp
 
     //public enum NkPanelSet
     //{
-    //    NK_PANEL_SET_NONBLOCK = 240,
-    //    NK_PANEL_SET_POPUP = 244,
-    //    NK_PANEL_SET_SUB = 246
+    //    NkPanelType.SET_NONBLOCK = 240,
+    //    NkPanelType.SET_POPUP = 244,
+    //    NkPanelType.SET_SUB = 246
     //}
 
     //public enum NkWindowFlags
@@ -698,6 +698,23 @@ namespace NuklearSharp
         ELEMENT_BUFFER_FULL = 8
     }
 
+    [Flags]
+    public enum NkPanelType
+    {
+        WINDOW = (1 << (0)),
+        GROUP = (1 << (1)),
+        POPUP = (1 << (2)),
+        CONTEXTUAL = (1 << (4)),
+        COMBO = (1 << (5)),
+        MENU = (1 << (6)),
+        TOOLTIP = (1 << (7)),
+
+        SET_NONBLOCK =    NkPanelType.CONTEXTUAL | NkPanelType.COMBO | NkPanelType.MENU | NkPanelType.TOOLTIP,
+
+        SET_POPUP = NkPanelType.SET_NONBLOCK | NkPanelType.POPUP,
+        SET_SUB = NkPanelType.SET_POPUP | NkPanelType.GROUP,
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -893,19 +910,19 @@ namespace NuklearSharp
         public const int NK_STYLE_ITEM_IMAGE = 1;
         public const int NK_HEADER_LEFT = 0;
         public const int NK_HEADER_RIGHT = 1;
-        public const int NK_PANEL_WINDOW = (1 << (0));
-        public const int NK_PANEL_GROUP = (1 << (1));
-        public const int NK_PANEL_POPUP = (1 << (2));
-        public const int NK_PANEL_CONTEXTUAL = (1 << (4));
-        public const int NK_PANEL_COMBO = (1 << (5));
-        public const int NK_PANEL_MENU = (1 << (6));
-        public const int NK_PANEL_TOOLTIP = (1 << (7));
+        //public const int NkPanelType.WINDOW = (1 << (0));
+        //public const int NkPanelType.GROUP = (1 << (1));
+        //public const int NkPanelType.POPUP = (1 << (2));
+        //public const int NkPanelType.CONTEXTUAL = (1 << (4));
+        //public const int NkPanelType.COMBO = (1 << (5));
+        //public const int NkPanelType.MENU = (1 << (6));
+        //public const int NkPanelType.TOOLTIP = (1 << (7));
 
-        public const int NK_PANEL_SET_NONBLOCK =
-            NK_PANEL_CONTEXTUAL | NK_PANEL_COMBO | NK_PANEL_MENU | NK_PANEL_TOOLTIP;
+        //public const int NkPanelType.SET_NONBLOCK =
+        //    NkPanelType.CONTEXTUAL | NkPanelType.COMBO | NkPanelType.MENU | NkPanelType.TOOLTIP;
 
-        public const int NK_PANEL_SET_POPUP = NK_PANEL_SET_NONBLOCK | NK_PANEL_POPUP;
-        public const int NK_PANEL_SET_SUB = NK_PANEL_SET_POPUP | NK_PANEL_GROUP;
+        //public const int NkPanelType.SET_POPUP = NkPanelType.SET_NONBLOCK | NkPanelType.POPUP;
+        //public const int NkPanelType.SET_SUB = NkPanelType.SET_POPUP | NkPanelType.GROUP;
         public const int NK_LAYOUT_DYNAMIC_FIXED = 0;
         public const int NK_LAYOUT_DYNAMIC_ROW = 1;
         public const int NK_LAYOUT_DYNAMIC_FREE = 2;
@@ -924,8 +941,8 @@ namespace NuklearSharp
         //public const int NkPanelFlags.CLOSED = (1 << (14));
         //public const int NkPanelFlags.MINIMIZED = (1 << (15));
         //public const int NkPanelFlags.REMOVE_ROM = (1 << (16));
-        public const int NK_DO_NOT_STOP_ON_NEW_LINE = 0;
-        public const int NK_STOP_ON_NEW_LINE = 1;
+        //public const int NK_DO_NOT_STOP_ON_NEW_LINE = 0;
+        //public const int NK_STOP_ON_NEW_LINE = 1;
         public const int NK_RP_HEURISTIC_Skyline_default = 0;
         public const int NK_RP_HEURISTIC_Skyline_BL_sortHeight = NK_RP_HEURISTIC_Skyline_default;
         public const int NK_RP_HEURISTIC_Skyline_BF_sortHeight = 2;

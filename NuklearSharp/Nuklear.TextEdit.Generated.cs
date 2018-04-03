@@ -78,7 +78,7 @@ namespace NuklearSharp
                 NkVec2 size =
                     (NkVec2)
                         (nk_text_calculate_text_bounds(font, text, (int)(end - text), (float)(row_height), &remaining, null, &glyphs,
-                            (int)(NK_STOP_ON_NEW_LINE)));
+                            true));
                 r->x0 = (float)(0.0f);
                 r->x1 = (float)(size.x);
                 r->baseline_y_delta = (float)(size.y);

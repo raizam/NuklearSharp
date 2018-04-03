@@ -45,7 +45,7 @@ namespace NuklearSharp
         public unsafe partial class nk_popup_state
         {
             public NkWindow win;
-            public int type;
+            public NkPanelType type;
             public NkPopupBuffer buf = new NkPopupBuffer();
             public uint name;
             public int active;

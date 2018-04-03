@@ -1103,7 +1103,7 @@ namespace NuklearSharp
 
         }
 
-        public static int nk_panel_begin(NkContext ctx, char* title, int panel_type)
+        public static int nk_panel_begin(NkContext ctx, char* title, NkPanelType panel_type)
         {
             nk_input _in_;
             NkWindow win;
@@ -1117,7 +1117,7 @@ namespace NuklearSharp
 
             if (((ctx.Current.Flags & PanelFlags.HIDDEN) != 0) || ((ctx.Current.Flags & PanelFlags.CLOSED) != 0))
             {
-                ctx.Current.Layout.Type = (int)(panel_type);
+                ctx.Current.Layout.Type = (panel_type);
                 return (int)(0);
             }
 
@@ -1128,7 +1128,7 @@ namespace NuklearSharp
             _out_ = win.Buffer;
             _in_ = (win.Flags & PanelFlags.NO_INPUT) != 0 ? null : ctx.Input;
             scrollbar_size = (NkVec2)(style.Window.scrollbar_size);
-            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(panel_type)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(style, (panel_type)));
             if (((win.Flags & PanelFlags.MOVABLE) != 0) && ((win.Flags & PanelFlags.ROM) == 0))
             {
                 int left_mouse_down;
@@ -1156,14 +1156,14 @@ namespace NuklearSharp
                 }
             }
 
-            layout.Type = (int)(panel_type);
+            layout.Type = (panel_type);
             layout.Flags = (win.Flags);
             layout.Bounds = (NkRect)(win.Bounds);
             layout.Bounds.x += (float)(panel_padding.x);
             layout.Bounds.w -= (float)(2 * panel_padding.x);
             if ((win.Flags & PanelFlags.BORDER) != 0)
             {
-                layout.Border = (float)(nk_panel_get_border(style, (win.Flags), (int)(panel_type)));
+                layout.Border = (float)(nk_panel_get_border(style, (win.Flags), (panel_type)));
                 layout.Bounds = (NkRect)(nk_shrink_rect_((NkRect)(layout.Bounds), (float)(layout.Border)));
             }
             else layout.Border = (float)(0);
@@ -1181,7 +1181,7 @@ namespace NuklearSharp
             layout.Row.height = (float)(panel_padding.y);
             layout.HasScrolling = (uint)(nk_true);
             if ((win.Flags & PanelFlags.NO_SCROLLBAR) == 0) layout.Bounds.w -= (float)(scrollbar_size.x);
-            if (nk_panel_is_nonblock((int)(panel_type)) == 0)
+            if (nk_panel_is_nonblock((panel_type)) == 0)
             {
                 layout.FooterHeight = (float)(0);
                 if (((win.Flags & PanelFlags.NO_SCROLLBAR) == 0) || ((win.Flags & PanelFlags.SCALABLE) != 0))
@@ -1344,9 +1344,9 @@ namespace NuklearSharp
             style = ctx.Style;
             _out_ = window.Buffer;
             _in_ = (((layout.Flags & PanelFlags.ROM) != 0) || ((layout.Flags & PanelFlags.NO_INPUT) != 0)) ? null : ctx.Input;
-            if (nk_panel_is_sub((int)(layout.Type)) == 0) nk_push_scissor(_out_, (NkRect)(nk_null_rect));
+            if (nk_panel_is_sub((layout.Type)) == 0) nk_push_scissor(_out_, (NkRect)(nk_null_rect));
             scrollbar_size = (NkVec2)(style.Window.scrollbar_size);
-            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(style, (layout.Type)));
             layout.AtY += (float)(layout.Row.height);
             if (((layout.Flags & PanelFlags.DYNAMIC) != 0) && ((layout.Flags & PanelFlags.MINIMIZED) == 0))
             {
@@ -1388,7 +1388,7 @@ namespace NuklearSharp
                 float scroll_offset;
                 float scroll_step;
                 float scroll_inc;
-                if ((nk_panel_is_sub((int)(layout.Type))) != 0)
+                if ((nk_panel_is_sub((layout.Type))) != 0)
                 {
                     NkWindow root_window = window;
                     NkPanel root_panel = window.Layout;
@@ -1420,7 +1420,7 @@ namespace NuklearSharp
                         }
                     }
                 }
-                else if (nk_panel_is_sub((int)(layout.Type)) == 0)
+                else if (nk_panel_is_sub((layout.Type)) == 0)
                 {
                     scroll_has_scrolling = (int)(((window) == (ctx.Active)) && ((layout.HasScrolling) != 0) ? 1 : 0);
                     if ((((_in_) != null) && (((_in_.mouse.ScrollDelta.y) > (0)) || ((_in_.mouse.ScrollDelta.x) > (0)))) &&
@@ -1479,7 +1479,7 @@ namespace NuklearSharp
             else window.ScrollbarHidingTimer = (float)(0);
             if ((layout.Flags & PanelFlags.BORDER) != 0)
             {
-                NkColor border_color = (NkColor)(nk_panel_get_border_color(style, (int)(layout.Type)));
+                NkColor border_color = (NkColor)(nk_panel_get_border_color(style, (layout.Type)));
                 float padding_y =
                     (float)
                         ((layout.Flags & PanelFlags.MINIMIZED) != 0
@@ -1559,7 +1559,7 @@ namespace NuklearSharp
                 }
             }
 
-            if (nk_panel_is_sub((int)(layout.Type)) == 0)
+            if (nk_panel_is_sub((layout.Type)) == 0)
             {
                 if ((layout.Flags & PanelFlags.HIDDEN) != 0) nk_command_buffer_reset(window.Buffer);
                 else nk_finish(ctx, window);
@@ -1860,7 +1860,7 @@ namespace NuklearSharp
 
             win.Layout = (NkPanel)(nk_create_panel(ctx));
             ctx.Current = win;
-            ret = (int)(nk_panel_begin(ctx, title, (int)(NK_PANEL_WINDOW)));
+            ret = (int)(nk_panel_begin(ctx, title, (NkPanelType.WINDOW)));
             win.Layout.Offset = win.Scrollbar;
 
             return (int)(ret);
@@ -1871,7 +1871,7 @@ namespace NuklearSharp
             NkPanel layout;
             if ((ctx == null) || (ctx.Current == null)) return;
             layout = ctx.Current.Layout;
-            if ((layout == null) || (((layout.Type) == (NK_PANEL_WINDOW)) && ((ctx.Current.Flags & PanelFlags.HIDDEN) != 0)))
+            if ((layout == null) || (((layout.Type) == (NkPanelType.WINDOW)) && ((ctx.Current.Flags & PanelFlags.HIDDEN) != 0)))
             {
                 ctx.Current = null;
                 return;
@@ -2464,7 +2464,7 @@ namespace NuklearSharp
             {
                 float space =
                     (float)
-                        (nk_layout_row_calculate_usable_space(ctx.Style, (int)(layout.Type), (float)(layout.Bounds.w),
+                        (nk_layout_row_calculate_usable_space(ctx.Style, (layout.Type), (float)(layout.Bounds.w),
                             (int)(layout.Row.columns)));
                 float var_width =
                     (float)(((space - min_fixed_width) < (0.0f) ? (0.0f) : (space - min_fixed_width)) / (float)(variable_count));
@@ -4018,7 +4018,7 @@ namespace NuklearSharp
             panel.Buffer = (NkCommandBuffer)(win.Buffer);
             panel.Layout = (NkPanel)(nk_create_panel(ctx));
             ctx.Current = panel;
-            nk_panel_begin(ctx, (flags & PanelFlags.TITLE) != 0 ? title : null, (int)(NK_PANEL_GROUP));
+            nk_panel_begin(ctx, (flags & PanelFlags.TITLE) != 0 ? title : null, (NkPanelType.GROUP));
             win.Buffer = (NkCommandBuffer)(panel.Buffer);
             win.Buffer.Clip = (NkRect)(panel.Layout.Clip);
             panel.Layout.Offset = offset;
@@ -4050,7 +4050,7 @@ namespace NuklearSharp
             g = win.Layout;
             parent = g.Parent;
 
-            panel_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(NK_PANEL_GROUP)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (NkPanelType.GROUP)));
             pan.Bounds.y = (float)(g.Bounds.y - (g.HeaderHeight + g.Menu.h));
             pan.Bounds.x = (float)(g.Bounds.x - panel_padding.x);
             pan.Bounds.w = (float)(g.Bounds.w + 2 * panel_padding.x);
@@ -4103,7 +4103,7 @@ namespace NuklearSharp
             if ((((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) || (id == null)) return (int)(0);
             win = ctx.Current;
             id_len = (int)(nk_strlen(id));
-            id_hash = (uint)(nk_murmur_hash(id, (int)(id_len), (uint)(NK_PANEL_GROUP)));
+            id_hash = (uint)(nk_murmur_hash(id, (int)(id_len), (uint)(NkPanelType.GROUP)));
             x_offset = nk_find_value(win, (uint)(id_hash));
             if (x_offset == null)
             {
@@ -4145,7 +4145,7 @@ namespace NuklearSharp
             item_spacing = (NkVec2)(style.Window.spacing);
             row_height += (int)((0) < ((int)(item_spacing.y)) ? ((int)(item_spacing.y)) : (0));
             title_len = (int)(nk_strlen(title));
-            title_hash = (uint)(nk_murmur_hash(title, (int)(title_len), (uint)(NK_PANEL_GROUP)));
+            title_hash = (uint)(nk_murmur_hash(title, (int)(title_len), (uint)(NkPanelType.GROUP)));
             x_offset = nk_find_value(win, (uint)(title_hash));
             if (x_offset == null)
             {
@@ -4189,7 +4189,7 @@ namespace NuklearSharp
             win = ctx.Current;
             panel = win.Layout;
             title_len = (int)(nk_strlen(title));
-            title_hash = (uint)(nk_murmur_hash(title, (int)(title_len), (uint)(NK_PANEL_POPUP)));
+            title_hash = (uint)(nk_murmur_hash(title, (int)(title_len), (uint)(NkPanelType.POPUP)));
             popup = win.Popup.win;
             if (popup == null)
             {
@@ -4197,7 +4197,7 @@ namespace NuklearSharp
                 popup.Parent = win;
                 win.Popup.win = popup;
                 win.Popup.active = (int)(0);
-                win.Popup.type = (int)(NK_PANEL_POPUP);
+                win.Popup.type = (NkPanelType.POPUP);
             }
 
             if (win.Popup.name != title_hash)
@@ -4206,7 +4206,7 @@ namespace NuklearSharp
                 {
                     win.Popup.name = (uint)(title_hash);
                     win.Popup.active = (int)(1);
-                    win.Popup.type = (int)(NK_PANEL_POPUP);
+                    win.Popup.type = (NkPanelType.POPUP);
                 }
                 else return (int)(0);
             }
@@ -4224,7 +4224,7 @@ namespace NuklearSharp
             nk_start_popup(ctx, win);
             popup.Buffer = (NkCommandBuffer)(win.Buffer);
             nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
-            if ((nk_panel_begin(ctx, title, (int)(NK_PANEL_POPUP))) != 0)
+            if ((nk_panel_begin(ctx, title, (NkPanelType.POPUP))) != 0)
             {
                 NkPanel root;
                 root = win.Layout;
@@ -4257,7 +4257,7 @@ namespace NuklearSharp
 
         }
 
-        public static int nk_nonblock_begin(NkContext ctx, PanelFlags flags, NkRect body, NkRect header, int panel_type)
+        public static int nk_nonblock_begin(NkContext ctx, PanelFlags flags, NkRect body, NkRect header, NkPanelType panel_type)
         {
             NkWindow popup;
             NkWindow win;
@@ -4272,7 +4272,7 @@ namespace NuklearSharp
                 popup = (NkWindow)(nk_create_window(ctx));
                 popup.Parent = win;
                 win.Popup.win = popup;
-                win.Popup.type = (int)(panel_type);
+                win.Popup.type = (panel_type);
                 nk_command_buffer_init(popup.Buffer, (int)(NK_CLIPPING_ON));
             }
             else
@@ -4310,7 +4310,7 @@ namespace NuklearSharp
             popup.Buffer = (NkCommandBuffer)(win.Buffer);
             nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
             ctx.Current = popup;
-            nk_panel_begin(ctx, null, (int)(panel_type));
+            nk_panel_begin(ctx, null, (panel_type));
             win.Buffer = (NkCommandBuffer)(popup.Buffer);
             popup.Layout.Parent = win.Layout;
             popup.Layout.Offset = popup.Scrollbar;
@@ -4377,7 +4377,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             win = ctx.Current;
             _in_ = ctx.Input;
-            if (((win.Popup.win) != null) && ((win.Popup.type & NK_PANEL_SET_NONBLOCK) != 0)) return (int)(0);
+            if (((win.Popup.win) != null) && ((win.Popup.type & NkPanelType.SET_NONBLOCK) != 0)) return (int)(0);
             w = (int)(nk_iceilf((float)(width)));
             h = (int)(nk_iceilf((float)(nk_null_rect.h)));
             x = (int)(nk_ifloorf((float)(_in_.mouse.Pos.x + 1)) - (int)(win.Layout.Clip.x));
@@ -4391,8 +4391,8 @@ namespace NuklearSharp
                     (nk_popup_begin(ctx, (NkPopupType.NK_POPUP_DYNAMIC), "__##Tooltip##__",
                         (PanelFlags.NO_SCROLLBAR | PanelFlags.BORDER), (NkRect)(bounds)));
             if ((ret) != 0) win.Layout.Flags &= (PanelFlags)(~(uint)(PanelFlags.ROM));
-            win.Popup.type = (int)(NK_PANEL_TOOLTIP);
-            ctx.Current.Layout.Type = (int)(NK_PANEL_TOOLTIP);
+            win.Popup.type = (NkPanelType.TOOLTIP);
+            ctx.Current.Layout.Type = (NkPanelType.TOOLTIP);
             return (int)(ret);
         }
 
@@ -4442,7 +4442,7 @@ namespace NuklearSharp
             win = ctx.Current;
             ++win.Popup.con_count;
             popup = win.Popup.win;
-            is_open = (int)(((popup) != null) && ((win.Popup.type) == (NK_PANEL_CONTEXTUAL)) ? 1 : 0);
+            is_open = (int)(((popup) != null) && ((win.Popup.type) == (NkPanelType.CONTEXTUAL)) ? 1 : 0);
             is_clicked = (int)(nk_input_mouse_clicked(ctx.Input, (NkButtons.RIGHT), (NkRect)(trigger_bounds)));
             if (((win.Popup.active_con) != 0) && (win.Popup.con_count != win.Popup.active_con)) return (int)(0);
             if (((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) ||
@@ -4464,8 +4464,8 @@ namespace NuklearSharp
             ret =
                 (int)
                     (nk_nonblock_begin(ctx,(flags | PanelFlags.NO_SCROLLBAR), (NkRect)(body), (NkRect)(null_rect),
-                        (int)(NK_PANEL_CONTEXTUAL)));
-            if ((ret) != 0) win.Popup.type = (int)(NK_PANEL_CONTEXTUAL);
+                        (NkPanelType.CONTEXTUAL)));
+            if ((ret) != 0) win.Popup.type = (NkPanelType.CONTEXTUAL);
             else
             {
                 win.Popup.active_con = (uint)(0);
@@ -4580,7 +4580,7 @@ namespace NuklearSharp
                 NkRect body = new NkRect();
                 if ((panel.AtY) < (panel.Bounds.y + panel.Bounds.h))
                 {
-                    NkVec2 padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(panel.Type)));
+                    NkVec2 padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (panel.Type)));
                     body = (NkRect)(panel.Bounds);
                     body.y = (float)(panel.AtY + panel.FooterHeight + panel.Border + padding.y + panel.Row.height);
                     body.h = (float)((panel.Bounds.y + panel.Bounds.h) - body.y);
@@ -4613,15 +4613,15 @@ namespace NuklearSharp
             hash = (uint)(win.Popup.combo_count++);
             is_open = (int)((popup != null) ? nk_true : nk_false);
             is_active =
-                (int)((((popup) != null) && ((win.Popup.name) == (hash))) && ((win.Popup.type) == (NK_PANEL_COMBO)) ? 1 : 0);
+                (int)((((popup) != null) && ((win.Popup.name) == (hash))) && ((win.Popup.type) == (NkPanelType.COMBO)) ? 1 : 0);
             if ((((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) || (((is_open) != 0) && (is_active == 0))) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
             if (
                 nk_nonblock_begin(ctx, (uint)(0), (NkRect)(body),
                     (NkRect)
                         ((((is_clicked) != 0) && ((is_open) != 0)) ? nk_rect_((float)(0), (float)(0), (float)(0), (float)(0)) : header),
-                    (int)(NK_PANEL_COMBO)) == 0) return (int)(0);
-            win.Popup.type = (int)(NK_PANEL_COMBO);
+                    (NkPanelType.COMBO)) == 0) return (int)(0);
+            win.Popup.type = (NkPanelType.COMBO);
             win.Popup.name = (uint)(hash);
             return (int)(1);
         }
@@ -5131,7 +5131,7 @@ namespace NuklearSharp
             NkVec2 window_padding = new NkVec2();
             if (((ctx == null) || (items == null)) || (count == 0)) return (int)(selected);
             item_spacing = (NkVec2)(ctx.Style.Window.spacing);
-            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
@@ -5161,7 +5161,7 @@ namespace NuklearSharp
             int length = (int)(0);
             if ((ctx == null) || (items_separated_by_separator == null)) return (int)(selected);
             item_spacing = (NkVec2)(ctx.Style.Window.spacing);
-            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
@@ -5217,7 +5217,7 @@ namespace NuklearSharp
             char* item;
             if ((ctx == null) || (item_getter == null)) return (int)(selected);
             item_spacing = (NkVec2)(ctx.Style.Window.spacing);
-            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (int)(ctx.Current.Layout.Type)));
+            window_padding = (NkVec2)(nk_panel_get_padding(ctx.Style, (ctx.Current.Layout.Type)));
             max_height = (int)(count * item_height + count * (int)(item_spacing.y));
             max_height += (int)((int)(item_spacing.y) * 2 + (int)(window_padding.y) * 2);
             size.y = (float)((size.y) < ((float)(max_height)) ? (size.y) : ((float)(max_height)));
@@ -5274,7 +5274,7 @@ namespace NuklearSharp
             int is_active = (int)(0);
             NkRect body = new NkRect();
             NkWindow popup;
-            uint hash = (uint)(nk_murmur_hash(id, (int)(nk_strlen(id)), (uint)(NK_PANEL_MENU)));
+            uint hash = (uint)(nk_murmur_hash(id, (int)(nk_strlen(id)), (uint)(NkPanelType.MENU)));
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(0);
             body.x = (float)(header.x);
             body.w = (float)(size.x);
@@ -5283,13 +5283,13 @@ namespace NuklearSharp
             popup = win.Popup.win;
             is_open = (int)(popup != null ? nk_true : nk_false);
             is_active =
-                (int)((((popup) != null) && ((win.Popup.name) == (hash))) && ((win.Popup.type) == (NK_PANEL_MENU)) ? 1 : 0);
+                (int)((((popup) != null) && ((win.Popup.name) == (hash))) && ((win.Popup.type) == (NkPanelType.MENU)) ? 1 : 0);
             if ((((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) || (((is_open) != 0) && (is_active == 0))) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
             if (
-                nk_nonblock_begin(ctx, (PanelFlags.NO_SCROLLBAR), (NkRect)(body), (NkRect)(header), (int)(NK_PANEL_MENU)) ==
+                nk_nonblock_begin(ctx, (PanelFlags.NO_SCROLLBAR), (NkRect)(body), (NkRect)(header), (NkPanelType.MENU)) ==
                 0) return (int)(0);
-            win.Popup.type = (int)(NK_PANEL_MENU);
+            win.Popup.type = (NkPanelType.MENU);
             win.Popup.name = (uint)(hash);
             return (int)(1);
         }

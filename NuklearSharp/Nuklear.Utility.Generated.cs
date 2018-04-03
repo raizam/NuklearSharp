@@ -1242,7 +1242,7 @@ namespace NuklearSharp
         }
 
         public static NkVec2 nk_text_calculate_text_bounds(NkUserFont font, char* begin, int byte_len, float row_height,
-            char** remaining, NkVec2* out_offset, int* glyphs, int op)
+            char** remaining, NkVec2* out_offset, int* glyphs, bool stopOnNewLine)
         {
             float line_height = (float)(row_height);
             NkVec2 text_size = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
@@ -1265,7 +1265,7 @@ namespace NuklearSharp
                     text_size.y += (float)(line_height);
                     line_width = (float)(0);
                     *glyphs += (int)(1);
-                    if ((op) == (NK_STOP_ON_NEW_LINE)) break;
+                    if (stopOnNewLine) break;
                     text_len++;
                     glyph_len = (int)(nk_utf_decode(begin + text_len, &unicode, (int)(byte_len - text_len)));
                     continue;
@@ -3143,7 +3143,7 @@ namespace NuklearSharp
                                     row_size =
                                         (NkVec2)
                                             (nk_text_calculate_text_bounds(font, text + row_begin, (int)(text_len - row_begin), (float)(row_height),
-                                                &remaining, &out_offset, &glyph_offset, (int)(NK_STOP_ON_NEW_LINE)));
+                                                &remaining, &out_offset, &glyph_offset, true));
                                     cursor_pos.x = (float)(row_size.x);
                                     cursor_ptr = text + text_len;
                                 }
@@ -3157,7 +3157,7 @@ namespace NuklearSharp
                                     row_size =
                                         (NkVec2)
                                             (nk_text_calculate_text_bounds(font, text + row_begin, (int)(text_len - row_begin), (float)(row_height),
-                                                &remaining, &out_offset, &glyph_offset, (int)(NK_STOP_ON_NEW_LINE)));
+                                                &remaining, &out_offset, &glyph_offset, true));
                                     selection_offset_start.x = (float)(row_size.x);
                                     select_begin_ptr = text + text_len;
                                 }
@@ -3171,7 +3171,7 @@ namespace NuklearSharp
                                     row_size =
                                         (NkVec2)
                                             (nk_text_calculate_text_bounds(font, text + row_begin, (int)(text_len - row_begin), (float)(row_height),
-                                                &remaining, &out_offset, &glyph_offset, (int)(NK_STOP_ON_NEW_LINE)));
+                                                &remaining, &out_offset, &glyph_offset, true));
                                     selection_offset_end.x = (float)(row_size.x);
                                     select_end_ptr = text + text_len;
                                 }
@@ -3876,14 +3876,14 @@ namespace NuklearSharp
             return (int)(active);
         }
 
-        public static int nk_panel_is_sub(int type)
+        public static int nk_panel_is_sub(NkPanelType type)
         {
-            return (int)((type & NK_PANEL_SET_SUB) != 0 ? 1 : 0);
+            return (int)((type & NkPanelType.SET_SUB) != 0 ? 1 : 0);
         }
 
-        public static int nk_panel_is_nonblock(int type)
+        public static int nk_panel_is_nonblock(NkPanelType type)
         {
-            return (int)((type & NK_PANEL_SET_NONBLOCK) != 0 ? 1 : 0);
+            return (int)((type & NkPanelType.SET_NONBLOCK) != 0 ? 1 : 0);
         }
 
         public static NkPropertyVariant nk_property_variant_int(int value, int min_value, int max_value, int step)

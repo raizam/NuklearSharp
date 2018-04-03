@@ -113,7 +113,7 @@ namespace NuklearSharp
 
         public class NkPanel
         {
-            public int Type;
+            public NkPanelType Type;
             public PanelFlags Flags;
             public NkRect Bounds = new NkRect();
             public nk_scroll Offset;
@@ -851,7 +851,7 @@ namespace NuklearSharp
             }
             else hash = nk_murmur_hash(name, nk_strlen(name), 42);
 
-            var _in_ = s == NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & PanelFlags.ROM) != 0
+            var _in_ = s == NkWidgetLayoutStates.NK_WIDGET_ROM && win.Property.active == 0 || (layout.Flags & PanelFlags.ROM) != 0
                 ? null
                 : ctx.Input;
 

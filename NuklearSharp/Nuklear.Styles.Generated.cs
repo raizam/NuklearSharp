@@ -303,79 +303,79 @@ namespace NuklearSharp
         }
     public unsafe static partial class Nk
     {
-        public static NkVec2 nk_panel_get_padding(NkStyle style, int type)
+        public static NkVec2 nk_panel_get_padding(NkStyle style, NkPanelType type)
         {
             switch (type)
             {
                 default:
-                case NK_PANEL_WINDOW:
+                case NkPanelType.WINDOW:
                     return (NkVec2)(style.Window.padding);
-                case NK_PANEL_GROUP:
+                case NkPanelType.GROUP:
                     return (NkVec2)(style.Window.group_padding);
-                case NK_PANEL_POPUP:
+                case NkPanelType.POPUP:
                     return (NkVec2)(style.Window.popup_padding);
-                case NK_PANEL_CONTEXTUAL:
+                case NkPanelType.CONTEXTUAL:
                     return (NkVec2)(style.Window.contextual_padding);
-                case NK_PANEL_COMBO:
+                case NkPanelType.COMBO:
                     return (NkVec2)(style.Window.combo_padding);
-                case NK_PANEL_MENU:
+                case NkPanelType.MENU:
                     return (NkVec2)(style.Window.menu_padding);
-                case NK_PANEL_TOOLTIP:
+                case NkPanelType.TOOLTIP:
                     return (NkVec2)(style.Window.menu_padding);
             }
 
         }
 
-        public static float nk_panel_get_border(NkStyle style, PanelFlags flags, int type)
+        public static float nk_panel_get_border(NkStyle style, PanelFlags flags, NkPanelType type)
         {
             if ((flags & PanelFlags.BORDER) != 0)
             {
                 switch (type)
                 {
                     default:
-                    case NK_PANEL_WINDOW:
+                    case NkPanelType.WINDOW:
                         return (float)(style.Window.border);
-                    case NK_PANEL_GROUP:
+                    case NkPanelType.GROUP:
                         return (float)(style.Window.group_border);
-                    case NK_PANEL_POPUP:
+                    case NkPanelType.POPUP:
                         return (float)(style.Window.popup_border);
-                    case NK_PANEL_CONTEXTUAL:
+                    case NkPanelType.CONTEXTUAL:
                         return (float)(style.Window.contextual_border);
-                    case NK_PANEL_COMBO:
+                    case NkPanelType.COMBO:
                         return (float)(style.Window.combo_border);
-                    case NK_PANEL_MENU:
+                    case NkPanelType.MENU:
                         return (float)(style.Window.menu_border);
-                    case NK_PANEL_TOOLTIP:
+                    case NkPanelType.TOOLTIP:
                         return (float)(style.Window.menu_border);
                 }
             }
             else return (float)(0);
         }
 
-        public static NkColor nk_panel_get_border_color(NkStyle style, int type)
+        public static NkColor nk_panel_get_border_color(NkStyle style, NkPanelType type)
         {
             switch (type)
             {
                 default:
-                case NK_PANEL_WINDOW:
+                case NkPanelType.WINDOW:
                     return (NkColor)(style.Window.border_color);
-                case NK_PANEL_GROUP:
+                case NkPanelType.GROUP:
                     return (NkColor)(style.Window.group_border_color);
-                case NK_PANEL_POPUP:
+                case NkPanelType.POPUP:
                     return (NkColor)(style.Window.popup_border_color);
-                case NK_PANEL_CONTEXTUAL:
+                case NkPanelType.CONTEXTUAL:
                     return (NkColor)(style.Window.contextual_border_color);
-                case NK_PANEL_COMBO:
+                case NkPanelType.COMBO:
                     return (NkColor)(style.Window.combo_border_color);
-                case NK_PANEL_MENU:
+                case NkPanelType.MENU:
                     return (NkColor)(style.Window.menu_border_color);
-                case NK_PANEL_TOOLTIP:
+                case NkPanelType.TOOLTIP:
                     return (NkColor)(style.Window.menu_border_color);
             }
 
         }
 
-        public static float nk_layout_row_calculate_usable_space(NkStyle style, int type, float total_space, int columns)
+        public static float nk_layout_row_calculate_usable_space(NkStyle style, NkPanelType type, float total_space, int columns)
         {
             float panel_padding;
             float panel_spacing;
@@ -383,7 +383,7 @@ namespace NuklearSharp
             NkVec2 spacing = new NkVec2();
             NkVec2 padding = new NkVec2();
             spacing = (NkVec2)(style.Window.spacing);
-            padding = (NkVec2)(nk_panel_get_padding(style, (int)(type)));
+            padding = (NkVec2)(nk_panel_get_padding(style, (type)));
             panel_padding = (float)(2 * padding.x);
             panel_spacing = (float)((float)((columns - 1) < (0) ? (0) : (columns - 1)) * spacing.x);
             panel_space = (float)(total_space - panel_padding - panel_spacing);

@@ -176,7 +176,7 @@ namespace NuklearSharp
             Nk.nk_start(_ctx, win);
         }
 
-        public bool PanelBegin(string title, int panel_type)
+        public bool PanelBegin(string title, NkPanelType panel_type)
         {
             fixed (char* title_ptr = title)
             {
@@ -1270,7 +1270,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool NonblockBegin(PanelFlags flags, NkRect body, NkRect header, int panel_type)
+        public bool NonblockBegin(PanelFlags flags, NkRect body, NkRect header, NkPanelType panel_type)
         {
             return Nk.nk_nonblock_begin(_ctx, flags, body, header, panel_type) != 0;
         }

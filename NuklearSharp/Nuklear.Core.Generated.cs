@@ -306,10 +306,10 @@ namespace NuklearSharp
             layout = win.Layout;
             style = ctx.Style;
             spacing = (NkVec2)(style.Window.spacing);
-            padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            padding = (NkVec2)(nk_panel_get_padding(style, (layout.Type)));
             panel_space =
                 (float)
-                    (nk_layout_row_calculate_usable_space(ctx.Style, (int)(layout.Type), (float)(layout.Bounds.w),
+                    (nk_layout_row_calculate_usable_space(ctx.Style,(layout.Type), (float)(layout.Bounds.w),
                         (int)(layout.Row.columns)));
             switch (layout.Row.type)
             {
@@ -453,14 +453,14 @@ namespace NuklearSharp
             layout.Row.index = (int)(index);
         }
 
-        public static int nk_widget(NkRect* bounds, NkContext ctx)
+        public static NkWidgetLayoutStates nk_widget(NkRect* bounds, NkContext ctx)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(NK_WIDGET_INVALID);
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return NkWidgetLayoutStates.NK_WIDGET_INVALID;
             nk_panel_alloc_space(bounds, ctx);
             win = ctx.Current;
             layout = win.Layout;
@@ -478,11 +478,11 @@ namespace NuklearSharp
                 (float)(bounds->y + bounds->h));
             if (
                 !(!(((((bounds->x) > (c.x + c.w)) || ((bounds->x + bounds->w) < (c.x))) || ((bounds->y) > (c.y + c.h))) ||
-                    ((bounds->y + bounds->h) < (c.y))))) return (int)(NK_WIDGET_INVALID);
+                    ((bounds->y + bounds->h) < (c.y))))) return NkWidgetLayoutStates.NK_WIDGET_INVALID;
             if (
                 !((((v.x) <= (_in_.mouse.Pos.x)) && ((_in_.mouse.Pos.x) < (v.x + v.w))) &&
-                  (((v.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (v.y + v.h))))) return (int)(NK_WIDGET_ROM);
-            return (int)(NK_WIDGET_VALID);
+                  (((v.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (v.y + v.h))))) return (NkWidgetLayoutStates.NK_WIDGET_ROM);
+            return (NkWidgetLayoutStates.NK_WIDGET_VALID);
         }
 
         public static int nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
@@ -497,7 +497,7 @@ namespace NuklearSharp
             style = ctx.Style;
             layout = win.Layout;
             state = (int)(nk_widget(bounds, ctx));
-            panel_padding = (NkVec2)(nk_panel_get_padding(style, (int)(layout.Type)));
+            panel_padding = (NkVec2)(nk_panel_get_padding(style,(layout.Type)));
             if ((layout.Row.index) == (1))
             {
                 bounds->w += (float)(panel_padding.x);
