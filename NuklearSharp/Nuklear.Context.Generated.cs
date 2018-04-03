@@ -3691,7 +3691,7 @@ namespace NuklearSharp
             return (NkColorF)(color);
         }
 
-        public static int nk_chart_begin_colored(NkContext ctx, int type, NkColor color, NkColor highlight, int count,
+        public static int nk_chart_begin_colored(NkContext ctx, NkChartType type, NkColor color, NkColor highlight, int count,
             float min_value, float max_value)
         {
             NkWindow win;
@@ -3720,7 +3720,7 @@ namespace NuklearSharp
             chart.H = (float)((chart.H) < (2 * style.padding.y) ? (2 * style.padding.y) : (chart.H));
             {
                 nk_chart_slot slot = chart.Slots[chart.Slot++];
-                slot.type = (int)(type);
+                slot.type = (type);
                 slot.count = (int)(count);
                 slot.color = (NkColor)(color);
                 slot.highlight = (NkColor)(highlight);
@@ -3744,15 +3744,15 @@ namespace NuklearSharp
             return (int)(1);
         }
 
-        public static int nk_chart_begin(NkContext ctx, int type, int count, float min_value, float max_value)
+        public static int nk_chart_begin(NkContext ctx, NkChartType type, int count, float min_value, float max_value)
         {
             return
                 (int)
-                    (nk_chart_begin_colored(ctx, (int)(type), (NkColor)(ctx.Style.Chart.color),
+                    (nk_chart_begin_colored(ctx, (type), (NkColor)(ctx.Style.Chart.color),
                         (NkColor)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value)));
         }
 
-        public static void nk_chart_add_slot_colored(NkContext ctx, int type, NkColor color, NkColor highlight, int count,
+        public static void nk_chart_add_slot_colored(NkContext ctx, NkChartType type, NkColor color, NkColor highlight, int count,
             float min_value, float max_value)
         {
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
@@ -3760,7 +3760,7 @@ namespace NuklearSharp
             {
                 NkChart chart = ctx.Current.Layout.Chart;
                 nk_chart_slot slot = chart.Slots[chart.Slot++];
-                slot.type = (int)(type);
+                slot.type = (type);
                 slot.count = (int)(count);
                 slot.color = (NkColor)(color);
                 slot.highlight = (NkColor)(highlight);
@@ -3771,18 +3771,18 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_chart_add_slot(NkContext ctx, int type, int count, float min_value, float max_value)
+        public static void nk_chart_add_slot(NkContext ctx, NkChartType type, int count, float min_value, float max_value)
         {
-            nk_chart_add_slot_colored(ctx, (int)(type), (NkColor)(ctx.Style.Chart.color),
+            nk_chart_add_slot_colored(ctx, (type), (NkColor)(ctx.Style.Chart.color),
                 (NkColor)(ctx.Style.Chart.selected_color), (int)(count), (float)(min_value), (float)(max_value));
         }
 
-        public static uint nk_chart_push_line(NkContext ctx, NkWindow win, NkChart g, float value, int slot)
+        public static NkChartEvent nk_chart_push_line(NkContext ctx, NkWindow win, NkChart g, float value, int slot)
         {
             NkPanel layout = win.Layout;
             nk_input i = ctx.Input;
             NkCommandBuffer _out_ = win.Buffer;
-            uint ret = (uint)(0);
+            NkChartEvent ret = (uint)(0);
             NkVec2 cur = new NkVec2();
             NkRect bounds = new NkRect();
             NkColor color = new NkColor();
@@ -3804,17 +3804,17 @@ namespace NuklearSharp
                     ((((g.Slots[slot].last.x - 3) <= (i.mouse.Pos.x)) && ((i.mouse.Pos.x) < (g.Slots[slot].last.x - 3 + 6))) &&
                      (((g.Slots[slot].last.y - 3) <= (i.mouse.Pos.y)) && ((i.mouse.Pos.y) < (g.Slots[slot].last.y - 3 + 6)))))
                 {
-                    ret = (uint)((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0 ? NK_CHART_HOVERING : 0);
+                    ret = ((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0 ? NkChartEvent.NK_CHART_HOVERING : 0);
                     ret |=
-                        (uint)
+
                             ((((i.mouse.Buttons[NK_BUTTON_LEFT].down) != 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
-                                ? NK_CHART_CLICKED
+                                ? NkChartEvent.NK_CHART_CLICKED
                                 : 0);
                     color = (NkColor)(g.Slots[slot].highlight);
                 }
                 nk_fill_rect(_out_, (NkRect)(bounds), (float)(0), (NkColor)(color));
                 g.Slots[slot].index += (int)(1);
-                return (uint)(ret);
+                return (ret);
             }
 
             color = (NkColor)(g.Slots[slot].color);
@@ -3829,11 +3829,10 @@ namespace NuklearSharp
             {
                 if ((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0)
                 {
-                    ret = (uint)(NK_CHART_HOVERING);
+                    ret = (NkChartEvent.NK_CHART_HOVERING);
                     ret |=
-                        (uint)
                             (((i.mouse.Buttons[NK_BUTTON_LEFT].down == 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
-                                ? NK_CHART_CLICKED
+                                ? NkChartEvent.NK_CHART_CLICKED
                                 : 0);
                     color = (NkColor)(g.Slots[slot].highlight);
                 }
@@ -3844,16 +3843,16 @@ namespace NuklearSharp
             g.Slots[slot].last.x = (float)(cur.x);
             g.Slots[slot].last.y = (float)(cur.y);
             g.Slots[slot].index += (int)(1);
-            return (uint)(ret);
+            return (ret);
         }
 
-        public static uint nk_chart_push_column(NkContext ctx, NkWindow win, NkChart chart, float value, int slot)
+        public static NkChartEvent nk_chart_push_column(NkContext ctx, NkWindow win, NkChart chart, float value, int slot)
         {
             NkCommandBuffer _out_ = win.Buffer;
             nk_input _in_ = ctx.Input;
             NkPanel layout = win.Layout;
             float ratio;
-            uint ret = (uint)(0);
+            NkChartEvent ret = (uint)(0);
             NkColor color = new NkColor();
             NkRect item = new NkRect();
             if ((chart.Slots[slot].index) >= (chart.Slots[slot].count)) return (uint)(nk_false);
@@ -3888,19 +3887,19 @@ namespace NuklearSharp
                 ((((item.x) <= (_in_.mouse.Pos.x)) && ((_in_.mouse.Pos.x) < (item.x + item.w))) &&
                  (((item.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (item.y + item.h)))))
             {
-                ret = (uint)(NK_CHART_HOVERING);
+                ret = (NkChartEvent.NK_CHART_HOVERING);
                 ret |=
-                    (uint)
+        
                         (((((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down == 0) &&
                           ((((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked) != 0))
-                            ? NK_CHART_CLICKED
+                            ? NkChartEvent.NK_CHART_CLICKED
                             : 0);
                 color = (NkColor)(chart.Slots[slot].highlight);
             }
 
             nk_fill_rect(_out_, (NkRect)(item), (float)(0), (NkColor)(color));
             chart.Slots[slot].index += (int)(1);
-            return (uint)(ret);
+            return (ret);
         }
 
         public static uint nk_chart_push_slot(NkContext ctx, float value, int slot)
@@ -3913,14 +3912,14 @@ namespace NuklearSharp
             if ((win.Layout.Chart.Slot) < (slot)) return (uint)(nk_false);
             switch (win.Layout.Chart.Slots[slot].type)
             {
-                case NK_CHART_LINES:
+                case NkChartType.NK_CHART_LINES:
                     flags = (uint)(nk_chart_push_line(ctx, win, win.Layout.Chart, (float)(value), (int)(slot)));
                     break;
-                case NK_CHART_COLUMN:
+                case NkChartType.NK_CHART_COLUMN:
                     flags = (uint)(nk_chart_push_column(ctx, win, win.Layout.Chart, (float)(value), (int)(slot)));
                     break;
                 default:
-                case NK_CHART_MAX:
+                case NkChartType.NK_CHART_MAX:
                     flags = (uint)(0);
                     break;
             }
@@ -3944,7 +3943,7 @@ namespace NuklearSharp
             return;
         }
 
-        public static void nk_plot(NkContext ctx, int type, float* values, int count, int offset)
+        public static void nk_plot(NkContext ctx, NkChartType type, float* values, int count, int offset)
         {
             int i = (int)(0);
             float min_value;
@@ -3957,7 +3956,7 @@ namespace NuklearSharp
                 min_value = (float)((values[i + offset]) < (min_value) ? (values[i + offset]) : (min_value));
                 max_value = (float)((values[i + offset]) < (max_value) ? (max_value) : (values[i + offset]));
             }
-            if ((nk_chart_begin(ctx, (int)(type), (int)(count), (float)(min_value), (float)(max_value))) != 0)
+            if ((nk_chart_begin(ctx, (type), (int)(count), (float)(min_value), (float)(max_value))) != 0)
             {
                 for (i = (int)(0); (i) < (count); ++i)
                 {
@@ -3968,7 +3967,7 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_plot_function(NkContext ctx, int type, void* userdata, NkFloatValueGetter value_getter,
+        public static void nk_plot_function(NkContext ctx, NkChartType type, void* userdata, NkFloatValueGetter value_getter,
             int count, int offset)
         {
             int i = (int)(0);
@@ -3982,7 +3981,7 @@ namespace NuklearSharp
                 min_value = (float)((value) < (min_value) ? (value) : (min_value));
                 max_value = (float)((value) < (max_value) ? (max_value) : (value));
             }
-            if ((nk_chart_begin(ctx, (int)(type), (int)(count), (float)(min_value), (float)(max_value))) != 0)
+            if ((nk_chart_begin(ctx, (type), (int)(count), (float)(min_value), (float)(max_value))) != 0)
             {
                 for (i = (int)(0); (i) < (count); ++i)
                 {
@@ -4179,7 +4178,7 @@ namespace NuklearSharp
             return (int)(result);
         }
 
-        public static int nk_popup_begin(NkContext ctx, int type, char* title, PanelFlags flags, NkRect rect)
+        public static int nk_popup_begin(NkContext ctx, NkPopupType type, char* title, PanelFlags flags, NkRect rect)
         {
             NkWindow popup;
             NkWindow win;
@@ -4221,7 +4220,7 @@ namespace NuklearSharp
             popup.Layout = (NkPanel)(nk_create_panel(ctx));
             popup.Flags = (flags);
             popup.Flags |= (PanelFlags.BORDER);
-            if ((type) == (NK_POPUP_DYNAMIC)) popup.Flags |= (PanelFlags.DYNAMIC);
+            if ((type) == (NkPopupType.NK_POPUP_DYNAMIC)) popup.Flags |= (PanelFlags.DYNAMIC);
             nk_start_popup(ctx, win);
             popup.Buffer = (NkCommandBuffer)(win.Buffer);
             nk_push_scissor(popup.Buffer, (NkRect)(nk_null_rect));
@@ -4389,7 +4388,7 @@ namespace NuklearSharp
             bounds.h = ((float)(h));
             ret =
                 (int)
-                    (nk_popup_begin(ctx, (int)(NK_POPUP_DYNAMIC), "__##Tooltip##__",
+                    (nk_popup_begin(ctx, (NkPopupType.NK_POPUP_DYNAMIC), "__##Tooltip##__",
                         (PanelFlags.NO_SCROLLBAR | PanelFlags.BORDER), (NkRect)(bounds)));
             if ((ret) != 0) win.Layout.Flags &= (PanelFlags)(~(uint)(PanelFlags.ROM));
             win.Popup.type = (int)(NK_PANEL_TOOLTIP);

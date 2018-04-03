@@ -1157,34 +1157,34 @@ namespace NuklearSharp
             return Nk.nk_color_picker(_ctx, color, fmt);
         }
 
-        public bool ChartBeginColored(int type, NkColor color, NkColor highlight, int count, float min_value,
+        public bool ChartBeginColored(NkChartType type, NkColor color, NkColor highlight, int count, float min_value,
             float max_value)
         {
             return Nk.nk_chart_begin_colored(_ctx, type, color, highlight, count, min_value, max_value) != 0;
         }
 
-        public bool ChartBegin(int type, int count, float min_value, float max_value)
+        public bool ChartBegin(NkChartType type, int count, float min_value, float max_value)
         {
             return Nk.nk_chart_begin(_ctx, type, count, min_value, max_value) != 0;
         }
 
-        public void ChartAddSlotColored(int type, NkColor color, NkColor highlight, int count,
+        public void ChartAddSlotColored(NkChartType type, NkColor color, NkColor highlight, int count,
             float min_value, float max_value)
         {
             Nk.nk_chart_add_slot_colored(_ctx, type, color, highlight, count, min_value, max_value);
         }
 
-        public void ChartAddSlot(int type, int count, float min_value, float max_value)
+        public void ChartAddSlot(NkChartType type, int count, float min_value, float max_value)
         {
             Nk.nk_chart_add_slot(_ctx, type, count, min_value, max_value);
         }
 
-        public uint ChartPushLine(NkWindow win, NkChart g, float value, int slot)
+        public NkChartEvent ChartPushLine(NkWindow win, NkChart g, float value, int slot)
         {
             return Nk.nk_chart_push_line(_ctx, win, g, value, slot);
         }
 
-        public uint ChartPushColumn(NkWindow win, NkChart chart, float value, int slot)
+        public NkChartEvent ChartPushColumn(NkWindow win, NkChart chart, float value, int slot)
         {
             return Nk.nk_chart_push_column(_ctx, win, chart, value, slot);
         }
@@ -1204,7 +1204,7 @@ namespace NuklearSharp
             Nk.nk_chart_end(_ctx);
         }
 
-        public void Plot(int type, float[] values, int offset)
+        public void Plot(NkChartType type, float[] values, int offset)
         {
             fixed (float* ptr = values)
             {
@@ -1212,7 +1212,7 @@ namespace NuklearSharp
             }
         }
 
-        public void PlotFunction(int type, IntPtr userdata, NkFloatValueGetter value_getter, int count, int offset)
+        public void PlotFunction(NkChartType type, IntPtr userdata, NkFloatValueGetter value_getter, int count, int offset)
         {
             Nk.nk_plot_function(_ctx, type, userdata.ToPointer(), value_getter, count, offset);
         }
@@ -1262,7 +1262,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool PopupBegin(int type, string title, PanelFlags flags, NkRect rect)
+        public bool PopupBegin(NkPopupType type, string title, PanelFlags flags, NkRect rect)
         {
             fixed (char* title_ptr = title)
             {

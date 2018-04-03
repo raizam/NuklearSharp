@@ -81,7 +81,7 @@ namespace NuklearSharp
 
         public unsafe partial class nk_chart_slot
         {
-            public int type;
+            public NkChartType type;
             public NkColor color = new NkColor();
             public NkColor highlight = new NkColor();
             public float min;

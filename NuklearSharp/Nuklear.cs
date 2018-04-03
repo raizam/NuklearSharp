@@ -811,7 +811,7 @@ namespace NuklearSharp
         {
         }
 
-        public static int nk_popup_begin(NkContext ctx, int type, string title, PanelFlags flags, NkRect rect)
+        public static int nk_popup_begin(NkContext ctx, NkPopupType type, string title, PanelFlags flags, NkRect rect)
         {
             fixed (char* ptr = title)
             {

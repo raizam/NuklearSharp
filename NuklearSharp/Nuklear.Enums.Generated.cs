@@ -105,12 +105,7 @@ namespace NuklearSharp
     //    NK_LAYOUT_COUNT = 9
     //}
 
-    //public enum NkChartType
-    //{
-    //    NK_CHART_LINES = 0,
-    //    NK_CHART_COLUMN = 1,
-    //    NK_CHART_MAX = 2
-    //}
+
 
     //public enum NkSymbolType
     //{
@@ -567,6 +562,13 @@ namespace NuklearSharp
         MAX = 30
     }
 
+    public enum NkChartType
+    {
+        NK_CHART_LINES = 0,
+        NK_CHART_COLUMN = 1,
+        NK_CHART_MAX = 2
+    }
+
 
     [Flags]
     public enum Alignment
@@ -642,6 +644,18 @@ namespace NuklearSharp
         EDITOR = SELECTABLE | MULTILINE | ALLOW_TAB | CLIPBOARD,
     }
 
+    public enum NkChartEvent
+    {
+        NK_CHART_HOVERING = 1,
+        NK_CHART_CLICKED = 2
+    }
+
+    public enum NkPopupType
+    {
+        NK_POPUP_STATIC = 0,
+        NK_POPUP_DYNAMIC = 1
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -660,11 +674,11 @@ namespace NuklearSharp
         //public const int NK_MAXIMIZED = nk_true;
         public const int NK_HIDDEN = nk_false;
         public const int NK_SHOWN = nk_true;
-        public const int NK_CHART_LINES = 0;
-        public const int NK_CHART_COLUMN = 1;
-        public const int NK_CHART_MAX = 2;
-        public const int NK_CHART_HOVERING = 0x01;
-        public const int NK_CHART_CLICKED = 0x02;
+        //public const int NK_CHART_LINES = 0;
+        //public const int NK_CHART_COLUMN = 1;
+        //public const int NK_CHART_MAX = 2;
+        //public const int NK_CHART_HOVERING = 0x01;
+        //public const int NK_CHART_CLICKED = 0x02;
         public const int NK_RGB = 0;
         public const int NK_RGBA = 1;
         public const int NK_POPUP_STATIC = 0;
