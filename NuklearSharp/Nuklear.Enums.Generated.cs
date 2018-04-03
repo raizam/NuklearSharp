@@ -248,37 +248,37 @@ namespace NuklearSharp
     //[Flags]
     //public enum NkEditFlags
     //{
-    //    NK_EDIT_DEFAULT = 0,
-    //    NK_EDIT_READ_ONLY = 1,
-    //    NK_EDIT_AUTO_SELECT = 2,
-    //    NK_EDIT_SIG_ENTER = 4,
-    //    NK_EDIT_ALLOW_TAB = 8,
-    //    NK_EDIT_NO_CURSOR = 16,
-    //    NK_EDIT_SELECTABLE = 32,
-    //    NK_EDIT_CLIPBOARD = 64,
-    //    NK_EDIT_CTRL_ENTER_NEWLINE = 128,
-    //    NK_EDIT_NO_HORIZONTAL_SCROLL = 256,
-    //    NK_EDIT_ALWAYS_INSERT_MODE = 512,
-    //    NK_EDIT_MULTILINE = 1024,
-    //    NK_EDIT_GOTO_END_ON_ACTIVATE = 2048
+    //    NkEditFlags.DEFAULT = 0,
+    //    NkEditFlags.READ_ONLY = 1,
+    //    NkEditFlags.AUTO_SELECT = 2,
+    //    NkEditFlags.SIG_ENTER = 4,
+    //    NkEditFlags.ALLOW_TAB = 8,
+    //    NkEditFlags.NO_CURSOR = 16,
+    //    NkEditFlags.SELECTABLE = 32,
+    //    NkEditFlags.CLIPBOARD = 64,
+    //    NkEditFlags.CTRL_ENTER_NEWLINE = 128,
+    //    NkEditFlags.NO_HORIZONTAL_SCROLL = 256,
+    //    NkEditFlags.ALWAYS_INSERT_MODE = 512,
+    //    NkEditFlags.MULTILINE = 1024,
+    //    NkEditFlags.GOTO_END_ON_ACTIVATE = 2048
     //}
 
     //public enum NkEditTypes
     //{
-    //    NK_EDIT_SIMPLE = 512,
-    //    NK_EDIT_FIELD = 608,
-    //    NK_EDIT_BOX = 1640,
-    //    NK_EDIT_EDITOR = 1128
+    //    NkEditFlags.SIMPLE = 512,
+    //    NkEditFlags.FIELD = 608,
+    //    NkEditFlags.BOX = 1640,
+    //    NkEditFlags.EDITOR = 1128
     //}
 
     //[Flags]
     //public enum NkEditEvents
     //{
-    //    NK_EDIT_ACTIVE = 1,
-    //    NK_EDIT_INACTIVE = 2,
-    //    NK_EDIT_ACTIVATED = 4,
-    //    NK_EDIT_DEACTIVATED = 8,
-    //    NK_EDIT_COMMITED = 16
+    //    NkEditFlags.ACTIVE = 1,
+    //    NkEditFlags.INACTIVE = 2,
+    //    NkEditFlags.ACTIVATED = 4,
+    //    NkEditFlags.DEACTIVATED = 8,
+    //    NkEditFlags.COMMITED = 16
     //}
 
     //public enum NkStyleColors
@@ -608,6 +608,40 @@ namespace NuklearSharp
         REMOVE_ROM = (1 << (16)),
     }
 
+    [Flags]
+    public enum NkEditState : uint
+    {
+        None = 0,
+        ACTIVE = (1 << 0),
+        INACTIVE = (1 << 1),
+        ACTIVATED = (1 << 2),
+        DEACTIVATED = (1 << 3),
+        COMMITED = (1 << 4),
+    }
+
+    public enum NkEditFlags : uint
+    {
+        DEFAULT = 0,
+        READ_ONLY = (1 << (0)),
+        AUTO_SELECT = (1 << (1)),
+        SIG_ENTER = (1 << (2)),
+        ALLOW_TAB = (1 << (3)),
+        NO_CURSOR = (1 << (4)),
+        SELECTABLE = (1 << (5)),
+        CLIPBOARD = (1 << (6)),
+        CTRL_ENTER_NEWLINE = (1 << (7)),
+        NO_HORIZONTAL_SCROLL = (1 << (8)),
+        ALWAYS_INSERT_MODE = (1 << (9)),
+        MULTILINE = (1 << (10)),
+        GOTO_END_ON_ACTIVATE = (1 << (11)),
+        SIMPLE = ALWAYS_INSERT_MODE,
+        FIELD = SIMPLE | SELECTABLE | CLIPBOARD,
+
+        BOX = ALWAYS_INSERT_MODE | SELECTABLE | MULTILINE | ALLOW_TAB | CLIPBOARD,
+
+        EDITOR = SELECTABLE | MULTILINE | ALLOW_TAB | CLIPBOARD,
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -720,34 +754,34 @@ namespace NuklearSharp
         //public const int NkTextAlign.MIDDLELEFT = NkTextAlign.MIDDLE | NkTextAlign.LEFT;
         //public const int NkTextAlign.MIDDLECENTERED = NkTextAlign.MIDDLE | NkTextAlign.CENTERED;
         //public const int NkTextAlign.MIDDLERIGHT = NkTextAlign.MIDDLE | NkTextAlign.RIGHT;
-        public const int NK_EDIT_DEFAULT = 0;
-        public const int NK_EDIT_READ_ONLY = (1 << (0));
-        public const int NK_EDIT_AUTO_SELECT = (1 << (1));
-        public const int NK_EDIT_SIG_ENTER = (1 << (2));
-        public const int NK_EDIT_ALLOW_TAB = (1 << (3));
-        public const int NK_EDIT_NO_CURSOR = (1 << (4));
-        public const int NK_EDIT_SELECTABLE = (1 << (5));
-        public const int NK_EDIT_CLIPBOARD = (1 << (6));
-        public const int NK_EDIT_CTRL_ENTER_NEWLINE = (1 << (7));
-        public const int NK_EDIT_NO_HORIZONTAL_SCROLL = (1 << (8));
-        public const int NK_EDIT_ALWAYS_INSERT_MODE = (1 << (9));
-        public const int NK_EDIT_MULTILINE = (1 << (10));
-        public const int NK_EDIT_GOTO_END_ON_ACTIVATE = (1 << (11));
-        public const int NK_EDIT_SIMPLE = NK_EDIT_ALWAYS_INSERT_MODE;
-        public const int NK_EDIT_FIELD = NK_EDIT_SIMPLE | NK_EDIT_SELECTABLE | NK_EDIT_CLIPBOARD;
+        //public const int NkEditFlags.DEFAULT = 0;
+        //public const int NkEditFlags.READ_ONLY = (1 << (0));
+        //public const int NkEditFlags.AUTO_SELECT = (1 << (1));
+        //public const int NkEditFlags.SIG_ENTER = (1 << (2));
+        //public const int NkEditFlags.ALLOW_TAB = (1 << (3));
+        //public const int NkEditFlags.NO_CURSOR = (1 << (4));
+        //public const int NkEditFlags.SELECTABLE = (1 << (5));
+        //public const int NkEditFlags.CLIPBOARD = (1 << (6));
+        //public const int NkEditFlags.CTRL_ENTER_NEWLINE = (1 << (7));
+        //public const int NkEditFlags.NO_HORIZONTAL_SCROLL = (1 << (8));
+        //public const int NkEditFlags.ALWAYS_INSERT_MODE = (1 << (9));
+        //public const int NkEditFlags.MULTILINE = (1 << (10));
+        //public const int NkEditFlags.GOTO_END_ON_ACTIVATE = (1 << (11));
+        //public const int NkEditFlags.SIMPLE = NkEditFlags.ALWAYS_INSERT_MODE;
+        //public const int NkEditFlags.FIELD = NkEditFlags.SIMPLE | NkEditFlags.SELECTABLE | NkEditFlags.CLIPBOARD;
 
-        public const int NK_EDIT_BOX =
-            NK_EDIT_ALWAYS_INSERT_MODE | NK_EDIT_SELECTABLE | NK_EDIT_MULTILINE |
-            NK_EDIT_ALLOW_TAB | NK_EDIT_CLIPBOARD;
+        //public const int NkEditFlags.BOX =
+        //    NkEditFlags.ALWAYS_INSERT_MODE | NkEditFlags.SELECTABLE | NkEditFlags.MULTILINE |
+        //    NkEditFlags.ALLOW_TAB | NkEditFlags.CLIPBOARD;
 
-        public const int NK_EDIT_EDITOR =
-            NK_EDIT_SELECTABLE | NK_EDIT_MULTILINE | NK_EDIT_ALLOW_TAB | NK_EDIT_CLIPBOARD;
+        //public const int NkEditFlags.EDITOR =
+        //    NkEditFlags.SELECTABLE | NkEditFlags.MULTILINE | NkEditFlags.ALLOW_TAB | NkEditFlags.CLIPBOARD;
 
-        public const int NK_EDIT_ACTIVE = (1 << (0));
-        public const int NK_EDIT_INACTIVE = (1 << (1));
-        public const int NK_EDIT_ACTIVATED = (1 << (2));
-        public const int NK_EDIT_DEACTIVATED = (1 << (3));
-        public const int NK_EDIT_COMMITED = (1 << (4));
+        //public const int NkEditFlags.ACTIVE = (1 << (0));
+        //public const int NkEditFlags.INACTIVE = (1 << (1));
+        //public const int NkEditFlags.ACTIVATED = (1 << (2));
+        //public const int NkEditFlags.DEACTIVATED = (1 << (3));
+        //public const int NkEditFlags.COMMITED = (1 << (4));
 
         //public const int NkStyleCursor.ARROW = 0;
         //public const int NkStyleCursor.TEXT = 1;

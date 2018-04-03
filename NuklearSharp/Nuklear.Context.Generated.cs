@@ -3470,7 +3470,7 @@ namespace NuklearSharp
             return (ulong)(cur);
         }
 
-        public static void nk_edit_focus(NkContext ctx, uint flags)
+        public static void nk_edit_focus(NkContext ctx, NkEditFlags flags)
         {
             uint hash;
             NkWindow win;
@@ -3479,7 +3479,7 @@ namespace NuklearSharp
             hash = (uint)(win.Edit.seq);
             win.Edit.active = (int)(nk_true);
             win.Edit.name = (uint)(hash);
-            if ((flags & NK_EDIT_ALWAYS_INSERT_MODE) != 0) win.Edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
+            if ((flags & NkEditFlags.ALWAYS_INSERT_MODE) != 0) win.Edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
         }
 
         public static void nk_edit_unfocus(NkContext ctx)
@@ -3491,11 +3491,11 @@ namespace NuklearSharp
             win.Edit.name = (uint)(0);
         }
 
-        public static uint nk_edit_string(NkContext ctx, uint flags, NkStr str, int max,
+        public static NkEditState nk_edit_string(NkContext ctx, NkEditFlags flags, NkStr str, int max,
             NkPluginFilter filter)
         {
             uint hash;
-            uint state;
+            NkEditState state;
             nk_text_edit edit;
             NkWindow win;
             if (((ctx == null))) return (uint)(0);
@@ -3504,12 +3504,12 @@ namespace NuklearSharp
             hash = (uint)(win.Edit.seq);
             edit = ctx.TextEdit;
             nk_textedit_clear_state(ctx.TextEdit,
-                (int)((flags & NK_EDIT_MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE), filter);
+                (int)((flags & NkEditFlags.MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE), filter);
             if (((win.Edit.active) != 0) && ((hash) == (win.Edit.name)))
             {
-                if ((flags & NK_EDIT_NO_CURSOR) != 0) edit.cursor = (int)(str.Len);
+                if ((flags & NkEditFlags.NO_CURSOR) != 0) edit.cursor = (int)(str.Len);
                 else edit.cursor = (int)(win.Edit.cursor);
-                if ((flags & NK_EDIT_SELECTABLE) == 0)
+                if ((flags & NkEditFlags.SELECTABLE) == 0)
                 {
                     edit.select_start = (int)(win.Edit.cursor);
                     edit.select_end = (int)(win.Edit.cursor);
@@ -3533,7 +3533,7 @@ namespace NuklearSharp
             }
 
             edit._string_ = str;
-            state = (uint)(nk_edit_buffer(ctx, (uint)(flags), edit, filter));
+            state = (nk_edit_buffer(ctx, (flags), edit, filter));
             if ((edit.active) != 0)
             {
                 win.Edit.cursor = (int)(edit.cursor);
@@ -3544,45 +3544,44 @@ namespace NuklearSharp
                 win.Edit.scrollbar.y = ((uint)(edit.scrollbar.y));
             }
 
-            return (uint)(state);
+            return (state);
         }
 
-        public static uint nk_edit_buffer(NkContext ctx, uint flags, nk_text_edit edit, NkPluginFilter filter)
+        public static NkEditState nk_edit_buffer(NkContext ctx, NkEditFlags flags, nk_text_edit edit, NkPluginFilter filter)
         {
             NkWindow win;
             NkStyle style;
             nk_input _in_;
             int state;
             NkRect bounds = new NkRect();
-            uint ret_flags = (uint)(0);
+            NkEditState ret_flags = (uint)(0);
             byte prev_state;
             uint hash;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (uint)(0);
             win = ctx.Current;
             style = ctx.Style;
             state = (int)(nk_widget(&bounds, ctx));
-            if (state == 0) return (uint)(state);
+            if (state == 0) return 0;
             _in_ = (win.Layout.Flags & PanelFlags.ROM) != 0 ? null : ctx.Input;
             hash = (uint)(win.Edit.seq++);
             if (((win.Edit.active) != 0) && ((hash) == (win.Edit.name)))
             {
-                if ((flags & NK_EDIT_NO_CURSOR) != 0) edit.cursor = (int)(edit._string_.Len);
-                if ((flags & NK_EDIT_SELECTABLE) == 0)
+                if ((flags & NkEditFlags.NO_CURSOR) != 0) edit.cursor = (int)(edit._string_.Len);
+                if ((flags & NkEditFlags.SELECTABLE) == 0)
                 {
                     edit.select_start = (int)(edit.cursor);
                     edit.select_end = (int)(edit.cursor);
                 }
-                if ((flags & NK_EDIT_CLIPBOARD) != 0) edit.clip = (NkClipboard)(ctx.Clip);
+                if ((flags & NkEditFlags.CLIPBOARD) != 0) edit.clip = (NkClipboard)(ctx.Clip);
                 edit.active = ((byte)(win.Edit.active));
             }
             else edit.active = (byte)(nk_false);
             edit.mode = (byte)(win.Edit.mode);
             filter = (filter == null) ? nk_filter_default : filter;
             prev_state = (byte)(edit.active);
-            _in_ = (flags & NK_EDIT_READ_ONLY) != 0 ? null : _in_;
+            _in_ = (flags & NkEditFlags.READ_ONLY) != 0 ? null : _in_;
             ret_flags =
-                (uint)
-                    (nk_do_edit(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (uint)(flags), filter, edit, style.Edit,
+                    (nk_do_edit(ref ctx.LastWidgetState, win.Buffer, (NkRect)(bounds), (flags), filter, edit, style.Edit,
                         _in_, style.Font));
             if ((ctx.LastWidgetState & NkWidgetStates.HOVER) != 0)
                 ctx.Style.CursorActive = ctx.Style.Cursors[(int)NkStyleCursor.TEXT];
@@ -3596,7 +3595,7 @@ namespace NuklearSharp
                 win.Edit.active = (int)(nk_false);
             }
 
-            return (uint)(ret_flags);
+            return (ret_flags);
         }
 
         public static void nk_property_int(NkContext ctx, char* name, int min, ref int val, int max, int step,

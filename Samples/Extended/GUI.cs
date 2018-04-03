@@ -162,13 +162,13 @@ namespace Extended
                 ctx.StyleSetFont(media.Font18.Handle);
                 ctx.LayoutRowDynamic(30, 2);
                 ctx.Label("String:", Alignment.MIDDLERIGHT);
-                ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[0], 64, Nk.nk_filter_default);
+                ctx.EditString(NkEditFlags.FIELD, ref EditStrings[0], 64, Nk.nk_filter_default);
                 ctx.Label("Floating point:", Alignment.MIDDLERIGHT);
-                ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[1], 64, Nk.nk_filter_float);
+                ctx.EditString(NkEditFlags.FIELD, ref EditStrings[1], 64, Nk.nk_filter_float);
                 ctx.Label("Hexadecimal:", Alignment.MIDDLERIGHT);
-                ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[2], 64, Nk.nk_filter_hex);
+                ctx.EditString(NkEditFlags.FIELD, ref EditStrings[2], 64, Nk.nk_filter_hex);
                 ctx.Label("Binary:", Alignment.MIDDLERIGHT);
-                ctx.EditString(Nk.NK_EDIT_FIELD, ref EditStrings[3], 64, Nk.nk_filter_binary);
+                ctx.EditString(NkEditFlags.FIELD, ref EditStrings[3], 64, Nk.nk_filter_binary);
                 ctx.Label("Checkbox:", Alignment.MIDDLERIGHT);
                 ctx.CheckboxLabel("Check me", ref _gridCheck);
                 ctx.Label("Combobox:", Alignment.MIDDLERIGHT);

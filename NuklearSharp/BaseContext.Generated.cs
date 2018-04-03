@@ -1074,7 +1074,7 @@ namespace NuklearSharp
             return Nk.nk_prog(_ctx, cur, max, modifyable);
         }
 
-        public void EditFocus(uint flags)
+        public void EditFocus(NkEditFlags flags)
         {
             Nk.nk_edit_focus(_ctx, flags);
         }
@@ -1084,7 +1084,7 @@ namespace NuklearSharp
             Nk.nk_edit_unfocus(_ctx);
         }
 
-        public uint EditString(uint flags, ref NkStr str, int max, NkPluginFilter filter)
+        public NkEditState EditString(NkEditFlags flags, ref NkStr str, int max, NkPluginFilter filter)
         {
             if (str == null)
             {
@@ -1094,7 +1094,7 @@ namespace NuklearSharp
             return Nk.nk_edit_string(_ctx, flags, str, max, filter);
         }
 
-        public uint EditBuffer(uint flags, nk_text_edit edit, NkPluginFilter filter)
+        public NkEditState EditBuffer(NkEditFlags flags, nk_text_edit edit, NkPluginFilter filter)
         {
             return Nk.nk_edit_buffer(_ctx, flags, edit, filter);
         }

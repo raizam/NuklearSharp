@@ -2933,11 +2933,11 @@ namespace NuklearSharp
             return (float)(scroll_offset);
         }
 
-        public static uint nk_do_edit(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, uint flags,
+        public static NkEditState nk_do_edit(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect bounds, NkEditFlags flags,
             NkPluginFilter filter, nk_text_edit edit, nk_style_edit style, nk_input _in_, NkUserFont font)
         {
             NkRect area = new NkRect();
-            uint ret = (uint)(0);
+            NkEditState ret = (uint)(0);
             float row_height;
             sbyte prev_state = (sbyte)(0);
             sbyte is_hovered = (sbyte)(0);
@@ -2945,14 +2945,14 @@ namespace NuklearSharp
             sbyte cursor_follow = (sbyte)(0);
             NkRect old_clip = new NkRect();
             NkRect clip = new NkRect();
-            if (((_out_ == null)) || (style == null)) return (uint)(ret);
+            if (((_out_ == null)) || (style == null)) return (ret);
             area.x = (float)(bounds.x + style.padding.x + style.border);
             area.y = (float)(bounds.y + style.padding.y + style.border);
             area.w = (float)(bounds.w - (2.0f * style.padding.x + 2 * style.border));
             area.h = (float)(bounds.h - (2.0f * style.padding.y + 2 * style.border));
-            if ((flags & NK_EDIT_MULTILINE) != 0)
+            if ((flags & NkEditFlags.MULTILINE) != 0)
                 area.w = (float)((0) < (area.w - style.scrollbar_size.x) ? (area.w - style.scrollbar_size.x) : (0));
-            row_height = (float)((flags & NK_EDIT_MULTILINE) != 0 ? font.Height + style.row_padding : area.h);
+            row_height = (float)((flags & NkEditFlags.MULTILINE) != 0 ? font.Height + style.row_padding : area.h);
             old_clip = (NkRect)(_out_.Clip);
             nk_unify(ref clip, ref old_clip, (float)(area.x), (float)(area.y), (float)(area.x + area.w),
                 (float)(area.y + area.h));
@@ -2971,20 +2971,20 @@ namespace NuklearSharp
 
             if ((prev_state == 0) && ((edit.active) != 0))
             {
-                int type = (int)((flags & NK_EDIT_MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE);
+                int type = (int)((flags & NkEditFlags.MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE);
                 nk_textedit_clear_state(edit, (int)(type), filter);
-                if ((flags & NK_EDIT_AUTO_SELECT) != 0) select_all = (sbyte)(nk_true);
-                if ((flags & NK_EDIT_GOTO_END_ON_ACTIVATE) != 0)
+                if ((flags & NkEditFlags.AUTO_SELECT) != 0) select_all = (sbyte)(nk_true);
+                if ((flags & NkEditFlags.GOTO_END_ON_ACTIVATE) != 0)
                 {
                     edit.cursor = (int)(edit._string_.Len);
                     _in_ = null;
                 }
             }
             else if (edit.active == 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
-            if ((flags & NK_EDIT_READ_ONLY) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
-            else if ((flags & NK_EDIT_ALWAYS_INSERT_MODE) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
-            ret = (uint)((edit.active) != 0 ? NK_EDIT_ACTIVE : NK_EDIT_INACTIVE);
-            if (prev_state != edit.active) ret |= (uint)((edit.active) != 0 ? NK_EDIT_ACTIVATED : NK_EDIT_DEACTIVATED);
+            if ((flags & NkEditFlags.READ_ONLY) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
+            else if ((flags & NkEditFlags.ALWAYS_INSERT_MODE) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
+            ret = ((edit.active) != 0 ? NkEditState.ACTIVE : NkEditState.INACTIVE);
+            if (prev_state != edit.active) ret |= ((edit.active) != 0 ? NkEditState.ACTIVATED : NkEditState.DEACTIVATED);
             if (((edit.active) != 0) && ((_in_) != null))
             {
                 int shift_mod = (int)(_in_.keyboard.Keys[(int)NkKeys.SHIFT].down);
@@ -3040,14 +3040,14 @@ namespace NuklearSharp
                 if ((nk_input_is_key_pressed(_in_, (NkKeys.ENTER))) != 0)
                 {
                     cursor_follow = (sbyte)(nk_true);
-                    if (((flags & NK_EDIT_CTRL_ENTER_NEWLINE) != 0) && ((shift_mod) != 0)) nk_textedit_text(edit, "\n", (int)(1));
-                    else if ((flags & NK_EDIT_SIG_ENTER) != 0) ret |= (uint)(NK_EDIT_COMMITED);
+                    if (((flags & NkEditFlags.CTRL_ENTER_NEWLINE) != 0) && ((shift_mod) != 0)) nk_textedit_text(edit, "\n", (int)(1));
+                    else if ((flags & NkEditFlags.SIG_ENTER) != 0) ret |= (NkEditState.COMMITED);
                     else nk_textedit_text(edit, "\n", (int)(1));
                 }
                 {
                     int copy = (int)(nk_input_is_key_pressed(_in_, (NkKeys.COPY)));
                     int cut = (int)(nk_input_is_key_pressed(_in_, (NkKeys.CUT)));
-                    if ((((copy) != 0) || ((cut) != 0)) && ((flags & NK_EDIT_CLIPBOARD) != 0))
+                    if ((((copy) != 0) || ((cut) != 0)) && ((flags & NkEditFlags.CLIPBOARD) != 0))
                     {
                         char* text;
                         int b = (int)(edit.select_start);
@@ -3058,7 +3058,7 @@ namespace NuklearSharp
                         {
                             text = str2 + begin;
                             if ((edit.clip.Copy) != null) edit.clip.Copy((NkHandle)(edit.clip.Userdata), text, (int)(end - begin));
-                            if (((cut) != 0) && ((flags & NK_EDIT_READ_ONLY) == 0))
+                            if (((cut) != 0) && ((flags & NkEditFlags.READ_ONLY) == 0))
                             {
                                 nk_textedit_cut(edit);
                                 cursor_follow = (sbyte)(nk_true);
@@ -3068,7 +3068,7 @@ namespace NuklearSharp
                 }
                 {
                     int paste = (int)(nk_input_is_key_pressed(_in_, (NkKeys.PASTE)));
-                    if ((((paste) != 0) && ((flags & NK_EDIT_CLIPBOARD) != 0)) && ((edit.clip.Paste) != null))
+                    if ((((paste) != 0) && ((flags & NkEditFlags.CLIPBOARD) != 0)) && ((edit.clip.Paste) != null))
                     {
                         edit.clip.Paste((NkHandle)(edit.clip.Userdata), edit);
                         cursor_follow = (sbyte)(nk_true);
@@ -3076,7 +3076,7 @@ namespace NuklearSharp
                 }
                 {
                     int tab = (int)(nk_input_is_key_pressed(_in_, (NkKeys.TAB)));
-                    if (((tab) != 0) && ((flags & NK_EDIT_ALLOW_TAB) != 0))
+                    if (((tab) != 0) && ((flags & NkEditFlags.ALLOW_TAB) != 0))
                     {
                         nk_textedit_text(edit, "    ", (int)(4));
                         cursor_follow = (sbyte)(nk_true);
@@ -3206,7 +3206,7 @@ namespace NuklearSharp
                         {
                             if ((cursor_follow) != 0)
                             {
-                                if ((flags & NK_EDIT_NO_HORIZONTAL_SCROLL) == 0)
+                                if ((flags & NkEditFlags.NO_HORIZONTAL_SCROLL) == 0)
                                 {
                                     float scroll_increment = (float)(area.w * 0.25f);
                                     if ((cursor_pos.x) < (edit.scrollbar.x))
@@ -3216,7 +3216,7 @@ namespace NuklearSharp
                                         edit.scrollbar.x = ((float)((int)((0.0f) < (cursor_pos.x) ? (cursor_pos.x) : (0.0f))));
                                 }
                                 else edit.scrollbar.x = (float)(0);
-                                if ((flags & NK_EDIT_MULTILINE) != 0)
+                                if ((flags & NkEditFlags.MULTILINE) != 0)
                                 {
                                     if ((cursor_pos.y) < (edit.scrollbar.y))
                                         edit.scrollbar.y = (float)((0.0f) < (cursor_pos.y - row_height) ? (cursor_pos.y - row_height) : (0.0f));
@@ -3224,7 +3224,7 @@ namespace NuklearSharp
                                 }
                                 else edit.scrollbar.y = (float)(0);
                             }
-                            if ((flags & NK_EDIT_MULTILINE) != 0)
+                            if ((flags & NkEditFlags.MULTILINE) != 0)
                             {
                                 NkWidgetStates ws = 0;
                                 NkRect scroll = new NkRect();
@@ -3398,7 +3398,7 @@ namespace NuklearSharp
                 }
             }
 
-            return (uint)(ret);
+            return (ret);
         }
 
         public static void nk_drag_behavior(ref NkWidgetStates state, nk_input _in_, NkRect drag, NkPropertyVariant* variant,
@@ -3684,7 +3684,7 @@ namespace NuklearSharp
                         ? (0)
                         : ((select_end) < (length) ? (select_end) : (length)));
             text_edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
-            nk_do_edit(ref ws, _out_, (NkRect)(edit), (uint)(NK_EDIT_FIELD | NK_EDIT_AUTO_SELECT), filters[filter], text_edit,
+            nk_do_edit(ref ws, _out_, (NkRect)(edit),(NkEditFlags.FIELD | NkEditFlags.AUTO_SELECT), filters[filter], text_edit,
                 style.edit, ((state) == (NK_PROPERTY_EDIT)) ? _in_ : null, font);
             cursor = (int)(text_edit.cursor);
             select_begin = (int)(text_edit.select_start);
