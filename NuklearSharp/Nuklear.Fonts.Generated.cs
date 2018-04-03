@@ -14,7 +14,7 @@ namespace NuklearSharp
         public byte oversample_h;
         public PinnedArray<byte> padding = new PinnedArray<byte>(3);
         public float size;
-        public int coord_type;
+        public NkFontCoordType coord_type;
         public NkVec2 spacing = new NkVec2();
         public uint* range;
         public nk_baked_font font;
@@ -1638,7 +1638,7 @@ namespace NuklearSharp
                             glyph->y1 += (float) (dst_font.ascent + 0.5f);
                             glyph->w = (float) (glyph->x1 - glyph->x0 + 0.5f);
                             glyph->h = (float) (glyph->y1 - glyph->y0);
-                            if ((cfg.coord_type) == (NK_COORD_PIXEL))
+                            if ((cfg.coord_type) == (NkFontCoordType.NK_COORD_PIXEL))
                             {
                                 glyph->u0 = (float) (q.s0 * (float) (width));
                                 glyph->v0 = (float) (q.t0 * (float) (height));

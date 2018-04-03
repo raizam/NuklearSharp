@@ -18,55 +18,55 @@ namespace NuklearSharp
         }
     public unsafe static partial class Nk
     {
-        public static int nk_input_has_mouse_click(nk_input i, int id)
+        public static int nk_input_has_mouse_click(nk_input i, NkButtons id)
         {
             nk_mouse_button* btn;
             if (i == null) return (int)(nk_false);
-            btn = (nk_mouse_button*)i.mouse.Buttons + id;
+            btn = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             return (int)((((btn->clicked) != 0) && ((btn->down) == (nk_false))) ? nk_true : nk_false);
         }
 
-        public static int nk_input_has_mouse_click_in_rect(nk_input i, int id, NkRect b)
+        public static int nk_input_has_mouse_click_in_rect(nk_input i, NkButtons id, NkRect b)
         {
             nk_mouse_button* btn;
             if (i == null) return (int)(nk_false);
-            btn = (nk_mouse_button*)i.mouse.Buttons + id;
+            btn = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             if (
                 !((((b.x) <= (btn->clicked_pos.x)) && ((btn->clicked_pos.x) < (b.x + b.w))) &&
                   (((b.y) <= (btn->clicked_pos.y)) && ((btn->clicked_pos.y) < (b.y + b.h))))) return (int)(nk_false);
             return (int)(nk_true);
         }
 
-        public static int nk_input_has_mouse_click_down_in_rect(nk_input i, int id, NkRect b, int down)
+        public static int nk_input_has_mouse_click_down_in_rect(nk_input i, NkButtons id, NkRect b, int down)
         {
             nk_mouse_button* btn;
             if (i == null) return (int)(nk_false);
-            btn = (nk_mouse_button*)i.mouse.Buttons + id;
+            btn = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             return
-                (int)(((nk_input_has_mouse_click_in_rect(i, (int)(id), (NkRect)(b))) != 0) && ((btn->down) == (down)) ? 1 : 0);
+                (int)(((nk_input_has_mouse_click_in_rect(i, (id), (NkRect)(b))) != 0) && ((btn->down) == (down)) ? 1 : 0);
         }
 
-        public static int nk_input_is_mouse_click_in_rect(nk_input i, int id, NkRect b)
+        public static int nk_input_is_mouse_click_in_rect(nk_input i, NkButtons id, NkRect b)
         {
             nk_mouse_button* btn;
             if (i == null) return (int)(nk_false);
-            btn = (nk_mouse_button*)i.mouse.Buttons + id;
+            btn = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             return
                 (int)
-                    ((((nk_input_has_mouse_click_down_in_rect(i, (int)(id), (NkRect)(b), (int)(nk_false))) != 0) &&
+                    ((((nk_input_has_mouse_click_down_in_rect(i,(id), (NkRect)(b), (int)(nk_false))) != 0) &&
                       ((btn->clicked) != 0))
                         ? nk_true
                         : nk_false);
         }
 
-        public static int nk_input_is_mouse_click_down_in_rect(nk_input i, int id, NkRect b, int down)
+        public static int nk_input_is_mouse_click_down_in_rect(nk_input i, NkButtons id, NkRect b, int down)
         {
             nk_mouse_button* btn;
             if (i == null) return (int)(nk_false);
-            btn = (nk_mouse_button*)i.mouse.Buttons + id;
+            btn = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             return
                 (int)
-                    ((((nk_input_has_mouse_click_down_in_rect(i, (int)(id), (NkRect)(b), (int)(down))) != 0) &&
+                    ((((nk_input_has_mouse_click_down_in_rect(i, (id), (NkRect)(b), (int)(down))) != 0) &&
                       ((btn->clicked) != 0))
                         ? nk_true
                         : nk_false);
@@ -76,9 +76,9 @@ namespace NuklearSharp
         {
             int i;
             int down = (int)(0);
-            for (i = (int)(0); (i) < (NK_BUTTON_MAX); ++i)
+            for (i = (int)(0); (i) < ((int)NkButtons.MAX); ++i)
             {
-                down = (int)(((down) != 0) || ((nk_input_is_mouse_click_in_rect(_in_, (int)(i), (NkRect)(b))) != 0) ? 1 : 0);
+                down = (int)(((down) != 0) || ((nk_input_is_mouse_click_in_rect(_in_, (NkButtons)(i), (NkRect)(b))) != 0) ? 1 : 0);
             }
             return (int)(down);
         }
@@ -101,32 +101,32 @@ namespace NuklearSharp
                 : 0;
         }
 
-        public static int nk_input_mouse_clicked(nk_input i, int id, NkRect rect)
+        public static int nk_input_mouse_clicked(nk_input i, NkButtons id, NkRect rect)
         {
             if (i == null) return (int)(nk_false);
             if (nk_input_is_mouse_hovering_rect(i, (NkRect)(rect)) == 0) return (int)(nk_false);
-            return (int)(nk_input_is_mouse_click_in_rect(i, (int)(id), (NkRect)(rect)));
+            return (int)(nk_input_is_mouse_click_in_rect(i, (id), (NkRect)(rect)));
         }
 
-        public static int nk_input_is_mouse_down(nk_input i, int id)
+        public static int nk_input_is_mouse_down(nk_input i, NkButtons id)
         {
             if (i == null) return (int)(nk_false);
-            return (int)(i.mouse.Buttons[id].down);
+            return (int)(i.mouse.Buttons[(int)id].down);
         }
 
-        public static int nk_input_is_mouse_pressed(nk_input i, int id)
+        public static int nk_input_is_mouse_pressed(nk_input i, NkButtons id)
         {
             nk_mouse_button* b;
             if (i == null) return (int)(nk_false);
-            b = (nk_mouse_button*)i.mouse.Buttons + id;
+            b = (nk_mouse_button*)i.mouse.Buttons + (int)id;
             if (((b->down) != 0) && ((b->clicked) != 0)) return (int)(nk_true);
             return (int)(nk_false);
         }
 
-        public static int nk_input_is_mouse_released(nk_input i, int id)
+        public static int nk_input_is_mouse_released(nk_input i, NkButtons id)
         {
             if (i == null) return (int)(nk_false);
-            return ((i.mouse.Buttons[id].down == 0) && ((i.mouse.Buttons[id].clicked) != 0)) ? 1 : 0;
+            return ((i.mouse.Buttons[(int)id].down == 0) && ((i.mouse.Buttons[(int)id].clicked) != 0)) ? 1 : 0;
         }
 
         public static int nk_input_is_key_pressed(nk_input i, NkKeys key)

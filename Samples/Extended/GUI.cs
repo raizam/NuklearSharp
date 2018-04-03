@@ -54,7 +54,7 @@ namespace Extended
             ctx.Ctx.Style.Window.spacing = Nk.nk_vec2_(0, 0);
             ctx.Ctx.Style.Window.padding = Nk.nk_vec2_(0, 0);
 
-            if (ctx.PopupBegin(Nk.NK_POPUP_STATIC, "piemenu", PanelFlags.NO_SCROLLBAR,
+            if (ctx.PopupBegin(NkPopupType.NK_POPUP_STATIC, "piemenu", PanelFlags.NO_SCROLLBAR,
                 Nk.nk_rect_(pos.x - totalSpace.x - radius, pos.y - radius - totalSpace.y,
                     2 * radius, 2 * radius)))
             {
@@ -129,7 +129,7 @@ namespace Extended
                     Nk.nk_draw_image(o, bounds, icons[activeItem], Nk.nk_rgb(255, 255, 255));
                 }
                 ctx.LayoutSpaceEnd();
-                if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, Nk.NK_BUTTON_RIGHT) == 0)
+                if (Nk.nk_input_is_mouse_down(ctx.Ctx.Input, NkButtons.RIGHT) == 0)
                 {
                     ctx.PopupClose();
                     ret = activeItem;
@@ -195,14 +195,14 @@ namespace Extended
         public static void ui_widget(NuklearContext ctx, Media media, float height)
         {
             ctx.StyleSetFont(media.Font22.Handle);
-            ctx.LayoutRow(Nk.NK_DYNAMIC, height, 2, Ratio);
+            ctx.LayoutRow(NkLayoutFormat.NK_DYNAMIC, height, 2, Ratio);
             ctx.Spacing(1);
         }
 
         public static void ui_widget_centered(NuklearContext ctx, Media media, float height)
         {
             ctx.StyleSetFont(media.Font22.Handle);
-            ctx.LayoutRow(Nk.NK_DYNAMIC, height, 3, Ratio2);
+            ctx.LayoutRow(NkLayoutFormat.NK_DYNAMIC, height, 3, Ratio2);
             ctx.Spacing(1);
         }
 
@@ -327,7 +327,7 @@ namespace Extended
 
             if (_imageActive)
             {
-                if (ctx.PopupBegin(Nk.NK_POPUP_STATIC, "Image Popup", 0, Nk.nk_rect_(265, 0, 320, 220)))
+                if (ctx.PopupBegin(NkPopupType.NK_POPUP_STATIC, "Image Popup", 0, Nk.nk_rect_(265, 0, 320, 220)))
                 {
                     ctx.LayoutRowStatic(82, 82, 3);
                     for (i = 0; i < 9; ++i)
@@ -375,7 +375,7 @@ namespace Extended
             ui_widget(ctx, media, 35);
             ctx.Progress(ref _prog, 100, Nk.nk_true);
 
-            if (Nk.nk_input_is_mouse_click_down_in_rect(ctx.Ctx.Input, Nk.NK_BUTTON_RIGHT,
+            if (Nk.nk_input_is_mouse_click_down_in_rect(ctx.Ctx.Input, NkButtons.RIGHT,
                 ctx.WindowGetBounds(), Nk.nk_true) != 0)
             {
                 _piemenuPos = ctx.Ctx.Input.mouse.Pos;

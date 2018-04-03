@@ -41,15 +41,15 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_list_setup(NkDrawList canvas, NkConvertConfig config, NkBuffer<nk_draw_command> cmds,
-            NkBuffer<byte> vertices, NkBuffer<ushort> elements, int line_aa, int shape_aa)
+            NkBuffer<byte> vertices, NkBuffer<ushort> elements, bool line_aa, bool shape_aa)
         {
             if (((((canvas == null) || (config == null)) || (cmds == null)) || (vertices == null)) || (elements == null)) return;
             canvas.Buffer = cmds;
             canvas.Config = (NkConvertConfig)(config);
             canvas.Elements = elements;
             canvas.Vertices = vertices;
-            canvas.LineAa = (int)(line_aa);
-            canvas.ShapeAa = (int)(shape_aa);
+            canvas.LineAa = (line_aa);
+            canvas.ShapeAa = (shape_aa);
             canvas.ClipRect = (NkRect)(nk_null_rect);
         }
 
@@ -137,7 +137,7 @@ namespace NuklearSharp
         }
 
         public static void nk_draw_list_stroke_poly_line(NkDrawList list, NkColor color,
-            int closed, float thickness, int aliasing)
+            int closed, float thickness, bool aliasing)
         {
             ulong count;
             int thick_line;
@@ -154,7 +154,7 @@ namespace NuklearSharp
             nk_color_fv(&col.r, (NkColor)(color));
             col_trans = (NkColorF)(col);
             col_trans.a = (float)(0);
-            if ((aliasing) == (NK_ANTI_ALIASING_ON))
+            if ((aliasing))
             {
                 float AA_SIZE = (float)(1.0f);
                 ulong i1 = (ulong)(0);
@@ -456,7 +456,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_draw_list_fill_poly_convex(NkDrawList list, NkColor color, int aliasing)
+        public static void nk_draw_list_fill_poly_convex(NkDrawList list, NkColor color, bool aliasing)
         {
             NkColorF col = new NkColorF();
             NkColorF col_trans = new NkColorF();
@@ -467,7 +467,7 @@ namespace NuklearSharp
             nk_color_fv(&col.r, (NkColor)(color));
             col_trans = (NkColorF)(col);
             col_trans.a = (float)(0);
-            if ((aliasing) == (NK_ANTI_ALIASING_ON))
+            if ((aliasing))
             {
                 ulong i = (ulong)(0);
                 ulong i0 = (ulong)(0);
@@ -715,7 +715,7 @@ namespace NuklearSharp
         {
             if (list == null) return;
             nk_draw_list_fill_poly_convex(list, (NkColor)(color),
-                (int)(list.Config.ShapeAa));
+                (list.Config.ShapeAa));
             nk_draw_list_path_clear(list);
         }
 
@@ -723,14 +723,14 @@ namespace NuklearSharp
         {
             if (list == null) return;
             nk_draw_list_stroke_poly_line(list, (NkColor)(color), (int)(closed),
-                (float)(thickness), (int)(list.Config.LineAa));
+                (float)(thickness), (list.Config.LineAa));
             nk_draw_list_path_clear(list);
         }
 
         public static void nk_draw_list_stroke_line(NkDrawList list, NkVec2 a, NkVec2 b, NkColor col, float thickness)
         {
             if ((list == null) || (col.a == 0)) return;
-            if ((list.LineAa) == (NK_ANTI_ALIASING_ON))
+            if ((list.LineAa))
             {
                 nk_draw_list_path_line_to(list, (NkVec2)(a));
                 nk_draw_list_path_line_to(list, (NkVec2)(b));
@@ -753,7 +753,7 @@ namespace NuklearSharp
         public static void nk_draw_list_fill_rect(NkDrawList list, NkRect rect, NkColor col, float rounding)
         {
             if ((list == null) || (col.a == 0)) return;
-            if ((list.LineAa) == (NK_ANTI_ALIASING_ON))
+            if ((list.LineAa))
             {
                 nk_draw_list_path_rect_to(list, (NkVec2)(nk_vec2_((float)(rect.x), (float)(rect.y))),
                     (NkVec2)(nk_vec2_((float)(rect.x + rect.w), (float)(rect.y + rect.h))), (float)(rounding));
@@ -771,7 +771,7 @@ namespace NuklearSharp
             float thickness)
         {
             if ((list == null) || (col.a == 0)) return;
-            if ((list.LineAa) == (NK_ANTI_ALIASING_ON))
+            if ((list.LineAa))
             {
                 nk_draw_list_path_rect_to(list, (NkVec2)(nk_vec2_((float)(rect.x), (float)(rect.y))),
                     (NkVec2)(nk_vec2_((float)(rect.x + rect.w), (float)(rect.y + rect.h))), (float)(rounding));

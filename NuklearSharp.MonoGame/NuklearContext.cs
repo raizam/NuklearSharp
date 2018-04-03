@@ -234,9 +234,9 @@ namespace NuklearSharp.MonoGame
                 }
             }
 
-            InputButton(Nk.NK_BUTTON_LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
-            InputButton(Nk.NK_BUTTON_MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
-            InputButton(Nk.NK_BUTTON_RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
+            InputButton(NkButtons.LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
+            InputButton(NkButtons.MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
+            InputButton(NkButtons.RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
 
             InputMotion(mouseState.X, mouseState.Y);
             InputScroll(new NkVec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
@@ -266,7 +266,7 @@ namespace NuklearSharp.MonoGame
             return ComboBeginColor(color.ToNkColor(), size.ToNkVec2());
         }
 
-        public Color ColorPicker(Color color, int fmt)
+        public Color ColorPicker(Color color, NkColorFormat fmt)
         {
             return ColorPicker(color.ToNkColorf(), fmt).ToColor();
         }

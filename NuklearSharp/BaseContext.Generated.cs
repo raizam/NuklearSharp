@@ -6,7 +6,7 @@ namespace NuklearSharp
 {
     unsafe partial class BaseContext
     {
-        public uint Convert(NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
+        public NkConvertResult Convert(NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
             NkBuffer<ushort> elements,
             NkConvertConfig config)
         {
@@ -33,7 +33,7 @@ namespace NuklearSharp
             Nk.nk_input_key(_ctx, key, down ? 1 : 0);
         }
 
-        public void InputButton(int id, int x, int y, bool down)
+        public void InputButton(NkButtons id, int x, int y, bool down)
         {
             Nk.nk_input_button(_ctx, id, x, y, down ? 1 : 0);
         }
@@ -399,7 +399,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowShow(string name, int s)
+        public void WindowShow(string name, NkShowStates s)
         {
             fixed (char* name_ptr = name)
             {
@@ -407,7 +407,7 @@ namespace NuklearSharp
             }
         }
 
-        public void WindowShowIf(string name, int s, int cond)
+        public void WindowShowIf(string name, NkShowStates s, int cond)
         {
             fixed (char* name_ptr = name)
             {
@@ -448,7 +448,7 @@ namespace NuklearSharp
             Nk.nk_panel_layout(_ctx, win, height, cols);
         }
 
-        public void RowLayout(int fmt, float height, int cols, int width)
+        public void RowLayout(NkLayoutFormat fmt, float height, int cols, int width)
         {
             Nk.nk_row_layout_(_ctx, fmt, height, cols, width);
         }
@@ -468,7 +468,7 @@ namespace NuklearSharp
             Nk.nk_layout_row_static(_ctx, height, item_width, cols);
         }
 
-        public void LayoutRowBegin(int fmt, float row_height, int cols)
+        public void LayoutRowBegin(NkLayoutFormat fmt, float row_height, int cols)
         {
             Nk.nk_layout_row_begin(_ctx, fmt, row_height, cols);
         }
@@ -483,7 +483,7 @@ namespace NuklearSharp
             Nk.nk_layout_row_end(_ctx);
         }
 
-        public void LayoutRow(int fmt, float height, int cols, float[] ratio)
+        public void LayoutRow(NkLayoutFormat fmt, float height, int cols, float[] ratio)
         {
             fixed (float* ptr = ratio)
             {
@@ -516,7 +516,7 @@ namespace NuklearSharp
             Nk.nk_layout_row_template_end(_ctx);
         }
 
-        public void LayoutSpaceBegin(int fmt, float height, int widget_count)
+        public void LayoutSpaceBegin(NkLayoutFormat fmt, float height, int widget_count)
         {
             Nk.nk_layout_space_begin(_ctx, fmt, height, widget_count);
         }
@@ -566,7 +566,7 @@ namespace NuklearSharp
             Nk.nk_panel_alloc_row(_ctx, win);
         }
 
-        public bool TreeBase(int type, NkImage img, string title, int initial_state, string hash, int line)
+        public bool TreeBase(NkTreeType type, NkImage img, string title, int initial_state, string hash, int line)
         {
             fixed (char* title_ptr = title)
             {
@@ -582,7 +582,7 @@ namespace NuklearSharp
             Nk.nk_tree_state_pop(_ctx);
         }
 
-        public bool TreePushHashed(int type, string title, int initial_state, string hash, int line)
+        public bool TreePushHashed(NkTreeType type, string title, int initial_state, string hash, int line)
         {
             fixed (char* title_ptr = title)
             {
@@ -593,7 +593,7 @@ namespace NuklearSharp
             }
         }
 
-        public bool TreeImagePushHashed(int type, NkImage img, string title, int initial_state, string hash, int seed)
+        public bool TreeImagePushHashed(NkTreeType type, NkImage img, string title, int initial_state, string hash, int seed)
         {
             fixed (char* title_ptr = title)
             {
@@ -640,12 +640,12 @@ namespace NuklearSharp
             return Nk.nk_widget_is_hovered(_ctx) != 0;
         }
 
-        public bool WidgetIsMouseClicked(int btn)
+        public bool WidgetIsMouseClicked(NkButtons btn)
         {
             return Nk.nk_widget_is_mouse_clicked(_ctx, btn) != 0;
         }
 
-        public bool WidgetHasMouseClickDown(int btn, int down)
+        public bool WidgetHasMouseClickDown(NkButtons btn, int down)
         {
             return Nk.nk_widget_has_mouse_click_down(_ctx, btn, down) != 0;
         }
@@ -1147,12 +1147,12 @@ namespace NuklearSharp
             }
         }
 
-        public bool ColorPick(NkColorF color, int fmt)
+        public bool ColorPick(NkColorF color, NkColorFormat fmt)
         {
             return Nk.nk_color_pick(_ctx, &color, fmt) != 0;
         }
 
-        public NkColorF ColorPicker(NkColorF color, int fmt)
+        public NkColorF ColorPicker(NkColorF color, NkColorFormat fmt)
         {
             return Nk.nk_color_picker(_ctx, color, fmt);
         }

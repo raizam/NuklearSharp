@@ -2,14 +2,14 @@ namespace NuklearSharp
 {
     public unsafe partial class Nk
     {
-        public static uint nk_convert(NkContext ctx, NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
+        public static NkConvertResult nk_convert(NkContext ctx, NkBuffer<nk_draw_command> cmds, NkBuffer<byte> vertices,
             NkBuffer<ushort> elements, NkConvertConfig config)
         {
-            uint res = (uint)(NK_CONVERT_SUCCESS);
+            NkConvertResult res = (NkConvertResult.SUCCESS);
 
             if ((((((ctx == null) || (cmds == null)) || (vertices == null)) || (elements == null)) || (config == null)) ||
-                (config.VertexLayout == null)) return (uint)(NK_CONVERT_INVALID_PARAM);
-            nk_draw_list_setup(ctx.DrawList, config, cmds, vertices, elements, (int)(config.LineAa), (int)(config.ShapeAa));
+                (config.VertexLayout == null)) return (NkConvertResult.INVALID_PARAM);
+            nk_draw_list_setup(ctx.DrawList, config, cmds, vertices, elements, (config.LineAa), (config.ShapeAa));
             var top_window = nk__begin(ctx);
 
             int cnt = 0;
@@ -190,7 +190,7 @@ namespace NuklearSharp
             nk_input _in_;
             if (ctx == null) return;
             _in_ = ctx.Input;
-            for (i = (int)(0); (i) < (NK_BUTTON_MAX); ++i)
+            for (i = (int)(0); (i) < ((int)NkButtons.MAX); ++i)
             {
                 ((nk_mouse_button*)_in_.mouse.Buttons + i)->clicked = (uint)(0);
             }
@@ -241,14 +241,14 @@ namespace NuklearSharp
             ((nk_key*)_in_.keyboard.Keys + (int)key)->down = (int)(down);
         }
 
-        public static void nk_input_button(NkContext ctx, int id, int x, int y, int down)
+        public static void nk_input_button(NkContext ctx, NkButtons id, int x, int y, int down)
         {
             nk_mouse_button* btn;
             nk_input _in_;
             if (ctx == null) return;
             _in_ = ctx.Input;
-            if ((_in_.mouse.Buttons[id].down) == (down)) return;
-            btn = (nk_mouse_button*)_in_.mouse.Buttons + id;
+            if ((_in_.mouse.Buttons[(int)id].down) == (down)) return;
+            btn = (nk_mouse_button*)_in_.mouse.Buttons + (int)id;
             btn->clicked_pos.x = ((float)(x));
             btn->clicked_pos.y = ((float)(y));
             btn->down = (int)(down);
@@ -1143,15 +1143,15 @@ namespace NuklearSharp
                     header.h += (float)(2.0f * style.Window.header.label_padding.y);
                 }
                 else header.h = (float)(panel_padding.y);
-                left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down);
+                left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down);
                 left_mouse_click_in_cursor =
-                    (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (NkRect)(header), (int)(nk_true)));
+                    (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(header), (int)(nk_true)));
                 if (((left_mouse_down) != 0) && ((left_mouse_click_in_cursor) != 0))
                 {
                     win.Bounds.x = (float)(win.Bounds.x + _in_.mouse.Delta.x);
                     win.Bounds.y = (float)(win.Bounds.y + _in_.mouse.Delta.y);
-                    ((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked_pos.x += (float)(_in_.mouse.Delta.x);
-                    ((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked_pos.y += (float)(_in_.mouse.Delta.y);
+                    ((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked_pos.x += (float)(_in_.mouse.Delta.x);
+                    ((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked_pos.y += (float)(_in_.mouse.Delta.y);
                     ctx.Style.CursorActive = ctx.Style.Cursors[(int)NkStyleCursor.MOVE];
                 }
             }
@@ -1522,9 +1522,9 @@ namespace NuklearSharp
                 if ((window.Flags & PanelFlags.ROM) == 0)
                 {
                     NkVec2 window_size = (NkVec2)(style.Window.min_size);
-                    int left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down);
+                    int left_mouse_down = (int)(((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down);
                     int left_mouse_click_in_scaler =
-                        (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NK_BUTTON_LEFT), (NkRect)(scaler), (int)(nk_true)));
+                        (int)(nk_input_has_mouse_click_down_in_rect(_in_, (int)(NkButtons.LEFT), (NkRect)(scaler), (int)(nk_true)));
                     if (((left_mouse_down) != 0) && ((left_mouse_click_in_scaler) != 0))
                     {
                         float delta_x = (float)(_in_.mouse.Delta.x);
@@ -1553,8 +1553,8 @@ namespace NuklearSharp
                             }
                         }
                         ctx.Style.CursorActive = ctx.Style.Cursors[(int)NkStyleCursor.RESIZE_TOP_RIGHT_DOWN_LEFT];
-                        ((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked_pos.x = (float)(scaler.x + scaler.w / 2.0f);
-                        ((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked_pos.y = (float)(scaler.y + scaler.h / 2.0f);
+                        ((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked_pos.x = (float)(scaler.x + scaler.w / 2.0f);
+                        ((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked_pos.y = (float)(scaler.y + scaler.h / 2.0f);
                     }
                 }
             }
@@ -1785,10 +1785,10 @@ namespace NuklearSharp
                             : nk_rect_((float)(win.Bounds.x), (float)(win.Bounds.y), (float)(win.Bounds.w), (float)(h)));
                 inpanel =
                     (int)
-                        (nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(NK_BUTTON_LEFT), (NkRect)(win_bounds), (int)(nk_true)));
-                inpanel = (int)(((inpanel) != 0) && ((ctx.Input.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0) ? 1 : 0);
+                        (nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(NkButtons.LEFT), (NkRect)(win_bounds), (int)(nk_true)));
+                inpanel = (int)(((inpanel) != 0) && ((ctx.Input.mouse.Buttons[(int)NkButtons.LEFT].clicked) != 0) ? 1 : 0);
                 ishovered = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(win_bounds)));
-                if (((win != ctx.Active) && ((ishovered) != 0)) && (ctx.Input.mouse.Buttons[NK_BUTTON_LEFT].down == 0))
+                if (((win != ctx.Active) && ((ishovered) != 0)) && (ctx.Input.mouse.Buttons[(int)NkButtons.LEFT].down == 0))
                 {
                     iter = win.Next;
                     while ((iter) != null)
@@ -2117,7 +2117,7 @@ namespace NuklearSharp
             nk_window_collapse(ctx, name, (c));
         }
 
-        public static void nk_window_show(NkContext ctx, char* name, int s)
+        public static void nk_window_show(NkContext ctx, char* name, NkShowStates s)
         {
             int title_len;
             uint title_hash;
@@ -2127,17 +2127,17 @@ namespace NuklearSharp
             title_hash = (uint)(nk_murmur_hash(name, (int)(title_len), (uint)(PanelFlags.TITLE)));
             win = nk_find_window(ctx, (uint)(title_hash), name);
             if (win == null) return;
-            if ((s) == (NK_HIDDEN))
+            if ((s) == (NkShowStates.NK_HIDDEN))
             {
                 win.Flags |= (PanelFlags.HIDDEN);
             }
             else win.Flags &= (PanelFlags)(~(uint)(PanelFlags.HIDDEN));
         }
 
-        public static void nk_window_show_if(NkContext ctx, char* name, int s, int cond)
+        public static void nk_window_show_if(NkContext ctx, char* name, NkShowStates s, int cond)
         {
             if ((ctx == null) || (cond == 0)) return;
-            nk_window_show(ctx, name, (int)(s));
+            nk_window_show(ctx, name, s);
         }
 
         public static void nk_window_set_focus(NkContext ctx, char* name)
@@ -2248,13 +2248,13 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_row_layout_(NkContext ctx, int fmt, float height, int cols, int width)
+        public static void nk_row_layout_(NkContext ctx, NkLayoutFormat fmt, float height, int cols, int width)
         {
             NkWindow win;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             nk_panel_layout(ctx, win, (float)(height), (int)(cols));
-            if ((fmt) == (NK_DYNAMIC)) win.Layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_FIXED);
+            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) win.Layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_FIXED);
             else win.Layout.Row.type = (int)(NK_LAYOUT_STATIC_FIXED);
             win.Layout.Row.ratio = null;
             win.Layout.Row.filled = (float)(0);
@@ -2276,15 +2276,15 @@ namespace NuklearSharp
 
         public static void nk_layout_row_dynamic(NkContext ctx, float height, int cols)
         {
-            nk_row_layout_(ctx, (int)(NK_DYNAMIC), (float)(height), (int)(cols), (int)(0));
+            nk_row_layout_(ctx, (NkLayoutFormat.NK_DYNAMIC), (float)(height), (int)(cols), (int)(0));
         }
 
         public static void nk_layout_row_static(NkContext ctx, float height, int item_width, int cols)
         {
-            nk_row_layout_(ctx, (int)(NK_STATIC), (float)(height), (int)(cols), (int)(item_width));
+            nk_row_layout_(ctx, (NkLayoutFormat.NK_STATIC), (float)(height), (int)(cols), (int)(item_width));
         }
 
-        public static void nk_layout_row_begin(NkContext ctx, int fmt, float row_height, int cols)
+        public static void nk_layout_row_begin(NkContext ctx, NkLayoutFormat fmt, float row_height, int cols)
         {
             NkWindow win;
             NkPanel layout;
@@ -2292,7 +2292,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(row_height), (int)(cols));
-            if ((fmt) == (NK_DYNAMIC)) layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_ROW);
+            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_ROW);
             else layout.Row.type = (int)(NK_LAYOUT_STATIC_ROW);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
@@ -2333,7 +2333,7 @@ namespace NuklearSharp
             layout.Row.item_offset = (float)(0);
         }
 
-        public static void nk_layout_row(NkContext ctx, int fmt, float height, int cols, float* ratio)
+        public static void nk_layout_row(NkContext ctx, NkLayoutFormat fmt, float height, int cols, float* ratio)
         {
             int i;
             int n_undef = (int)(0);
@@ -2343,7 +2343,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(height), (int)(cols));
-            if ((fmt) == (NK_DYNAMIC))
+            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC))
             {
                 float r = (float)(0);
                 layout.Row.ratio = ratio;
@@ -2482,7 +2482,7 @@ namespace NuklearSharp
 
         }
 
-        public static void nk_layout_space_begin(NkContext ctx, int fmt, float height, int widget_count)
+        public static void nk_layout_space_begin(NkContext ctx, NkLayoutFormat fmt, float height, int widget_count)
         {
             NkWindow win;
             NkPanel layout;
@@ -2490,7 +2490,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             nk_panel_layout(ctx, win, (float)(height), (int)(widget_count));
-            if ((fmt) == (NK_STATIC)) layout.Row.type = (int)(NK_LAYOUT_STATIC_FREE);
+            if ((fmt) == (NkLayoutFormat.NK_STATIC)) layout.Row.type = (int)(NK_LAYOUT_STATIC_FREE);
             else layout.Row.type = (int)(NK_LAYOUT_DYNAMIC_FREE);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
@@ -2604,7 +2604,7 @@ namespace NuklearSharp
             nk_panel_layout(ctx, win, (float)(row_height), (int)(layout.Row.columns));
         }
 
-        public static int nk_tree_state_base(NkContext ctx, int type, NkImage img, char* title, ref NkCollapseStates state)
+        public static int nk_tree_state_base(NkContext ctx, NkTreeType type, NkImage img, char* title, ref NkCollapseStates state)
         {
             NkWindow win;
             NkPanel layout;
@@ -2631,7 +2631,7 @@ namespace NuklearSharp
             nk_layout_row_dynamic(ctx, (float)(row_height), (int)(1));
             nk_layout_reset_min_row_height(ctx);
             widget_state = (int)(nk_widget(&header, ctx));
-            if ((type) == (NK_TREE_TAB))
+            if ((type) == (NkTreeType.NK_TREE_TAB))
             {
                 NkStyleItem background = style.Tab.background;
                 if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
@@ -2655,13 +2655,13 @@ namespace NuklearSharp
             if ((state) == (NkCollapseStates.NK_MAXIMIZED))
             {
                 symbol = (style.Tab.sym_maximize);
-                if ((type) == (NK_TREE_TAB)) button = style.Tab.tab_maximize_button;
+                if ((type) == (NkTreeType.NK_TREE_TAB)) button = style.Tab.tab_maximize_button;
                 else button = style.Tab.node_maximize_button;
             }
             else
             {
                 symbol = (style.Tab.sym_minimize);
-                if ((type) == (NK_TREE_TAB)) button = style.Tab.tab_minimize_button;
+                if ((type) == (NkTreeType.NK_TREE_TAB)) button = style.Tab.tab_minimize_button;
                 else button = style.Tab.node_minimize_button;
             }
 
@@ -2702,7 +2702,7 @@ namespace NuklearSharp
             else return (int)(nk_false);
         }
 
-        public static int nk_tree_base(NkContext ctx, int type, NkImage img, char* title, int initial_state, char* hash,
+        public static int nk_tree_base(NkContext ctx, NkTreeType type, NkImage img, char* title, int initial_state, char* hash,
             int len, int line)
         {
             NkWindow win = ctx.Current;
@@ -2723,19 +2723,19 @@ namespace NuklearSharp
             }
 
             NkCollapseStates kkk = (NkCollapseStates)(*state);
-            int result = (int)(nk_tree_state_base(ctx, (int)(type), img, title, ref kkk));
+            int result = (int)(nk_tree_state_base(ctx,(type), img, title, ref kkk));
             *state = (uint)(int)kkk;
             return result;
         }
 
-        public static int nk_tree_state_push(NkContext ctx, int type, char* title, ref NkCollapseStates state)
+        public static int nk_tree_state_push(NkContext ctx, NkTreeType type, char* title, ref NkCollapseStates state)
         {
-            return (int)(nk_tree_state_base(ctx, (int)(type), null, title, ref state));
+            return (int)(nk_tree_state_base(ctx, (type), null, title, ref state));
         }
 
-        public static int nk_tree_state_image_push(NkContext ctx, int type, NkImage img, char* title, ref NkCollapseStates state)
+        public static int nk_tree_state_image_push(NkContext ctx, NkTreeType type, NkImage img, char* title, ref NkCollapseStates state)
         {
-            return (int)(nk_tree_state_base(ctx, (int)(type), img, title, ref state));
+            return (int)(nk_tree_state_base(ctx, (type), img, title, ref state));
         }
 
         public static void nk_tree_state_pop(NkContext ctx)
@@ -2750,16 +2750,16 @@ namespace NuklearSharp
             layout.Row.tree_depth--;
         }
 
-        public static int nk_tree_push_hashed(NkContext ctx, int type, char* title, int initial_state, char* hash, int len,
+        public static int nk_tree_push_hashed(NkContext ctx, NkTreeType type, char* title, int initial_state, char* hash, int len,
             int line)
         {
-            return (int)(nk_tree_base(ctx, (int)(type), null, title, (int)(initial_state), hash, (int)(len), (int)(line)));
+            return (int)(nk_tree_base(ctx, (type), null, title, (int)(initial_state), hash, (int)(len), (int)(line)));
         }
 
-        public static int nk_tree_image_push_hashed(NkContext ctx, int type, NkImage img, char* title, int initial_state,
+        public static int nk_tree_image_push_hashed(NkContext ctx, NkTreeType type, NkImage img, char* title, int initial_state,
             char* hash, int len, int seed)
         {
-            return (int)(nk_tree_base(ctx, (int)(type), img, title, (int)(initial_state), hash, (int)(len), (int)(seed)));
+            return (int)(nk_tree_base(ctx, (type), img, title, (int)(initial_state), hash, (int)(len), (int)(seed)));
         }
 
         public static void nk_tree_pop(NkContext ctx)
@@ -2828,7 +2828,7 @@ namespace NuklearSharp
             return (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(bounds)));
         }
 
-        public static int nk_widget_is_mouse_clicked(NkContext ctx, int btn)
+        public static int nk_widget_is_mouse_clicked(NkContext ctx, NkButtons btn)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
@@ -2845,10 +2845,10 @@ namespace NuklearSharp
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return (int)(0);
-            return (int)(nk_input_mouse_clicked(ctx.Input, (int)(btn), (NkRect)(bounds)));
+            return (int)(nk_input_mouse_clicked(ctx.Input, (btn), (NkRect)(bounds)));
         }
 
-        public static int nk_widget_has_mouse_click_down(NkContext ctx, int btn, int down)
+        public static int nk_widget_has_mouse_click_down(NkContext ctx, NkButtons btn, int down)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
@@ -2865,7 +2865,7 @@ namespace NuklearSharp
             if (
                 !(!(((((bounds.x) > (c.x + c.w)) || ((bounds.x + bounds.w) < (c.x))) || ((bounds.y) > (c.y + c.h))) ||
                     ((bounds.y + bounds.h) < (c.y))))) return (int)(0);
-            return (int)(nk_input_has_mouse_click_down_in_rect(ctx.Input, (int)(btn), (NkRect)(bounds), (int)(down)));
+            return (int)(nk_input_has_mouse_click_down_in_rect(ctx.Input,(btn), (NkRect)(bounds), (int)(down)));
         }
 
         public static void nk_spacing(NkContext ctx, int cols)
@@ -3664,7 +3664,7 @@ namespace NuklearSharp
             return (double)(val);
         }
 
-        public static int nk_color_pick(NkContext ctx, NkColorF* color, int fmt)
+        public static int nk_color_pick(NkContext ctx, NkColorF* color, NkColorFormat fmt)
         {
             NkWindow win;
             NkPanel layout;
@@ -3681,13 +3681,13 @@ namespace NuklearSharp
             _in_ = (((state) == (NK_WIDGET_ROM)) || ((layout.Flags & PanelFlags.ROM) != 0)) ? null : ctx.Input;
             return
                 (int)
-                    (nk_do_color_picker(ref ctx.LastWidgetState, win.Buffer, color, (int)(fmt), (NkRect)(bounds),
+                    (nk_do_color_picker(ref ctx.LastWidgetState, win.Buffer, color, (fmt), (NkRect)(bounds),
                         (NkVec2)(nk_vec2_((float)(0), (float)(0))), _in_, config.Font));
         }
 
-        public static NkColorF nk_color_picker(NkContext ctx, NkColorF color, int fmt)
+        public static NkColorF nk_color_picker(NkContext ctx, NkColorF color, NkColorFormat fmt)
         {
-            nk_color_pick(ctx, &color, (int)(fmt));
+            nk_color_pick(ctx, &color, (fmt));
             return (NkColorF)(color);
         }
 
@@ -3807,7 +3807,7 @@ namespace NuklearSharp
                     ret = ((nk_input_is_mouse_hovering_rect(i, (NkRect)(bounds))) != 0 ? NkChartEvent.NK_CHART_HOVERING : 0);
                     ret |=
 
-                            ((((i.mouse.Buttons[NK_BUTTON_LEFT].down) != 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
+                            ((((i.mouse.Buttons[(int)NkButtons.LEFT].down) != 0) && ((i.mouse.Buttons[(int)NkButtons.LEFT].clicked) != 0))
                                 ? NkChartEvent.NK_CHART_CLICKED
                                 : 0);
                     color = (NkColor)(g.Slots[slot].highlight);
@@ -3831,7 +3831,7 @@ namespace NuklearSharp
                 {
                     ret = (NkChartEvent.NK_CHART_HOVERING);
                     ret |=
-                            (((i.mouse.Buttons[NK_BUTTON_LEFT].down == 0) && ((i.mouse.Buttons[NK_BUTTON_LEFT].clicked) != 0))
+                            (((i.mouse.Buttons[(int)NkButtons.LEFT].down == 0) && ((i.mouse.Buttons[(int)NkButtons.LEFT].clicked) != 0))
                                 ? NkChartEvent.NK_CHART_CLICKED
                                 : 0);
                     color = (NkColor)(g.Slots[slot].highlight);
@@ -3890,8 +3890,8 @@ namespace NuklearSharp
                 ret = (NkChartEvent.NK_CHART_HOVERING);
                 ret |=
         
-                        (((((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->down == 0) &&
-                          ((((nk_mouse_button*)_in_.mouse.Buttons + NK_BUTTON_LEFT)->clicked) != 0))
+                        (((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->down == 0) &&
+                          ((((nk_mouse_button*)_in_.mouse.Buttons + (int)NkButtons.LEFT)->clicked) != 0))
                             ? NkChartEvent.NK_CHART_CLICKED
                             : 0);
                 color = (NkColor)(chart.Slots[slot].highlight);
@@ -4280,7 +4280,7 @@ namespace NuklearSharp
                 int pressed;
                 int in_body;
                 int in_header;
-                pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NK_BUTTON_LEFT)));
+                pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NkButtons.LEFT)));
                 in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(body)));
                 in_header = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(header)));
                 if (((pressed) != 0) && ((in_body == 0) || ((in_header) != 0))) is_active = (int)(nk_false);
@@ -4443,7 +4443,7 @@ namespace NuklearSharp
             ++win.Popup.con_count;
             popup = win.Popup.win;
             is_open = (int)(((popup) != null) && ((win.Popup.type) == (NK_PANEL_CONTEXTUAL)) ? 1 : 0);
-            is_clicked = (int)(nk_input_mouse_clicked(ctx.Input, (int)(NK_BUTTON_RIGHT), (NkRect)(trigger_bounds)));
+            is_clicked = (int)(nk_input_mouse_clicked(ctx.Input, (NkButtons.RIGHT), (NkRect)(trigger_bounds)));
             if (((win.Popup.active_con) != 0) && (win.Popup.con_count != win.Popup.active_con)) return (int)(0);
             if (((((is_clicked) != 0) && ((is_open) != 0)) && (is_active == 0)) ||
                 (((is_open == 0) && (is_active == 0)) && (is_clicked == 0))) return (int)(0);
@@ -4586,7 +4586,7 @@ namespace NuklearSharp
                     body.h = (float)((panel.Bounds.y + panel.Bounds.h) - body.y);
                 }
                 {
-                    int pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NK_BUTTON_LEFT)));
+                    int pressed = (int)(nk_input_is_mouse_pressed(ctx.Input, (int)(NkButtons.LEFT)));
                     int in_body = (int)(nk_input_is_mouse_hovering_rect(ctx.Input, (NkRect)(body)));
                     if (((pressed) != 0) && ((in_body) != 0)) popup.Flags |= (PanelFlags.HIDDEN);
                 }

@@ -79,7 +79,7 @@ namespace NuklearSharp
 
         public class NkMouse
         {
-            public PinnedArray<nk_mouse_button> Buttons = new PinnedArray<nk_mouse_button>(new nk_mouse_button[Nk.NK_BUTTON_MAX]);
+            public PinnedArray<nk_mouse_button> Buttons = new PinnedArray<nk_mouse_button>(new nk_mouse_button[(int)NkButtons.MAX]);
             public NkVec2 Pos;
             public NkVec2 Prev;
             public NkVec2 Delta;
@@ -164,8 +164,8 @@ namespace NuklearSharp
             public NkBuffer<byte> Vertices;
             public readonly NkBuffer<NkVec2> Normals = new NkBuffer<NkVec2>();
             public NkBuffer<ushort> Elements;
-            public int LineAa;
-            public int ShapeAa;
+            public bool LineAa;
+            public bool ShapeAa;
             public NkHandle Userdata;
 
             public int VertexOffset
@@ -525,8 +525,8 @@ namespace NuklearSharp
         public class NkConvertConfig
         {
             public float GlobalAlpha;
-            public int LineAa;
-            public int ShapeAa;
+            public bool LineAa;
+            public bool ShapeAa;
             public uint CircleSegmentCount;
             public uint ArcSegmentCount;
             public uint CurveSegmentCount;

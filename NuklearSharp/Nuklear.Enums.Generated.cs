@@ -133,8 +133,8 @@ namespace NuklearSharp
 
     //public enum NkButtonBehavior
     //{
-    //    NK_BUTTON_DEFAULT = 0,
-    //    NK_BUTTON_REPEATER = 1
+    //    NkButtons.DEFAULT = 0,
+    //    NkButtons.REPEATER = 1
     //}
 
     ////public enum Nk
@@ -195,21 +195,21 @@ namespace NuklearSharp
 
     //public enum NkButtons
     //{
-    //    NK_BUTTON_LEFT = 0,
-    //    NK_BUTTON_MIDDLE = 1,
-    //    NK_BUTTON_RIGHT = 2,
-    //    NK_BUTTON_DOUBLE = 3,
-    //    NK_BUTTON_MAX = 4
+    //    NkButtons.LEFT = 0,
+    //    NkButtons.MIDDLE = 1,
+    //    NkButtons.RIGHT = 2,
+    //    NkButtons.DOUBLE = 3,
+    //    NkButtons.MAX = 4
     //}
 
     //[Flags]
     //public enum NkConvertResult
     //{
-    //    NK_CONVERT_SUCCESS = 0,
-    //    NK_CONVERT_INVALID_PARAM = 1,
-    //    NK_CONVERT_COMMAND_BUFFER_FULL = 2,
-    //    NK_CONVERT_VERTEX_BUFFER_FULL = 4,
-    //    NK_CONVERT_ELEMENT_BUFFER_FULL = 8
+    //    NkConvertResult.SUCCESS = 0,
+    //    NkConvertResult.INVALID_PARAM = 1,
+    //    NkConvertResult.COMMAND_BUFFER_FULL = 2,
+    //    NkConvertResult.VERTEX_BUFFER_FULL = 4,
+    //    NkConvertResult.ELEMENT_BUFFER_FULL = 8
     //}
 
     //public enum NkCommandType
@@ -321,11 +321,11 @@ namespace NuklearSharp
     //    NkStyleCursor.COUNT = 7
     //}
 
-    //public enum NkFontCoordType
-    //{
-    //    NK_COORD_UV = 0,
-    //    NK_COORD_PIXEL = 1
-    //}
+    public enum NkFontCoordType
+    {
+        NK_COORD_UV = 0,
+        NK_COORD_PIXEL = 1
+    }
 
     //public enum NkFontAtlasFormat
     //{
@@ -656,6 +656,48 @@ namespace NuklearSharp
         NK_POPUP_DYNAMIC = 1
     }
 
+    public enum NkShowStates
+    {
+        NK_HIDDEN = 0,
+        NK_SHOWN = 1
+    }
+
+    public enum NkColorFormat
+    {
+        NK_RGB = 0,
+        NK_RGBA = 1
+    }
+
+    public enum NkLayoutFormat
+    {
+        NK_DYNAMIC = 0,
+        NK_STATIC = 1
+    }
+    public enum NkTreeType
+    {
+        NK_TREE_NODE = 0,
+        NK_TREE_TAB = 1
+    }
+    public enum NkButtons
+    {
+        LEFT = 0,
+        MIDDLE = 1,
+        RIGHT = 2,
+        DOUBLE = 3,
+        MAX = 4
+
+    }
+
+    [Flags]
+    public enum NkConvertResult
+    {
+        SUCCESS = 0,
+        INVALID_PARAM = 1,
+        COMMAND_BUFFER_FULL = 2,
+        VERTEX_BUFFER_FULL = 4,
+        ELEMENT_BUFFER_FULL = 8
+    }
+
     unsafe partial class Nk
     {
         public const int nk_false = 0;
@@ -664,29 +706,29 @@ namespace NuklearSharp
         //public const int NK_RIGHT = 1;
         //public const int NK_DOWN = 2;
         //public const int NK_LEFT = 3;
-        //public const int NK_BUTTON_DEFAULT = 0;
-        //public const int NK_BUTTON_REPEATER = 1;
+        //public const int NkButtons.DEFAULT = 0;
+        //public const int NkButtons.REPEATER = 1;
         //  public const int NK_FIXED = nk_false;
         //  public const int NK_MODIFIABLE = nk_true;
         //public const int NK_VERTICAL = 0;
         //public const int NK_HORIZONTAL = 1;
         //public const int NK_MINIMIZED = nk_false;
         //public const int NK_MAXIMIZED = nk_true;
-        public const int NK_HIDDEN = nk_false;
-        public const int NK_SHOWN = nk_true;
+        //public const int NK_HIDDEN = nk_false;
+        //public const int NK_SHOWN = nk_true;
         //public const int NK_CHART_LINES = 0;
         //public const int NK_CHART_COLUMN = 1;
         //public const int NK_CHART_MAX = 2;
         //public const int NK_CHART_HOVERING = 0x01;
         //public const int NK_CHART_CLICKED = 0x02;
-        public const int NK_RGB = 0;
-        public const int NK_RGBA = 1;
-        public const int NK_POPUP_STATIC = 0;
-        public const int NK_POPUP_DYNAMIC = 1;
-        public const int NK_DYNAMIC = 0;
-        public const int NK_STATIC = 1;
-        public const int NK_TREE_NODE = 0;
-        public const int NK_TREE_TAB = 1;
+        //public const int NK_RGB = 0;
+        //public const int NK_RGBA = 1;
+        //public const int NK_POPUP_STATIC = 0;
+        //public const int NK_POPUP_DYNAMIC = 1;
+        //public const int NK_DYNAMIC = 0;
+        //public const int NK_STATIC = 1;
+        //public const int NK_TREE_NODE = 0;
+        //public const int NK_TREE_TAB = 1;
         //public const int NkSymbolType.NONE = 0;
         //public const int NkSymbolType.X = 1;
         //public const int NkSymbolType.UNDERSCORE = 2;
@@ -732,18 +774,18 @@ namespace NuklearSharp
         //public const int NkKeys.SCROLL_DOWN = 28;
         //public const int NkKeys.SCROLL_UP = 29;
         //public const int NkKeys.MAX = 30;
-        public const int NK_BUTTON_LEFT = 0;
-        public const int NK_BUTTON_MIDDLE = 1;
-        public const int NK_BUTTON_RIGHT = 2;
-        public const int NK_BUTTON_DOUBLE = 3;
-        public const int NK_BUTTON_MAX = 4;
-        public const int NK_ANTI_ALIASING_OFF = 0;
-        public const int NK_ANTI_ALIASING_ON = 1;
-        public const int NK_CONVERT_SUCCESS = 0;
-        public const int NK_CONVERT_INVALID_PARAM = 1;
-        public const int NK_CONVERT_COMMAND_BUFFER_FULL = (1 << (1));
-        public const int NK_CONVERT_VERTEX_BUFFER_FULL = (1 << (2));
-        public const int NK_CONVERT_ELEMENT_BUFFER_FULL = (1 << (3));
+        //public const int NkButtons.LEFT = 0;
+        //public const int NkButtons.MIDDLE = 1;
+        //public const int NkButtons.RIGHT = 2;
+        //public const int NkButtons.DOUBLE = 3;
+        //public const int NkButtons.MAX = 4;
+        //public const int NK_ANTI_ALIASING_OFF = 0;
+        //public const int NK_ANTI_ALIASING_ON = 1;
+        //public const int NkConvertResult.SUCCESS = 0;
+        //public const int NkConvertResult.INVALID_PARAM = 1;
+        //public const int NkConvertResult.COMMAND_BUFFER_FULL = (1 << (1));
+        //public const int NkConvertResult.VERTEX_BUFFER_FULL = (1 << (2));
+        //public const int NkConvertResult.ELEMENT_BUFFER_FULL = (1 << (3));
         //public const int NkPanelFlags.BORDER = (1 << (0));
         //public const int NkPanelFlags.MOVABLE = (1 << (1));
         //public const int NkPanelFlags.SCALABLE = (1 << (2));

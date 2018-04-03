@@ -32,8 +32,8 @@
             {
                 VertexAlignment = 4,
                 GlobalAlpha = 1f,
-                ShapeAa = Nk.NK_ANTI_ALIASING_ON,
-                LineAa = Nk.NK_ANTI_ALIASING_ON,
+                ShapeAa = true,
+                LineAa = true,
                 CircleSegmentCount = 22,
                 CurveSegmentCount = 22,
                 ArcSegmentCount = 22
