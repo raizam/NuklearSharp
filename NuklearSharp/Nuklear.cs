@@ -193,7 +193,7 @@ namespace NuklearSharp
 
         public class NkStyleItem
         {
-            public int Type;
+            public NkStyleItemType Type;
             public NkStyleItemData Data = new NkStyleItemData();
         }
 
@@ -256,7 +256,7 @@ namespace NuklearSharp
         [StructLayout(LayoutKind.Sequential)]
         public struct NkPropertyVariant
         {
-            public int kind;
+            public NkPropertyKind kind;
             public NkProperty value;
             public NkProperty min_value;
             public NkProperty max_value;
@@ -506,7 +506,7 @@ namespace NuklearSharp
             public int Count;
 
             public NkRect Clip;
-            public int UseClipping;
+            public bool UseClipping;
             public NkHandle Userdata = new NkHandle();
         }
 
@@ -578,7 +578,7 @@ namespace NuklearSharp
             return new T();
         }
 
-        public static void nk_command_buffer_init(NkCommandBuffer cmdbuf, int clip)
+        public static void nk_command_buffer_init(NkCommandBuffer cmdbuf, bool clip)
         {
             cmdbuf.UseClipping = clip;
             cmdbuf.First = cmdbuf.Last = null;
@@ -593,11 +593,11 @@ namespace NuklearSharp
             cmdbuf.Clip = nk_null_rect;
         }
 
-        public static NkCommandBase nk_command_buffer_push(NkCommandBuffer b, int t)
+        public static NkCommandBase nk_command_buffer_push(NkCommandBuffer b, NkCommandType t)
         {
-            if (b == null || t < 0 || t >= CommandCreators.Length || CommandCreators[t] == null) return null;
+            if (b == null || t < 0 || (int)t >= CommandCreators.Length || CommandCreators[(int)t] == null) return null;
 
-            var creator = CommandCreators[t];
+            var creator = CommandCreators[(int)t];
 
             var command = (NkCommandBase)creator();
 
@@ -649,7 +649,7 @@ namespace NuklearSharp
             {
                 var mouseBounds = new NkRect();
                 var cursor = ctx.Style.CursorActive;
-                nk_command_buffer_init(ctx.Overlay, NK_CLIPPING_OFF);
+                nk_command_buffer_init(ctx.Overlay, false);
                 nk_start_buffer(ctx, ctx.Overlay);
                 mouseBounds.x = ctx.Input.mouse.Pos.x - cursor.offset.x;
                 mouseBounds.y = ctx.Input.mouse.Pos.y - cursor.offset.y;
@@ -829,7 +829,7 @@ namespace NuklearSharp
         }
 
         public static void nk_property_(NkContext ctx, char* name, NkPropertyVariant* variant, float incPerPixel,
-            int filter)
+            NkPropertyFilter filter)
         {
             var bounds = new NkRect();
             uint hash;
@@ -920,7 +920,7 @@ namespace NuklearSharp
             NkColor col)
         {
             if (b == null || col.a == 0 || lineThickness <= 0) return;
-            var cmd = (NkCommandPolygon)nk_command_buffer_push(b, NK_COMMAND_POLYGON);
+            var cmd = (NkCommandPolygon)nk_command_buffer_push(b, NkCommandType.POLYGON);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.LineThickness = (ushort)lineThickness;
@@ -936,7 +936,7 @@ namespace NuklearSharp
         public static void nk_fill_polygon(NkCommandBuffer b, float* points, int pointCount, NkColor col)
         {
             if (b == null || col.a == 0) return;
-            var cmd = (NkCommandPolygonFilled)nk_command_buffer_push(b, NK_COMMAND_POLYGON_FILLED);
+            var cmd = (NkCommandPolygonFilled)nk_command_buffer_push(b, NkCommandType.POLYGON_FILLED);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;
@@ -952,7 +952,7 @@ namespace NuklearSharp
             NkColor col)
         {
             if (b == null || col.a == 0 || lineThickness <= 0) return;
-            var cmd = (NkCommandPolyline)nk_command_buffer_push(b, NK_COMMAND_POLYLINE);
+            var cmd = (NkCommandPolyline)nk_command_buffer_push(b, NkCommandType.POLYLINE);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;

@@ -262,7 +262,7 @@ namespace NuklearSharp
             public NkColor label_normal = new NkColor();
             public NkColor label_hover = new NkColor();
             public NkColor label_active = new NkColor();
-            public int align;
+            public NkStyleHeaderAlign align;
             public NkVec2 padding = new NkVec2();
             public NkVec2 label_padding = new NkVec2();
             public NkVec2 spacing = new NkVec2();

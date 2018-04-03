@@ -1293,41 +1293,44 @@ namespace NuklearSharp
             return (NkVec2)(text_size);
         }
 
-        public static void* nk_buffer_align(void* unaligned, ulong align, ulong* alignment, int type)
-        {
-            void* memory = null;
-            switch (type)
-            {
-                default:
-                case NK_BUFFER_MAX:
-                case NK_BUFFER_FRONT:
-                    if ((align) != 0)
-                    {
-                        memory = ((void*)((long)(((ulong)((long)((byte*)(unaligned) + (align - 1)))) & ~(align - 1))));
-                        *alignment = ((ulong)((byte*)(memory) - (byte*)(unaligned)));
-                    }
-                    else
-                    {
-                        memory = unaligned;
-                        *alignment = (ulong)(0);
-                    }
-                    break;
-                case NK_BUFFER_BACK:
-                    if ((align) != 0)
-                    {
-                        memory = ((void*)((long)(((ulong)((long)((byte*)(unaligned)))) & ~(align - 1))));
-                        *alignment = ((ulong)((byte*)(unaligned) - (byte*)(memory)));
-                    }
-                    else
-                    {
-                        memory = unaligned;
-                        *alignment = (ulong)(0);
-                    }
-                    break;
-            }
+        //public const int NK_BUFFER_FRONT = 0;
+        //public const int NK_BUFFER_BACK = 1;
+        //public const int NK_BUFFER_MAX = 2;
+        //public static void* nk_buffer_align(void* unaligned, ulong align, ulong* alignment, int type)
+        //{
+        //    void* memory = null;
+        //    switch (type)
+        //    {
+        //        default:
+        //        case NK_BUFFER_MAX:
+        //        case NK_BUFFER_FRONT:
+        //            if ((align) != 0)
+        //            {
+        //                memory = ((void*)((long)(((ulong)((long)((byte*)(unaligned) + (align - 1)))) & ~(align - 1))));
+        //                *alignment = ((ulong)((byte*)(memory) - (byte*)(unaligned)));
+        //            }
+        //            else
+        //            {
+        //                memory = unaligned;
+        //                *alignment = (ulong)(0);
+        //            }
+        //            break;
+        //        case NK_BUFFER_BACK:
+        //            if ((align) != 0)
+        //            {
+        //                memory = ((void*)((long)(((ulong)((long)((byte*)(unaligned)))) & ~(align - 1))));
+        //                *alignment = ((ulong)((byte*)(unaligned) - (byte*)(memory)));
+        //            }
+        //            else
+        //            {
+        //                memory = unaligned;
+        //                *alignment = (ulong)(0);
+        //            }
+        //            break;
+        //    }
 
-            return memory;
-        }
+        //    return memory;
+        //}
 
         public static void nk_draw_vertex_color(void* attr, float* vals, VertexLayoutFormat format)
         {
@@ -1525,17 +1528,17 @@ namespace NuklearSharp
                     void* address = (void*)((sbyte*)(dst) + elem_iter->offset);
                     switch (elem_iter->attribute)
                     {
-                        case NK_VERTEX_ATTRIBUTE_COUNT:
+                        case NkDrawVertexLayoutAttribute.ATTRIBUTE_COUNT:
                         default:
                             ;
                             break;
-                        case NK_VERTEX_POSITION:
+                        case NkDrawVertexLayoutAttribute.POSITION:
                             nk_draw_vertex_element(address, &pos.x, (int)(2), elem_iter->format);
                             break;
-                        case NK_VERTEX_TEXCOORD:
+                        case NkDrawVertexLayoutAttribute.TEXCOORD:
                             nk_draw_vertex_element(address, &uv.x, (int) (2), elem_iter->format);
                             break;
-                        case NK_VERTEX_COLOR:
+                        case NkDrawVertexLayoutAttribute.COLOR:
                             nk_draw_vertex_color(address, &color.r, elem_iter->format);
                             break;
                     }
@@ -2406,7 +2409,7 @@ namespace NuklearSharp
         }
 
         public static int nk_do_toggle(ref NkWidgetStates state, NkCommandBuffer _out_, NkRect r, int* active, char* str, int len,
-            int type, nk_style_toggle style, nk_input _in_, NkUserFont font)
+            NkToggleType type, nk_style_toggle style, nk_input _in_, NkUserFont font)
         {
             int was_active;
             NkRect bounds = new NkRect();
@@ -2435,7 +2438,7 @@ namespace NuklearSharp
             was_active = (int)(*active);
             *active = (int)(nk_toggle_behavior(_in_, (NkRect)(bounds), ref state, (int)(*active)));
             if ((style.draw_begin) != null) style.draw_begin(_out_, (NkHandle)(style.userdata));
-            if ((type) == (NK_TOGGLE_CHECK))
+            if ((type) == (NkToggleType.NK_TOGGLE_CHECK))
             {
                 nk_draw_checkbox(_out_, (state), style, (int)(*active), &label, &select, &cursor, str, (int)(len), font);
             }
@@ -2971,8 +2974,8 @@ namespace NuklearSharp
 
             if ((prev_state == 0) && ((edit.active) != 0))
             {
-                int type = (int)((flags & NkEditFlags.MULTILINE) != 0 ? NK_TEXT_EDIT_MULTI_LINE : NK_TEXT_EDIT_SINGLE_LINE);
-                nk_textedit_clear_state(edit, (int)(type), filter);
+                NkTextEditType type = ((flags & NkEditFlags.MULTILINE) != 0 ? NkTextEditType.MULTI_LINE : NkTextEditType.SINGLE_LINE);
+                nk_textedit_clear_state(edit, (type), filter);
                 if ((flags & NkEditFlags.AUTO_SELECT) != 0) select_all = (sbyte)(nk_true);
                 if ((flags & NkEditFlags.GOTO_END_ON_ACTIVATE) != 0)
                 {
@@ -2980,9 +2983,9 @@ namespace NuklearSharp
                     _in_ = null;
                 }
             }
-            else if (edit.active == 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
-            if ((flags & NkEditFlags.READ_ONLY) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_VIEW);
-            else if ((flags & NkEditFlags.ALWAYS_INSERT_MODE) != 0) edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
+            else if (edit.active == 0) edit.mode = (byte)(NkTextEditMode.VIEW);
+            if ((flags & NkEditFlags.READ_ONLY) != 0) edit.mode = (byte)(NkTextEditMode.VIEW);
+            else if ((flags & NkEditFlags.ALWAYS_INSERT_MODE) != 0) edit.mode = (NkTextEditMode.INSERT);
             ret = ((edit.active) != 0 ? NkEditState.ACTIVE : NkEditState.INACTIVE);
             if (prev_state != edit.active) ret |= ((edit.active) != 0 ? NkEditState.ACTIVATED : NkEditState.DEACTIVATED);
             if (((edit.active) != 0) && ((_in_) != null))
@@ -3015,7 +3018,7 @@ namespace NuklearSharp
                 }
                 {
                     int i;
-                    int old_mode = (int)(edit.mode);
+                    NkTextEditMode old_mode = (edit.mode);
                     for (i = (int)(0); (i) < ((int)NkKeys.MAX); ++i)
                     {
                         if (((i) == ((int)NkKeys.ENTER)) || ((i) == ((int)NkKeys.TAB))) continue;
@@ -3098,7 +3101,7 @@ namespace NuklearSharp
                         if ((state & NkWidgetStates.ACTIVED) != 0) background = style.active;
                         else if ((state & NkWidgetStates.HOVER) != 0) background = style.hover;
                         else background = style.normal;
-                        if ((background.Type) == (NK_STYLE_ITEM_COLOR))
+                        if ((background.Type) == (NkStyleItemType.COLOR))
                         {
                             nk_stroke_rect(_out_, (NkRect)(bounds), (float)(style.rounding), (float)(style.border),
                                 (NkColor)(style.border_color));
@@ -3281,7 +3284,7 @@ namespace NuklearSharp
                                 cursor_color = (NkColor)(style.cursor_normal);
                                 cursor_text_color = (NkColor)(style.cursor_text_normal);
                             }
-                            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
+                            if ((background.Type) == (NkStyleItemType.IMAGE))
                                 background_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
                             else background_color = (NkColor)(background.Data.Color);
                             if ((edit.select_start) == (edit.select_end))
@@ -3385,7 +3388,7 @@ namespace NuklearSharp
                                 background = style.normal;
                                 text_color = (NkColor)(style.text_normal);
                             }
-                            if ((background.Type) == (NK_STYLE_ITEM_IMAGE))
+                            if ((background.Type) == (NkStyleItemType.IMAGE))
                                 background_color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
                             else background_color = (NkColor)(background.Data.Color);
                             nk_edit_draw_text(_out_, style, (float)(area.x - edit.scrollbar.x), (float)(area.y - edit.scrollbar.y),
@@ -3426,7 +3429,7 @@ namespace NuklearSharp
                 {
                     default:
                         break;
-                    case NK_PROPERTY_INT:
+                    case NkPropertyKind.NK_PROPERTY_INT:
                         variant->value.i = (int)(variant->value.i + (int)(delta));
                         variant->value.i =
                             (int)
@@ -3435,7 +3438,7 @@ namespace NuklearSharp
                                     ? (variant->min_value.i)
                                     : ((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)));
                         break;
-                    case NK_PROPERTY_FLOAT:
+                    case NkPropertyKind.NK_PROPERTY_FLOAT:
                         variant->value.f = (float)(variant->value.f + delta);
                         variant->value.f =
                             (float)
@@ -3444,7 +3447,7 @@ namespace NuklearSharp
                                     ? (variant->min_value.f)
                                     : ((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)));
                         break;
-                    case NK_PROPERTY_DOUBLE:
+                    case NkPropertyKind.NK_PROPERTY_DOUBLE:
                         variant->value.d = (double)(variant->value.d + (double)(delta));
                         variant->value.d =
                             (double)
@@ -3485,7 +3488,7 @@ namespace NuklearSharp
 
         public static void nk_do_property(ref NkWidgetStates ws, NkCommandBuffer _out_, NkRect property, char* name,
             NkPropertyVariant* variant, float inc_per_pixel, ref string buffer, ref NkPropertyStatus state, ref int cursor,
-            ref int select_begin, ref int select_end, nk_style_property style, int filter, nk_input _in_, NkUserFont font,
+            ref int select_begin, ref int select_end, nk_style_property style, NkPropertyFilter filter, nk_input _in_, NkUserFont font,
             nk_text_edit text_edit, NkButtonBehavior behavior)
         {
             NkPluginFilter[] filters = new NkPluginFilter[2];
@@ -3533,15 +3536,15 @@ namespace NuklearSharp
                 {
                     default:
                         break;
-                    case NK_PROPERTY_INT:
+                    case NkPropertyKind.NK_PROPERTY_INT:
                         nk_itoa(_string_, (int)(variant->value.i));
                         num_len = (int)(nk_strlen(_string_));
                         break;
-                    case NK_PROPERTY_FLOAT:
+                    case NkPropertyKind.NK_PROPERTY_FLOAT:
                         nk_dtoa(_string_, (double)(variant->value.f));
                         num_len = (int)(nk_string_float_limit(_string_, (int)(2)));
                         break;
-                    case NK_PROPERTY_DOUBLE:
+                    case NkPropertyKind.NK_PROPERTY_DOUBLE:
                         nk_dtoa(_string_, (double)(variant->value.d));
                         num_len = (int)(nk_string_float_limit(_string_, (int)(2)));
                         break;
@@ -3578,7 +3581,7 @@ namespace NuklearSharp
                 {
                     default:
                         break;
-                    case NK_PROPERTY_INT:
+                    case NkPropertyKind.NK_PROPERTY_INT:
                         variant->value.i =
                             (int)
                                 (((variant->value.i - variant->step.i) < (variant->max_value.i)
@@ -3589,7 +3592,7 @@ namespace NuklearSharp
                                         ? (variant->value.i - variant->step.i)
                                         : (variant->max_value.i)));
                         break;
-                    case NK_PROPERTY_FLOAT:
+                    case NkPropertyKind.NK_PROPERTY_FLOAT:
                         variant->value.f =
                             (float)
                                 (((variant->value.f - variant->step.f) < (variant->max_value.f)
@@ -3600,7 +3603,7 @@ namespace NuklearSharp
                                         ? (variant->value.f - variant->step.f)
                                         : (variant->max_value.f)));
                         break;
-                    case NK_PROPERTY_DOUBLE:
+                    case NkPropertyKind.NK_PROPERTY_DOUBLE:
                         variant->value.d =
                             (double)
                                 (((variant->value.d - variant->step.d) < (variant->max_value.d)
@@ -3622,7 +3625,7 @@ namespace NuklearSharp
                 {
                     default:
                         break;
-                    case NK_PROPERTY_INT:
+                    case NkPropertyKind.NK_PROPERTY_INT:
                         variant->value.i =
                             (int)
                                 (((variant->value.i + variant->step.i) < (variant->max_value.i)
@@ -3633,7 +3636,7 @@ namespace NuklearSharp
                                         ? (variant->value.i + variant->step.i)
                                         : (variant->max_value.i)));
                         break;
-                    case NK_PROPERTY_FLOAT:
+                    case NkPropertyKind.NK_PROPERTY_FLOAT:
                         variant->value.f =
                             (float)
                                 (((variant->value.f + variant->step.f) < (variant->max_value.f)
@@ -3644,7 +3647,7 @@ namespace NuklearSharp
                                         ? (variant->value.f + variant->step.f)
                                         : (variant->max_value.f)));
                         break;
-                    case NK_PROPERTY_DOUBLE:
+                    case NkPropertyKind.NK_PROPERTY_DOUBLE:
                         variant->value.d =
                             (double)
                                 (((variant->value.d + variant->step.d) < (variant->max_value.d)
@@ -3665,7 +3668,7 @@ namespace NuklearSharp
                 active = (int)(0);
             }
             else active = (int)((state) == (NkPropertyStatus.NK_PROPERTY_EDIT) ? 1 : 0);
-            nk_textedit_clear_state(text_edit, (int)(NK_TEXT_EDIT_SINGLE_LINE), filters[filter]);
+            nk_textedit_clear_state(text_edit, (int)(NkTextEditType.SINGLE_LINE), filters[(int)filter]);
             text_edit.active = ((byte)(active));
 
             text_edit._string_.Str = dst;
@@ -3683,8 +3686,8 @@ namespace NuklearSharp
                     (((select_end) < (length) ? (select_end) : (length)) < (0)
                         ? (0)
                         : ((select_end) < (length) ? (select_end) : (length)));
-            text_edit.mode = (byte)(NK_TEXT_EDIT_MODE_INSERT);
-            nk_do_edit(ref ws, _out_, (NkRect)(edit),(NkEditFlags.FIELD | NkEditFlags.AUTO_SELECT), filters[filter], text_edit,
+            text_edit.mode = (NkTextEditMode.INSERT);
+            nk_do_edit(ref ws, _out_, (NkRect)(edit),(NkEditFlags.FIELD | NkEditFlags.AUTO_SELECT), filters[(int)filter], text_edit,
                 style.edit, ((state) == (NkPropertyStatus.NK_PROPERTY_EDIT)) ? _in_ : null, font);
             cursor = (int)(text_edit.cursor);
             select_begin = (int)(text_edit.select_start);
@@ -3701,7 +3704,7 @@ namespace NuklearSharp
                     {
                         default:
                             break;
-                        case NK_PROPERTY_INT:
+                        case NkPropertyKind.NK_PROPERTY_INT:
                             variant->value.i = (int)(nk_strtoi(ptr, null));
                             variant->value.i =
                                 (int)
@@ -3710,7 +3713,7 @@ namespace NuklearSharp
                                         ? (variant->min_value.i)
                                         : ((variant->value.i) < (variant->max_value.i) ? (variant->value.i) : (variant->max_value.i)));
                             break;
-                        case NK_PROPERTY_FLOAT:
+                        case NkPropertyKind.NK_PROPERTY_FLOAT:
                             nk_string_float_limit(ptr, (int)(2));
                             variant->value.f = (float)(nk_strtof(ptr, null));
                             variant->value.f =
@@ -3720,7 +3723,7 @@ namespace NuklearSharp
                                         ? (variant->min_value.f)
                                         : ((variant->value.f) < (variant->max_value.f) ? (variant->value.f) : (variant->max_value.f)));
                             break;
-                        case NK_PROPERTY_DOUBLE:
+                        case NkPropertyKind.NK_PROPERTY_DOUBLE:
                             nk_string_float_limit(ptr, (int)(2));
                             variant->value.d = (double)(nk_strtod(ptr, null));
                             variant->value.d =
@@ -3862,7 +3865,7 @@ namespace NuklearSharp
         public static NkStyleItem nk_style_item_hide()
         {
             NkStyleItem i = new NkStyleItem();
-            i.Type = (int)(NK_STYLE_ITEM_COLOR);
+            i.Type = (int)(NkStyleItemType.COLOR);
             i.Data.Color = (NkColor)(nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
             return (NkStyleItem)(i);
         }
@@ -3889,7 +3892,7 @@ namespace NuklearSharp
         public static NkPropertyVariant nk_property_variant_int(int value, int min_value, int max_value, int step)
         {
             NkPropertyVariant result = new NkPropertyVariant();
-            result.kind = (int)(NK_PROPERTY_INT);
+            result.kind = (NkPropertyKind.NK_PROPERTY_INT);
             result.value.i = (int)(value);
             result.min_value.i = (int)(min_value);
             result.max_value.i = (int)(max_value);
@@ -3900,7 +3903,7 @@ namespace NuklearSharp
         public static NkPropertyVariant nk_property_variant_float(float value, float min_value, float max_value, float step)
         {
             NkPropertyVariant result = new NkPropertyVariant();
-            result.kind = (int)(NK_PROPERTY_FLOAT);
+            result.kind = (NkPropertyKind.NK_PROPERTY_FLOAT);
             result.value.f = (float)(value);
             result.min_value.f = (float)(min_value);
             result.max_value.f = (float)(max_value);
@@ -3912,7 +3915,7 @@ namespace NuklearSharp
             double step)
         {
             NkPropertyVariant result = new NkPropertyVariant();
-            result.kind = (int)(NK_PROPERTY_DOUBLE);
+            result.kind = (NkPropertyKind.NK_PROPERTY_DOUBLE);
             result.value.d = (double)(value);
             result.min_value.d = (double)(min_value);
             result.max_value.d = (double)(max_value);

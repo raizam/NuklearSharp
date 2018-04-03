@@ -278,7 +278,7 @@ namespace NuklearSharp
         public static NkStyleItem nk_style_item_image(NkImage img)
         {
             NkStyleItem i = new NkStyleItem();
-            i.Type = (int)(NK_STYLE_ITEM_IMAGE);
+            i.Type = (NkStyleItemType.IMAGE);
             i.Data.Image = (NkImage)(img);
             return (NkStyleItem)(i);
         }
@@ -286,7 +286,7 @@ namespace NuklearSharp
         public static NkStyleItem nk_style_item_color(NkColor col)
         {
             NkStyleItem i = new NkStyleItem();
-            i.Type = (int)(NK_STYLE_ITEM_COLOR);
+            i.Type = (int)(NkStyleItemType.COLOR);
             i.Data.Color = (NkColor)(col);
             return (NkStyleItem)(i);
         }
@@ -485,18 +485,18 @@ namespace NuklearSharp
             return (NkWidgetLayoutStates.NK_WIDGET_VALID);
         }
 
-        public static int nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
+        public static NkWidgetLayoutStates nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
         {
             NkWindow win;
             NkStyle style;
             NkPanel layout;
-            int state;
+            NkWidgetLayoutStates state;
             NkVec2 panel_padding = new NkVec2();
-            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (int)(NK_WIDGET_INVALID);
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (NkWidgetLayoutStates.NK_WIDGET_INVALID);
             win = ctx.Current;
             style = ctx.Style;
             layout = win.Layout;
-            state = (int)(nk_widget(bounds, ctx));
+            state = (nk_widget(bounds, ctx));
             panel_padding = (NkVec2)(nk_panel_get_padding(style,(layout.Type)));
             if ((layout.Row.index) == (1))
             {
@@ -506,7 +506,7 @@ namespace NuklearSharp
             else bounds->x -= (float)(item_padding.x);
             if ((layout.Row.index) == (layout.Row.columns)) bounds->w += (float)(panel_padding.x);
             else bounds->w += (float)(item_padding.x);
-            return (int)(state);
+            return (state);
         }
 
         public static void nk_list_view_end(nk_list_view view)

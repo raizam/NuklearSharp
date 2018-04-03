@@ -13,7 +13,7 @@ namespace NuklearSharp
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_draw_vertex_layout_element
         {
-            public int attribute;
+            public NkDrawVertexLayoutAttribute attribute;
             public VertexLayoutFormat format;
             public ulong offset;
         }
@@ -133,11 +133,11 @@ namespace NuklearSharp
         public static int nk_draw_vertex_layout_element_is_end_of_layout(nk_draw_vertex_layout_element* element)
         {
             return
-                (int)(((element->attribute) == (NK_VERTEX_ATTRIBUTE_COUNT)) || ((element->format) == VertexLayoutFormat.COUNT) ? 1 : 0);
+                (int)(((element->attribute) == (NkDrawVertexLayoutAttribute.ATTRIBUTE_COUNT)) || ((element->format) == VertexLayoutFormat.COUNT) ? 1 : 0);
         }
 
         public static void nk_draw_list_stroke_poly_line(NkDrawList list, NkColor color,
-            int closed, float thickness, bool aliasing)
+            bool closed, float thickness, bool aliasing)
         {
             ulong count;
             int thick_line;
@@ -148,7 +148,7 @@ namespace NuklearSharp
             if ((list == null) || ((points_count) < (2))) return;
             color.a = ((byte)((float)(color.a) * list.Config.GlobalAlpha));
             count = (ulong)(points_count);
-            if (closed == 0) count = (ulong)(points_count - 1);
+            if (!closed) count = (ulong)(points_count - 1);
             thick_line = (int)((thickness) > (1.0f) ? 1 : 0);
             color.a = ((byte)((float)(color.a) * list.Config.GlobalAlpha));
             nk_color_fv(&col.r, (NkColor)(color));
@@ -199,12 +199,12 @@ namespace NuklearSharp
                                 normals[i1].x = (float)(diff.y);
                                 normals[i1].y = (float)(-diff.x);
                             }
-                            if (closed == 0) normals[points_count - 1] = (NkVec2)(normals[points_count - 2]);
+                            if (!closed) normals[points_count - 1] = (NkVec2)(normals[points_count - 2]);
                             if (thick_line == 0)
                             {
                                 ulong idx1;
                                 ulong i;
-                                if (closed == 0)
+                                if (!closed)
                                 {
                                     NkVec2 d = new NkVec2();
                                     temp[0] =
@@ -290,7 +290,7 @@ namespace NuklearSharp
                                 ulong idx1;
                                 ulong i;
                                 float half_inner_thickness = (float)((thickness - AA_SIZE) * 0.5f);
-                                if (closed == 0)
+                                if (!closed)
                                 {
                                     NkVec2 d1 =
                                         (NkVec2)
@@ -719,10 +719,10 @@ namespace NuklearSharp
             nk_draw_list_path_clear(list);
         }
 
-        public static void nk_draw_list_path_stroke(NkDrawList list, NkColor color, int closed, float thickness)
+        public static void nk_draw_list_path_stroke(NkDrawList list, NkColor color, bool closed, float thickness)
         {
             if (list == null) return;
-            nk_draw_list_stroke_poly_line(list, (NkColor)(color), (int)(closed),
+            nk_draw_list_stroke_poly_line(list, (NkColor)(color), (closed),
                 (float)(thickness), (list.Config.LineAa));
             nk_draw_list_path_clear(list);
         }
@@ -747,7 +747,7 @@ namespace NuklearSharp
                             (float)((b).y - (nk_vec2_((float)(0.5f), (float)(0.5f))).y))));
             }
 
-            nk_draw_list_path_stroke(list, (NkColor)(col), (int)(NK_STROKE_OPEN), (float)(thickness));
+            nk_draw_list_path_stroke(list, (NkColor)(col), false, (float)(thickness));
         }
 
         public static void nk_draw_list_fill_rect(NkDrawList list, NkRect rect, NkColor col, float rounding)
@@ -782,7 +782,7 @@ namespace NuklearSharp
                     (NkVec2)(nk_vec2_((float)(rect.x + rect.w), (float)(rect.y + rect.h))), (float)(rounding));
             }
 
-            nk_draw_list_path_stroke(list, (NkColor)(col), (int)(NK_STROKE_CLOSED), (float)(thickness));
+            nk_draw_list_path_stroke(list, (NkColor)(col), true, (float)(thickness));
         }
 
         public static void nk_draw_list_fill_rect_multi_color(NkDrawList list, NkRect rect, NkColor left, NkColor top,
@@ -845,7 +845,7 @@ namespace NuklearSharp
             nk_draw_list_path_line_to(list, (NkVec2)(a));
             nk_draw_list_path_line_to(list, (NkVec2)(b));
             nk_draw_list_path_line_to(list, (NkVec2)(c));
-            nk_draw_list_path_stroke(list, (NkColor)(col), (int)(NK_STROKE_CLOSED), (float)(thickness));
+            nk_draw_list_path_stroke(list, (NkColor)(col), true, (float)(thickness));
         }
 
         public static void nk_draw_list_fill_circle(NkDrawList list, NkVec2 center, float radius, NkColor col, uint segs)
@@ -864,7 +864,7 @@ namespace NuklearSharp
             if ((list == null) || (col.a == 0)) return;
             a_max = (float)(3.141592654f * 2.0f * ((float)(segs) - 1.0f) / (float)(segs));
             nk_draw_list_path_arc_to(list, (NkVec2)(center), (float)(radius), (float)(0.0f), (float)(a_max), (uint)(segs));
-            nk_draw_list_path_stroke(list, (NkColor)(col), (int)(NK_STROKE_CLOSED), (float)(thickness));
+            nk_draw_list_path_stroke(list, (NkColor)(col), true, (float)(thickness));
         }
 
         public static void nk_draw_list_stroke_curve(NkDrawList list, NkVec2 p0, NkVec2 cp0, NkVec2 cp1, NkVec2 p1,
@@ -873,7 +873,7 @@ namespace NuklearSharp
             if ((list == null) || (col.a == 0)) return;
             nk_draw_list_path_line_to(list, (NkVec2)(p0));
             nk_draw_list_path_curve_to(list, (NkVec2)(cp0), (NkVec2)(cp1), (NkVec2)(p1), (uint)(segments));
-            nk_draw_list_path_stroke(list, (NkColor)(col), (int)(NK_STROKE_OPEN), (float)(thickness));
+            nk_draw_list_path_stroke(list, (NkColor)(col), false, (float)(thickness));
         }
 
         public static void nk_draw_list_push_rect_uv(NkDrawList list, NkVec2 a, NkVec2 c, NkVec2 uva, NkVec2 uvc,

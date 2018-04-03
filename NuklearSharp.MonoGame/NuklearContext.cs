@@ -47,25 +47,25 @@ namespace NuklearSharp.MonoGame
             {
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = Nk.NK_VERTEX_POSITION,
+                    attribute = NkDrawVertexLayoutAttribute.POSITION,
                     format = VertexLayoutFormat.FLOAT,
                     offset = 0
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = Nk.NK_VERTEX_COLOR,
+                    attribute = NkDrawVertexLayoutAttribute.COLOR,
                     format = VertexLayoutFormat.B8G8R8A8,
                     offset = 12
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = Nk.NK_VERTEX_TEXCOORD,
+                    attribute = NkDrawVertexLayoutAttribute.TEXCOORD,
                     format = VertexLayoutFormat.FLOAT,
                     offset = 16
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = Nk.NK_VERTEX_ATTRIBUTE_COUNT
+                    attribute = NkDrawVertexLayoutAttribute.ATTRIBUTE_COUNT
                 }
             };
         }
