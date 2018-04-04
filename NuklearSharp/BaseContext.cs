@@ -1,4 +1,4 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public abstract partial class BaseContext
     {

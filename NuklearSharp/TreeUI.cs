@@ -1,10 +1,10 @@
-using NuklearSharp;
+using KlearUI;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     internal static class TreeUI
     {
-        public static unsafe bool nk_tree_state_base(NkContext ctx, NkTreeType type, NkImage img, char* title, ref NkCollapseStates state)
+        public static unsafe bool nk_tree_state_base(NkContext ctx, TreeKind type, NkImage img, char* title, ref VisibleStates state)
         {
             NkWindow win;
             NkPanel layout;
@@ -12,14 +12,14 @@ namespace NuklearSharp
             NkCommandBuffer _out_;
             nk_input _in_;
             nk_style_button button;
-            NkSymbolType symbol;
+            Symbols symbol;
             float row_height;
             NkVec2 item_spacing = new NkVec2();
             NkRect header = new NkRect();
             NkRect sym = new NkRect();
             nk_text text = new nk_text();
-            NkWidgetStates ws = (uint)(0);
-            NkWidgetLayoutStates widget_state;
+            WidgetStates ws = (uint)(0);
+            WidgetLayoutStates widget_state;
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return false;
             win = ctx.Current;
             layout = win.Layout;
@@ -31,10 +31,10 @@ namespace NuklearSharp
             Layout.nk_layout_row_dynamic(ctx, (float)(row_height), (int)(1));
             Layout.nk_layout_reset_min_row_height(ctx);
             widget_state = Nk.nk_widget(&header, ctx);
-            if ((type) == (NkTreeType.NK_TREE_TAB))
+            if ((type) == (TreeKind.Tab))
             {
                 NkStyleItem background = style.Tab.background;
-                if ((background.Type) == (NkStyleItemType.IMAGE))
+                if ((background.Type) == (StyleItemKind.Image))
                 {
                     _out_.nk_draw_image((NkRect)(header), background.Data.Image, (NkColor)(Nk.nk_white));
                     text.background = (NkColor)(NkColor.nk_rgba((int)(0), (int)(0), (int)(0), (int)(0)));
@@ -48,20 +48,20 @@ namespace NuklearSharp
                 }
             }
             else text.background = (NkColor)(style.Window.background);
-            _in_ = ((layout.Flags & PanelFlags.ROM) == 0) ? ctx.Input : null;
-            _in_ = (((_in_) != null) && ((widget_state) == (NkWidgetLayoutStates.NK_WIDGET_VALID))) ? ctx.Input : null;
-            if ((Nk.nk_button_behavior(ref ws, (NkRect)(header), _in_, NkButtonBehavior.Default)))
-                state = (((state) == (NkCollapseStates.NK_MAXIMIZED)) ? NkCollapseStates.NK_MINIMIZED : NkCollapseStates.NK_MAXIMIZED);
-            if ((state) == (NkCollapseStates.NK_MAXIMIZED))
+            _in_ = ((layout.Flags & PanelFlags.Rom) == 0) ? ctx.Input : null;
+            _in_ = (((_in_) != null) && ((widget_state) == (WidgetLayoutStates.Valid))) ? ctx.Input : null;
+            if ((Nk.nk_button_behavior(ref ws, (NkRect)(header), _in_, ButtonBehavior.Default)))
+                state = (((state) == (VisibleStates.Maximized)) ? VisibleStates.Minimized : VisibleStates.Maximized);
+            if ((state) == (VisibleStates.Maximized))
             {
                 symbol = (style.Tab.sym_maximize);
-                if ((type) == (NkTreeType.NK_TREE_TAB)) button = style.Tab.tab_maximize_button;
+                if ((type) == (TreeKind.Tab)) button = style.Tab.tab_maximize_button;
                 else button = style.Tab.node_maximize_button;
             }
             else
             {
                 symbol = (style.Tab.sym_minimize);
-                if ((type) == (NkTreeType.NK_TREE_TAB)) button = style.Tab.tab_minimize_button;
+                if ((type) == (TreeKind.Tab)) button = style.Tab.tab_minimize_button;
                 else button = style.Tab.node_minimize_button;
             }
 
@@ -69,7 +69,7 @@ namespace NuklearSharp
                 sym.w = (float)(sym.h = (float)(style.Font.Height));
                 sym.y = (float)(header.y + style.Tab.padding.y);
                 sym.x = (float)(header.x + style.Tab.padding.x);
-                Nk.nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(sym), (symbol), NkButtonBehavior.Default, button, null,
+                Nk.nk_do_button_symbol(ref ws, win.Buffer, (NkRect)(sym), (symbol), ButtonBehavior.Default, button, null,
                     style.Font);
                 if ((img) != null)
                 {
@@ -88,10 +88,10 @@ namespace NuklearSharp
                 label.h = (float)(style.Font.Height);
                 text.text = (NkColor)(style.Tab.text);
                 text.padding = (NkVec2)(Nk.nk_vec2_((float)(0), (float)(0)));
-                _out_.nk_widget_text((NkRect)(label), title, (int)(Nk.nk_strlen(title)), &text, (Alignment.MIDDLELEFT), style.Font);
+                _out_.nk_widget_text((NkRect)(label), title, (int)(Nk.nk_strlen(title)), &text, (Align.MiddleLeft), style.Font);
             }
 
-            if ((state) == (NkCollapseStates.NK_MAXIMIZED))
+            if ((state) == (VisibleStates.Maximized))
             {
                 layout.AtX = (float)(header.x + (float)(layout.Offset.x) + style.Tab.indent);
                 layout.Bounds.w = (float)((layout.Bounds.w) < (style.Tab.indent) ? (style.Tab.indent) : (layout.Bounds.w));
@@ -102,7 +102,7 @@ namespace NuklearSharp
             else return false;
         }
 
-        public static unsafe bool nk_tree_base(NkContext ctx, NkTreeType type, NkImage img, char* title, int initial_state, char* hash,
+        public static unsafe bool nk_tree_base(NkContext ctx, TreeKind type, NkImage img, char* title, int initial_state, char* hash,
             int len, int line)
         {
             NkWindow win = ctx.Current;
@@ -122,18 +122,18 @@ namespace NuklearSharp
                 *state = (uint)(initial_state);
             }
 
-            NkCollapseStates kkk = (NkCollapseStates)(*state);
+            VisibleStates kkk = (VisibleStates)(*state);
             var result = (nk_tree_state_base(ctx, (type), img, title, ref kkk));
             *state = (uint)(int)kkk;
             return result;
         }
 
-        public static unsafe bool nk_tree_state_push(NkContext ctx, NkTreeType type, char* title, ref NkCollapseStates state)
+        public static unsafe bool nk_tree_state_push(NkContext ctx, TreeKind type, char* title, ref VisibleStates state)
         {
             return (nk_tree_state_base(ctx, (type), null, title, ref state));
         }
 
-        public static unsafe bool nk_tree_state_image_push(NkContext ctx, NkTreeType type, NkImage img, char* title, ref NkCollapseStates state)
+        public static unsafe bool nk_tree_state_image_push(NkContext ctx, TreeKind type, NkImage img, char* title, ref VisibleStates state)
         {
             return (nk_tree_state_base(ctx, (type), img, title, ref state));
         }
@@ -150,13 +150,13 @@ namespace NuklearSharp
             layout.Row.tree_depth--;
         }
 
-        public static unsafe bool nk_tree_push_hashed(NkContext ctx, NkTreeType type, char* title, int initial_state, char* hash, int len,
+        public static unsafe bool nk_tree_push_hashed(NkContext ctx, TreeKind type, char* title, int initial_state, char* hash, int len,
             int line)
         {
             return (nk_tree_base(ctx, (type), null, title, (int)(initial_state), hash, (int)(len), (int)(line)));
         }
 
-        public static unsafe bool nk_tree_image_push_hashed(NkContext ctx, NkTreeType type, NkImage img, char* title, int initial_state,
+        public static unsafe bool nk_tree_image_push_hashed(NkContext ctx, TreeKind type, NkImage img, char* title, int initial_state,
             char* hash, int len, int seed)
         {
             return (nk_tree_base(ctx, (type), img, title, (int)(initial_state), hash, (int)(len), (int)(seed)));

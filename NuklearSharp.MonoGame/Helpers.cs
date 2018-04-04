@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace NuklearSharp.MonoGame
+namespace KlearUI.MonoGame
 {
     internal static class Helpers
     {

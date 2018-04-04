@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct NkRect

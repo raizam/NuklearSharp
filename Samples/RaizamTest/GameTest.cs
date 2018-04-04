@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using NuklearSharp;
-using NuklearSharp.MonoGame;
+using KlearUI;
+using KlearUI.MonoGame;
 
 namespace RaizamTest
 {
@@ -100,8 +100,8 @@ namespace RaizamTest
 
             // TODO: Add your drawing code here
             if (_nuklearContext.BeginTitled("demo2", "demo2", new Rectangle(50, 50, 200, 200),
-                PanelFlags.BORDER | PanelFlags.MOVABLE | PanelFlags.SCALABLE |
-                PanelFlags.MINIMIZABLE | PanelFlags.TITLE))
+                PanelFlags.Border | PanelFlags.Movable | PanelFlags.Scalable |
+                PanelFlags.Minimizable | PanelFlags.Title))
             {
                 _nuklearContext.LayoutRowStatic(30, 80, 1);
                 _nuklearContext.LayoutRowDynamic(30, 1);
@@ -116,7 +116,7 @@ namespace RaizamTest
                 _nuklearContext.ButtonColor(Color.Red);
                 _nuklearContext.LayoutRowDynamic(30, 1);
                 _nuklearContext.LayoutRowDynamic(30, 2);
-                _nuklearContext.LabelColored("background", Alignment.MIDDLELEFT, _background);
+                _nuklearContext.LabelColored("background", Align.MiddleLeft, _background);
 
                 if (_nuklearContext.ComboBeginColor(_background, new Vector2(_nuklearContext.WidgetWidth(), 400)))
                 {
@@ -131,7 +131,7 @@ namespace RaizamTest
                 }
 
                 _nuklearContext.LayoutRowDynamic(30, 1);
-                _nuklearContext.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Alignment.MIDDLELEFT, _background);
+                _nuklearContext.LabelColored("Sichem Allocated: " + Pointer.AllocatedTotal, Align.MiddleLeft, _background);
 
             }
             _nuklearContext.End();

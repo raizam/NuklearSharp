@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace NuklearSharp.MonoGame
+namespace KlearUI.MonoGame
 {
     public class NuklearContext : BaseContext
     {
@@ -47,25 +47,25 @@ namespace NuklearSharp.MonoGame
             {
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = NkDrawVertexLayoutAttribute.POSITION,
+                    attribute = VertexLayoutKind.Position,
                     format = VertexLayoutFormat.FLOAT,
                     offset = 0
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = NkDrawVertexLayoutAttribute.COLOR,
+                    attribute = VertexLayoutKind.Color,
                     format = VertexLayoutFormat.B8G8R8A8,
                     offset = 12
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = NkDrawVertexLayoutAttribute.TEXCOORD,
+                    attribute = VertexLayoutKind.TexCoord,
                     format = VertexLayoutFormat.FLOAT,
                     offset = 16
                 },
                 new nk_draw_vertex_layout_element
                 {
-                    attribute = NkDrawVertexLayoutAttribute.ATTRIBUTE_COUNT
+                    attribute = VertexLayoutKind.COUNT
                 }
             };
         }
@@ -192,29 +192,29 @@ namespace NuklearSharp.MonoGame
 
             InputBegin();
 
-            InputKey(NkKeys.DEL, keyboardState.IsKeyDown(Keys.Delete));
-            InputKey(NkKeys.ENTER, keyboardState.IsKeyDown(Keys.Enter));
-            InputKey(NkKeys.TAB, keyboardState.IsKeyDown(Keys.Tab));
-            InputKey(NkKeys.BACKSPACE, keyboardState.IsKeyDown(Keys.Back));
-            InputKey(NkKeys.LEFT, keyboardState.IsKeyDown(Keys.Left));
-            InputKey(NkKeys.RIGHT, keyboardState.IsKeyDown(Keys.Right));
-            InputKey(NkKeys.UP, keyboardState.IsKeyDown(Keys.Up));
-            InputKey(NkKeys.DOWN, keyboardState.IsKeyDown(Keys.Down));
+            InputKey(ControlKeys.Del, keyboardState.IsKeyDown(Keys.Delete));
+            InputKey(ControlKeys.Enter, keyboardState.IsKeyDown(Keys.Enter));
+            InputKey(ControlKeys.Tab, keyboardState.IsKeyDown(Keys.Tab));
+            InputKey(ControlKeys.Backspace, keyboardState.IsKeyDown(Keys.Back));
+            InputKey(ControlKeys.Left, keyboardState.IsKeyDown(Keys.Left));
+            InputKey(ControlKeys.Right, keyboardState.IsKeyDown(Keys.Right));
+            InputKey(ControlKeys.Up, keyboardState.IsKeyDown(Keys.Up));
+            InputKey(ControlKeys.Down, keyboardState.IsKeyDown(Keys.Down));
             if (keyboardState.IsKeyDown(Keys.LeftControl) ||
                 keyboardState.IsKeyDown(Keys.RightControl))
             {
-                InputKey(NkKeys.COPY, keyboardState.IsKeyDown(Keys.C));
-                InputKey(NkKeys.PASTE, keyboardState.IsKeyDown(Keys.P));
-                InputKey(NkKeys.CUT, keyboardState.IsKeyDown(Keys.X));
-                InputKey(NkKeys.CUT, keyboardState.IsKeyDown(Keys.E));
-                InputKey(NkKeys.SHIFT, true);
+                InputKey(ControlKeys.Copy, keyboardState.IsKeyDown(Keys.C));
+                InputKey(ControlKeys.Paste, keyboardState.IsKeyDown(Keys.P));
+                InputKey(ControlKeys.Cut, keyboardState.IsKeyDown(Keys.X));
+                InputKey(ControlKeys.Cut, keyboardState.IsKeyDown(Keys.E));
+                InputKey(ControlKeys.Shift, true);
             }
             else
             {
-                InputKey(NkKeys.COPY, false);
-                InputKey(NkKeys.PASTE, false);
-                InputKey(NkKeys.CUT, false);
-                InputKey(NkKeys.SHIFT, false);
+                InputKey(ControlKeys.Copy, false);
+                InputKey(ControlKeys.Paste, false);
+                InputKey(ControlKeys.Cut, false);
+                InputKey(ControlKeys.Shift, false);
             }
 
             var isShiftDown = keyboardState.IsKeyDown(Keys.LeftShift) ||
@@ -234,9 +234,9 @@ namespace NuklearSharp.MonoGame
                 }
             }
 
-            InputButton(NkButtons.LEFT, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
-            InputButton(NkButtons.MIDDLE, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
-            InputButton(NkButtons.RIGHT, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
+            InputButton(MouseButtons.Left, mouseState.X, mouseState.Y, mouseState.LeftButton == ButtonState.Pressed);
+            InputButton(MouseButtons.Middle, mouseState.X, mouseState.Y, mouseState.MiddleButton == ButtonState.Pressed);
+            InputButton(MouseButtons.Right, mouseState.X, mouseState.Y, mouseState.RightButton == ButtonState.Pressed);
 
             InputMotion(mouseState.X, mouseState.Y);
             InputScroll(new NkVec2 { x = 0, y = (mouseState.ScrollWheelValue - _previousWheel) / WheelDelta });
@@ -256,7 +256,7 @@ namespace NuklearSharp.MonoGame
             return ButtonColor(color.ToNkColor());
         }
 
-        public void LabelColored(string str, Alignment align, Color color)
+        public void LabelColored(string str, Align align, Color color)
         {
             LabelColored(str, align, color.ToNkColor());
         }
@@ -266,7 +266,7 @@ namespace NuklearSharp.MonoGame
             return ComboBeginColor(color.ToNkColor(), size.ToNkVec2());
         }
 
-        public Color ColorPicker(Color color, NkColorFormat fmt)
+        public Color ColorPicker(Color color, ColorFormat fmt)
         {
             return ColorPicker(color.ToNkColorf(), fmt).ToColor();
         }

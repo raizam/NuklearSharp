@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     internal static unsafe class Operations
     {

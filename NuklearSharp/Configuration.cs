@@ -1,4 +1,4 @@
-namespace NuklearSharp
+namespace KlearUI
 {
 
     public unsafe partial class nk_config_stack_style_item_element

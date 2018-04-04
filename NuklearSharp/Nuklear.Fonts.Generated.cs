@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     public unsafe partial class nk_font_config
     {
@@ -14,7 +14,7 @@ namespace NuklearSharp
         public byte oversample_h;
         public PinnedArray<byte> padding = new PinnedArray<byte>(3);
         public float size;
-        public NkFontCoordType coord_type;
+        public FontCoordType coord_type;
         public NkVec2 spacing = new NkVec2();
         public uint* range;
         public nk_baked_font font;
@@ -405,7 +405,7 @@ namespace NuklearSharp
                     (NkHandle) (nk_handle_ptr(null)));
             }
 
-            for (i = (int) (0); (i) < ((int)NkStyleCursor.COUNT); ++i)
+            for (i = (int) (0); (i) < ((int)CursorKind.COUNT); ++i)
             {
                 NkCursor cursor = atlas.Cursors[i];
                 cursor.img.w = ((ushort) (width));
@@ -461,7 +461,7 @@ namespace NuklearSharp
                 font_iter.Handle.Texture = (NkHandle) (texture);
             }
 
-            for (i = (int) (0); (i) < ((int)NkStyleCursor.COUNT); ++i)
+            for (i = (int) (0); (i) < ((int)CursorKind.COUNT); ++i)
             {
                 atlas.Cursors[i].img.handle = (NkHandle) (texture);
             }

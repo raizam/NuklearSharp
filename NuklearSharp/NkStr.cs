@@ -1,4 +1,4 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public unsafe class NkStr
     {

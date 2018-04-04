@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
 
@@ -42,7 +42,7 @@ namespace NuklearSharp
 
     public class NkStyleItem
     {
-        public NkStyleItemType Type;
+        public StyleItemKind Type;
         public NkStyleItemData Data = new NkStyleItemData();
     }
 
@@ -66,7 +66,7 @@ namespace NuklearSharp
         public int TexWidth;
         public int TexHeight;
         public NkRectI Custom;
-        public NkCursor[] Cursors = new NkCursor[(int)NkStyleCursor.COUNT];
+        public NkCursor[] Cursors = new NkCursor[(int)CursorKind.COUNT];
         public int GlyphCount;
         public nk_font_glyph* Glyphs;
         public NkFont DefaultFont;
@@ -105,7 +105,7 @@ namespace NuklearSharp
     [StructLayout(LayoutKind.Sequential)]
     public struct NkPropertyVariant
     {
-        public NkPropertyKind kind;
+        public PropertyKind kind;
         public NkProperty value;
         public NkProperty min_value;
         public NkProperty max_value;
@@ -115,7 +115,7 @@ namespace NuklearSharp
     public class NkStyle
     {
         public NkUserFont Font;
-        public NkCursor[] Cursors = new NkCursor[(int)NkStyleCursor.COUNT];
+        public NkCursor[] Cursors = new NkCursor[(int)CursorKind.COUNT];
         public NkCursor CursorActive;
         public NkCursor CursorLast;
         public bool CursorVisible;
@@ -186,7 +186,7 @@ namespace NuklearSharp
     [StructLayout(LayoutKind.Sequential)]
     public struct NkConfigStackButtonBehaviorElement
     {
-        public NkButtonBehavior old_value;
+        public ButtonBehavior old_value;
     }
 
     public class NkConvertConfig
@@ -284,7 +284,7 @@ namespace NuklearSharp
         {
         }
 
-        public static int nk_popup_begin(NkContext ctx, NkPopupType type, string title, PanelFlags flags, NkRect rect)
+        public static int nk_popup_begin(NkContext ctx, PopupKind type, string title, PanelFlags flags, NkRect rect)
         {
             fixed (char* ptr = title)
             {
@@ -307,7 +307,7 @@ namespace NuklearSharp
             NkColor col)
         {
             if (b == null || col.a == 0 || lineThickness <= 0) return;
-            var cmd = (NkCommandPolygon)b.nk_command_buffer_push(NkCommandType.POLYGON);
+            var cmd = (NkCommandPolygon)b.nk_command_buffer_push(CommandType.Polygon);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.LineThickness = (ushort)lineThickness;
@@ -323,7 +323,7 @@ namespace NuklearSharp
         public static void nk_fill_polygon(NkCommandBuffer b, float* points, int pointCount, NkColor col)
         {
             if (b == null || col.a == 0) return;
-            var cmd = (NkCommandPolygonFilled)b.nk_command_buffer_push(NkCommandType.POLYGON_FILLED);
+            var cmd = (NkCommandPolygonFilled)b.nk_command_buffer_push(CommandType.PolygonFilled);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;
@@ -339,7 +339,7 @@ namespace NuklearSharp
             NkColor col)
         {
             if (b == null || col.a == 0 || lineThickness <= 0) return;
-            var cmd = (NkCommandPolyline)b.nk_command_buffer_push(NkCommandType.POLYLINE);
+            var cmd = (NkCommandPolyline)b.nk_command_buffer_push(CommandType.Polyline);
             if (cmd == null) return;
             cmd.Color = col;
             cmd.PointCount = (ushort)pointCount;

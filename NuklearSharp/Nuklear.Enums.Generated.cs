@@ -1,6 +1,6 @@
 using System;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
 
@@ -31,353 +31,349 @@ namespace NuklearSharp
         COUNT = 21
     }
 
-    public enum NkDrawVertexLayoutAttribute
+    public enum VertexLayoutKind
     {
-        POSITION = 0,
-        COLOR = 1,
-        TEXCOORD = 2,
-        ATTRIBUTE_COUNT = 3
+        Position = 0,
+        Color = 1,
+        TexCoord = 2,
+        COUNT = 3
     }
 
-    public enum NkCommandType
+    public enum CommandType
     {
-        NOP = 0,
-        SCISSOR = 1,
-        LINE = 2,
-        CURVE = 3,
-        RECT = 4,
-        RECT_FILLED = 5,
-        RECT_MULTI_COLOR = 6,
-        CIRCLE = 7,
-        CIRCLE_FILLED = 8,
-        ARC = 9,
-        ARC_FILLED = 10,
-        TRIANGLE = 11,
-        TRIANGLE_FILLED = 12,
-        POLYGON = 13,
-        POLYGON_FILLED = 14,
-        POLYLINE = 15,
-        TEXT = 16,
-        IMAGE = 17,
-        CUSTOM = 18
-    }
-    
-    public enum NkFontCoordType
-    {
-        NK_COORD_UV = 0,
-        NK_COORD_PIXEL = 1
-    }
-
-    public enum NkToggleType
-    {
-        NK_TOGGLE_CHECK = 0,
-        NK_TOGGLE_OPTION = 1
-    }
-
-
-
-    public enum NkPropertyFilter
-    {
-        NK_FILTER_INT = 0,
-        NK_FILTER_FLOAT = 1
+        Scissor = 1,
+        Line = 2,
+        Curve = 3,
+        Rect = 4,
+        RectFilled = 5,
+        RectMulticolor = 6,
+        Circle = 7,
+        CircleFilled = 8,
+        Arc = 9,
+        ArcFilled = 10,
+        Triangle = 11,
+        TriangleFilled = 12,
+        Polygon = 13,
+        PolygonFilled = 14,
+        Polyline = 15,
+        Text = 16,
+        Image = 17,
+        Custom = 18
     }
     
-    public enum NkHeading
+    public enum FontCoordType
     {
-        NK_UP = 0,
-        NK_RIGHT = 1,
-        NK_DOWN = 2,
-        NK_LEFT = 3
+        CoordUV = 0,
+        CoordPixel = 1
     }
 
-    public enum NkButtonBehavior
+    public enum ToggleKind
+    {
+        Check = 0,
+        Option = 1
+    }
+
+
+
+    public enum PropertyFilterKind
+    {
+        FilterInt = 0,
+        FilterFloat = 1
+    }
+    
+    public enum Heading
+    {
+        Up = 0,
+        Right = 1,
+        Down = 2,
+        Left = 3
+    }
+
+    public enum ButtonBehavior
     {
         Default = 0,
         Repeater = 1
     }
-    public enum NkOrientation
+    public enum Orientation
     {
         Vertical = 0,
         Horizontal = 1
     }
-    public enum NkCollapseStates
+    public enum VisibleStates
     {
-        NK_MINIMIZED = 0,
-        NK_MAXIMIZED = 1
+        Minimized = 0,
+        Maximized = 1
     }
 
-    public enum NkWidgetLayoutStates
+    public enum WidgetLayoutStates
     {
-        NK_WIDGET_INVALID = 0,
-        NK_WIDGET_VALID = 1,
-        NK_WIDGET_ROM = 2
+        Invalid = 0,
+        Valid = 1,
+        ROM = 2
     }
 
     [Flags]
-    public enum NkWidgetStates
+    public enum WidgetStates
     {
-        MODIFIED = 2,
-        INACTIVE = 4,
-        ENTERED = 8,
-        HOVER = 16,
-        ACTIVED = 32,
-        LEFT = 64,
-        HOVERED = 18,
-        ACTIVE = 34
+        Modified = 2,
+        Inactive = 4,
+        Entered = 8,
+        Hover = 16,
+        Actived = 32,
+        Left = 64,
+        Hovered = 18,
+        Active = 34
     }
 
 
 
-    public enum NkStyleColors
+    public enum StyleColors
     {
-        TEXT = 0,
-        WINDOW = 1,
-        HEADER = 2,
-        BORDER = 3,
-        BUTTON = 4,
-        BUTTON_HOVER = 5,
-        BUTTON_ACTIVE = 6,
-        TOGGLE = 7,
-        TOGGLE_HOVER = 8,
-        TOGGLE_CURSOR = 9,
-        SELECT = 10,
-        SELECT_ACTIVE = 11,
-        SLIDER = 12,
-        SLIDER_CURSOR = 13,
-        SLIDER_CURSOR_HOVER = 14,
-        SLIDER_CURSOR_ACTIVE = 15,
-        PROPERTY = 16,
-        EDIT = 17,
-        EDIT_CURSOR = 18,
-        COMBO = 19,
-        CHART = 20,
-        CHART_COLOR = 21,
-        CHART_COLOR_HIGHLIGHT = 22,
-        SCROLLBAR = 23,
-        SCROLLBAR_CURSOR = 24,
-        SCROLLBAR_CURSOR_HOVER = 25,
-        SCROLLBAR_CURSOR_ACTIVE = 26,
-        TAB_HEADER = 27,
+        Text = 0,
+        Window = 1,
+        Header = 2,
+        Border = 3,
+        Button = 4,
+        ButtonHover = 5,
+        ButtonActive = 6,
+        Toogle = 7,
+        ToogleHover = 8,
+        ToogleCursor = 9,
+        Select = 10,
+        SelectActive = 11,
+        Slider = 12,
+        SliderCursor = 13,
+        SliderCursorHover = 14,
+        SliderCursorActive = 15,
+        Property = 16,
+        Edit = 17,
+        EditCursor = 18,
+        Combo = 19,
+        Chart = 20,
+        CharColor = 21,
+        CharColorHighlight = 22,
+        Scrollbar = 23,
+        ScrollbarCursor = 24,
+        ScrollbarCursorHover = 25,
+        ScrollbarCursorActive = 26,
+        TabHeader = 27,
         COUNT = 28
     }
 
 
-    public enum NkStyleCursor
+    public enum CursorKind
     {
-        ARROW = 0,
-        TEXT = 1,
-        MOVE = 2,
-        RESIZE_VERTICAL = 3,
-        RESIZE_HORIZONTAL = 4,
-        RESIZE_TOP_LEFT_DOWN_RIGHT = 5,
-        RESIZE_TOP_RIGHT_DOWN_LEFT = 6,
+        Arrow = 0,
+        Text = 1,
+        Move = 2,
+        ResizeVertical = 3,
+        ResizeHorizontal = 4,
+        ResizeAntiClockwise = 5,
+        ResizeClockwise = 6,
         COUNT = 7
     }
 
-    public enum NkSymbolType
+    public enum Symbols
     {
-        NONE = 0,
+        None = 0,
         X = 1,
-        UNDERSCORE = 2,
-        CIRCLE_SOLID = 3,
-        CIRCLE_OUTLINE = 4,
-        RECT_SOLID = 5,
-        RECT_OUTLINE = 6,
-        TRIANGLE_UP = 7,
-        TRIANGLE_DOWN = 8,
-        TRIANGLE_LEFT = 9,
-        TRIANGLE_RIGHT = 10,
-        PLUS = 11,
-        MINUS = 12,
+        Underscore = 2,
+        CircleSolid = 3,
+        CircleOutline = 4,
+        RectSolid = 5,
+        RectOutline = 6,
+        TriangleUp = 7,
+        TriangleDown = 8,
+        TriangleLeft = 9,
+        TriangleRight = 10,
+        Plus = 11,
+        Minus = 12,
         MAX = 13
     }
 
-    public enum NkKeys
+    public enum ControlKeys
     {
-        NONE = 0,
-        SHIFT = 1,
-        CTRL = 2,
-        DEL = 3,
-        ENTER = 4,
-        TAB = 5,
-        BACKSPACE = 6,
-        COPY = 7,
-        CUT = 8,
-        PASTE = 9,
-        UP = 10,
-        DOWN = 11,
-        LEFT = 12,
-        RIGHT = 13,
-        TEXT_INSERT_MODE = 14,
-        TEXT_REPLACE_MODE = 15,
-        TEXT_RESET_MODE = 16,
-        TEXT_LINE_START = 17,
-        TEXT_LINE_END = 18,
-        TEXT_START = 19,
-        TEXT_END = 20,
-        TEXT_UNDO = 21,
-        TEXT_REDO = 22,
-        TEXT_SELECT_ALL = 23,
-        TEXT_WORD_LEFT = 24,
-        TEXT_WORD_RIGHT = 25,
-        SCROLL_START = 26,
-        SCROLL_END = 27,
-        SCROLL_DOWN = 28,
-        SCROLL_UP = 29,
+        None = 0,
+        Shift = 1,
+        Ctrl = 2,
+        Del = 3,
+        Enter = 4,
+        Tab = 5,
+        Backspace = 6,
+        Copy = 7,
+        Cut = 8,
+        Paste = 9,
+        Up = 10,
+        Down = 11,
+        Left = 12,
+        Right = 13,
+        TextInsertMode = 14,
+        TextReplaceMode = 15,
+        TextResetMode = 16,
+        TextLineStart = 17,
+        TextLineEnd = 18,
+        TextStart = 19,
+        TextEnd = 20,
+        TextUndo = 21,
+        TextRedo = 22,
+        TextSelectAll = 23,
+        TextWordLeft = 24,
+        TextWordRight = 25,
+        ScrollStart = 26,
+        ScrollEnd = 27,
+        ScrollDown = 28,
+        ScrollUp = 29,
         MAX = 30
     }
 
-    public enum NkChartType
+    public enum ChartKind
     {
-        NK_CHART_LINES = 0,
-        NK_CHART_COLUMN = 1,
+        Lines = 0,
+        Collumn = 1,
         NK_CHART_MAX = 2
     }
 
 
     [Flags]
-    public enum Alignment
+    public enum Align
     {
-        LEFT = 1,
-        CENTERED = 2,
-        RIGHT = 4,
-        TOP = 8,
-        MIDDLE = 16,
-        BOTTOM = 32,
+        Left = 1,
+        Centered = 2,
+        Right = 4,
+        Top = 8,
+        Middle = 16,
+        Bottom = 32,
 
-        MIDDLELEFT = 17,
-        MIDDLECENTERED = 18,
-        MIDDLERIGHT = 20
+        MiddleLeft = 17,
+        MiddleCentered = 18,
+        MiddleRight = 20
     }
 
     [Flags]
     public enum PanelFlags : uint
     {
-        BORDER = 1,
-        MOVABLE = 2,
-        SCALABLE = 4,
-        CLOSABLE = 8,
-        MINIMIZABLE = 16,
-        NO_SCROLLBAR = 32,
-        TITLE = 64,
-        SCROLL_AUTO_HIDE = 128,
-        BACKGROUND = 256,
-        SCALE_LEFT = 512,
-        NO_INPUT = 1024,
+        Border = 1,
+        Movable = 2,
+        Scalable = 4,
+        Closable = 8,
+        Minimizable = 16,
+        NoScrollbar = 32,
+        Title = 64,
+        ScrollAutoHide = 128,
+        Background = 256,
+        ScaleLeft = 512,
+        NonInput = 1024,
 
-        PRIVATE = (1 << (11)),
-        DYNAMIC = PanelFlags.PRIVATE,
-        ROM = (1 << (12)),
-        NOT_INTERACTIVE = PanelFlags.ROM | PanelFlags.NO_INPUT,
-        HIDDEN = (1 << (13)),
-        CLOSED = (1 << (14)),
-        MINIMIZED = (1 << (15)),
-        REMOVE_ROM = (1 << (16)),
+        Private = (1 << (11)),
+        Dynamic = PanelFlags.Private,
+        Rom = (1 << (12)),
+        NotInteractive = PanelFlags.Rom | PanelFlags.NonInput,
+        Hidden = (1 << (13)),
+        Closed = (1 << (14)),
+        Minimized = (1 << (15)),
+        RemoveRom = (1 << (16)),
     }
 
     [Flags]
-    public enum NkEditState : uint
+    public enum EditState : uint
     {
         None = 0,
-        ACTIVE = (1 << 0),
-        INACTIVE = (1 << 1),
-        ACTIVATED = (1 << 2),
-        DEACTIVATED = (1 << 3),
-        COMMITED = (1 << 4),
+        Active = (1 << 0),
+        Inactive = (1 << 1),
+        Activated = (1 << 2),
+        Deactivated = (1 << 3),
+        Commited = (1 << 4),
     }
 
-    public enum NkEditFlags : uint
+    public enum EditFlags : uint
     {
-        DEFAULT = 0,
-        READ_ONLY = (1 << (0)),
-        AUTO_SELECT = (1 << (1)),
-        SIG_ENTER = (1 << (2)),
-        ALLOW_TAB = (1 << (3)),
-        NO_CURSOR = (1 << (4)),
-        SELECTABLE = (1 << (5)),
-        CLIPBOARD = (1 << (6)),
-        CTRL_ENTER_NEWLINE = (1 << (7)),
-        NO_HORIZONTAL_SCROLL = (1 << (8)),
-        ALWAYS_INSERT_MODE = (1 << (9)),
-        MULTILINE = (1 << (10)),
-        GOTO_END_ON_ACTIVATE = (1 << (11)),
-        SIMPLE = ALWAYS_INSERT_MODE,
-        FIELD = SIMPLE | SELECTABLE | CLIPBOARD,
+        Default = 0,
+        ReadOnly = (1 << (0)),
+        AutoSelect = (1 << (1)),
+        SigEnter = (1 << (2)),
+        AllowTab = (1 << (3)),
+        NoCursor = (1 << (4)),
+        Selectable = (1 << (5)),
+        Clipboard = (1 << (6)),
+        CtrlEnterNewLine = (1 << (7)),
+        NoHorizontalScroll = (1 << (8)),
+        AlwaysInsertMode = (1 << (9)),
+        Multiline = (1 << (10)),
+        GotoEndOnActivate = (1 << (11)),
+        Simple = AlwaysInsertMode,
+        Filed = Simple | Selectable | Clipboard,
 
-        BOX = ALWAYS_INSERT_MODE | SELECTABLE | MULTILINE | ALLOW_TAB | CLIPBOARD,
+        Box = AlwaysInsertMode | Selectable | Multiline | AllowTab | Clipboard,
 
-        EDITOR = SELECTABLE | MULTILINE | ALLOW_TAB | CLIPBOARD,
+        Editor = Selectable | Multiline | AllowTab | Clipboard,
     }
 
-    public enum NkChartEvent
+    public enum ChartEvent
     {
-        NK_CHART_HOVERING = 1,
-        NK_CHART_CLICKED = 2
+        Hovering = 1,
+        Clicked = 2
     }
 
-    public enum NkPopupType
+    public enum PopupKind
     {
-        NK_POPUP_STATIC = 0,
-        NK_POPUP_DYNAMIC = 1
+        PopupStatic = 0,
+        PopupDynamic = 1
     }
 
-    public enum NkShowStates
+    public enum ShowStates
     {
-        NK_HIDDEN = 0,
-        NK_SHOWN = 1
+        Hidden = 0,
+        Shown = 1
     }
 
-    public enum NkColorFormat
+    public enum ColorFormat
     {
-        NK_RGB = 0,
-        NK_RGBA = 1
+        Rgb = 0,
+        Rgba = 1
     }
 
-    public enum NkLayoutFormat
+    public enum LayoutFormat
     {
-        NK_DYNAMIC = 0,
-        NK_STATIC = 1
+        Dynamic = 0,
+        Static = 1
     }
-    public enum NkTreeType
+    public enum TreeKind
     {
-        NK_TREE_NODE = 0,
-        NK_TREE_TAB = 1
+        Node = 0,
+        Tab = 1
     }
-    public enum NkButtons
+    public enum MouseButtons
     {
-        LEFT = 0,
-        MIDDLE = 1,
-        RIGHT = 2,
-        DOUBLE = 3,
+        Left = 0,
+        Middle = 1,
+        Right = 2,
+        Double = 3,
         MAX = 4
-
     }
 
     [Flags]
-    public enum NkConvertResult
+    public enum VertexConvertResult
     {
-        SUCCESS = 0,
-        INVALID_PARAM = 1,
-        COMMAND_BUFFER_FULL = 2,
-        VERTEX_BUFFER_FULL = 4,
-        ELEMENT_BUFFER_FULL = 8
+        Success = 0,
+        InvalidParam = 1,
+        CommandBufferFull = 2,
+        VertexBufferFull = 4,
+        ElementBufferFull = 8
     }
 
     [Flags]
-    public enum NkPanelType
+    public enum PanelKind
     {
-        WINDOW = (1 << (0)),
-        GROUP = (1 << (1)),
-        POPUP = (1 << (2)),
-        CONTEXTUAL = (1 << (4)),
-        COMBO = (1 << (5)),
-        MENU = (1 << (6)),
-        TOOLTIP = (1 << (7)),
-
-        SET_NONBLOCK =    NkPanelType.CONTEXTUAL | NkPanelType.COMBO | NkPanelType.MENU | NkPanelType.TOOLTIP,
-
-        SET_POPUP = NkPanelType.SET_NONBLOCK | NkPanelType.POPUP,
-        SET_SUB = NkPanelType.SET_POPUP | NkPanelType.GROUP,
+        Window = (1 << (0)),
+        Group = (1 << (1)),
+        Popup = (1 << (2)),
+        Contextual = (1 << (4)),
+        Combo = (1 << (5)),
+        Menu = (1 << (6)),
+        Tooltip = (1 << (7)),
+        SetNonBlock =    PanelKind.Contextual | PanelKind.Combo | PanelKind.Menu | PanelKind.Tooltip,
+        SetPopup = PanelKind.SetNonBlock | PanelKind.Popup,
+        SetSub = PanelKind.SetPopup | PanelKind.Group,
     }
 
     public enum FontAtlasFormat
@@ -387,57 +383,57 @@ namespace NuklearSharp
     }
 
 
-    public enum NkPanelRowLayoutType
+    public enum PanelRowLayoutType
     {
-        DYNAMIC_FIXED = 0,
-        DYNAMIC_ROW = 1,
-        DYNAMIC_FREE = 2,
-        DYNAMIC = 3,
-        STATIC_FIXED = 4,
-        STATIC_ROW = 5,
-        STATIC_FREE = 6,
-        STATIC = 7,
-        TEMPLATE = 8,
+        DynamicFixed = 0,
+        DynamicRow = 1,
+        DynamicFree = 2,
+        Dynamic = 3,
+        StatixFixed = 4,
+        StaticRow = 5,
+        StaticFree = 6,
+        Static = 7,
+        Template = 8,
         COUNT = 9
     }
 
-    public enum NkPropertyKind
+    public enum PropertyKind
     {
-        NK_PROPERTY_INT = 0,
-        NK_PROPERTY_FLOAT = 1,
-        NK_PROPERTY_DOUBLE = 2
+        Int = 0,
+        Float = 1,
+        Double = 2
     }
 
-    public enum NkPropertyStatus
+    public enum PropertyStatus
     {
-        NK_PROPERTY_DEFAULT = 0,
-        NK_PROPERTY_EDIT = 1,
-        NK_PROPERTY_DRAG = 2
+        Default = 0,
+        Edit = 1,
+        Drag = 2
     }
 
-    public enum NkTextEditType
+    public enum TextEditMode
     {
-        SINGLE_LINE = 0,
-        MULTI_LINE = 1
+        SingleLine = 0,
+        Multiline = 1
     }
 
     public enum NkTextEditMode
     {
-        VIEW = 0,
-        INSERT = 1,
-        REPLACE = 2
+        View = 0,
+        Insert = 1,
+        Replace = 2
+    } 
+
+    public enum StyleItemKind
+    {
+        Color = 0,
+        Image = 1
     }
 
-    public enum NkStyleItemType
+    public enum StyleHeaderAlign
     {
-        COLOR = 0,
-        IMAGE = 1
-    }
-
-    public enum NkStyleHeaderAlign
-    {
-        LEFT = 0,
-        RIGHT = 1
+        Left = 0,
+        Right = 1
     }
 
     unsafe partial class Nk

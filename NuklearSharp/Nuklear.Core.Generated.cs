@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct NkColorF
@@ -34,15 +34,7 @@ namespace NuklearSharp
             public short h;
         }
 
-        public unsafe partial class NkImage
-        {
-            public NkHandle handle = new NkHandle();
-            public ushort w;
-            public ushort h;
-            public PinnedArray<ushort> region = new PinnedArray<ushort>(4);
-        }
-
-        public unsafe partial class NkCursor
+    public unsafe partial class NkCursor
         {
             public NkImage img = new NkImage();
             public NkVec2 size = new NkVec2();
@@ -62,7 +54,7 @@ namespace NuklearSharp
 
         public unsafe partial class nk_chart_slot
         {
-            public NkChartType type;
+            public ChartKind type;
             public NkColor color = new NkColor();
             public NkColor highlight = new NkColor();
             public float min;
@@ -187,7 +179,7 @@ namespace NuklearSharp
             clip.h = (float)((0) < (clip.h) ? (clip.h) : (0));
         }
 
-        public static void nk_triangle_from_direction(NkVec2* result, NkRect r, float pad_x, float pad_y, NkHeading direction)
+        public static void nk_triangle_from_direction(NkVec2* result, NkRect r, float pad_x, float pad_y, Heading direction)
         {
             float w_half;
             float h_half;
@@ -199,19 +191,19 @@ namespace NuklearSharp
             r.y = (float)(r.y + pad_y);
             w_half = (float)(r.w / 2.0f);
             h_half = (float)(r.h / 2.0f);
-            if ((direction) == (NkHeading.NK_UP))
+            if ((direction) == (Heading.Up))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x + w_half), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + r.h)));
                 result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
-            else if ((direction) == (NkHeading.NK_RIGHT))
+            else if ((direction) == (Heading.Right))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y + h_half)));
                 result[2] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y + r.h)));
             }
-            else if ((direction) == (NkHeading.NK_DOWN))
+            else if ((direction) == (Heading.Down))
             {
                 result[0] = (NkVec2)(nk_vec2_((float)(r.x), (float)(r.y)));
                 result[1] = (NkVec2)(nk_vec2_((float)(r.x + r.w), (float)(r.y)));
@@ -239,7 +231,7 @@ namespace NuklearSharp
         public static NkStyleItem nk_style_item_image(NkImage img)
         {
             NkStyleItem i = new NkStyleItem();
-            i.Type = (NkStyleItemType.IMAGE);
+            i.Type = (StyleItemKind.Image);
             i.Data.Image = (NkImage)(img);
             return (NkStyleItem)(i);
         }
@@ -247,7 +239,7 @@ namespace NuklearSharp
         public static NkStyleItem nk_style_item_color(NkColor col)
         {
             NkStyleItem i = new NkStyleItem();
-            i.Type = (int)(NkStyleItemType.COLOR);
+            i.Type = (int)(StyleItemKind.Color);
             i.Data.Color = (NkColor)(col);
             return (NkStyleItem)(i);
         }
@@ -274,14 +266,14 @@ namespace NuklearSharp
                         (int)(layout.Row.columns)));
             switch (layout.Row.type)
             {
-                case NkPanelRowLayoutType.DYNAMIC_FIXED:
+                case PanelRowLayoutType.DynamicFixed:
                     {
                         item_width = (float)(((1.0f) < (panel_space - 1.0f) ? (panel_space - 1.0f) : (1.0f)) / (float)(layout.Row.columns));
                         item_offset = (float)((float)(layout.Row.index) * item_width);
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
-                case NkPanelRowLayoutType.DYNAMIC_ROW:
+                case PanelRowLayoutType.DynamicRow:
                     {
                         item_width = (float)(layout.Row.item_width * panel_space);
                         item_offset = (float)(layout.Row.item_offset);
@@ -294,7 +286,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkPanelRowLayoutType.DYNAMIC_FREE:
+                case PanelRowLayoutType.DynamicFree:
                     {
                         bounds->x = (float)(layout.AtX + (layout.Bounds.w * layout.Row.item.x));
                         bounds->x -= ((float)(layout.Offset.x));
@@ -304,7 +296,7 @@ namespace NuklearSharp
                         bounds->h = (float)(layout.Row.height * layout.Row.item.h);
                         return;
                     }
-                case NkPanelRowLayoutType.DYNAMIC:
+                case PanelRowLayoutType.Dynamic:
                     {
                         float ratio;
                         ratio =
@@ -320,14 +312,14 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkPanelRowLayoutType.STATIC_FIXED:
+                case PanelRowLayoutType.StatixFixed:
                     {
                         item_width = (float)(layout.Row.item_width);
                         item_offset = (float)((float)(layout.Row.index) * item_width);
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                     }
                     break;
-                case NkPanelRowLayoutType.STATIC_ROW:
+                case PanelRowLayoutType.StaticRow:
                     {
                         item_width = (float)(layout.Row.item_width);
                         item_offset = (float)(layout.Row.item_offset);
@@ -335,7 +327,7 @@ namespace NuklearSharp
                         if ((modify)) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
-                case NkPanelRowLayoutType.STATIC_FREE:
+                case PanelRowLayoutType.StaticFree:
                     {
                         bounds->x = (float)(layout.AtX + layout.Row.item.x);
                         bounds->w = (float)(layout.Row.item.w);
@@ -346,7 +338,7 @@ namespace NuklearSharp
                         bounds->h = (float)(layout.Row.item.h);
                         return;
                     }
-                case NkPanelRowLayoutType.STATIC:
+                case PanelRowLayoutType.Static:
                     {
                         item_spacing = (float)((float)(layout.Row.index) * spacing.x);
                         item_width = (float)(layout.Row.ratio[layout.Row.index]);
@@ -354,7 +346,7 @@ namespace NuklearSharp
                         if ((modify)) layout.Row.item_offset += (float)(item_width);
                     }
                     break;
-                case NkPanelRowLayoutType.TEMPLATE:
+                case PanelRowLayoutType.Template:
                     {
                         item_width = (float)(layout.Row.templates[layout.Row.index]);
                         item_offset = (float)(layout.Row.item_offset);
@@ -414,14 +406,14 @@ namespace NuklearSharp
             layout.Row.index = (int)(index);
         }
 
-        public static NkWidgetLayoutStates nk_widget(NkRect* bounds, NkContext ctx)
+        public static WidgetLayoutStates nk_widget(NkRect* bounds, NkContext ctx)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
             NkWindow win;
             NkPanel layout;
             nk_input _in_;
-            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return NkWidgetLayoutStates.NK_WIDGET_INVALID;
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return WidgetLayoutStates.Invalid;
             nk_panel_alloc_space(bounds, ctx);
             win = ctx.Current;
             layout = win.Layout;
@@ -439,21 +431,21 @@ namespace NuklearSharp
                 (float)(bounds->y + bounds->h));
             if (
                 !(!(((((bounds->x) > (c.x + c.w)) || ((bounds->x + bounds->w) < (c.x))) || ((bounds->y) > (c.y + c.h))) ||
-                    ((bounds->y + bounds->h) < (c.y))))) return NkWidgetLayoutStates.NK_WIDGET_INVALID;
+                    ((bounds->y + bounds->h) < (c.y))))) return WidgetLayoutStates.Invalid;
             if (
                 !((((v.x) <= (_in_.mouse.Pos.x)) && ((_in_.mouse.Pos.x) < (v.x + v.w))) &&
-                  (((v.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (v.y + v.h))))) return (NkWidgetLayoutStates.NK_WIDGET_ROM);
-            return (NkWidgetLayoutStates.NK_WIDGET_VALID);
+                  (((v.y) <= (_in_.mouse.Pos.y)) && ((_in_.mouse.Pos.y) < (v.y + v.h))))) return (WidgetLayoutStates.ROM);
+            return (WidgetLayoutStates.Valid);
         }
 
-        public static NkWidgetLayoutStates nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
+        public static WidgetLayoutStates nk_widget_fitting(NkRect* bounds, NkContext ctx, NkVec2 item_padding)
         {
             NkWindow win;
             NkStyle style;
             NkPanel layout;
-            NkWidgetLayoutStates state;
+            WidgetLayoutStates state;
             NkVec2 panel_padding = new NkVec2();
-            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (NkWidgetLayoutStates.NK_WIDGET_INVALID);
+            if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return (WidgetLayoutStates.Invalid);
             win = ctx.Current;
             style = ctx.Style;
             layout = win.Layout;

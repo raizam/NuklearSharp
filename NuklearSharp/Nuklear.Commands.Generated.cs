@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
     public class nk_scroll
@@ -23,7 +23,7 @@ namespace NuklearSharp
     public unsafe partial class nk_popup_state
     {
         public NkWindow win;
-        public NkPanelType type;
+        public PanelKind type;
         public NkPopupBuffer buf = new NkPopupBuffer();
         public uint name;
         public int active;
@@ -60,7 +60,7 @@ namespace NuklearSharp
         public uint name;
         public uint seq;
         public uint old;
-        public NkPropertyStatus state;
+        public PropertyStatus state;
     }
 
     public unsafe partial class nk_table

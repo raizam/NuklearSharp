@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
     [StructLayout(LayoutKind.Sequential)]
@@ -16,7 +16,7 @@ namespace NuklearSharp
 
         public class NkKeyboard
         {
-            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[(int)NkKeys.MAX]);
+            public PinnedArray<nk_key> Keys = new PinnedArray<nk_key>(new nk_key[(int)ControlKeys.MAX]);
             public PinnedArray<char> Text = new PinnedArray<char>(new char[16]);
             public int TextLen;
         }
@@ -24,7 +24,7 @@ namespace NuklearSharp
         public class NkMouse
         {
             public PinnedArray<nk_mouse_button> Buttons =
-                new PinnedArray<nk_mouse_button>(new nk_mouse_button[(int)NkButtons.MAX]);
+                new PinnedArray<nk_mouse_button>(new nk_mouse_button[(int)KlearUI.MouseButtons.MAX]);
 
             public NkVec2 Pos;
             public NkVec2 Prev;
@@ -46,7 +46,7 @@ namespace NuklearSharp
 
     public static unsafe class InputExtentions
     {
-        public static bool nk_input_has_mouse_click(this nk_input nkInput, NkButtons id)
+        public static bool nk_input_has_mouse_click(this nk_input nkInput, MouseButtons id)
         {
             //nk_input_has_mouse_click
             nk_mouse_button* btn;
@@ -55,7 +55,7 @@ namespace NuklearSharp
             return ((((btn->clicked) != 0) && ((btn->down) == (0))));
         }
 
-        public static bool nk_input_has_mouse_click_in_rect(this nk_input nkInput, NkButtons id, NkRect b)
+        public static bool nk_input_has_mouse_click_in_rect(this nk_input nkInput, MouseButtons id, NkRect b)
         {
             nk_mouse_button* btn;
             if (nkInput == null) return false;
@@ -66,7 +66,7 @@ namespace NuklearSharp
             return true;
         }
 
-        public static bool nk_input_has_mouse_click_down_in_rect(this nk_input nkInput, NkButtons id, NkRect b, bool down)
+        public static bool nk_input_has_mouse_click_down_in_rect(this nk_input nkInput, MouseButtons id, NkRect b, bool down)
         {
             nk_mouse_button* btn;
             if (nkInput == null) return false;
@@ -75,7 +75,7 @@ namespace NuklearSharp
                 (((nk_input_has_mouse_click_in_rect(nkInput, (id), (NkRect)(b)))) && ((btn->down != 0) == (down)));
         }
 
-        public static bool nk_input_is_mouse_click_in_rect(this nk_input nkInput, NkButtons id, NkRect b)
+        public static bool nk_input_is_mouse_click_in_rect(this nk_input nkInput, MouseButtons id, NkRect b)
         {
             nk_mouse_button* btn;
             if (nkInput == null) return false;
@@ -88,7 +88,7 @@ namespace NuklearSharp
                     : false);
         }
 
-        public static bool nk_input_is_mouse_click_down_in_rect(this nk_input nkInput, NkButtons id, NkRect b, bool down)
+        public static bool nk_input_is_mouse_click_down_in_rect(this nk_input nkInput, MouseButtons id, NkRect b, bool down)
         {
             nk_mouse_button* btn;
             if (nkInput == null) return false;
@@ -101,9 +101,9 @@ namespace NuklearSharp
         public static bool nk_input_any_mouse_click_in_rect(this nk_input nkInput, NkRect b)
         {
 
-            for (int i = 0; (i) < ((int)NkButtons.MAX); ++i)
+            for (int i = 0; (i) < ((int)MouseButtons.MAX); ++i)
             {
-                if (nk_input_is_mouse_click_in_rect(nkInput, (NkButtons)(i), (NkRect)(b)))
+                if (nk_input_is_mouse_click_in_rect(nkInput, (MouseButtons)(i), (NkRect)(b)))
                     return true;
             }
             return false;
@@ -123,20 +123,20 @@ namespace NuklearSharp
                    (((rect.y) <= (nkInput.mouse.Prev.y)) && ((nkInput.mouse.Prev.y) < (rect.y + rect.h)));
         }
 
-        public static bool nk_input_mouse_clicked(this nk_input nkInput, NkButtons id, NkRect rect)
+        public static bool nk_input_mouse_clicked(this nk_input nkInput, MouseButtons id, NkRect rect)
         {
             if (nkInput == null) return false;
             if (nk_input_is_mouse_hovering_rect(nkInput, (NkRect)(rect)) == false) return false;
             return (nk_input_is_mouse_click_in_rect(nkInput, (id), (NkRect)(rect)));
         }
 
-        public static bool nk_input_is_mouse_down(this nk_input nkInput, NkButtons id)
+        public static bool nk_input_is_mouse_down(this nk_input nkInput, MouseButtons id)
         {
             if (nkInput == null) return false;
             return (nkInput.mouse.Buttons[(int)id].down != 0);
         }
 
-        public static bool nk_input_is_mouse_pressed(this nk_input nkInput, NkButtons id)
+        public static bool nk_input_is_mouse_pressed(this nk_input nkInput, MouseButtons id)
         {
             nk_mouse_button* b;
             if (nkInput == null) return false;
@@ -145,13 +145,13 @@ namespace NuklearSharp
             return false;
         }
 
-        public static bool nk_input_is_mouse_released(this nk_input nkInput, NkButtons id)
+        public static bool nk_input_is_mouse_released(this nk_input nkInput, MouseButtons id)
         {
             if (nkInput == null) return false;
             return ((nkInput.mouse.Buttons[(int)id].down == 0) && ((nkInput.mouse.Buttons[(int)id].clicked) != 0));
         }
 
-        public static bool nk_input_is_key_pressed(this nk_input nkInput, NkKeys key)
+        public static bool nk_input_is_key_pressed(this nk_input nkInput, ControlKeys key)
         {
             nk_key* k;
             if (nkInput == null) return false;

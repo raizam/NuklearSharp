@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
     [StructLayout(LayoutKind.Sequential)]
@@ -322,7 +322,7 @@ namespace NuklearSharp
 
         public static int nk_textedit_cut(nk_text_edit state)
         {
-            if ((state.mode) == (NkTextEditMode.VIEW)) return (int)(0);
+            if ((state.mode) == (NkTextEditMode.View)) return (int)(0);
             if (((state).select_start != (state).select_end))
             {
                 nk_textedit_delete_selection(state);
@@ -337,7 +337,7 @@ namespace NuklearSharp
         {
             int glyphs;
             char* text = ctext;
-            if ((state.mode) == (NkTextEditMode.VIEW)) return (int)(0);
+            if ((state.mode) == (NkTextEditMode.View)) return (int)(0);
             nk_textedit_clamp(state);
             nk_textedit_delete_selection(state);
             glyphs = (int)(nk_utf_len(ctext, (int)(len)));
@@ -358,7 +358,7 @@ namespace NuklearSharp
             char unicode;
             int glyph_len;
             int text_len = (int)(0);
-            if (((text == null) || (total_len == 0)) || ((state.mode) == (NkTextEditMode.VIEW))) return;
+            if (((text == null) || (total_len == 0)) || ((state.mode) == (NkTextEditMode.View))) return;
             glyph_len = (int)(nk_utf_decode(text, &unicode, (int)(total_len)));
             while (((text_len) < (total_len)) && ((glyph_len) != 0))
             {
@@ -367,7 +367,7 @@ namespace NuklearSharp
                 if (((state.filter) != null) && (state.filter(state, unicode) == false)) goto next;
                 if ((!((state).select_start != (state).select_end)) && ((state.cursor) < (state._string_.Len)))
                 {
-                    if ((state.mode) == (NkTextEditMode.REPLACE))
+                    if ((state.mode) == (NkTextEditMode.Replace))
                     {
                         nk_textedit_makeundo_replace(state, (int)(state.cursor), (int)(1), (int)(1));
                         state._string_.remove_at((int)(state.cursor), (int)(1));
@@ -395,46 +395,46 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_textedit_key(nk_text_edit state, NkKeys key, bool shift_mod, NkUserFont font, float row_height)
+        public static void nk_textedit_key(nk_text_edit state, ControlKeys key, bool shift_mod, NkUserFont font, float row_height)
         {
             retry:
             ;
             switch (key)
             {
-                case NkKeys.NONE:
-                case NkKeys.CTRL:
-                case NkKeys.ENTER:
-                case NkKeys.SHIFT:
-                case NkKeys.TAB:
-                case NkKeys.COPY:
-                case NkKeys.CUT:
-                case NkKeys.PASTE:
-                case NkKeys.MAX:
+                case ControlKeys.None:
+                case ControlKeys.Ctrl:
+                case ControlKeys.Enter:
+                case ControlKeys.Shift:
+                case ControlKeys.Tab:
+                case ControlKeys.Copy:
+                case ControlKeys.Cut:
+                case ControlKeys.Paste:
+                case ControlKeys.MAX:
                 default:
                     break;
-                case NkKeys.TEXT_UNDO:
+                case ControlKeys.TextUndo:
                     nk_textedit_undo(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NkKeys.TEXT_REDO:
+                case ControlKeys.TextRedo:
                     nk_textedit_redo(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NkKeys.TEXT_SELECT_ALL:
+                case ControlKeys.TextSelectAll:
                     nk_textedit_select_all(state);
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NkKeys.TEXT_INSERT_MODE:
-                    if ((state.mode) == (NkTextEditMode.VIEW)) state.mode = (NkTextEditMode.INSERT);
+                case ControlKeys.TextInsertMode:
+                    if ((state.mode) == (NkTextEditMode.View)) state.mode = (NkTextEditMode.Insert);
                     break;
-                case NkKeys.TEXT_REPLACE_MODE:
-                    if ((state.mode) == (NkTextEditMode.VIEW)) state.mode = (NkTextEditMode.REPLACE);
+                case ControlKeys.TextReplaceMode:
+                    if ((state.mode) == (NkTextEditMode.View)) state.mode = (NkTextEditMode.Replace);
                     break;
-                case NkKeys.TEXT_RESET_MODE:
-                    if (((state.mode) == (NkTextEditMode.INSERT)) || ((state.mode) == (NkTextEditMode.REPLACE)))
-                        state.mode = (byte)(NkTextEditMode.VIEW);
+                case ControlKeys.TextResetMode:
+                    if (((state.mode) == (NkTextEditMode.Insert)) || ((state.mode) == (NkTextEditMode.Replace)))
+                        state.mode = (byte)(NkTextEditMode.View);
                     break;
-                case NkKeys.LEFT:
+                case ControlKeys.Left:
                     if ((shift_mod))
                     {
                         nk_textedit_clamp(state);
@@ -450,7 +450,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NkKeys.RIGHT:
+                case ControlKeys.Right:
                     if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -467,7 +467,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NkKeys.TEXT_WORD_LEFT:
+                case ControlKeys.TextWordLeft:
                     if ((shift_mod))
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
@@ -485,7 +485,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkKeys.TEXT_WORD_RIGHT:
+                case ControlKeys.TextWordRight:
                     if ((shift_mod))
                     {
                         if (!((state).select_start != (state).select_end)) nk_textedit_prep_selection_at_cursor(state);
@@ -503,7 +503,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkKeys.DOWN:
+                case ControlKeys.Down:
                     {
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
@@ -511,7 +511,7 @@ namespace NuklearSharp
                         bool sel = (shift_mod);
                         if ((state.single_line) != 0)
                         {
-                            key = (NkKeys.RIGHT);
+                            key = (ControlKeys.Right);
                             goto retry;
                         }
                         if ((sel)) nk_textedit_prep_selection_at_cursor(state);
@@ -540,7 +540,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkKeys.UP:
+                case ControlKeys.Up:
                     {
                         nk_text_find find = new nk_text_find();
                         nk_text_edit_row row = new nk_text_edit_row();
@@ -548,7 +548,7 @@ namespace NuklearSharp
                         bool sel = (bool)(shift_mod);
                         if ((state.single_line) != 0)
                         {
-                            key = (NkKeys.LEFT);
+                            key = (ControlKeys.Left);
                             goto retry;
                         }
                         if ((sel)) nk_textedit_prep_selection_at_cursor(state);
@@ -576,8 +576,8 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkKeys.DEL:
-                    if ((state.mode) == (NkTextEditMode.VIEW)) break;
+                case ControlKeys.Del:
+                    if ((state.mode) == (NkTextEditMode.View)) break;
                     if (((state).select_start != (state).select_end)) nk_textedit_delete_selection(state);
                     else
                     {
@@ -586,8 +586,8 @@ namespace NuklearSharp
                     }
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NkKeys.BACKSPACE:
-                    if ((state.mode) == (NkTextEditMode.VIEW)) break;
+                case ControlKeys.Backspace:
+                    if ((state.mode) == (NkTextEditMode.View)) break;
                     if (((state).select_start != (state).select_end)) nk_textedit_delete_selection(state);
                     else
                     {
@@ -600,7 +600,7 @@ namespace NuklearSharp
                     }
                     state.has_preferred_x = (byte)(0);
                     break;
-                case NkKeys.TEXT_START:
+                case ControlKeys.TextStart:
                     if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -613,7 +613,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NkKeys.TEXT_END:
+                case ControlKeys.TextEnd:
                     if ((shift_mod))
                     {
                         nk_textedit_prep_selection_at_cursor(state);
@@ -627,7 +627,7 @@ namespace NuklearSharp
                         state.has_preferred_x = (byte)(0);
                     }
                     break;
-                case NkKeys.TEXT_LINE_START:
+                case ControlKeys.TextLineStart:
                     {
                         if ((shift_mod))
                         {
@@ -651,7 +651,7 @@ namespace NuklearSharp
                         }
                     }
                     break;
-                case NkKeys.TEXT_LINE_END:
+                case ControlKeys.TextLineEnd:
                     {
                         if ((shift_mod))
                         {
@@ -907,7 +907,7 @@ namespace NuklearSharp
             }
         }
 
-        public static void nk_textedit_clear_state(nk_text_edit state, NkTextEditType type, NkPluginFilter filter)
+        public static void nk_textedit_clear_state(nk_text_edit state, TextEditMode type, NkPluginFilter filter)
         {
             state.undo.UndoPoint = (short)(0);
             state.undo.UndoCharPoint = (short)(0);
@@ -919,8 +919,8 @@ namespace NuklearSharp
             state.preferred_x = (float)(0);
             state.cursor_at_end_of_line = (byte)(0);
             state.initialized = (byte)(1);
-            state.single_line = ((byte)((type) == (NkTextEditType.SINGLE_LINE) ? 1 : 0));
-            state.mode = (byte)(NkTextEditMode.VIEW);
+            state.single_line = ((byte)((type) == (TextEditMode.SingleLine) ? 1 : 0));
+            state.mode = (byte)(NkTextEditMode.View);
             state.filter = filter;
             state.scrollbar = (NkVec2)(nk_vec2_((float)(0), (float)(0)));
         }
@@ -929,21 +929,21 @@ namespace NuklearSharp
         {
             if (((memory == null)) || (size == 0)) return;
 
-            nk_textedit_clear_state(state, (int)(NkTextEditType.SINGLE_LINE), null);
+            nk_textedit_clear_state(state, (int)(TextEditMode.SingleLine), null);
         }
 
         public static void nk_textedit_init(nk_text_edit state, ulong size)
         {
             if ((state == null)) return;
 
-            nk_textedit_clear_state(state, (int)(NkTextEditType.SINGLE_LINE), null);
+            nk_textedit_clear_state(state, (int)(TextEditMode.SingleLine), null);
         }
 
         public static void nk_textedit_init_default(nk_text_edit state)
         {
             if (state == null) return;
 
-            nk_textedit_clear_state(state, (int)(NkTextEditType.SINGLE_LINE), null);
+            nk_textedit_clear_state(state, (int)(TextEditMode.SingleLine), null);
         }
 
         public static void nk_textedit_select_all(nk_text_edit state)

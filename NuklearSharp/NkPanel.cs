@@ -1,8 +1,8 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public class NkPanel
         {
-            public NkPanelType Type;
+            public PanelKind Type;
             public PanelFlags Flags;
             public NkRect Bounds = new NkRect();
             public nk_scroll Offset;

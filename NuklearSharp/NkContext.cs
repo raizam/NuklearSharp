@@ -1,12 +1,12 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public unsafe class NkContext
     {
         public nk_input Input = new nk_input();
         public NkStyle Style = new NkStyle();
         public NkClipboard Clip = new NkClipboard();
-        public NkWidgetStates LastWidgetState;
-        public NkButtonBehavior ButtonBehavior;
+        public WidgetStates LastWidgetState;
+        public ButtonBehavior ButtonBehavior;
         public nk_configuration_stacks Stacks = new nk_configuration_stacks();
         public float DeltaTimeSeconds;
         public NkDrawList DrawList = new NkDrawList();
@@ -82,7 +82,7 @@
             return (InputExtentions.nk_input_is_mouse_hovering_rect(Input, (NkRect)(bounds)));
         }
 
-        public bool nk_widget_is_mouse_clicked(NkButtons btn)
+        public bool nk_widget_is_mouse_clicked(MouseButtons btn)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
@@ -102,7 +102,7 @@
             return (InputExtentions.nk_input_mouse_clicked(Input, (btn), (NkRect)(bounds)));
         }
 
-        public bool nk_widget_has_mouse_click_down(NkButtons btn, bool down)
+        public bool nk_widget_has_mouse_click_down(MouseButtons btn, bool down)
         {
             NkRect c = new NkRect();
             NkRect v = new NkRect();
@@ -140,7 +140,7 @@
                 cols = (int)(index);
             }
 
-            if ((layout.Row.type != NkPanelRowLayoutType.DYNAMIC_FIXED) && (layout.Row.type != NkPanelRowLayoutType.STATIC_FIXED))
+            if ((layout.Row.type != PanelRowLayoutType.DynamicFixed) && (layout.Row.type != PanelRowLayoutType.StatixFixed))
             {
                 for (i = (int)(0); (i) < (cols); ++i)
                 {
@@ -193,7 +193,7 @@
 
         public void nk_build()
         {
-            if (Style.CursorActive == null) Style.CursorActive = Style.Cursors[(int)NkStyleCursor.ARROW];
+            if (Style.CursorActive == null) Style.CursorActive = Style.Cursors[(int)CursorKind.Arrow];
             if (Style.CursorActive != null && Input.mouse.Grabbed == 0 && Style.CursorVisible)
             {
                 var mouseBounds = new NkRect();
@@ -212,12 +212,12 @@
             for (; it != null;)
             {
                 var next = it.Next;
-                if ((it.Flags & PanelFlags.HIDDEN) != 0 || it.Seq != Seq)
+                if ((it.Flags & PanelFlags.Hidden) != 0 || it.Seq != Seq)
                     goto cont;
                 cmd = it.Buffer.Last;
 
                 while (next != null &&
-                       (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & PanelFlags.HIDDEN) != 0))
+                       (next.Buffer == null || next.Buffer.Count == 0 || (next.Flags & PanelFlags.Hidden) != 0))
                 {
                     next = next.Next;
                 }
@@ -261,7 +261,7 @@
 
             var iter = Begin;
             while (iter != null &&
-                   (iter.Buffer.Count == 0 || (iter.Flags & PanelFlags.HIDDEN) != 0 || iter.Seq != Seq))
+                   (iter.Buffer.Count == 0 || (iter.Flags & PanelFlags.Hidden) != 0 || iter.Seq != Seq))
             {
                 iter = iter.Next;
             }

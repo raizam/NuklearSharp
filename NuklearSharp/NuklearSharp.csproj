@@ -44,6 +44,7 @@
     <Compile Include="NkContext.cs" />
     <Compile Include="NkDrawList.cs" />
     <Compile Include="NkFont.cs" />
+    <Compile Include="NkImage.cs" />
     <Compile Include="NkPanel.cs" />
     <Compile Include="NkRect.cs" />
     <Compile Include="NkStr.cs" />

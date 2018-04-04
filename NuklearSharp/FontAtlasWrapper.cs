@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     public unsafe class FontAtlasWrapper
     {

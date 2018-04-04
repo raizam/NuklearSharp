@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     public class NkBuffer<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     internal static unsafe class CRuntime
     {

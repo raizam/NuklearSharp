@@ -1,4 +1,4 @@
-namespace NuklearSharp
+namespace KlearUI
 {
 
         public unsafe partial class nk_style_text
@@ -17,7 +17,7 @@ namespace NuklearSharp
             public NkColor text_normal = new NkColor();
             public NkColor text_hover = new NkColor();
             public NkColor text_active = new NkColor();
-            public Alignment text_alignment;
+            public Align text_alignment;
             public float border;
             public float rounding;
             public NkVec2 padding = new NkVec2();
@@ -97,8 +97,8 @@ namespace NuklearSharp
             public bool show_buttons;
             public nk_style_button inc_button = new nk_style_button();
             public nk_style_button dec_button = new nk_style_button();
-            public NkSymbolType inc_symbol;
-            public NkSymbolType dec_symbol;
+            public Symbols inc_symbol;
+            public Symbols dec_symbol;
             public NkHandle userdata = new NkHandle();
             public NkDrawNotify draw_begin;
             public NkDrawNotify draw_end;
@@ -142,8 +142,8 @@ namespace NuklearSharp
             public bool show_buttons;
             public nk_style_button inc_button = new nk_style_button();
             public nk_style_button dec_button = new nk_style_button();
-            public NkSymbolType inc_symbol;
-            public NkSymbolType dec_symbol;
+            public Symbols inc_symbol;
+            public Symbols dec_symbol;
             public NkHandle userdata = new NkHandle();
             public NkDrawNotify draw_begin;
             public NkDrawNotify draw_end;
@@ -184,8 +184,8 @@ namespace NuklearSharp
             public NkColor label_normal = new NkColor();
             public NkColor label_hover = new NkColor();
             public NkColor label_active = new NkColor();
-            public NkSymbolType sym_left;
-            public NkSymbolType sym_right;
+            public Symbols sym_left;
+            public Symbols sym_right;
             public float border;
             public float rounding;
             public NkVec2 padding = new NkVec2();
@@ -221,9 +221,9 @@ namespace NuklearSharp
             public NkColor symbol_hover = new NkColor();
             public NkColor symbol_active = new NkColor();
             public nk_style_button button = new nk_style_button();
-            public NkSymbolType sym_normal;
-            public NkSymbolType sym_hover;
-            public NkSymbolType sym_active;
+            public Symbols sym_normal;
+            public Symbols sym_hover;
+            public Symbols sym_active;
             public float border;
             public float rounding;
             public NkVec2 content_padding = new NkVec2();
@@ -240,8 +240,8 @@ namespace NuklearSharp
             public nk_style_button tab_minimize_button = new nk_style_button();
             public nk_style_button node_maximize_button = new nk_style_button();
             public nk_style_button node_minimize_button = new nk_style_button();
-            public NkSymbolType sym_minimize;
-            public NkSymbolType sym_maximize;
+            public Symbols sym_minimize;
+            public Symbols sym_maximize;
             public float border;
             public float rounding;
             public float indent;
@@ -256,13 +256,13 @@ namespace NuklearSharp
             public NkStyleItem active = new NkStyleItem();
             public nk_style_button close_button = new nk_style_button();
             public nk_style_button minimize_button = new nk_style_button();
-            public NkSymbolType close_symbol;
-            public NkSymbolType minimize_symbol;
-            public NkSymbolType maximize_symbol;
+            public Symbols close_symbol;
+            public Symbols minimize_symbol;
+            public Symbols maximize_symbol;
             public NkColor label_normal = new NkColor();
             public NkColor label_hover = new NkColor();
             public NkColor label_active = new NkColor();
-            public NkStyleHeaderAlign align;
+            public StyleHeaderAlign align;
             public NkVec2 padding = new NkVec2();
             public NkVec2 label_padding = new NkVec2();
             public NkVec2 spacing = new NkVec2();
@@ -303,79 +303,79 @@ namespace NuklearSharp
         }
     public unsafe static partial class Nk
     {
-        public static NkVec2 nk_panel_get_padding(NkStyle style, NkPanelType type)
+        public static NkVec2 nk_panel_get_padding(NkStyle style, PanelKind type)
         {
             switch (type)
             {
                 default:
-                case NkPanelType.WINDOW:
+                case PanelKind.Window:
                     return (NkVec2)(style.Window.padding);
-                case NkPanelType.GROUP:
+                case PanelKind.Group:
                     return (NkVec2)(style.Window.group_padding);
-                case NkPanelType.POPUP:
+                case PanelKind.Popup:
                     return (NkVec2)(style.Window.popup_padding);
-                case NkPanelType.CONTEXTUAL:
+                case PanelKind.Contextual:
                     return (NkVec2)(style.Window.contextual_padding);
-                case NkPanelType.COMBO:
+                case PanelKind.Combo:
                     return (NkVec2)(style.Window.combo_padding);
-                case NkPanelType.MENU:
+                case PanelKind.Menu:
                     return (NkVec2)(style.Window.menu_padding);
-                case NkPanelType.TOOLTIP:
+                case PanelKind.Tooltip:
                     return (NkVec2)(style.Window.menu_padding);
             }
 
         }
 
-        public static float nk_panel_get_border(NkStyle style, PanelFlags flags, NkPanelType type)
+        public static float nk_panel_get_border(NkStyle style, PanelFlags flags, PanelKind type)
         {
-            if ((flags & PanelFlags.BORDER) != 0)
+            if ((flags & PanelFlags.Border) != 0)
             {
                 switch (type)
                 {
                     default:
-                    case NkPanelType.WINDOW:
+                    case PanelKind.Window:
                         return (float)(style.Window.border);
-                    case NkPanelType.GROUP:
+                    case PanelKind.Group:
                         return (float)(style.Window.group_border);
-                    case NkPanelType.POPUP:
+                    case PanelKind.Popup:
                         return (float)(style.Window.popup_border);
-                    case NkPanelType.CONTEXTUAL:
+                    case PanelKind.Contextual:
                         return (float)(style.Window.contextual_border);
-                    case NkPanelType.COMBO:
+                    case PanelKind.Combo:
                         return (float)(style.Window.combo_border);
-                    case NkPanelType.MENU:
+                    case PanelKind.Menu:
                         return (float)(style.Window.menu_border);
-                    case NkPanelType.TOOLTIP:
+                    case PanelKind.Tooltip:
                         return (float)(style.Window.menu_border);
                 }
             }
             else return (float)(0);
         }
 
-        public static NkColor nk_panel_get_border_color(NkStyle style, NkPanelType type)
+        public static NkColor nk_panel_get_border_color(NkStyle style, PanelKind type)
         {
             switch (type)
             {
                 default:
-                case NkPanelType.WINDOW:
+                case PanelKind.Window:
                     return (NkColor)(style.Window.border_color);
-                case NkPanelType.GROUP:
+                case PanelKind.Group:
                     return (NkColor)(style.Window.group_border_color);
-                case NkPanelType.POPUP:
+                case PanelKind.Popup:
                     return (NkColor)(style.Window.popup_border_color);
-                case NkPanelType.CONTEXTUAL:
+                case PanelKind.Contextual:
                     return (NkColor)(style.Window.contextual_border_color);
-                case NkPanelType.COMBO:
+                case PanelKind.Combo:
                     return (NkColor)(style.Window.combo_border_color);
-                case NkPanelType.MENU:
+                case PanelKind.Menu:
                     return (NkColor)(style.Window.menu_border_color);
-                case NkPanelType.TOOLTIP:
+                case PanelKind.Tooltip:
                     return (NkColor)(style.Window.menu_border_color);
             }
 
         }
 
-        public static float nk_layout_row_calculate_usable_space(NkStyle style, NkPanelType type, float total_space, int columns)
+        public static float nk_layout_row_calculate_usable_space(NkStyle style, PanelKind type, float total_space, int columns)
         {
             float panel_padding;
             float panel_spacing;

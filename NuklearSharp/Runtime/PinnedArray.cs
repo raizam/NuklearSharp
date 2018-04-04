@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     public abstract unsafe class Pointer : IDisposable
     {

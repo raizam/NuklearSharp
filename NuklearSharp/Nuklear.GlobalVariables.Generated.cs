@@ -1,4 +1,4 @@
-namespace NuklearSharp
+namespace KlearUI
 {
     unsafe partial class Nk
     {

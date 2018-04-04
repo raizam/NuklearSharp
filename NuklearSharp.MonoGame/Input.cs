@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace NuklearSharp.MonoGame
+namespace KlearUI.MonoGame
 {
     public static class Input
     {

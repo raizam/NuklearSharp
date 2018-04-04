@@ -1,4 +1,4 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public unsafe delegate float NkTextWidthDelegate(NkHandle handle, float height, char* text, int length);
 

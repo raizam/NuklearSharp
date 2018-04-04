@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct nk_command
     {
-        public NkCommandType type;
+        public CommandType type;
         public ulong next;
     }
 
@@ -29,7 +29,7 @@ namespace NuklearSharp
             Clip.y = r.y;
             Clip.w = r.w;
             Clip.h = r.h;
-            cmd = (NkCommandScissor)nk_command_buffer_push(NkCommandType.SCISSOR);
+            cmd = (NkCommandScissor)nk_command_buffer_push(CommandType.Scissor);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -42,7 +42,7 @@ namespace NuklearSharp
         {
             NkCommandLine cmd;
             if (this == null || line_thickness <= 0) return;
-            cmd = (NkCommandLine)nk_command_buffer_push(NkCommandType.LINE);
+            cmd = (NkCommandLine)nk_command_buffer_push(CommandType.Line);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Begin.x = (short)x0;
@@ -57,7 +57,7 @@ namespace NuklearSharp
         {
             NkCommandCurve cmd;
             if (this == null || col.a == 0 || line_thickness <= 0) return;
-            cmd = (NkCommandCurve)nk_command_buffer_push(NkCommandType.CURVE);
+            cmd = (NkCommandCurve)nk_command_buffer_push(CommandType.Curve);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Begin.x = (short)ax;
@@ -84,7 +84,7 @@ namespace NuklearSharp
                     Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y) return;
             }
 
-            cmd = (NkCommandRect)nk_command_buffer_push(NkCommandType.RECT);
+            cmd = (NkCommandRect)nk_command_buffer_push(CommandType.Rect);
             if (cmd == null) return;
             cmd.Rounding = (ushort)rounding;
             cmd.LineThickness = (ushort)line_thickness;
@@ -106,7 +106,7 @@ namespace NuklearSharp
                        Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y)) return;
             }
 
-            cmd = (NkCommandRectFilled)nk_command_buffer_push(NkCommandType.RECT_FILLED);
+            cmd = (NkCommandRectFilled)nk_command_buffer_push(CommandType.RectFilled);
             if (cmd == null) return;
             cmd.Rounding = (ushort)rounding;
             cmd.X = (short)rect.x;
@@ -128,7 +128,7 @@ namespace NuklearSharp
                        Clip.y > rect.y + rect.h || Clip.y + Clip.h < rect.y)) return;
             }
 
-            cmd = (NkCommandRectMultiColor)nk_command_buffer_push(NkCommandType.RECT_MULTI_COLOR);
+            cmd = (NkCommandRectMultiColor)nk_command_buffer_push(CommandType.RectMulticolor);
             if (cmd == null) return;
             cmd.X = (short)rect.x;
             cmd.Y = (short)rect.y;
@@ -151,7 +151,7 @@ namespace NuklearSharp
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCircle)nk_command_buffer_push(NkCommandType.CIRCLE);
+            cmd = (NkCommandCircle)nk_command_buffer_push(CommandType.Circle);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.X = (short)r.x;
@@ -172,7 +172,7 @@ namespace NuklearSharp
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCircleFilled)nk_command_buffer_push(NkCommandType.CIRCLE_FILLED);
+            cmd = (NkCommandCircleFilled)nk_command_buffer_push(CommandType.CircleFilled);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -186,7 +186,7 @@ namespace NuklearSharp
         {
             NkCommandArc cmd;
             if (this == null || c.a == 0 || line_thickness <= 0) return;
-            cmd = (NkCommandArc)nk_command_buffer_push(NkCommandType.ARC);
+            cmd = (NkCommandArc)nk_command_buffer_push(CommandType.Arc);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.Cx = (short)cx;
@@ -202,7 +202,7 @@ namespace NuklearSharp
         {
             NkCommandArcFilled cmd;
             if (this == null || c.a == 0) return;
-            cmd = (NkCommandArcFilled)nk_command_buffer_push(NkCommandType.ARC_FILLED);
+            cmd = (NkCommandArcFilled)nk_command_buffer_push(CommandType.ArcFilled);
             if (cmd == null) return;
             cmd.Cx = (short)cx;
             cmd.Cy = (short)cy;
@@ -225,7 +225,7 @@ namespace NuklearSharp
                     !(Clip.x <= x2 && x2 < Clip.x + Clip.w && Clip.y <= y2 && y2 < Clip.y + Clip.h)) return;
             }
 
-            cmd = (NkCommandTriangle)nk_command_buffer_push(NkCommandType.TRIANGLE);
+            cmd = (NkCommandTriangle)nk_command_buffer_push(CommandType.Triangle);
             if (cmd == null) return;
             cmd.LineThickness = (ushort)line_thickness;
             cmd.A.x = (short)x0;
@@ -251,7 +251,7 @@ namespace NuklearSharp
                     !(Clip.x <= x2 && x2 < Clip.x + Clip.w && Clip.y <= y2 && y2 < Clip.y + Clip.h)) return;
             }
 
-            cmd = (NkCommandTriangleFilled)nk_command_buffer_push(NkCommandType.TRIANGLE_FILLED);
+            cmd = (NkCommandTriangleFilled)nk_command_buffer_push(CommandType.TriangleFilled);
             if (cmd == null) return;
             cmd.A.x = (short)x0;
             cmd.A.y = (short)y0;
@@ -273,7 +273,7 @@ namespace NuklearSharp
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandImage)nk_command_buffer_push(NkCommandType.IMAGE);
+            cmd = (NkCommandImage)nk_command_buffer_push(CommandType.Image);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -294,7 +294,7 @@ namespace NuklearSharp
                        Clip.y + Clip.h < r.y)) return;
             }
 
-            cmd = (NkCommandCustom)nk_command_buffer_push(NkCommandType.CUSTOM);
+            cmd = (NkCommandCustom)nk_command_buffer_push(CommandType.Custom);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -330,7 +330,7 @@ namespace NuklearSharp
             }
 
             if (length == 0) return;
-            cmd = (NkCommandText)nk_command_buffer_push(NkCommandType.TEXT);
+            cmd = (NkCommandText)nk_command_buffer_push(CommandType.Text);
             if (cmd == null) return;
             cmd.X = (short)r.x;
             cmd.Y = (short)r.y;
@@ -346,7 +346,7 @@ namespace NuklearSharp
             cmd.String[length] = '\0';
         }
 
-        public void nk_widget_text(NkRect b, char* _string_, int len, nk_text* t, Alignment a,
+        public void nk_widget_text(NkRect b, char* _string_, int len, nk_text* t, Align a,
             NkUserFont f)
         {
             NkRect label = new NkRect();
@@ -359,12 +359,12 @@ namespace NuklearSharp
             label.h = f.Height < b.h - 2 * t->padding.y ? f.Height : b.h - 2 * t->padding.y;
             text_width = f.Width((NkHandle)f.Userdata, (float)f.Height, _string_, (int)len);
             text_width += 2.0f * t->padding.x;
-            if ((a & Alignment.LEFT) != 0)
+            if ((a & Align.Left) != 0)
             {
                 label.x = b.x + t->padding.x;
                 label.w = 0 < b.w - 2 * t->padding.x ? b.w - 2 * t->padding.x : 0;
             }
-            else if ((a & Alignment.CENTERED) != 0)
+            else if ((a & Align.Centered) != 0)
             {
                 label.w = 1 < 2 * t->padding.x + text_width ? 2 * t->padding.x + text_width : 1;
                 label.x = b.x + t->padding.x + (b.w - 2 * t->padding.x - label.w) / 2;
@@ -372,7 +372,7 @@ namespace NuklearSharp
                 label.w = b.x + b.w < label.x + label.w ? b.x + b.w : label.x + label.w;
                 if (label.w >= label.x) label.w -= label.x;
             }
-            else if ((a & Alignment.RIGHT) != 0)
+            else if ((a & Align.Right) != 0)
             {
                 label.x =
 
@@ -382,7 +382,7 @@ namespace NuklearSharp
                 label.w = text_width + 2 * t->padding.x;
             }
             else return;
-            if ((a & Alignment.MIDDLE) != 0)
+            if ((a & Align.Middle) != 0)
             {
                 label.y = b.y + b.h / 2.0f - f.Height / 2.0f;
                 label.h =
@@ -391,7 +391,7 @@ namespace NuklearSharp
                         ? b.h - (b.h / 2.0f + f.Height / 2.0f)
                         : b.h / 2.0f;
             }
-            else if ((a & Alignment.BOTTOM) != 0)
+            else if ((a & Align.Bottom) != 0)
             {
                 label.y = b.y + b.h - f.Height;
                 label.h = f.Height;
@@ -428,7 +428,7 @@ namespace NuklearSharp
             while (done < len)
             {
                 if (fitting == 0 || line.y + line.h >= b.y + b.h) break;
-                nk_widget_text(line, &_string_[done], fitting, &text, Alignment.MIDDLELEFT, f);
+                nk_widget_text(line, &_string_[done], fitting, &text, Align.MiddleLeft, f);
                 done += fitting;
                 line.y += f.Height + 2 * t->padding.y;
                 fitting =
@@ -438,82 +438,82 @@ namespace NuklearSharp
             }
         }
 
-        public void nk_draw_symbol(NkSymbolType type, NkRect content, NkColor background,
+        public void nk_draw_symbol(Symbols type, NkRect content, NkColor background,
             NkColor foreground, float border_width, NkUserFont font)
         {
             switch (type)
             {
-                case NkSymbolType.X:
-                case NkSymbolType.UNDERSCORE:
-                case NkSymbolType.PLUS:
-                case NkSymbolType.MINUS:
+                case Symbols.X:
+                case Symbols.Underscore:
+                case Symbols.Plus:
+                case Symbols.Minus:
                     {
-                        char X = type == NkSymbolType.X
+                        char X = type == Symbols.X
                             ? 'x'
-                            : type == NkSymbolType.UNDERSCORE ? '_' : type == NkSymbolType.PLUS ? '+' : '-';
+                            : type == Symbols.Underscore ? '_' : type == Symbols.Plus ? '+' : '-';
                         nk_text text = new nk_text();
                         text.padding = Nk.nk_vec2_((float)0, (float)0);
                         text.background = background;
                         text.text = foreground;
-                        nk_widget_text(content, &X, 1, &text, Alignment.MIDDLECENTERED, font);
+                        nk_widget_text(content, &X, 1, &text, Align.MiddleCentered, font);
                     }
                     break;
-                case NkSymbolType.CIRCLE_SOLID:
-                case NkSymbolType.CIRCLE_OUTLINE:
-                case NkSymbolType.RECT_SOLID:
-                case NkSymbolType.RECT_OUTLINE:
+                case Symbols.CircleSolid:
+                case Symbols.CircleOutline:
+                case Symbols.RectSolid:
+                case Symbols.RectOutline:
                     {
-                        if (type == NkSymbolType.RECT_SOLID || type == NkSymbolType.RECT_OUTLINE)
+                        if (type == Symbols.RectSolid || type == Symbols.RectOutline)
                         {
                             nk_fill_rect(content, 0, foreground);
-                            if (type == NkSymbolType.RECT_OUTLINE)
+                            if (type == Symbols.RectOutline)
                                 nk_fill_rect(Nk.nk_shrink_rect_((NkRect)content, (float)border_width),
                                     0, background);
                         }
                         else
                         {
                             nk_fill_circle(content, foreground);
-                            if (type == NkSymbolType.CIRCLE_OUTLINE)
+                            if (type == Symbols.CircleOutline)
                                 nk_fill_circle(Nk.nk_shrink_rect_((NkRect)content, (float)1),
                                     background);
                         }
                     }
                     break;
-                case NkSymbolType.TRIANGLE_UP:
-                case NkSymbolType.TRIANGLE_DOWN:
-                case NkSymbolType.TRIANGLE_LEFT:
-                case NkSymbolType.TRIANGLE_RIGHT:
+                case Symbols.TriangleUp:
+                case Symbols.TriangleDown:
+                case Symbols.TriangleLeft:
+                case Symbols.TriangleRight:
                     {
-                        NkHeading heading;
+                        Heading heading;
                         NkVec2* points = stackalloc NkVec2[3];
                         heading =
 
-                            type == NkSymbolType.TRIANGLE_RIGHT
-                                ? NkHeading.NK_RIGHT
-                                : type == NkSymbolType.TRIANGLE_LEFT
-                                    ? NkHeading.NK_LEFT
-                                    : type == NkSymbolType.TRIANGLE_UP ? NkHeading.NK_UP : NkHeading.NK_DOWN;
+                            type == Symbols.TriangleRight
+                                ? Heading.Right
+                                : type == Symbols.TriangleLeft
+                                    ? Heading.Left
+                                    : type == Symbols.TriangleUp ? Heading.Up : Heading.Down;
                         Nk.nk_triangle_from_direction(points, content, 0, 0, heading);
                         nk_fill_triangle(points[0].x, points[0].y, points[1].x,
                             points[1].y, points[2].x, points[2].y, foreground);
                     }
                     break;
                 default:
-                case NkSymbolType.NONE:
-                case NkSymbolType.MAX:
+                case Symbols.None:
+                case Symbols.MAX:
                     break;
             }
 
         }
 
-        public NkStyleItem nk_draw_button(NkRect* bounds, NkWidgetStates state,
+        public NkStyleItem nk_draw_button(NkRect* bounds, WidgetStates state,
             nk_style_button style)
         {
             NkStyleItem background;
-            if ((state & NkWidgetStates.HOVER) != 0) background = style.hover;
-            else if ((state & NkWidgetStates.ACTIVED) != 0) background = style.active;
+            if ((state & WidgetStates.Hover) != 0) background = style.hover;
+            else if ((state & WidgetStates.Actived) != 0) background = style.active;
             else background = style.normal;
-            if (background.Type == NkStyleItemType.IMAGE)
+            if (background.Type == StyleItemKind.Image)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
             }
@@ -527,38 +527,38 @@ namespace NuklearSharp
             return background;
         }
 
-        public void nk_draw_button_text(NkRect* bounds, NkRect* content, NkWidgetStates state,
-            nk_style_button style, char* txt, int len, Alignment text_alignment, NkUserFont font)
+        public void nk_draw_button_text(NkRect* bounds, NkRect* content, WidgetStates state,
+            nk_style_button style, char* txt, int len, Align text_alignment, NkUserFont font)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
             background = nk_draw_button(bounds, state, style);
-            if (background.Type == NkStyleItemType.COLOR) text.background = background.Data.Color;
+            if (background.Type == StyleItemKind.Color) text.background = background.Data.Color;
             else text.background = style.text_background;
-            if ((state & NkWidgetStates.HOVER) != 0) text.text = style.text_hover;
-            else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = style.text_active;
+            if ((state & WidgetStates.Hover) != 0) text.text = style.text_hover;
+            else if ((state & WidgetStates.Actived) != 0) text.text = style.text_active;
             else text.text = style.text_normal;
             text.padding = Nk.nk_vec2_((float)0, (float)0);
             nk_widget_text(*content, txt, len, &text, text_alignment, font);
         }
 
-        public void nk_draw_button_symbol(NkRect* bounds, NkRect* content, NkWidgetStates state,
-            nk_style_button style, NkSymbolType type, NkUserFont font)
+        public void nk_draw_button_symbol(NkRect* bounds, NkRect* content, WidgetStates state,
+            nk_style_button style, Symbols type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             NkColor bg = new NkColor();
             NkStyleItem background;
             background = nk_draw_button(bounds, state, style);
-            if (background.Type == NkStyleItemType.COLOR) bg = background.Data.Color;
+            if (background.Type == StyleItemKind.Color) bg = background.Data.Color;
             else bg = style.text_background;
-            if ((state & NkWidgetStates.HOVER) != 0) sym = style.text_hover;
-            else if ((state & NkWidgetStates.ACTIVED) != 0) sym = style.text_active;
+            if ((state & WidgetStates.Hover) != 0) sym = style.text_hover;
+            else if ((state & WidgetStates.Actived) != 0) sym = style.text_active;
             else sym = style.text_normal;
             nk_draw_symbol(type, *content, bg, sym, 1,
                 font);
         }
 
-        public void nk_draw_button_image(NkRect* bounds, NkRect* content, NkWidgetStates state,
+        public void nk_draw_button_image(NkRect* bounds, NkRect* content, WidgetStates state,
             nk_style_button style, NkImage img)
         {
             nk_draw_button(bounds, state, style);
@@ -566,20 +566,20 @@ namespace NuklearSharp
         }
 
         public void nk_draw_button_text_symbol(NkRect* bounds, NkRect* label,
-            NkRect* symbol, NkWidgetStates state, nk_style_button style, char* str, int len, NkSymbolType type, NkUserFont font)
+            NkRect* symbol, WidgetStates state, nk_style_button style, char* str, int len, Symbols type, NkUserFont font)
         {
             NkColor sym = new NkColor();
             nk_text text = new nk_text();
             NkStyleItem background;
             background = nk_draw_button(bounds, state, style);
-            if (background.Type == NkStyleItemType.COLOR) text.background = background.Data.Color;
+            if (background.Type == StyleItemKind.Color) text.background = background.Data.Color;
             else text.background = style.text_background;
-            if ((state & NkWidgetStates.HOVER) != 0)
+            if ((state & WidgetStates.Hover) != 0)
             {
                 sym = style.text_hover;
                 text.text = style.text_hover;
             }
-            else if ((state & NkWidgetStates.ACTIVED) != 0)
+            else if ((state & WidgetStates.Actived) != 0)
             {
                 sym = style.text_active;
                 text.text = style.text_active;
@@ -593,38 +593,38 @@ namespace NuklearSharp
             text.padding = Nk.nk_vec2_((float)0, (float)0);
             nk_draw_symbol(type, *symbol, style.text_background,
                 sym, 0, font);
-            nk_widget_text(*label, str, len, &text, Alignment.MIDDLECENTERED, font);
+            nk_widget_text(*label, str, len, &text, Align.MiddleCentered, font);
         }
 
         public void nk_draw_button_text_image(NkRect* bounds, NkRect* label,
-            NkRect* image, NkWidgetStates state, nk_style_button style, char* str, int len, NkUserFont font, NkImage img)
+            NkRect* image, WidgetStates state, nk_style_button style, char* str, int len, NkUserFont font, NkImage img)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
             background = nk_draw_button(bounds, state, style);
-            if (background.Type == NkStyleItemType.COLOR) text.background = background.Data.Color;
+            if (background.Type == StyleItemKind.Color) text.background = background.Data.Color;
             else text.background = style.text_background;
-            if ((state & NkWidgetStates.HOVER) != 0) text.text = style.text_hover;
-            else if ((state & NkWidgetStates.ACTIVED) != 0) text.text = style.text_active;
+            if ((state & WidgetStates.Hover) != 0) text.text = style.text_hover;
+            else if ((state & WidgetStates.Actived) != 0) text.text = style.text_active;
             else text.text = style.text_normal;
             text.padding = Nk.nk_vec2_((float)0, (float)0);
-            nk_widget_text(*label, str, len, &text, Alignment.MIDDLECENTERED, font);
+            nk_widget_text(*label, str, len, &text, Align.MiddleCentered, font);
             nk_draw_image(*image, img, Nk.nk_white);
         }
 
-        public void nk_draw_checkbox(NkWidgetStates state, nk_style_toggle style, bool active,
+        public void nk_draw_checkbox(WidgetStates state, nk_style_toggle style, bool active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
             NkStyleItem cursor;
             nk_text text = new nk_text();
-            if ((state & NkWidgetStates.HOVER) != 0)
+            if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
                 text.text = style.text_hover;
             }
-            else if ((state & NkWidgetStates.ACTIVED) != 0)
+            else if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -637,7 +637,7 @@ namespace NuklearSharp
                 text.text = style.text_normal;
             }
 
-            if (background.Type == NkStyleItemType.COLOR)
+            if (background.Type == StyleItemKind.Color)
             {
                 nk_fill_rect(*selector, 0, style.border_color);
                 nk_fill_rect(Nk.nk_shrink_rect_(*selector, (float)style.border),
@@ -646,7 +646,7 @@ namespace NuklearSharp
             else nk_draw_image(*selector, background.Data.Image, Nk.nk_white);
             if (active)
             {
-                if (cursor.Type == NkStyleItemType.IMAGE)
+                if (cursor.Type == StyleItemKind.Image)
                     nk_draw_image(*cursors, cursor.Data.Image, Nk.nk_white);
                 else nk_fill_rect(*cursors, 0, cursor.Data.Color);
             }
@@ -654,22 +654,22 @@ namespace NuklearSharp
             text.padding.x = 0;
             text.padding.y = 0;
             text.background = style.text_background;
-            nk_widget_text(*label, _string_, len, &text, Alignment.MIDDLELEFT, font);
+            nk_widget_text(*label, _string_, len, &text, Align.MiddleLeft, font);
         }
 
-        public void nk_draw_option(NkWidgetStates state, nk_style_toggle style, bool active,
+        public void nk_draw_option(WidgetStates state, nk_style_toggle style, bool active,
             NkRect* label, NkRect* selector, NkRect* cursors, char* _string_, int len, NkUserFont font)
         {
             NkStyleItem background;
             NkStyleItem cursor;
             nk_text text = new nk_text();
-            if ((state & NkWidgetStates.HOVER) != 0)
+            if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
                 text.text = style.text_hover;
             }
-            else if ((state & NkWidgetStates.ACTIVED) != 0)
+            else if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -682,7 +682,7 @@ namespace NuklearSharp
                 text.text = style.text_normal;
             }
 
-            if (background.Type == NkStyleItemType.COLOR)
+            if (background.Type == StyleItemKind.Color)
             {
                 nk_fill_circle(*selector, style.border_color);
                 nk_fill_circle(Nk.nk_shrink_rect_(*selector, (float)style.border),
@@ -691,7 +691,7 @@ namespace NuklearSharp
             else nk_draw_image(*selector, background.Data.Image, Nk.nk_white);
             if (active)
             {
-                if (cursor.Type == NkStyleItemType.IMAGE)
+                if (cursor.Type == StyleItemKind.Image)
                     nk_draw_image(*cursors, cursor.Data.Image, Nk.nk_white);
                 else nk_fill_circle(*cursors, cursor.Data.Color);
             }
@@ -699,23 +699,23 @@ namespace NuklearSharp
             text.padding.x = 0;
             text.padding.y = 0;
             text.background = style.text_background;
-            nk_widget_text(*label, _string_, len, &text, Alignment.MIDDLELEFT, font);
+            nk_widget_text(*label, _string_, len, &text, Align.MiddleLeft, font);
         }
 
-        public void nk_draw_selectable(NkWidgetStates state, nk_style_selectable style, int active,
-            NkRect* bounds, NkRect* icon, NkImage img, char* _string_, int len, Alignment align, NkUserFont font)
+        public void nk_draw_selectable(WidgetStates state, nk_style_selectable style, int active,
+            NkRect* bounds, NkRect* icon, NkImage img, char* _string_, int len, Align align, NkUserFont font)
         {
             NkStyleItem background;
             nk_text text = new nk_text();
             text.padding = style.padding;
             if (active == 0)
             {
-                if ((state & NkWidgetStates.ACTIVED) != 0)
+                if ((state & WidgetStates.Actived) != 0)
                 {
                     background = style.pressed;
                     text.text = style.text_pressed;
                 }
-                else if ((state & NkWidgetStates.HOVER) != 0)
+                else if ((state & WidgetStates.Hover) != 0)
                 {
                     background = style.hover;
                     text.text = style.text_hover;
@@ -728,12 +728,12 @@ namespace NuklearSharp
             }
             else
             {
-                if ((state & NkWidgetStates.ACTIVED) != 0)
+                if ((state & WidgetStates.Actived) != 0)
                 {
                     background = style.pressed_active;
                     text.text = style.text_pressed_active;
                 }
-                else if ((state & NkWidgetStates.HOVER) != 0)
+                else if ((state & WidgetStates.Hover) != 0)
                 {
                     background = style.hover_active;
                     text.text = style.text_hover_active;
@@ -745,7 +745,7 @@ namespace NuklearSharp
                 }
             }
 
-            if (background.Type == NkStyleItemType.IMAGE)
+            if (background.Type == StyleItemKind.Image)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
                 text.background = NkColor.nk_rgba((int)0, (int)0, (int)0, (int)0);
@@ -761,7 +761,7 @@ namespace NuklearSharp
             nk_widget_text(*bounds, _string_, len, &text, align, font);
         }
 
-        public void nk_draw_slider(NkWidgetStates state, nk_style_slider style, NkRect* bounds,
+        public void nk_draw_slider(WidgetStates state, nk_style_slider style, NkRect* bounds,
             NkRect* visual_cursor, float min, float value, float max)
         {
             NkRect fill = new NkRect();
@@ -769,13 +769,13 @@ namespace NuklearSharp
             NkStyleItem background;
             NkColor bar_color = new NkColor();
             NkStyleItem cursor;
-            if ((state & NkWidgetStates.ACTIVED) != 0)
+            if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.active;
                 bar_color = style.bar_active;
                 cursor = style.cursor_active;
             }
-            else if ((state & NkWidgetStates.HOVER) != 0)
+            else if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 bar_color = style.bar_hover;
@@ -796,7 +796,7 @@ namespace NuklearSharp
             fill.x = bar.x;
             fill.y = bar.y;
             fill.h = bar.h;
-            if (background.Type == NkStyleItemType.IMAGE)
+            if (background.Type == StyleItemKind.Image)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
             }
@@ -809,22 +809,22 @@ namespace NuklearSharp
 
             nk_fill_rect(bar, style.rounding, bar_color);
             nk_fill_rect(fill, style.rounding, style.bar_filled);
-            if (cursor.Type == NkStyleItemType.IMAGE)
+            if (cursor.Type == StyleItemKind.Image)
                 nk_draw_image(*visual_cursor, cursor.Data.Image, Nk.nk_white);
             else nk_fill_circle(*visual_cursor, cursor.Data.Color);
         }
 
-        public void nk_draw_progress(NkWidgetStates state, nk_style_progress style,
+        public void nk_draw_progress(WidgetStates state, nk_style_progress style,
             NkRect* bounds, NkRect* scursor, ulong value, ulong max)
         {
             NkStyleItem background;
             NkStyleItem cursor;
-            if ((state & NkWidgetStates.ACTIVED) != 0)
+            if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.active;
                 cursor = style.cursor_active;
             }
-            else if ((state & NkWidgetStates.HOVER) != 0)
+            else if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -835,14 +835,14 @@ namespace NuklearSharp
                 cursor = style.cursor_normal;
             }
 
-            if (background.Type == NkStyleItemType.COLOR)
+            if (background.Type == StyleItemKind.Color)
             {
                 nk_fill_rect(*bounds, style.rounding, background.Data.Color);
                 nk_stroke_rect(*bounds, style.rounding, style.border,
                     style.border_color);
             }
             else nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
-            if (cursor.Type == NkStyleItemType.COLOR)
+            if (cursor.Type == StyleItemKind.Color)
             {
                 nk_fill_rect(*scursor, style.rounding, cursor.Data.Color);
                 nk_stroke_rect(*scursor, style.rounding, style.border,
@@ -851,17 +851,17 @@ namespace NuklearSharp
             else nk_draw_image(*scursor, cursor.Data.Image, Nk.nk_white);
         }
 
-        public void nk_draw_scrollbar(NkWidgetStates state, nk_style_scrollbar style,
+        public void nk_draw_scrollbar(WidgetStates state, nk_style_scrollbar style,
             NkRect* bounds, NkRect* scroll)
         {
             NkStyleItem background;
             NkStyleItem cursor;
-            if ((state & NkWidgetStates.ACTIVED) != 0)
+            if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.active;
                 cursor = style.cursor_active;
             }
-            else if ((state & NkWidgetStates.HOVER) != 0)
+            else if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 cursor = style.cursor_hover;
@@ -872,7 +872,7 @@ namespace NuklearSharp
                 cursor = style.cursor_normal;
             }
 
-            if (background.Type == NkStyleItemType.COLOR)
+            if (background.Type == StyleItemKind.Color)
             {
                 nk_fill_rect(*bounds, style.rounding, background.Data.Color);
                 nk_stroke_rect(*bounds, style.rounding, style.border,
@@ -883,7 +883,7 @@ namespace NuklearSharp
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
             }
 
-            if (background.Type == NkStyleItemType.COLOR)
+            if (background.Type == StyleItemKind.Color)
             {
                 nk_fill_rect(*scroll, style.rounding_cursor, cursor.Data.Color);
                 nk_stroke_rect(*scroll, style.rounding_cursor,
@@ -925,7 +925,7 @@ namespace NuklearSharp
                         if (is_selected)
                             nk_fill_rect(label, 0, background);
                         nk_widget_text(label, line, (int)(text + text_len - line), &txt,
-                            Alignment.MIDDLECENTERED, font);
+                            Align.MiddleCentered, font);
                         text_len++;
                         line_count++;
                         line_width = 0;
@@ -960,23 +960,23 @@ namespace NuklearSharp
                     if (is_selected)
                         nk_fill_rect(label, 0, background);
                     nk_widget_text(label, line, (int)(text + text_len - line), &txt,
-                        Alignment.MIDDLELEFT, font);
+                        Align.MiddleLeft, font);
                 }
             }
 
         }
 
         public void nk_draw_property(nk_style_property style, NkRect* bounds,
-            NkRect* label, NkWidgetStates state, char* name, int len, NkUserFont font)
+            NkRect* label, WidgetStates state, char* name, int len, NkUserFont font)
         {
             nk_text text = new nk_text();
             NkStyleItem background;
-            if ((state & NkWidgetStates.ACTIVED) != 0)
+            if ((state & WidgetStates.Actived) != 0)
             {
                 background = style.active;
                 text.text = style.label_active;
             }
-            else if ((state & NkWidgetStates.HOVER) != 0)
+            else if ((state & WidgetStates.Hover) != 0)
             {
                 background = style.hover;
                 text.text = style.label_hover;
@@ -987,7 +987,7 @@ namespace NuklearSharp
                 text.text = style.label_normal;
             }
 
-            if (background.Type == NkStyleItemType.IMAGE)
+            if (background.Type == StyleItemKind.Image)
             {
                 nk_draw_image(*bounds, background.Data.Image, Nk.nk_white);
                 text.background = NkColor.nk_rgba((int)0, (int)0, (int)0, (int)0);
@@ -1001,7 +1001,7 @@ namespace NuklearSharp
             }
 
             text.padding = Nk.nk_vec2_((float)0, (float)0);
-            nk_widget_text(*label, name, len, &text, Alignment.MIDDLECENTERED, font);
+            nk_widget_text(*label, name, len, &text, Align.MiddleCentered, font);
         }
 
         public void nk_draw_color_picker(NkRect* matrix, NkRect* hue_bar,
@@ -1081,7 +1081,7 @@ namespace NuklearSharp
             return new T();
         }
 
-        public NkCommandBase nk_command_buffer_push(NkCommandType t)
+        public NkCommandBase nk_command_buffer_push(CommandType t)
         {
             if (this == null || t < 0 || (int)t >= CommandCreators.Length || CommandCreators[(int)t] == null) return null;
 

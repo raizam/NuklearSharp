@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace NuklearSharp
+namespace KlearUI
 {
 
         [StructLayout(LayoutKind.Sequential)]
@@ -13,7 +13,7 @@ namespace NuklearSharp
         [StructLayout(LayoutKind.Sequential)]
         public unsafe partial struct nk_draw_vertex_layout_element
         {
-            public NkDrawVertexLayoutAttribute attribute;
+            public VertexLayoutKind attribute;
             public VertexLayoutFormat format;
             public ulong offset;
         }
@@ -133,7 +133,7 @@ namespace NuklearSharp
         public static int nk_draw_vertex_layout_element_is_end_of_layout(nk_draw_vertex_layout_element* element)
         {
             return
-                (int)(((element->attribute) == (NkDrawVertexLayoutAttribute.ATTRIBUTE_COUNT)) || ((element->format) == VertexLayoutFormat.COUNT) ? 1 : 0);
+                (int)(((element->attribute) == (VertexLayoutKind.COUNT)) || ((element->format) == VertexLayoutFormat.COUNT) ? 1 : 0);
         }
 
         public static void nk_draw_list_stroke_poly_line(NkDrawList list, NkColor color,

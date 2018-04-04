@@ -1,4 +1,4 @@
-﻿namespace NuklearSharp
+﻿namespace KlearUI
 {
     public unsafe class NkFont
     {
@@ -1536,7 +1536,7 @@
                             glyph->y1 += (float) (dst_font.ascent + 0.5f);
                             glyph->w = (float) (glyph->x1 - glyph->x0 + 0.5f);
                             glyph->h = (float) (glyph->y1 - glyph->y0);
-                            if ((cfg.coord_type) == (NkFontCoordType.NK_COORD_PIXEL))
+                            if ((cfg.coord_type) == (FontCoordType.CoordPixel))
                             {
                                 glyph->u0 = (float) (q.s0 * (float) (width));
                                 glyph->v0 = (float) (q.t0 * (float) (height));

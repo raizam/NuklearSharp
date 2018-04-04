@@ -1,8 +1,8 @@
-namespace NuklearSharp
+namespace KlearUI
 {
     public unsafe partial class nk_row_layout
     {
-        public NkPanelRowLayoutType type;
+        public PanelRowLayoutType type;
         public int index;
         public float height;
         public float min_height;
@@ -55,15 +55,15 @@ namespace NuklearSharp
 
         public static void nk_layout_row_dynamic(NkContext ctx, float height, int cols)
         {
-            Nk.nk_row_layout_(ctx, (NkLayoutFormat.NK_DYNAMIC), (float)(height), (int)(cols), (int)(0));
+            Nk.nk_row_layout_(ctx, (LayoutFormat.Dynamic), (float)(height), (int)(cols), (int)(0));
         }
 
         public static void nk_layout_row_static(NkContext ctx, float height, int item_width, int cols)
         {
-            Nk.nk_row_layout_(ctx, (NkLayoutFormat.NK_STATIC), (float)(height), (int)(cols), (int)(item_width));
+            Nk.nk_row_layout_(ctx, (LayoutFormat.Static), (float)(height), (int)(cols), (int)(item_width));
         }
 
-        public static unsafe void nk_layout_row_begin(NkContext ctx, NkLayoutFormat fmt, float row_height, int cols)
+        public static unsafe void nk_layout_row_begin(NkContext ctx, LayoutFormat fmt, float row_height, int cols)
         {
             NkWindow win;
             NkPanel layout;
@@ -71,8 +71,8 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             Nk.nk_panel_layout(ctx, win, (float)(row_height), (int)(cols));
-            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC)) layout.Row.type = (NkPanelRowLayoutType.DYNAMIC_ROW);
-            else layout.Row.type = (NkPanelRowLayoutType.STATIC_ROW);
+            if ((fmt) == (LayoutFormat.Dynamic)) layout.Row.type = (PanelRowLayoutType.DynamicRow);
+            else layout.Row.type = (PanelRowLayoutType.StaticRow);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
             layout.Row.item_width = (float)(0);
@@ -87,8 +87,8 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if ((layout.Row.type != NkPanelRowLayoutType.STATIC_ROW) && (layout.Row.type != NkPanelRowLayoutType.DYNAMIC_ROW)) return;
-            if ((layout.Row.type) == (NkPanelRowLayoutType.DYNAMIC_ROW))
+            if ((layout.Row.type != PanelRowLayoutType.StaticRow) && (layout.Row.type != PanelRowLayoutType.DynamicRow)) return;
+            if ((layout.Row.type) == (PanelRowLayoutType.DynamicRow))
             {
                 float ratio = (float)(ratio_or_width);
                 if ((ratio + layout.Row.filled) > (1.0f)) return;
@@ -107,12 +107,12 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if ((layout.Row.type != NkPanelRowLayoutType.STATIC_ROW) && (layout.Row.type != NkPanelRowLayoutType.DYNAMIC_ROW)) return;
+            if ((layout.Row.type != PanelRowLayoutType.StaticRow) && (layout.Row.type != PanelRowLayoutType.DynamicRow)) return;
             layout.Row.item_width = (float)(0);
             layout.Row.item_offset = (float)(0);
         }
 
-        public static unsafe void nk_layout_row(NkContext ctx, NkLayoutFormat fmt, float height, int cols, float* ratio)
+        public static unsafe void nk_layout_row(NkContext ctx, LayoutFormat fmt, float height, int cols, float* ratio)
         {
             int i;
             int n_undef = (int)(0);
@@ -122,7 +122,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             Nk.nk_panel_layout(ctx, win, (float)(height), (int)(cols));
-            if ((fmt) == (NkLayoutFormat.NK_DYNAMIC))
+            if ((fmt) == (LayoutFormat.Dynamic))
             {
                 float r = (float)(0);
                 layout.Row.ratio = ratio;
@@ -132,13 +132,13 @@ namespace NuklearSharp
                     else r += (float)(ratio[i]);
                 }
                 r = (float)((0) < ((1.0f) < (1.0f - r) ? (1.0f) : (1.0f - r)) ? ((1.0f) < (1.0f - r) ? (1.0f) : (1.0f - r)) : (0));
-                layout.Row.type = (NkPanelRowLayoutType.DYNAMIC);
+                layout.Row.type = (PanelRowLayoutType.Dynamic);
                 layout.Row.item_width = (float)((((r) > (0)) && ((n_undef) > (0))) ? (r / (float)(n_undef)) : 0);
             }
             else
             {
                 layout.Row.ratio = ratio;
-                layout.Row.type = (NkPanelRowLayoutType.STATIC);
+                layout.Row.type = (PanelRowLayoutType.Static);
                 layout.Row.item_width = (float)(0);
                 layout.Row.item_offset = (float)(0);
             }
@@ -155,7 +155,7 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             Nk.nk_panel_layout(ctx, win, (float)(height), (int)(1));
-            layout.Row.type = (NkPanelRowLayoutType.TEMPLATE);
+            layout.Row.type = (PanelRowLayoutType.Template);
             layout.Row.columns = (int)(0);
             layout.Row.ratio = null;
             layout.Row.item_width = (float)(0);
@@ -175,7 +175,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
+            if (layout.Row.type != PanelRowLayoutType.Template) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(-1.0f);
         }
@@ -187,7 +187,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
+            if (layout.Row.type != PanelRowLayoutType.Template) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(-min_width);
         }
@@ -199,7 +199,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
+            if (layout.Row.type != PanelRowLayoutType.Template) return;
             if ((layout.Row.columns) >= (16)) return;
             layout.Row.templates[layout.Row.columns++] = (float)(width);
         }
@@ -217,7 +217,7 @@ namespace NuklearSharp
             if (((ctx == null) || (ctx.Current == null)) || (ctx.Current.Layout == null)) return;
             win = ctx.Current;
             layout = win.Layout;
-            if (layout.Row.type != NkPanelRowLayoutType.TEMPLATE) return;
+            if (layout.Row.type != PanelRowLayoutType.Template) return;
             for (i = (int)(0); (i) < (layout.Row.columns); ++i)
             {
                 float width = (float)(layout.Row.templates[i]);
@@ -261,7 +261,7 @@ namespace NuklearSharp
 
         }
 
-        public static unsafe void nk_layout_space_begin(NkContext ctx, NkLayoutFormat fmt, float height, int widget_count)
+        public static unsafe void nk_layout_space_begin(NkContext ctx, LayoutFormat fmt, float height, int widget_count)
         {
             NkWindow win;
             NkPanel layout;
@@ -269,8 +269,8 @@ namespace NuklearSharp
             win = ctx.Current;
             layout = win.Layout;
             Nk.nk_panel_layout(ctx, win, (float)(height), (int)(widget_count));
-            if ((fmt) == (NkLayoutFormat.NK_STATIC)) layout.Row.type = (NkPanelRowLayoutType.STATIC_FREE);
-            else layout.Row.type = (NkPanelRowLayoutType.DYNAMIC_FREE);
+            if ((fmt) == (LayoutFormat.Static)) layout.Row.type = (PanelRowLayoutType.StaticFree);
+            else layout.Row.type = (PanelRowLayoutType.DynamicFree);
             layout.Row.ratio = null;
             layout.Row.filled = (float)(0);
             layout.Row.item_width = (float)(0);
